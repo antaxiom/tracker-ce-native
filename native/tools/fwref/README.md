@@ -1,8 +1,8 @@
 # fwref — source-true firmware reference
 
 `fwref` renders the firmware's Instrument General, Master 1/3, Master 2/3 (Track
-Mixer), Master 3/3 (Global Mixer), Config, Perform, Pattern, Song, Sample Loader
-and Sample Playback screens on the host by compiling the **unmodified**
+Mixer), Master 3/3 (Global Mixer), Master EQ, Config, Perform, Pattern, Song,
+Sample Loader and Sample Playback screens on the host by compiling the **unmodified**
 `core/libs/NewDisplay` control sources and driving them with checked-in specs
 extracted from the firmware source.
 
@@ -46,7 +46,7 @@ native/tools/display_emulator/FT812Emulator  exact 800x480 framebuffer
         │
         ▼
 render/fwref/{instrument_params,master_page1,master_page2,master_page3,
-               config,perform,pattern,song,loader,sample}.png
+               master_eq,config,perform,pattern,song,loader,sample}.png
 ```
 
 `include/display.h` is a host shim for the `cDisplay` surface only
@@ -67,6 +67,7 @@ constants that `cSongPlayer` reaches through the real `display.h`, plus
 | `specs/master_page1.json` | Master 1/3 control list (frame, 8 labels, bgLabel, 3 bars, cover, saturation list). |
 | `specs/master_page2.json` | Track Mixer 2/3 (8 labels, 8 volume bars, 8 level bars, bgLabel). |
 | `specs/master_page3.json` | Global Mixer 3/3 (4 aux name labels, 4 volume + 8 level bars, labels). |
+| `specs/master_eq.json` | Master EQ (5 band labels + dB values, 5 band bars, 5-place frame, cover over columns 5..7). |
 | `specs/config.json` | Config default screen (frame, 8 labels, cList/cParamValueList, hidden cTextBox/cGridEditorPopup/popout, covers). |
 | `specs/perform.json` | Performance FX (12 vertical cLabels + 12 cMultiLabels, track labels, bgLabel). |
 | `specs/pattern.json` | Pattern control list (frame, 8 action labels, bgLabel, cTracker grid, title-bar song timer). |

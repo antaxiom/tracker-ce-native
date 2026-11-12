@@ -150,6 +150,7 @@ struct SpecEntry
     std::string text2 = "";       // literal or @key
     std::string textFormat;       // formatter id for `text` (see scenario.cpp)
     std::string text2Format;      // formatter id (see scenario.cpp)
+    int text2Arg = 0;             // per-column arg for text2 formatters
     std::string barValue;         // bar value mapping id
     bool barDataWhite = false;
 

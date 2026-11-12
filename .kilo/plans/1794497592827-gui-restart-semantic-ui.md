@@ -139,8 +139,11 @@ comparison after a primitive-level audit, never as the app's substrate.
 - Phase 5 started: semantic paths are the production renderer; legacy views
   remain as the fallback surface for sub-pages, dialogs and chrome.
 - Master sub-pages ported: `TrackMixerScreen` (0.63% vs fwref page 2) and
-  `MasterEqScreen` (legacy-equivalent; firmware page 3 is Global Mixer, which
-  the desktop engine does not model). See
+  `MasterEqScreen` (firmware `showEqualizerScreen()`: five band bars, 5-place
+  selection frame, cover over columns 5..7; 0.23% vs a new source-true
+  `master_eq` fwref spec, plus an 8th calibrated hardware tile). Firmware page
+  3/3 is Global Mixer, which the desktop engine does not model; the app's third
+  Master tab is therefore the Master EQ page. See
   `native/docs/gates/phase5-master-subpages.md`.
 - Instrument sub-pages ported: `InstrumentPagesScreen` covers Effects and
   Automation (0.18% / 0.73% vs the legacy renderer). See
@@ -153,8 +156,9 @@ comparison after a primitive-level audit, never as the app's substrate.
   recorded in `native/docs/gates/phase6-verification.md`.
 - `--gui-classic` retired; `AppLayout` always renders semantic screens, and the
   legacy `renderActiveScreen` path remains only for the legacy test harness.
-- `native/tools/visreg/visreg.py` is the repeatable Classic gate: 14/14
-  screen/sub-page cases pass at 97.85-99.99% similarity with determinism.
+- `native/tools/visreg/visreg.py` is the repeatable Classic gate: 15/15
+  screen/sub-page cases (incl. Master EQ) pass at 97.85-99.99% similarity with
+  determinism.
 - Multi-state fwref added for Instrument Effects/Automation (0.01%/0.02%);
   functional smoke is green 17/17 after transport/song/sample fixes.
 - `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
@@ -163,9 +167,9 @@ comparison after a primitive-level audit, never as the app's substrate.
 - fwref FW-1 implemented: strict by default, per-screen audit in `renderSpec`,
   fails on unsupported or approximate calls; current result 0/0.
 - `Canvas` is ImGui-backed today; a recording/software backend is Phase 5 work.
-- FW-8 harness implemented (`native/tools/refcal`): 5/5 hardware tiles pass
-  (Instrument x2, Performance, Pattern, Track Mixer); remaining screens and
-  multi-state captures still need specs.
+- FW-8 harness implemented (`native/tools/refcal`): 8/8 hardware tiles pass
+  (Instrument x2, Instrument Automation, Performance, Pattern, Track Mixer,
+  Sample Playback, Master EQ); remaining screens still need capture photos.
 
 ## Target architecture
 

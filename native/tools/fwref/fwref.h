@@ -55,6 +55,12 @@ struct MasterScenario
     int reverbLevel = 0;
     int dryMixLevel = 0;
     int lineInLevel = 0;
+
+    // Master EQ page (gMasterParams.cpp:805-900). The firmware stores
+    // eqBandAdjustment as -1..1; the bar value is map(-1..1 -> 0..100), so the
+    // scenario carries the already-mapped 0..100 value.
+    std::array<int, 5> eqBand = { 50, 50, 50, 50, 50 };
+    int selectedEqPlace = 0;
 };
 
 struct PatternScenario
@@ -267,6 +273,10 @@ bool renderMasterPage2(trakr::emulator::FT812DisplayEmulator& emu,
                        const MasterScenario& scenario);
 bool renderMasterPage3(trakr::emulator::FT812DisplayEmulator& emu,
                        const MasterScenario& scenario);
+
+// Renders the Master EQ page (gMasterParams.cpp showEqualizerScreen()).
+bool renderMasterEq(trakr::emulator::FT812DisplayEmulator& emu,
+                    const MasterScenario& scenario);
 
 // Renders the Config editor default screen (cList/cParamValueList/cTextBox/
 // cGridEditorPopup created from gConfigEdit.cpp).

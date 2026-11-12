@@ -95,6 +95,7 @@ SpecEntry parseEntry(const json& j)
     e.text2 = j.value("text2", "");
     e.textFormat = j.value("text_format", "");
     e.text2Format = j.value("text2_format", "");
+    e.text2Arg = j.value("text2_arg", 0);
     e.barValue = j.value("bar_value", "");
     e.barDataWhite = j.value("bar_data_white", false);
 

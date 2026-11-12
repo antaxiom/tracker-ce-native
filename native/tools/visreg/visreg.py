@@ -52,6 +52,7 @@ CASES = [
          args=("--instrument-page", "automation"), crop=(0, 28, 800, 396)),
     Case("master1", "master", "master_page1.png"),
     Case("master2", "master", "master_page2.png", "Tab"),
+    Case("master_eq", "master", "master_eq.png", args=("--master-page", "eq")),
     Case("sample", "sample", "sample.png"),
     Case("sample_slice", "sample", "sample_slice.png", "Up,Up,Up"),
     Case("sample_granular", "sample", "sample_granular.png", "Up,Up,Up,Up,Up,Up"),

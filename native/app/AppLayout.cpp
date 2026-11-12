@@ -45,7 +45,7 @@ void AppLayout::render(ScreenContext& scrCtx,
         }
         case Screen::Master:
             pageTitle = (scrCtx.mixerView.subPage() == MixerView::SubPage::TrackMixer) ? "Track Mixer 2/3"
-                      : (scrCtx.mixerView.subPage() == MixerView::SubPage::Master) ? "Master 1/3" : "Global Mixer 3/3";
+                      : (scrCtx.mixerView.subPage() == MixerView::SubPage::Master) ? "Master 1/3" : "Master EQ";
             break;
         case Screen::Perform:    pageTitle = "Performance FX"; break;
         case Screen::SampleLoader: pageTitle = "Sample Loader"; break;
@@ -449,7 +449,12 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
                 btns[1] = {"Reverb", "", "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(1); }};
                 btns[2] = {"Delay", "", "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(2); }};
                 btns[3] = {"Limiter", "", "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(3); }};
-                btns[4] = {"EQ", "", "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(4); }};
+                btns[4] = {"EQ", "", "", "", hw::UnderlineColor::None, true, false, [&scrCtx, &scheduler]() {
+                    // gMasterParams.cpp showEqualizerScreen() opens from the EQ label.
+                    scrCtx.mixerView.setSelectedTrack(4);
+                    scrCtx.mixerView.setSubPage(MixerView::SubPage::MasterFx);
+                    scheduler.requestRedraw();
+                }};
                 static const char* kSatNames[5] = {"Hard Clip", "Soft Clip", "Saturate", "Overdrive", "Drive+"};
                 int sat = std::clamp(scrCtx.song.masterSaturationType, 0, 4);
                 btns[5] = {"Saturation", kSatNames[sat], "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(5); }};
@@ -458,15 +463,18 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
                 snprintf(vbuf, sizeof(vbuf), "%d", std::clamp(static_cast<int>(std::lround(scrCtx.song.masterSpace * 8.0f)), 0, 8));
                 btns[7] = {"Space", vbuf, "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(7); }};
             } else {
-                btns[0] = {"EQ 115", "Bass", "", "", hw::UnderlineColor::Green, true, false, nullptr};
-                btns[1] = {"EQ 330", "LowMid", "", "", hw::UnderlineColor::Green, true, false, nullptr};
-                btns[2] = {"EQ 990", "Mid", "", "", hw::UnderlineColor::Green, true, false, nullptr};
-                btns[3] = {"EQ 3k", "HighMid", "", "", hw::UnderlineColor::Green, true, false, nullptr};
-                btns[4] = {"EQ 9.9k", "Treble", "", "", hw::UnderlineColor::Green, true, false, nullptr};
-                btns[5] = {"Delay", "Send 1", "", "", hw::UnderlineColor::Green, true, false, nullptr};
-                btns[6] = {"Reverb", "Send 2", "", "", hw::UnderlineColor::Green, true, false, nullptr};
-                btns[7] = {"Track", "Mixer", "", "", hw::UnderlineColor::Orange, true, false, [&scrCtx, &scheduler]() {
-                    scrCtx.mixerView.setSubPage(MixerView::SubPage::TrackMixer); scheduler.requestRedraw();
+                // gMasterParams.cpp showEqualizerScreen(): five band labels with
+                // the per-band gain ("%.2f dB"), two blanks and "Back".
+                for (int i = 0; i < 5; ++i) {
+                    char dbBuf[24];
+                    snprintf(dbBuf, sizeof(dbBuf), "%.2f dB", scrCtx.song.masterEq[i]);
+                    btns[i] = {MasterEqScreen::bandLabel(i), dbBuf, "", "", hw::UnderlineColor::None,
+                               true, false, [&scrCtx, i]() { scrCtx.mixerView.setSelectedTrack(i); }};
+                }
+                btns[5] = {" ", " ", "", "", hw::UnderlineColor::None, false, false, nullptr};
+                btns[6] = {" ", " ", "", "", hw::UnderlineColor::None, false, false, nullptr};
+                btns[7] = {"Back", " ", "", "", hw::UnderlineColor::None, true, false, [&scrCtx, &scheduler]() {
+                    scrCtx.mixerView.setSubPage(MixerView::SubPage::Master); scheduler.requestRedraw();
                 }};
             }
             break;

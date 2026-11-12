@@ -294,6 +294,21 @@ def check_master3(px):
     no_green(px, "master3")
 
 
+def check_master_eq(px):
+    eq(px, 400, 10, (0x08, 0x08, 0x08), "master_eq title bar bg")
+    eq(px, 1, 200, (0xCD, 0x18, 0x18), "master_eq selection frame")
+    eq(px, 50, 35, (0x0A, 0x0A, 0x0A), "master_eq band bar background")
+    eq(px, 50, 300, (255, 255, 255), "master_eq band 0 fill")
+    eq(px, 350, 300, (255, 255, 255), "master_eq band 3 fill")
+    eq(px, 520, 300, (0x0A, 0x0A, 0x0A), "master_eq blank space cover")
+    eq(px, 410, 440, (0x0A, 0x0A, 0x0A), "master_eq bottom bar bg")
+    if not has_rgb_in(px, 5, 95, 430, 455, (0x77, 0x77, 0x77)):
+        fail("master_eq band label text missing")
+    if not has_white_in(px, 6, 90, 5, 23):
+        fail("master_eq title text missing")
+    no_green(px, "master_eq")
+
+
 def check_config(px):
     eq(px, 400, 10, (0x08, 0x08, 0x08), "config title bar bg")
     eq(px, 50, 200, (0x0A, 0x0A, 0x0A), "config basemenu list bg")
@@ -510,7 +525,8 @@ def main():
         run([bin_path, "--out", b, "--strict"])
 
         for name in ("instrument_params.png", "master_page1.png", "master_page2.png",
-                     "master_page3.png", "config.png", "perform.png", "pattern.png",
+                     "master_page3.png", "master_eq.png", "config.png", "perform.png",
+                     "pattern.png",
                      "song.png", "loader.png", "sample.png"):
             pa = os.path.join(a, name)
             pb = os.path.join(b, name)
@@ -523,6 +539,7 @@ def main():
         _, _, mpx = read_png(os.path.join(a, "master_page1.png"))
         _, _, m2px = read_png(os.path.join(a, "master_page2.png"))
         _, _, m3px = read_png(os.path.join(a, "master_page3.png"))
+        _, _, meqpx = read_png(os.path.join(a, "master_eq.png"))
         _, _, cfpx = read_png(os.path.join(a, "config.png"))
         _, _, pfpx = read_png(os.path.join(a, "perform.png"))
         _, _, ppx = read_png(os.path.join(a, "pattern.png"))
@@ -533,6 +550,7 @@ def main():
         check_master(mpx)
         check_master2(m2px)
         check_master3(m3px)
+        check_master_eq(meqpx)
         check_config(cfpx)
         check_perform(pfpx)
         check_pattern(ppx)

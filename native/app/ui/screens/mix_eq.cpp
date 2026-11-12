@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cmath>
 #include <string>
+#include <vector>
 
 namespace trakr {
 using namespace ::trakr::ui;
@@ -18,12 +19,25 @@ constexpr int kEqBarY = 29;
 constexpr int kEqBarW = 800 / 8 - 3;    // 97
 constexpr int kEqBarH = 394;
 constexpr int kCoverX = 800 / 8 * 5 + 2; // 502
+
+constexpr int kFramePlaces[5][4] = {
+    {1, 31, kEqBarW, 391},   {101, 31, kEqBarW, 391},
+    {201, 31, kEqBarW, 391}, {301, 31, kEqBarW, 391},
+    {401, 31, kEqBarW, 391},
+};
 } // namespace
 
 MasterEqScreen::MasterEqScreen() = default;
 
 void MasterEqScreen::build() {
     if (built_) return;
+
+    std::vector<RectI> places;
+    places.reserve(5);
+    for (int i = 0; i < 5; ++i)
+        places.push_back(RectI{kFramePlaces[i][0], kFramePlaces[i][1], kFramePlaces[i][2],
+                               kFramePlaces[i][3]});
+    frame_ = &display_.add<FrameControl>("frame", std::move(places), 0);
 
     for (int i = 0; i < 5; ++i) {
         band_[i] = &display_.add<BarControl>("eqBand" + std::to_string(i), i,
@@ -45,7 +59,12 @@ void MasterEqScreen::syncFromModel(const Song& song, const MixerView& view) {
             static_cast<int>(std::lround((song.masterEq[i] + 12.0f) / 24.0f * 100.0f)), 0, 100);
         band_[i]->setValue(value);
     }
-    (void)view;
+    frame_->setSelected(std::clamp(view.selectedTrack(), 0, 4));
+}
+
+const char* MasterEqScreen::bandLabel(int band) {
+    static const char* const kLabels[5] = {"115 Hz", "330 Hz", "990 Hz", "3000 Hz", "9900 Hz"};
+    return (band >= 0 && band < 5) ? kLabels[band] : "";
 }
 
 void MasterEqScreen::update(Song& song,

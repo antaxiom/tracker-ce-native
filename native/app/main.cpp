@@ -101,7 +101,7 @@ static ImGuiKey scriptModKey(unsigned int bit) {
 
 int main(int argc, char** argv) {
     bool smoke_test_mode = false, auto_test_mode = false, select_demo = false, start_wide = false, use_polyend_font = false, lcd_shot_mode = false, gui_next = true;
-    std::string screenshot_path, init_screen, script_arg, remote_fifo, loader_dir, instrument_page;
+    std::string screenshot_path, init_screen, script_arg, remote_fifo, loader_dir, instrument_page, master_page;
     for (int i = 1; i < argc; ++i) {
         if (!std::strcmp(argv[i], "--smoke-test")) smoke_test_mode = true;
         else if (!std::strcmp(argv[i], "--auto-test")) auto_test_mode = smoke_test_mode = true;
@@ -113,6 +113,7 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--gui-next")) gui_next = true;
         else if (!std::strcmp(argv[i], "--loader-dir") && i + 1 < argc) loader_dir = argv[++i];
         else if (!std::strcmp(argv[i], "--instrument-page") && i + 1 < argc) instrument_page = argv[++i];
+        else if (!std::strcmp(argv[i], "--master-page") && i + 1 < argc) master_page = argv[++i];
         else if (!std::strcmp(argv[i], "--screenshot") && i + 1 < argc) screenshot_path = argv[++i];
         else if (!std::strcmp(argv[i], "--screen") && i + 1 < argc) init_screen = argv[++i];
         else if (!std::strcmp(argv[i], "--script") && i + 1 < argc) script_arg = argv[++i];
@@ -297,6 +298,14 @@ int main(int argc, char** argv) {
             instrumentView.setSubPage(trakr::InstrumentView::SubPage::Automation);
         else if (instrument_page == "general")
             instrumentView.setSubPage(trakr::InstrumentView::SubPage::General);
+    }
+    if (!master_page.empty()) {
+        if (master_page == "eq")
+            mixerView.setSubPage(trakr::MixerView::SubPage::MasterFx);
+        else if (master_page == "mixer")
+            mixerView.setSubPage(trakr::MixerView::SubPage::TrackMixer);
+        else if (master_page == "master")
+            mixerView.setSubPage(trakr::MixerView::SubPage::Master);
     }
     if (!loader_dir.empty()) sampleLoaderView.setDirectory(loader_dir);
     if (init_screen == "fill" || init_screen == "fill_master") showFillModal = true;

@@ -24,6 +24,7 @@ SCREENS = [
     ("master_page1", "master_page1.png"),
     ("master_page2", "master_page2.png"),
     ("master_page3", "master_page3.png"),
+    ("master_eq", "master_eq.png"),
     ("config", "config.png"),
     ("perform", "perform.png"),
     ("pattern", "pattern.png"),
@@ -45,7 +46,7 @@ def build(out_dir):
     manifest["scenario"]["sha256"] = sha_file(scenario)
 
     for name in ("chrome.json", "instrument_general.json", "master_page1.json",
-                 "master_page2.json", "master_page3.json", "config.json",
+                 "master_page2.json", "master_page3.json", "master_eq.json", "config.json",
                  "perform.json", "pattern.json", "song.json", "loader.json",
                  "sample.json"):
         manifest["specs"][name] = sha_file(os.path.join(SPEC_DIR, name))

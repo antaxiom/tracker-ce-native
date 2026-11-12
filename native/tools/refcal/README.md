@@ -38,14 +38,17 @@ Requires ImageMagick (`magick`), `numpy` and `scipy`.
 
 ## Current results (2026-11-12)
 
-`specs.json` contains five tiles across four screens:
+`specs.json` contains eight tiles across seven screens:
 
 - 2 Instrument Parameters 1/2 tiles (`video_perform_instrument_pattern.png`),
+- 1 Instrument Automation tile (`video_sample_playback_automation.png`),
 - 1 Performance FX tile,
 - 1 Pattern tile,
-- 1 Track Mixer 2/3 tile (`video_pattern_mute_selection_mixer.png`).
+- 1 Track Mixer 2/3 tile (`video_pattern_mute_selection_mixer.png`),
+- 1 Sample Playback tile (`video_sample_playback_automation.png`),
+- 1 Master EQ tile (`video_master_eq_perform.png`).
 
-All 5 pass the required checks: header separator at firmware row 28, bottom
+All 8 pass the required checks: header separator at firmware row 28, bottom
 label cells present, and (for Instrument) frame grid and four filter-list rows.
 The header check compares against firmware geometry (row 28), not against the
 reference image's brightest row, because some reference headers have no bright

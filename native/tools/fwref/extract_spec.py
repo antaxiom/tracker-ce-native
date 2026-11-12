@@ -529,6 +529,83 @@ def build_master3(lines, theme_fields, colors):
     return entries
 
 
+EQ_BAND_LABELS = ["115 Hz", "330 Hz", "990 Hz", "3000 Hz", "9900 Hz"]
+
+def build_master_eq(lines, theme_fields, colors):
+    entries = []
+    active_labels = resolve_colors(theme_fields, colors, "activeLabelsColors")
+    active_bars = resolve_colors(theme_fields, colors, "activeBarColors")
+    cover_colors = resolve_colors(theme_fields, colors, "blankSpaceCoverLabelColors")
+
+    # frameControl (gMasterParams.cpp:10-19) selected by selectedPlaceEqualizer
+    require(lines, 10, 19, "{ 0 + 1, 31, 800 / 8 - 3, 391 }", MASTER)
+    require(lines, 971, 979, "display.setControlValue(frameControl, selectedPlaceEqualizer);", MASTER)
+    e = entry(0, "cFrame", "0 + 1", "31", "800 / 8 - 3", "391",
+              ["controlStyleShow"], value="@master.selectedEqPlace")
+    e["places"] = parse_places(lines, 10, 19)
+    e["source"] = src(MASTER, lines, 10, 19)
+    e["override_source"] = src(MASTER, lines, 971, 979)
+    entries.append(e)
+
+    # showEqualizerScreen(): band labels 0..4, blanks 5..6 and Back 7.
+    require(lines, 57, 67, "prop2.x = (800 / 8) * i + (800 / 16);", MASTER)
+    require(lines, 827, 837, 'display.setControlText(label[0], "115 Hz");', MASTER)
+    require(lines, 827, 837, 'display.setControlText(label[7], "Back");', MASTER)
+    require(lines, 839, 847, "display.setControlValue(label[i], 1);", MASTER)
+    for i in range(8):
+        text = EQ_BAND_LABELS[i] if i < 5 else ("Back" if i == 7 else " ")
+        kw = {"value": 1, "text": text}
+        if i < 5:
+            kw["text2_format"] = "eq_band_db"
+            kw["text2_arg"] = i
+        else:
+            kw["text2"] = " "
+        e = entry(1 + i, "cLabel",
+                  f"(800 / 8) * {i} + (800 / 16)", "424", "800 / 8 - 6", "55",
+                  ["controlStyleCenterX", "controlStyleCenterY", "controlStyleFont3",
+                   "controlStyleShow"],
+                  colors=active_labels,
+                  style2=["controlStyleCenterX", "controlStyleCenterY", "controlStyleFont2"],
+                  **kw)
+        e["source"] = src(MASTER, lines, 57, 67)
+        e["override_source"] = src(MASTER, lines, 839, 847)
+        e["text_source"] = src(MASTER, lines, 827, 837)
+        entries.append(e)
+
+    require(lines, 69, 77, "prop2.style = controlStyleNoTransparency | controlStyleShow;", MASTER)
+    e = entry(9, "cBgLabel", "0", "425", "800", "54",
+              ["controlStyleNoTransparency", "controlStyleShow"], value=255)
+    e["source"] = src(MASTER, lines, 69, 77)
+    e["override_source"] = src(MASTER, lines, 862, 864)
+    entries.append(e)
+
+    # Band bars 0..4 (bars 5..7 are hidden by showEqualizerScreen()).
+    require(lines, 103, 114, "prop2.x = (800 / 8) * i + 2;", MASTER)
+    require(lines, 1031, 1036, "display.setControlPosition(barControl[i], (800 / 8) * i + 2, 29);", MASTER)
+    require(lines, 1031, 1036, "display.setControlSize(barControl[i], 800 / 8 - 3, 394);", MASTER)
+    for i in range(5):
+        e = entry(26 + i, "cBar",
+                  f"(800 / 8) * {i} + 2", "29", "800 / 8 - 3", "394",
+                  ["controlStyleShow", "controlStyleValue_0_100", "controlStyleBackground",
+                   "controlStyleGradient", "controlStyleBottomShadow"],
+                  colors=active_bars, bar_value="eq_band", bar_arg=i, bar_data_white=True)
+        e["source"] = src(MASTER, lines, 103, 114)
+        e["override_source"] = src(MASTER, lines, 1031, 1036)
+        entries.append(e)
+
+    # blankSpaceCover[0] covers columns 5..7 (gMasterParams.cpp:891-893).
+    require(lines, 891, 893, "display.setControlPosition(blankSpaceCover[0], (800 / 8) * 5 + 2, -1);", MASTER)
+    require(lines, 891, 893, "display.setControlSize(blankSpaceCover[0], (800 / 1) * 3 - 3, -1);", MASTER)
+    e = entry(34, "cLabel", "(800 / 8) * 5 + 2", "29", "(800 / 1) * 3 - 3", "394",
+              ["controlStyleBackground", "controlStyleBottomShadow", "controlStyleShow"],
+              colors=cover_colors, value=0, text="")
+    e["source"] = src(MASTER, lines, 138, 148)
+    e["override_source"] = src(MASTER, lines, 891, 893)
+    entries.append(e)
+
+    return entries
+
+
 def build_config(lines, theme_fields, colors):
     entries = []
     active_labels = resolve_colors(theme_fields, colors, "activeLabelsColors")
@@ -1382,6 +1459,7 @@ def build():
     master_entries = build_master(master_lines, theme_fields, colors)
     master2_entries = build_master2(master_lines, theme_fields, colors)
     master3_entries = build_master3(master_lines, theme_fields, colors)
+    master_eq_entries = build_master_eq(master_lines, theme_fields, colors)
     config_entries = build_config(config_lines, theme_fields, colors)
     perform_entries = build_perform(perform_lines, theme_fields, colors)
     pattern_entries = build_pattern(pattern_lines, theme_lines, theme_fields, colors,
@@ -1400,6 +1478,8 @@ def build():
         validate_entry(e, files, style_names, "master2")
     for e in master3_entries:
         validate_entry(e, files, style_names, "master3")
+    for e in master_eq_entries:
+        validate_entry(e, files, style_names, "master_eq")
     for e in config_entries:
         validate_entry(e, files, style_names, "config")
     for e in perform_entries:
@@ -1453,6 +1533,14 @@ def build():
         "chrome": {"title": "Global Mixer 3/3", "rightLabel": ""},
         "provenance": provenance,
         "entries": master3_entries,
+    }
+    master_eq = {
+        "screen": "master_eq",
+        "scenario": "master",
+        "theme": "default",
+        "chrome": {"title": "Master EQ", "rightLabel": ""},
+        "provenance": provenance,
+        "entries": master_eq_entries,
     }
     config = {
         "screen": "config",
@@ -1519,6 +1607,7 @@ def build():
         "master_page1.json": master,
         "master_page2.json": master_page2,
         "master_page3.json": master_page3,
+        "master_eq.json": master_eq,
         "config.json": config,
         "perform.json": perform,
         "pattern.json": pattern,

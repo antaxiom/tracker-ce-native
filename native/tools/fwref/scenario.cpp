@@ -150,6 +150,8 @@ int resolveInt(const std::string& exprOrKey, const Scenario& scenario, bool& ok)
             return scenario.master.saturationType;
         if (key == "master.selectedPlace")
             return scenario.master.selectedPlace;
+        if (key == "master.selectedEqPlace")
+            return scenario.master.selectedEqPlace;
         if (key == "instrument.filterListPos")
             return filterListPosOf(scenario);
         if (key == "pattern.selectedPlace")
@@ -248,7 +250,7 @@ std::string resolveText(const std::string& literalOrKey, const Scenario& scenari
     return resolveLoaderSampleText(key, scenario);
 }
 
-std::string formatLabelValue(const std::string& formatId, const Scenario& scenario)
+std::string formatLabelValue(const std::string& formatId, const Scenario& scenario, int arg)
 {
     char buf[64];
 
@@ -338,6 +340,16 @@ std::string formatLabelValue(const std::string& formatId, const Scenario& scenar
     {
         // gMasterParams.cpp:1209-1220
         std::snprintf(buf, sizeof(buf), "%d", scenario.master.stereoBoost);
+        return buf;
+    }
+    if (formatId == "eq_band_db")
+    {
+        // gMasterParams.cpp:903-928 showEqualizerBand(): the bar value is
+        // map(eqBandAdjustment, -1..1 -> 0..100) and the label is
+        // map(eqBandAdjustment, -1..1 -> -12..12) printed as "%.2f dB".
+        const int bar = (arg >= 0 && arg < 5) ? scenario.master.eqBand[arg] : 50;
+        float db = mapf(static_cast<float>(bar), 0.0f, 100.0f, -12.0f, 12.0f);
+        std::snprintf(buf, sizeof(buf), "%.2f dB", db);
         return buf;
     }
     if (formatId == "song_timer")

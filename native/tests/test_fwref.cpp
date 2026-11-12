@@ -117,6 +117,25 @@ TEST_CASE("fwref Master 3/3 Global Mixer reference pixels", "[fwref][master3]")
     REQUIRE(px(410, 440) == 0x0A0A0A); // bottom bar
 }
 
+TEST_CASE("fwref Master EQ reference pixels", "[fwref][masterEq]")
+{
+    FT812DisplayEmulator emu;
+    auto scenario = fwref::defaultComparisonScenario();
+    REQUIRE(fwref::renderMasterEq(emu, scenario.master));
+
+    const auto& fb = emu.framebuffer();
+    auto px = [&](int x, int y) { return rgbOf(fb[static_cast<size_t>(y) * 800 + x]); };
+
+    REQUIRE(px(1, 200) == 0xCD1818);   // selection frame on band 0
+    REQUIRE(px(50, 35) == 0x0A0A0A);   // band bar background above the fill
+    REQUIRE(px(50, 60) == 0x080808);   // gradient ramp below the bar top
+    REQUIRE(px(50, 300) == 0xFFFFFF);  // 0 dB band fill (bar centre)
+    REQUIRE(px(250, 300) == 0xFFFFFF); // every band sits at 0 dB by default
+    REQUIRE(px(520, 300) == 0x0A0A0A); // blank space cover over columns 5..7
+    REQUIRE(px(710, 300) == 0x0A0A0A);
+    REQUIRE(px(410, 440) == 0x0A0A0A); // bottom bar
+}
+
 TEST_CASE("fwref Config reference pixels", "[fwref][config]")
 {
     FT812DisplayEmulator emu;

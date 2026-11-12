@@ -180,6 +180,22 @@ int main(int argc, char** argv)
 
     {
         trakr::emulator::FT812DisplayEmulator emu;
+        if (!fwref::renderMasterEq(emu, scenario.master))
+        {
+            std::fprintf(stderr, "fwref_gen: failed to render master eq\n");
+            return 1;
+        }
+        const std::string path = outDir + "/master_eq.png";
+        if (!emu.savePng(path))
+        {
+            std::fprintf(stderr, "fwref_gen: cannot write %s\n", path.c_str());
+            return 1;
+        }
+        std::printf("wrote %s\n", path.c_str());
+    }
+
+    {
+        trakr::emulator::FT812DisplayEmulator emu;
         if (!fwref::renderConfig(emu, scenario.config))
         {
             std::fprintf(stderr, "fwref_gen: failed to render config\n");

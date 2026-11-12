@@ -1,10 +1,10 @@
 #pragma once
 
-// Master EQ (app Master FX page) — semantic UI port.
+// Master EQ (Master tab page 3) — semantic UI port.
 //
 // Firmware reference: core/interface/masterParams/gMasterParams.cpp
-//   showEqualizerScreen(): five band cBars (columns 0..4) plus the blank space
-//   cover over columns 5..7. No frame is drawn on this page.
+//   showEqualizerScreen(): five band cBars (columns 0..4), the selected-band
+//   frame (framesPlaces 0..4) and the blank space cover over columns 5..7.
 
 #include "ui/controls/primitives.h"
 #include "ui/display.h"
@@ -30,6 +30,9 @@ public:
                 ui::LayoutProfile profile = ui::LayoutProfile::Classic,
                 bool shiftHeld = false);
 
+    // Firmware band names (gMasterParams.cpp:827-831).
+    static const char* bandLabel(int band);
+
     void render(ImDrawList* drawList,
                 const ImRect& workspace,
                 ui::LayoutProfile profile = ui::LayoutProfile::Classic) const;
@@ -40,6 +43,7 @@ private:
 
     ui::Display display_;
     ui::BarControl* band_[8]{};
+    ui::FrameControl* frame_{nullptr};
     ui::BlankCoverControl* cover_{nullptr};
     MixerView* view_{nullptr};
     bool built_{false};

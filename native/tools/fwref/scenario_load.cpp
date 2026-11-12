@@ -109,6 +109,17 @@ bool loadScenarioJson(const std::string& path, Scenario& out, std::string& error
                 s.trackLevel[idx++] = v.get<int>();
             }
         }
+        if (m.contains("eqBand") && m["eqBand"].is_array())
+        {
+            size_t idx = 0;
+            for (const auto& v : m["eqBand"])
+            {
+                if (idx >= s.eqBand.size())
+                    break;
+                s.eqBand[idx++] = v.get<int>();
+            }
+        }
+        s.selectedEqPlace = m.value("selectedEqPlace", s.selectedEqPlace);
     }
 
     if (j.contains("config"))

@@ -13,13 +13,13 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 
 | Gate | Command | Result |
 |---|---|---|
-| Unit tests | `./native/build/trakr_tests` | 133/133, 538,195 assertions |
+| Unit tests | `./native/build/trakr_tests` | 134/134, 538,204 assertions |
 | UI robot (semantic default) | `./native/build/trakr_app --auto-test` | 114 frames, 0 ID conflicts/stack/numeric errors |
 | Functional smoke | `python3 native/tools/gui_audit/functional_smoke.py` | 17/17 scenarios pass |
 | fwref strict oracle | `cd native/tools/fwref && python3 check_reference.py` | all gates pass, 0 unsupported / 0 approximations |
-| Hardware structural (calibrated) | `python3 native/tools/refcal/refcal.py --all` | 5/5 tiles (Instrument x2, Performance, Pattern, Track Mixer) |
+| Hardware structural (calibrated) | `python3 native/tools/refcal/refcal.py --all` | 8/8 tiles (Instrument x2, Instrument Automation, Performance, Pattern, Track Mixer, Sample Playback, Master EQ) |
 | Glyph coverage | `python3 native/tools/check_glyphs.py` | 0 non-ASCII codepoints, all covered |
-| Classic visual regression | `python3 native/tools/visreg/visreg.py --all --deterministic` | 14/14 cases >= 95% (97.85-99.99%), deterministic |
+| Classic visual regression | `python3 native/tools/visreg/visreg.py --all --deterministic` | 15/15 cases >= 95% (97.85-99.99%), deterministic |
 | Classic parity | per-screen gate docs | all nine workspaces >= 95%; best 99.9% |
 
 ## Screen coverage
@@ -29,7 +29,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 | Pattern | default | 98.4% | popups via app fill modal |
 | Song | default | 98.9% | — |
 | Instrument | default | General 99.98% | Effects/Automation legacy-equivalent (no fwref) |
-| Master | default | 1/3 99.8%; 2/3 99.4% | Master FX app-defined (legacy-equivalent) |
+| Master | default | 1/3 99.8%; 2/3 99.4% | Master EQ 99.8% (source-true fwref + hardware tile); Global Mixer 3/3 not modeled |
 | Sample | default | Playback 98.3% | Editor app-defined (structural) |
 | Sample Loader | default | 99.1% | importer crop page not modeled |
 | Config | default | 99.6% | item editor/grid page not modeled |
@@ -61,8 +61,11 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
   Config item-editor popup remains app-defined and has no reference.
 - The Perform page has no additional firmware grid page (the earlier residual
   was incorrect); the app models every firmware Performance control.
-- Firmware Global Mixer (Master 3/3) is not modeled by the desktop engine; the
-  app exposes a Master EQ page instead.
+- Firmware Global Mixer (Master 3/3) is not modeled by the desktop engine
+  (no global aux volume/mute/line-in in the desktop mixer), so the app's third
+  Master tab is the firmware Master EQ page (`showEqualizerScreen()`, reached in
+  the firmware from the EQ label on Master 1/3). Both pages now have a
+  source-true fwref reference; Master EQ also has a calibrated hardware tile.
 - Sample Loader import progress and the Config item-editor popup are desktop
   workflow divergences (direct file open and direct value editing) rather than
   missing screen controls.
@@ -71,7 +74,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
   screen state. Fixed along the way: stop rewinds the transport row, Song delete
   returns the selection to the previous slot, and the Sample parameter selector
   wraps like the legacy screen.
-- Calibrated hardware tiles exist for five views, not all sub-pages.
+- Calibrated hardware tiles exist for seven views (including Master EQ), not every sub-page.
 
 ## Handoff
 

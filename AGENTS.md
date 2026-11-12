@@ -22,7 +22,7 @@ file dialogs).
 # Build application and tests
 cmake --build native/build -j8
 
-# Run unit tests (132 test cases)
+# Run unit tests (134 test cases)
 ./native/build/trakr_tests
 
 # Run UI robot audit (1,103 frames)
@@ -39,7 +39,7 @@ python3 native/tools/os_input/os_input_runner.py
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots
 
-# Classic visual-regression gate (14 screen/sub-page states vs fwref, >= 95%)
+# Classic visual-regression gate (15 screen/sub-page states vs fwref, >= 95%)
 python3 native/tools/visreg/visreg.py --all --deterministic
 
 # Calibrated hardware structural checks (needs ImageMagick, numpy, scipy)
@@ -90,31 +90,36 @@ Two tiers of reference exist:
 
 1. **Source-true references** (`native/tools/fwref`): the unmodified firmware
    `NewDisplay` controls are compiled on the host and driven by hash-stamped specs,
-   producing the authoritative frame. Currently covers **Instrument (General)**,
-   **Master (1/3)**, **Pattern**, **Song**, **Sample Playback**, and **Sample
-   Loader**, plus specs for the remaining screens.
+   producing the authoritative frame. Covers every Classic screen and app-modeled
+   sub-page: **Instrument (General/Effects/Automation)**, **Master (1/3, 2/3 Track
+   Mixer, 3/3 Global Mixer, EQ)**, **Pattern**, **Song**, **Sample Playback**,
+   **Sample Loader**, **Config**, **Performance** and **File**.
 2. **Hand-drawn emulator references** (`native/tools/display_emulator/FT812ScreensCore/Extra.cpp`):
-   the remaining screens still measure against hand-drawn approximations while they
-   are migrated to source-true fwref.
+   retired from all gates; they remain only inside the legacy emulator tooling.
 
 Current source-true scores (≥95.0% target):
 
-| Screen | Pixel % | Status |
-|--------|---------|---------|
-| Pattern | 98.36% | ✅ |
-| Master | 98.14% | ✅ |
-| Instrument | 97.75% | ✅ |
+| Screen / state | Similarity | Status |
+|----------------|-----------|--------|
+| Pattern | 99.50% | ✅ |
 | Song | 98.91% | ✅ |
+| Instrument General | 99.67% | ✅ |
+| Instrument Effects | 99.99% | ✅ |
+| Instrument Automation | 99.98% | ✅ |
+| Master 1/3 | 99.78% | ✅ |
+| Master 2/3 (Track Mixer) | 99.37% | ✅ |
+| Master EQ | 99.77% | ✅ |
 | Sample Playback | 98.26% | ✅ |
+| Sample Slice | 97.85% | ✅ |
+| Sample Granular | 97.85% | ✅ |
 | Sample Loader | 99.15% | ✅ |
 | Config | 99.64% | ✅ |
 | Performance | 98.25% | ✅ |
 | File | 98.88% | ✅ |
 
-Song/Sample/Loader/Config/Perform/File figures are full-frame comparisons
-against the fwref scenario (legacy path: 98.55% / 97.87% / 98.53% / 98.09% /
-98.25% / 98.03%); the remaining difference is mostly app chrome and
-rotated/bitmap glyph rasterization. See
+These are full-frame comparisons against the audited fwref scenario, measured by
+`native/tools/visreg/visreg.py`. The remaining difference is mostly app chrome
+and rotated/bitmap glyph rasterization. See
 `native/docs/gates/phase4-*.md` for per-screen scope and conditions.
 
 **Measurement note**: screenshots are rendered with `--lcd-shot`, an exact 800x480

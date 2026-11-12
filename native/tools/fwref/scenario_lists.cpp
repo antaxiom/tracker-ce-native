@@ -73,6 +73,8 @@ int barValueFor(const std::string& id, int arg, const Scenario& scenario)
         return auxVolumeAt(scenario, arg);
     if (id == "aux_level")
         return auxLevelAt(scenario, arg);
+    if (id == "eq_band")
+        return (arg >= 0 && arg < 5) ? scenario.master.eqBand[arg] : 0;
     if (id == "volume")
         return scenario.instrument.volume;
     if (id == "pan_leftright")

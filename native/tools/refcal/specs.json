@@ -60,6 +60,44 @@
       "ref": "render/fwref/master_page2.png",
       "check_filter": false,
       "check_frame": false
+    },
+    {
+      "name": "sample_hw_left",
+      "frame": "native/docs/reference/screens/video_sample_playback_automation.png",
+      "tile": [
+        0,
+        10,
+        632,
+        381
+      ],
+      "ref": "render/fwref/sample.png",
+      "check_filter": false,
+      "check_frame": false
+    },
+    {
+      "name": "instrument_automation_hw_left",
+      "frame": "native/docs/reference/screens/video_sample_playback_automation.png",
+      "tile": [
+        0,
+        382,
+        632,
+        381
+      ],
+      "ref": "render/fwref/instrument_automation.png",
+      "check_filter": false,
+      "check_frame": false
+    },
+    {
+      "name": "master_eq_hw_left",
+      "frame": "native/docs/reference/screens/video_master_eq_perform.png",
+      "tile": [
+        0,
+        10,
+        632,
+        381
+      ],
+      "ref": "render/fwref/master_eq.png",
+      "check_filter": false
     }
   ]
 }

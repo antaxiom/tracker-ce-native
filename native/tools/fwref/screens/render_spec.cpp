@@ -145,7 +145,7 @@ bool renderSpec(trakr::emulator::FT812DisplayEmulator& emu,
 
             std::string text2;
             if (!e.text2Format.empty())
-                text2 = formatLabelValue(e.text2Format, scenario);
+                text2 = formatLabelValue(e.text2Format, scenario, e.text2Arg);
             else
                 text2 = substituteChromeText(e.text2, spec, scenario);
             gLabelStrings.push_back(text2);
