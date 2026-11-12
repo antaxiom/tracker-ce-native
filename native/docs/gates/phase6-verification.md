@@ -75,6 +75,16 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
   returns the selection to the previous slot, and the Sample parameter selector
   wraps like the legacy screen.
 - Calibrated hardware tiles exist for seven views (including Master EQ), not every sub-page.
+- **Header song timer (found while adding the Master EQ hardware tile).**
+  `Interface::activateModule()` shows `songTimer` on every module except the
+  pattern editor (`core/interface/core/interface.cpp:418-443`), and the
+  `video_master_eq_perform.png` Master EQ photo confirms it (`1s:40s .. P1.000`
+  in the title bar). Both the app (`AppLayout.cpp` passes
+  `showTransport = activeScreen == Screen::Pattern`) and every non-Pattern
+  fwref chrome currently omit it, so the >= 95% parity figures for those
+  screens do not include this control. Fixing it requires adding the timer
+  entry to the non-Pattern chrome specs, regenerating the references and
+  re-measuring parity; tracked as the next fidelity increment.
 
 ## Handoff
 
