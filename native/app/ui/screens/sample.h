@@ -48,6 +48,7 @@ private:
     ui::Display display_;
     ui::FrameControl* frame_{nullptr};
     ui::ListControl* playModeList_{nullptr};
+    ui::ListControl* editList_{nullptr};
     ui::ProgressCursorControl* progressCursor_{nullptr};
     ui::LineIndicatorControl* granularCursor_{nullptr};
     ui::PointsControl* points_{nullptr};

@@ -106,9 +106,7 @@ void AppLayout::render(ScreenContext& scrCtx,
         scrCtx.mixerView.subPage() == MixerView::SubPage::MasterFx;
     const bool guiNextPattern = layoutState.guiNext && activeScreen == Screen::Pattern;
     const bool guiNextSong = layoutState.guiNext && activeScreen == Screen::Song;
-    const bool guiNextSample =
-        layoutState.guiNext && activeScreen == Screen::Sample &&
-        scrCtx.sampleView.subPage() == SampleView::SubPage::Playback;
+    const bool guiNextSample = layoutState.guiNext && activeScreen == Screen::Sample;
     const bool guiNextLoader = layoutState.guiNext && activeScreen == Screen::SampleLoader;
     const bool guiNextConfig = layoutState.guiNext && activeScreen == Screen::Config;
     const bool guiNextPerform = layoutState.guiNext && activeScreen == Screen::Perform;

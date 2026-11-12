@@ -24,6 +24,8 @@ constexpr int kWaveW = 600;
 const char* const kPlayModeNames[8] = {"1-Shot", "Forward Loop", "Backward Loop",
                                        "Pingpong Loop", "Slice", "Beat Slice",
                                        "Wavetable", "Granular"};
+const char* const kEditOps[7] = {"Crop", "Reverse", "Normalize", "Amplify",
+                                 "Fade In", "Fade Out", "Silence"};
 
 size_t waveLength(const Instrument& inst) {
     return (inst.sample && !inst.sample->ch[0].empty()) ? inst.sample->ch[0].size() : 0;
@@ -61,6 +63,12 @@ void SampleScreen::build() {
     playModeList_->setRect(RectI{kListX, 29, kListW, 394});
     playModeList_->setStart(0);
 
+    std::vector<std::string> edits(kEditOps, kEditOps + 7);
+    editList_ = &display_.add<ListControl>("editOps", std::move(edits), 7);
+    editList_->setRect(RectI{kListX, 29, kListW, 394});
+    editList_->setStart(0);
+    editList_->setVisible(false);
+
     progressCursor_ = &display_.add<ProgressCursorControl>("progressCursor");
     progressCursor_->setRect(RectI{kWaveX, kWaveformY, kWaveW, kWaveformHeight});
 
@@ -81,6 +89,11 @@ void SampleScreen::build() {
 
     wtPosition_ = &display_.add<WtProgressControl>("wtPosition");
     wtPosition_->setRect(RectI{kWaveX, 400, kWaveW, 2});
+
+    editList_->setOnSelect([this](int index) {
+        if (!view_) return;
+        view_->setSelectedEditOp(static_cast<SampleView::EditOp>(index));
+    });
 
     playModeList_->setOnSelect([this](int index) {
         if (!song_ || !engineHost_ || !view_) return;
@@ -168,7 +181,11 @@ void SampleScreen::syncFromModel(Song& song, EngineHost& engineHost, int selecte
 
     playModeList_->setSelected(static_cast<int>(inst.loop));
     playModeList_->setStart(0);
-    const bool showFrame = view.activeParam() == SampleView::Param::PlayMode;
+    const bool editor = view.subPage() == SampleView::SubPage::Editor;
+    playModeList_->setVisible(!editor);
+    editList_->setSelected(static_cast<int>(view.selectedEditOp()));
+    editList_->setVisible(editor);
+    const bool showFrame = !editor && view.activeParam() == SampleView::Param::PlayMode;
     frame_->setSelected(6);
     frame_->setVisible(showFrame);
 }
@@ -207,6 +224,7 @@ void SampleScreen::update(Song& song,
 
     const bool fine = shiftHeld || ImGui::GetIO().KeyShift;
     if (keyTarget && !ImGui::GetIO().WantTextInput && valid) {
+        if (ImGui::IsKeyPressed(ImGuiKey_Tab)) view.togglePage();
         if (ImGui::IsKeyPressed(ImGuiKey_UpArrow))
             view.adjustParam(song, engineHost, selectedInstIdx, +1, fine);
         if (ImGui::IsKeyPressed(ImGuiKey_DownArrow))
@@ -227,6 +245,10 @@ void SampleScreen::update(Song& song,
         const int dx = static_cast<int>(std::floor(device.x));
         const int dy = static_cast<int>(std::floor(device.y));
         if (ui::Control* hit = display_.hitTest(dx, dy)) hit->onPress(dx, dy);
+        if (view.subPage() == SampleView::SubPage::Editor && dx >= kListX && dx < kListX + kListW &&
+            dy >= 29 + kListTopInset && ImGui::IsMouseDoubleClicked(0)) {
+            view.applyEditOp(song, history, engineHost, selectedInstIdx);
+        }
     }
 
     // Marker dragging maps the pointer through the 16-bit cPoints space.

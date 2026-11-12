@@ -1,0 +1,73 @@
+# Phase 6 — Verification, retirement and handoff
+
+- Date: 2026-11-12
+- Status: **PASS with documented residuals**
+
+## Purpose
+
+Phase 6 closes the GUI restart: the semantic UI is the production renderer,
+firmware source remains ground truth, fwref is an audited advisory oracle, and
+legacy code is retained only as dialog/state plumbing and a debug escape hatch.
+
+## Verification matrix
+
+| Gate | Command | Result |
+|---|---|---|
+| Unit tests | `./native/build/trakr_tests` | 133/133, 538,195 assertions |
+| UI robot (semantic default) | `./native/build/trakr_app --auto-test` | 114 frames, 0 ID conflicts/stack/numeric errors |
+| Functional smoke | `python3 native/tools/gui_audit/functional_smoke.py` | 9/17 (8 pre-existing scenario failures unchanged) |
+| fwref strict oracle | `cd native/tools/fwref && python3 check_reference.py` | all gates pass, 0 unsupported / 0 approximations |
+| Hardware structural (calibrated) | `python3 native/tools/refcal/refcal.py --all` | 5/5 tiles (Instrument x2, Performance, Pattern, Track Mixer) |
+| Glyph coverage | `python3 native/tools/check_glyphs.py` | 0 non-ASCII codepoints, all covered |
+| Classic parity | per-screen gate docs | all nine workspaces >= 95%; best 99.9% |
+
+## Screen coverage
+
+| Workspace | Semantic path | Main state vs fwref | Sub-pages |
+|---|---|---|---|
+| Pattern | default | 98.4% | popups via app fill modal |
+| Song | default | 98.9% | — |
+| Instrument | default | General 99.98% | Effects/Automation legacy-equivalent (no fwref) |
+| Master | default | 1/3 99.8%; 2/3 99.4% | Master FX app-defined (legacy-equivalent) |
+| Sample | default | Playback 98.3% | Editor app-defined (structural) |
+| Sample Loader | default | 99.1% | importer crop page not modeled |
+| Config | default | 99.6% | item editor/grid page not modeled |
+| Perform | default | 98.3% | grid/pad page not modeled |
+| File | default | 98.9% | browser only by design |
+
+## Retirement decisions
+
+1. `--gui-classic` remains as a debug escape hatch; it is not part of the
+   supported product path. Semantic rendering is the default and sub-pages
+   with a port no longer fall back.
+2. Legacy views remain for view state, edit commands, dialogs and the
+   `--gui-classic` path. Deleting them requires porting the remaining
+   app-defined dialogs (export deck, fill modal, import progress) first; this
+   is tracked as post-Phase-6 cleanup rather than blocking the restart.
+3. Hand-drawn `FT812ScreensCore/Extra.cpp` references are retired from all
+   gates; they remain only inside the legacy display-emulator tooling.
+4. fwref is labeled an audited advisory oracle: strict mode is on, and every
+   used call is implemented or whitelisted. It is never an app dependency.
+
+## Known residuals
+
+- fwref has no multi-state specs for Effects/Automation, Config item editor,
+  or popups (FW-7).
+- Firmware Global Mixer (Master 3/3) is not modeled by the desktop engine; the
+  app exposes a Master EQ page instead.
+- Sample Loader importer crop page, Config item editor and Perform grid page
+  are not modeled.
+- Eight functional-smoke scenarios fail before and after the restart
+  (`pattern_record_undo`, `pattern_delete`, `pattern_copy_paste`,
+  `pattern_transport`, `song_cursor`, `song_pattern`, `song_insert`,
+  `sample_param`).
+- Calibrated hardware tiles exist for five views, not all sub-pages.
+
+## Handoff
+
+- Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
+  `./native/build/trakr_app --auto-test` before changing UI code.
+- Screens live in `native/app/ui/screens/*` and mirror
+  `core/interface/*/g*.cpp`; controls live in `native/app/ui/controls/*`.
+- Use `--lcd-shot --screenshot` plus `compare -metric AE` against
+  `render/fwref/*.png` (regenerate with `fwref_gen --strict`).

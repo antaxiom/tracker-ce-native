@@ -145,6 +145,12 @@ comparison after a primitive-level audit, never as the app's substrate.
 - Instrument sub-pages ported: `InstrumentPagesScreen` covers Effects and
   Automation (0.18% / 0.73% vs the legacy renderer). See
   `native/docs/gates/phase5-instrument-subpages.md`.
+- Sample Editor sub-page ported (app-defined page; structural verification).
+  See `native/docs/gates/phase5-sample-editor.md`.
+- Phase 5 exit: every app-modeled workspace and sub-page renders semantically;
+  legacy views remain only for dialog/state plumbing and `--gui-classic`.
+- Phase 6 complete: verification matrix, retirement decisions and handoff are
+  recorded in `native/docs/gates/phase6-verification.md`.
 - `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
   post-marker, 2 cursor) to model NewDisplay's update/update2/update3; `cPoints`
   additive range background is painted in the prepass as an approximation.
@@ -314,6 +320,15 @@ fwref may be labeled **"audited advisory oracle"** only when:
 Otherwise it remains **"approximate, advisory only"**, and Classic-profile verification relies
 on calibrated hardware captures plus layout/visual invariants. This status never blocks the
 GUI restart and never becomes an app dependency.
+
+### Phase 6 — Verification, retirement and handoff
+
+- Run the full gate matrix (unit, robot, smoke, fwref strict, refcal, glyph,
+  Classic parity) and record results in `native/docs/gates/phase6-verification.md`.
+- Freeze the renderer boundary: semantic screens are production; legacy views
+  remain for dialogs/state and the debug `--gui-classic` escape hatch.
+- Keep fwref labeled an audited advisory oracle; record residuals and the
+  post-restart cleanup list (dialogs, unmodeled pages, FW-7 multi-state specs).
 
 ## Verification model
 
