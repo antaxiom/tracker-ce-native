@@ -5,6 +5,7 @@
 #include "ui/controls/song_player.h"
 #include "ui/controls/waveform.h"
 #include "ui/controls/param_value_list.h"
+#include "views/MixerView.h"
 #include "ui/controls/multi_label.h"
 #include "ui/display.h"
 #include "ui/layout.h"
@@ -186,4 +187,11 @@ TEST_CASE("MultiLabelControl routes top and preset row presses", "[ui][multilabe
     CHECK(cell.onPress(40, 34 + 35 + 210 + 2 * 30 + 5)); // fourth preset row
     CHECK(row == 2);
     CHECK_FALSE(cell.onPress(40, 34 + 35 + 4)); // gap between cells
+}
+
+TEST_CASE("Mixer gain fader mapping matches the firmware curve", "[ui][mixer]") {
+    CHECK(trakr::MixerView::gainBarValue(0.0f) == 75);
+    CHECK(trakr::MixerView::gainBarValue(6.0f) == 100);
+    CHECK(trakr::MixerView::gainBarValue(-48.0f) == 0);
+    CHECK(trakr::MixerView::gainBarValue(-3.0f) < 75);
 }

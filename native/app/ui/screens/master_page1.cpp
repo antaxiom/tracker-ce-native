@@ -110,6 +110,7 @@ void MasterPage1Screen::update(Song& song,
     const bool fine = shiftHeld || ImGui::GetIO().KeyShift;
 
     if (keyTarget && !ImGui::GetIO().WantTextInput) {
+        if (ImGui::IsKeyPressed(ImGuiKey_Tab)) view.togglePage();
         const int selected = view.selectedTrack();
         if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow, false))
             view.setSelectedTrack(std::max(0, selected - 1));

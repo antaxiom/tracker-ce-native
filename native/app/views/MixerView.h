@@ -28,6 +28,12 @@ public:
                  : (subPage_ == SubPage::TrackMixer) ? SubPage::MasterFx
                  : SubPage::Master;
     }
+    // Firmware gain fader mapping used by the Track Mixer page.
+    static int gainBarValue(float gainDb) {
+        const float n = gainDb <= 0.0f ? 0.75f * (gainDb + 48.0f) / 48.0f
+                                       : 0.75f + 0.25f * (gainDb / 6.0f);
+        return std::clamp(static_cast<int>(std::lround(n * 100.0f)), 0, 100);
+    }
     int selectedTrack() const { return selectedTrack_; }
     void setSelectedTrack(int t) { selectedTrack_ = t; }
     void selectNextTrack(int delta) { selectedTrack_ = std::clamp(selectedTrack_ + delta, 0, 7); }

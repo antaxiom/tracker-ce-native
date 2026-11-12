@@ -199,7 +199,12 @@ int main(int argc, char** argv) {
         (init_screen == "perform") ? trakr::Screen::Perform : (init_screen == "loader") ? trakr::Screen::SampleLoader :
         (init_screen == "config") ? trakr::Screen::Config : (init_screen == "file") ? trakr::Screen::File : trakr::Screen::Pattern;
     if (init_screen == "master" || init_screen == "fill_master") {
-        for (auto& t : song.tracks) { t.gainDb = 0.0f; t.pan = 0.0f; t.name.clear(); }
+        for (size_t i = 0; i < song.tracks.size(); ++i) {
+            auto& t = song.tracks[i];
+            t.gainDb = 6.0f; // fwref scenario trackVolume = 100%
+            t.pan = 0.0f;
+            t.name = "Track " + std::to_string(i + 1); // scenario trackNames
+        }
     } else if (init_screen == "config") {
         configView.setActiveGroup(trakr::ConfigView::Group::ProjectSettings);
     } else if (init_screen == "pattern") {

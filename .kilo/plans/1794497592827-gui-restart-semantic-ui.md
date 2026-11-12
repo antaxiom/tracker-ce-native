@@ -138,6 +138,10 @@ comparison after a primitive-level audit, never as the app's substrate.
   (`--gui-classic` opts out). Sub-pages without a port fall back automatically.
 - Phase 5 started: semantic paths are the production renderer; legacy views
   remain as the fallback surface for sub-pages, dialogs and chrome.
+- Master sub-pages ported: `TrackMixerScreen` (0.63% vs fwref page 2) and
+  `MasterEqScreen` (legacy-equivalent; firmware page 3 is Global Mixer, which
+  the desktop engine does not model). See
+  `native/docs/gates/phase5-master-subpages.md`.
 - `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
   post-marker, 2 cursor) to model NewDisplay's update/update2/update3; `cPoints`
   additive range background is painted in the prepass as an approximation.

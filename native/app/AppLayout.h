@@ -20,6 +20,8 @@
 #include "ui/screens/config.h"
 #include "ui/screens/perform.h"
 #include "ui/screens/file.h"
+#include "ui/screens/track_mixer.h"
+#include "ui/screens/mix_eq.h"
 #include <string>
 
 namespace trakr {
@@ -65,6 +67,8 @@ private:
     ConfigScreen guiConfig_;
     PerformScreen guiPerform_;
     FileScreen guiFile_;
+    TrackMixerScreen guiTrackMixer_;
+    MasterEqScreen guiMasterEq_;
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

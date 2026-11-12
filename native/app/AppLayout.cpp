@@ -95,6 +95,12 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextMaster =
         layoutState.guiNext && activeScreen == Screen::Master &&
         scrCtx.mixerView.subPage() == MixerView::SubPage::Master;
+    const bool guiNextTrackMixer =
+        layoutState.guiNext && activeScreen == Screen::Master &&
+        scrCtx.mixerView.subPage() == MixerView::SubPage::TrackMixer;
+    const bool guiNextMasterEq =
+        layoutState.guiNext && activeScreen == Screen::Master &&
+        scrCtx.mixerView.subPage() == MixerView::SubPage::MasterFx;
     const bool guiNextPattern = layoutState.guiNext && activeScreen == Screen::Pattern;
     const bool guiNextSong = layoutState.guiNext && activeScreen == Screen::Song;
     const bool guiNextSample =
@@ -105,7 +111,8 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextPerform = layoutState.guiNext && activeScreen == Screen::Perform;
     const bool guiNextFile = layoutState.guiNext && activeScreen == Screen::File;
     if (guiNextInstrument || guiNextMaster || guiNextPattern || guiNextSong || guiNextSample ||
-        guiNextLoader || guiNextConfig || guiNextPerform || guiNextFile) {
+        guiNextLoader || guiNextConfig || guiNextPerform || guiNextFile ||
+        guiNextTrackMixer || guiNextMasterEq) {
         const ImRect workspace = display_.workspaceRect();
         ImGui::SetNextWindowPos(workspace.Min);
         ImGui::SetNextWindowSize(workspace.GetSize());
@@ -123,6 +130,8 @@ void AppLayout::render(ScreenContext& scrCtx,
                                : guiNextConfig     ? "##gui_next_config"
                                : guiNextPerform    ? "##gui_next_perform"
                                : guiNextFile       ? "##gui_next_file"
+                               : guiNextTrackMixer ? "##gui_next_track_mixer"
+                               : guiNextMasterEq   ? "##gui_next_master_eq"
                                                    : "##gui_next_loader";
         if (ImGui::Begin(windowName, nullptr, flags)) {
             if (guiNextInstrument) {
@@ -168,6 +177,18 @@ void AppLayout::render(ScreenContext& scrCtx,
                                 ui::LayoutProfile::Classic);
                 guiFile_.render(ImGui::GetWindowDrawList(), workspace,
                                 ui::LayoutProfile::Classic);
+            } else if (guiNextTrackMixer) {
+                guiTrackMixer_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                      scrCtx.mixerView, workspace, ui::LayoutProfile::Classic,
+                                      layoutState.shiftHeld);
+                guiTrackMixer_.render(ImGui::GetWindowDrawList(), workspace,
+                                      ui::LayoutProfile::Classic);
+            } else if (guiNextMasterEq) {
+                guiMasterEq_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                    scrCtx.mixerView, workspace, ui::LayoutProfile::Classic,
+                                    layoutState.shiftHeld);
+                guiMasterEq_.render(ImGui::GetWindowDrawList(), workspace,
+                                    ui::LayoutProfile::Classic);
             } else {
                 guiPattern_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
                                    scrCtx.currentOrderIdx, scrCtx.octave, scrCtx.editStep,
