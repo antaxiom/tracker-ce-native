@@ -4,6 +4,7 @@
 
 #include "FT812.h"
 #include "fwref_internal.h"
+#include "audit.h"
 #include "displayStructs.h"
 
 #include <algorithm>
@@ -259,11 +260,11 @@ void API_END(void)
     }
     else if (gPrim == BITMAPS)
     {
-        for (const Vertex& v : gVerts)
-        {
-            // BITMAPS vertices are only used with API_CELL in these controls.
-            (void)v;
-        }
+        // BITMAPS vertices are only used with API_CELL in these controls. Any
+        // non-cell bitmap vertex would be silently dropped, so audit it.
+        if (!gVerts.empty())
+            fwref::auditCall("API_BITMAPS_VERTEX", fwref::AuditClass::PixelAffecting,
+                             "bitmap vertex without CELL");
     }
 
     gVerts.clear();
@@ -296,6 +297,19 @@ void API_CMD_TEXT(int16_t x,
 {
     if (gTarget == nullptr || string == nullptr)
         return;
+    constexpr uint16_t kSupportedTextOptions = 512u | 1024u | 2048u; // centerX|centerY|rightX
+    if ((options & static_cast<uint16_t>(~kSupportedTextOptions)) != 0)
+        fwref::auditCall("API_CMD_TEXT_OPTIONS", fwref::AuditClass::PixelAffecting,
+                         "unsupported option bits");
+    for (const unsigned char* p = reinterpret_cast<const unsigned char*>(string); *p; ++p)
+    {
+        if (*p >= 128)
+        {
+            fwref::auditCall("API_CMD_TEXT_NON_ASCII", fwref::AuditClass::PixelAffecting,
+                             "non-ASCII glyph");
+            break;
+        }
+    }
     applyClipAndBlend();
     gTarget->drawTextCmd(x, y, std::string(string), toColor(g.color, g.alpha),
                          fontFromHandle(font), options, length);
@@ -318,8 +332,14 @@ void API_CMD_NUMBER(int16_t x, int16_t y, int16_t font, uint16_t options, int32_
     char buf[32];
     if (g.numberBase == 16)
         std::snprintf(buf, sizeof(buf), "%X", static_cast<uint32_t>(n));
-    else
+    else if (g.numberBase == 10)
         std::snprintf(buf, sizeof(buf), "%d", n);
+    else
+    {
+        fwref::auditCall("API_CMD_NUMBER_BASE", fwref::AuditClass::Approximation,
+                         "only base 10/16 implemented");
+        std::snprintf(buf, sizeof(buf), "%d", n);
+    }
     applyClipAndBlend();
     gTarget->drawTextCmd(x, y, std::string(buf), toColor(g.color, g.alpha),
                          fontFromHandle(font), options, 0);

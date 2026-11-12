@@ -2,6 +2,7 @@
 #include "spec_paths.h"
 
 #include "FT812Emulator.h"
+#include "audit.h"
 
 #include <cstdio>
 #include <filesystem>
@@ -13,7 +14,7 @@ namespace
 int usage()
 {
     std::fprintf(stderr,
-                 "usage: fwref_gen [--out DIR] [--scenario FILE]\n"
+                 "usage: fwref_gen [--out DIR] [--scenario FILE] [--strict]\n"
                  "       fwref_gen --selftest\n");
     return 2;
 }
@@ -24,6 +25,7 @@ int main(int argc, char** argv)
 {
     std::string outDir = "render/fwref";
     std::string scenarioPath = fwref::scenarioFile();
+    bool strict = false;
 
     for (int i = 1; i < argc; ++i)
     {
@@ -32,6 +34,8 @@ int main(int argc, char** argv)
             outDir = argv[++i];
         else if (a == "--scenario" && i + 1 < argc)
             scenarioPath = argv[++i];
+        else if (a == "--strict")
+            strict = true;
         else if (a == "--selftest")
         {
             std::string error;
@@ -46,6 +50,8 @@ int main(int argc, char** argv)
         else
             return usage();
     }
+
+    fwref::setStrict(strict);
 
     fwref::Scenario scenario;
     std::string error;
@@ -217,5 +223,12 @@ int main(int argc, char** argv)
         std::printf("wrote %s\n", path.c_str());
     }
 
+    fwref::printAuditReport("fwref_gen");
+    if (strict && fwref::auditFailures() > 0)
+    {
+        std::fprintf(stderr, "fwref_gen: strict mode failed with %d unsupported call(s)\n",
+                     fwref::auditFailures());
+        return 1;
+    }
     return 0;
 }

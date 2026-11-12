@@ -89,7 +89,32 @@ void AppLayout::render(ScreenContext& scrCtx,
                       activeScreen == Screen::Pattern);
 
     // 4. Render Central Workspace
-    renderActiveScreen(activeScreen, scrCtx, display_.workspaceRect());
+    const bool guiNextInstrument =
+        layoutState.guiNext && activeScreen == Screen::Instrument &&
+        scrCtx.instrumentView.subPage() == InstrumentView::SubPage::General;
+    if (guiNextInstrument) {
+        const ImRect workspace = display_.workspaceRect();
+        ImGui::SetNextWindowPos(workspace.Min);
+        ImGui::SetNextWindowSize(workspace.GetSize());
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+        const ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
+                                       ImGuiWindowFlags_NoSavedSettings |
+                                       ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground |
+                                       ImGuiWindowFlags_NoBringToFrontOnFocus;
+        if (ImGui::Begin("##gui_next_instrument", nullptr, flags)) {
+            guiInstrument_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                  scrCtx.selectedInstIdx, scrCtx.instrumentView, workspace,
+                                  ui::LayoutProfile::Classic, layoutState.shiftHeld);
+            guiInstrument_.render(ImGui::GetWindowDrawList(), workspace,
+                                  ui::LayoutProfile::Classic);
+        }
+        ImGui::End();
+        ImGui::PopStyleVar(3);
+    } else {
+        renderActiveScreen(activeScreen, scrCtx, display_.workspaceRect());
+    }
 
     // 5. Update and render 8 Contextual Screen Buttons (y=424..480 logical)
     updateScreenButtons(activeScreen, scrCtx, effectiveShift, showFillModal, showExportDeck, scheduler);

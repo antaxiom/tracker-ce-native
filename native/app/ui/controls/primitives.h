@@ -1,0 +1,116 @@
+#pragma once
+
+// Reusable controls ported from NewDisplay usage. These are semantic ports:
+// firmware geometry and painting semantics are reproduced, but each control is
+// laid out by the host LayoutContext instead of a fixed framebuffer.
+
+#include "ui/control.h"
+#include <functional>
+#include <string>
+#include <vector>
+
+namespace trakr::ui {
+
+// cFrame: one red 2px frame around the active place.
+class FrameControl : public Control {
+public:
+    FrameControl(std::string id, std::vector<RectI> places, int selected = 0);
+    void draw(Canvas& canvas) const override;
+    void setSelected(int index);
+    int selected() const { return selected_; }
+
+private:
+    std::vector<RectI> places_;
+    int selected_{0};
+};
+
+// cBar: container + bottom shadow + fill. Value is 0..100 (Fill) or -100..100
+// (LeftRight). `inactive` swaps in inactiveBarColors, matching cBar's state.
+class BarControl : public Control {
+public:
+    enum class Mode { Fill, LeftRight };
+
+    BarControl(std::string id, int column, Mode mode = Mode::Fill);
+    void setValue(int value) { value_ = value; }
+    int value() const { return value_; }
+    void setInactive(bool inactive) { inactive_ = inactive; }
+    void setColumn(int column) { column_ = column; }
+    int column() const { return column_; }
+    void setOnPress(std::function<void(int)> cb) { onPress_ = std::move(cb); }
+
+    void draw(Canvas& canvas) const override;
+    bool acceptsInput() const override { return true; }
+    bool onPress(int deviceX, int deviceY) override;
+
+private:
+    int column_{0};
+    int value_{0};
+    Mode mode_{Mode::Fill};
+    bool inactive_{false};
+    std::function<void(int)> onPress_;
+};
+
+// cList: background, 27px rows, selection frame, scrollbar. Selection is
+// clamped and scrolled into view exactly like cList's visible window.
+class ListControl : public Control {
+public:
+    ListControl(std::string id, std::vector<std::string> items, int visibleLines);
+    void setSelected(int index);
+    int selected() const { return selected_; }
+    void setItems(std::vector<std::string> items);
+    void setOnSelect(std::function<void(int)> cb) { onSelect_ = std::move(cb); }
+
+    void draw(Canvas& canvas) const override;
+    bool acceptsInput() const override { return true; }
+    bool onPress(int deviceX, int deviceY) override;
+
+private:
+    std::vector<std::string> items_;
+    int visibleLines_{5};
+    int selected_{0};
+    std::function<void(int)> onSelect_;
+};
+
+// cLabel with Background | BottomShadow, used as the blank-space cover.
+class BlankCoverControl : public Control {
+public:
+    explicit BlankCoverControl(std::string id) : Control(std::move(id)) {}
+    void draw(Canvas& canvas) const override;
+};
+
+// cBgLabel: bottom button-bar background.
+class BgLabelControl : public Control {
+public:
+    explicit BgLabelControl(std::string id) : Control(std::move(id)) {}
+    void draw(Canvas& canvas) const override;
+};
+
+// cLabel with centered text, used for the firmware bottom button labels.
+class LabelControl : public Control {
+public:
+    LabelControl(std::string id, std::string text, trakr::hw::FwFont font);
+    void setText(std::string text) { text_ = std::move(text); }
+    void setColors(ImU32 text, ImU32 background, ImU32 frame) {
+        textColor_ = text;
+        bgColor_ = background;
+        frameColor_ = frame;
+    }
+    void setShowBackground(bool show) { showBackground_ = show; }
+    void setShowFrame(bool show) { showFrame_ = show; }
+
+    void draw(Canvas& canvas) const override;
+
+private:
+    std::string text_;
+    trakr::hw::FwFont font_;
+    ImU32 textColor_{kWhite};
+    ImU32 bgColor_{kGrey32};
+    ImU32 frameColor_{kOneTrueRed};
+    bool showBackground_{true};
+    bool showFrame_{false};
+};
+
+// Shared cBar/cBgLabel bottom shadow: 12px vertical fade into transparent.
+void drawBottomShadow(Canvas& canvas, const RectI& rect, ImU32 background);
+
+} // namespace trakr::ui

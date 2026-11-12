@@ -3,6 +3,7 @@
 
 #include "FT812.h"
 #include "fwref_internal.h"
+#include "audit.h"
 
 #include <algorithm>
 #include <cmath>
@@ -33,6 +34,9 @@ void drawMatrixGlyph(FT812DisplayEmulator* target,
     const int tx = mtx.active ? (mtx.tx >> 16) : 0;
     const int ty = mtx.active ? (mtx.ty >> 16) : 0;
     const int q = mtx.active ? mtx.quarterTurns() : 0;
+    if (mtx.active && q != 0 && q != 3)
+        fwref::auditCall("API_MATRIX_ROTATION", fwref::AuditClass::Approximation,
+                         "only 0/270 degree rotations implemented");
     if (q == 3)
     {
         const int h = target->fontHeight(font);

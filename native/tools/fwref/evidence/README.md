@@ -14,4 +14,24 @@ When captures are available:
    * bottom-bar separator positions and label rows.
 4. Record pass/fail per region here. Do not use hardware as a pixel metric.
 
-The source-true oracle gates (`check_reference.py`) remain the pixel metric.
+## Audit status (2026-11-12)
+
+FW-1 strict mode is implemented (`native/tools/fwref/audit.{h,cpp}`):
+
+- `fwref_gen --strict` fails on any unsupported pixel-affecting call or
+  approximation; `check_reference.py` now runs with `--strict`.
+- Current result: **0 unsupported, 0 approximations** across all ten reference
+  screens.
+- Whitelisted as ignored-safe with a documented reason: `API_BITMAP_SOURCE`,
+  `API_BITMAP_LAYOUT`, `API_BITMAP_SIZE`, `API_CMD_SETBITMAP` (font handles are
+  preloaded; image/bitmap draws are audited at `API_END`).
+- Audited and failing when exercised: non-cell `BITMAPS` vertices, non-ASCII
+  text, unsupported text option bits, non-quarter matrix rotations, unsupported
+  number bases.
+
+## Hardware status
+
+Still **not validated against hardware**. fwref remains an approximate,
+advisory-only oracle (ADR-0003). The source-true gates
+(`check_reference.py`) prove provenance, determinism, the primitive contract
+and the negative control; they do not prove FT812 equivalence.

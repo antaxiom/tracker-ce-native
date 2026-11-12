@@ -11,6 +11,7 @@
 #include "hw/MenuPopup.h"
 #include "ScreenManager.h"
 #include "RenderScheduler.h"
+#include "ui/screens/instrument_general.h"
 #include <string>
 
 namespace trakr {
@@ -20,6 +21,7 @@ struct AppLayoutState {
     bool showButtonDeck{true};
     bool shiftHeld{false};
     bool showMenuPopup{false};
+    bool guiNext{false};
 };
 
 class AppLayout {
@@ -46,6 +48,7 @@ private:
     hw::ScreenButtons screenButtons_;
     hw::ButtonDeck buttonDeck_;
     hw::MenuPopup menuPopup_;
+    InstrumentGeneralScreen guiInstrument_;
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

@@ -506,8 +506,8 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         a = os.path.join(td, "a")
         b = os.path.join(td, "b")
-        run([bin_path, "--out", a])
-        run([bin_path, "--out", b])
+        run([bin_path, "--out", a, "--strict"])
+        run([bin_path, "--out", b, "--strict"])
 
         for name in ("instrument_params.png", "master_page1.png", "master_page2.png",
                      "master_page3.png", "config.png", "perform.png", "pattern.png",

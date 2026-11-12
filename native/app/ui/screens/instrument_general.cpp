@@ -1,0 +1,179 @@
+#include "instrument_general.h"
+
+#include "Song.h"
+#include "History.h"
+#include "EngineHost.h"
+#include "views/InstrumentView.h"
+
+#include <cmath>
+#include <string>
+#include <vector>
+
+namespace trakr {
+using namespace ::trakr::ui;
+using ui::BarControl;
+using ui::BlankCoverControl;
+using ui::BgLabelControl;
+using ui::Canvas;
+using ui::FrameControl;
+using ui::LabelControl;
+using ui::LayoutContext;
+using ui::ListControl;
+using ui::RectI;
+
+namespace {
+
+constexpr int kColumnWidth = kDeviceWidth / 8; // 100
+constexpr int kHalfColumn = kDeviceWidth / 16; // 50
+
+// gInstrEdit.cpp framesPlaces[8][4], device pixels.
+constexpr int kFramePlaces[8][4] = {
+    {1, 31, kBarWidth, 391},   {101, 31, kBarWidth, 391}, {201, 31, kBarWidth, 391},
+    {301, 31, kBarWidth, 391}, {401, 31, kBarWidth, 391}, {501, 31, kBarWidth, 391},
+    {601, 31, kBarWidth, 391}, {701, 31, kBarWidth, 391},
+};
+
+// gInstrEdit.cpp showInstrumentParams() bottom labels.
+constexpr const char* kLabelText[8] = {
+    "Volume", "Panning", "Tune", "Finetune", "Filter Type", "Cutoff", "Resonance", "More",
+};
+
+} // namespace
+
+InstrumentGeneralScreen::InstrumentGeneralScreen() = default;
+
+void InstrumentGeneralScreen::build() {
+    if (built_) return;
+
+    std::vector<RectI> places;
+    places.reserve(8);
+    for (int i = 0; i < 8; ++i) {
+        places.push_back(RectI{kFramePlaces[i][0], kFramePlaces[i][1], kFramePlaces[i][2],
+                               kFramePlaces[i][3]});
+    }
+    frame_ = &display_.add<FrameControl>("frame", std::move(places), 0);
+
+    // Firmware creates {label[i], barControl[i]} as a pair, before bgLabel and
+    // the lists. Reverse creation order then composites the filter list and
+    // cover before the bars and the frame.
+    for (int i = 0; i < 8; ++i) {
+        auto& label = display_.add<LabelControl>("label" + std::to_string(i), kLabelText[i],
+                                                 trakr::hw::FwFont::Bold17);
+        label.setRect(RectI{kColumnWidth * i + kHalfColumn, kButtonsTop, kColumnWidth - 6, 55});
+        label.setColors(kActiveLabelsColors[0], kActiveLabelsColors[1], kActiveLabelsColors[2]);
+        label.setShowBackground(true);
+
+        const auto mode = (i >= 1 && i <= 3) ? BarControl::Mode::LeftRight : BarControl::Mode::Fill;
+        auto& bar = display_.add<BarControl>("bar" + std::to_string(i), i, mode);
+        bar.setRect(RectI{kColumnWidth * i + 1, kBarY, kBarWidth, kBarHeight});
+        bar.setVisible(i != 4 && i != 7); // showInstrumentParams hides bar 4 and 7
+        bars_[i] = &bar;
+    }
+
+    auto& bgLabel = display_.add<BgLabelControl>("bgLabel");
+    bgLabel.setRect(RectI{0, kButtonsTop + 1, kDeviceWidth, 54});
+
+    std::vector<std::string> filterItems = {"Disabled", "Low-pass", "High-pass", "Band-pass"};
+    filterList_ = &display_.add<ListControl>("filter", std::move(filterItems), 5);
+    filterList_->setRect(RectI{kColumnWidth * 4 + 1, kBarY, kBarWidth, kBarHeight});
+
+    auto& cover = display_.add<BlankCoverControl>("blankSpaceCover");
+    cover.setRect(RectI{kColumnWidth * 7 + 1, kBarY, kBarWidth, kBarHeight});
+
+    built_ = true;
+}
+
+void InstrumentGeneralScreen::syncFromModel(const Song& song, int selectedInstIdx,
+                                            const InstrumentView& view) {
+    if (selectedInstIdx < 0 || selectedInstIdx >= static_cast<int>(song.instruments.size())) return;
+    const Instrument& inst = song.instruments[static_cast<size_t>(selectedInstIdx)];
+
+    bars_[0]->setValue(inst.volume);
+    bars_[1]->setValue(inst.panning * 2);
+    bars_[2]->setValue((inst.tune * 100) / 24);
+    bars_[3]->setValue(inst.finetune);
+    bars_[5]->setValue(inst.cutoff);
+    bars_[6]->setValue(inst.resonance);
+
+    const bool filterOn = inst.filterType != Instrument::FilterType::None;
+    bars_[5]->setInactive(!filterOn);
+    bars_[6]->setInactive(!filterOn);
+
+    filterList_->setSelected(static_cast<int>(inst.filterType));
+    frame_->setSelected(view.selectedColumn());
+}
+
+void InstrumentGeneralScreen::update(Song& song,
+                                     History& history,
+                                     EngineHost& engineHost,
+                                     int& selectedInstIdx,
+                                     InstrumentView& view,
+                                     const ImRect& workspace,
+                                     ui::LayoutProfile profile,
+                                     bool shiftHeld) {
+    (void)history;
+    build();
+    if (selectedInstIdx < 0 || selectedInstIdx >= static_cast<int>(song.instruments.size())) return;
+
+    ImGui::SetCursorScreenPos(workspace.Min);
+    ImGui::InvisibleButton("##gui_next_instrument_workspace", workspace.GetSize());
+    const bool hovered = ImGui::IsItemHovered();
+    const bool windowFocused =
+        ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) && !ImGui::IsAnyItemActive();
+    const bool keyTarget = hovered || windowFocused;
+    const bool fine = shiftHeld || ImGui::GetIO().KeyShift;
+
+    if (keyTarget && !ImGui::GetIO().WantTextInput) {
+        const int col = view.selectedColumn();
+        if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow, false)) view.setSelectedColumn(col - 1);
+        if (ImGui::IsKeyPressed(ImGuiKey_RightArrow, false)) view.setSelectedColumn(col + 1);
+        if (ImGui::IsKeyPressed(ImGuiKey_UpArrow)) {
+            view.adjustSelectedParam(song, engineHost, selectedInstIdx, +1, fine);
+        }
+        if (ImGui::IsKeyPressed(ImGuiKey_DownArrow)) {
+            view.adjustSelectedParam(song, engineHost, selectedInstIdx, -1, fine);
+        }
+        if (ImGui::IsKeyPressed(ImGuiKey_Delete) || ImGui::IsKeyPressed(ImGuiKey_Backspace)) {
+            view.resetSelectedParam(song, engineHost, selectedInstIdx);
+        }
+        const float wheel = ImGui::GetIO().MouseWheel;
+        if (std::abs(wheel) > 0.01f) {
+            view.adjustSelectedParam(song, engineHost, selectedInstIdx,
+                                     (wheel > 0.0f) ? +1 : -1, fine);
+        }
+    }
+
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+        const LayoutContext lc = LayoutContext::fromWorkspace(workspace, profile);
+        const ImVec2 device = lc.screenToDevice(ImGui::GetIO().MousePos);
+        const int dx = static_cast<int>(std::floor(device.x));
+        const int dy = static_cast<int>(std::floor(device.y));
+        if (ui::Control* hit = display_.hitTest(dx, dy)) {
+            if (hit->onPress(dx, dy)) {
+                if (auto* bar = dynamic_cast<BarControl*>(hit)) {
+                    view.setSelectedColumn(bar->column());
+                } else if (auto* list = dynamic_cast<ListControl*>(hit)) {
+                    auto& inst = song.instruments[static_cast<size_t>(selectedInstIdx)];
+                    inst.filterType = static_cast<Instrument::FilterType>(list->selected());
+                    view.setSelectedColumn(4);
+                    engineHost.publish(song);
+                }
+            }
+        }
+    }
+
+    syncFromModel(song, selectedInstIdx, view);
+}
+
+void InstrumentGeneralScreen::render(ImDrawList* drawList,
+                                     const ImRect& workspace,
+                                     ui::LayoutProfile profile) const {
+    if (!built_ || drawList == nullptr) return;
+    const LayoutContext lc = LayoutContext::fromWorkspace(workspace, profile);
+    Canvas canvas(drawList, lc);
+    canvas.pushClip(RectI{0, kWorkspaceTop, kDeviceWidth, kWorkspaceSpanY});
+    display_.renderAll(canvas);
+    canvas.popClip();
+}
+
+} // namespace trakr

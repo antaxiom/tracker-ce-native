@@ -195,6 +195,16 @@ add_executable(trakr_app
     app/hw/HwWidgets.h
     app/hw/TextFit.cpp
     app/hw/TextFit.h
+    app/ui/canvas.cpp
+    app/ui/canvas.h
+    app/ui/control.h
+    app/ui/design.h
+    app/ui/display.h
+    app/ui/layout.h
+    app/ui/controls/primitives.cpp
+    app/ui/controls/primitives.h
+    app/ui/screens/instrument_general.cpp
+    app/ui/screens/instrument_general.h
 )
 target_include_directories(trakr_app PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model
@@ -254,6 +264,7 @@ set_source_files_properties(
     "-include;${CMAKE_CURRENT_SOURCE_DIR}/tools/fwref/shim/textbox_compat.h")
 
 add_library(fwref_core STATIC
+    tools/fwref/audit.cpp
     tools/fwref/spec.cpp
     tools/fwref/spec_parse_extras.cpp
     tools/fwref/spec_paths.cpp
@@ -376,6 +387,8 @@ add_executable(trakr_tests
     tests/test_fwref.cpp
     tests/test_audio_clock.cpp
     tests/test_text_fit.cpp
+    tests/test_ui_core.cpp
+    tests/test_fwref_audit.cpp
     tools/display_emulator/FT812Emulator.cpp
     tools/display_emulator/FT812ScreensCore.cpp
     tools/display_emulator/FT812ScreensExtra.cpp
@@ -424,6 +437,9 @@ add_executable(trakr_tests
     app/hw/HwWidgets.cpp
     app/hw/TextFit.cpp
     app/hw/BitmapText.cpp
+    app/ui/canvas.cpp
+    app/ui/controls/primitives.cpp
+    app/ui/screens/instrument_general.cpp
 )
 target_include_directories(trakr_tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model
