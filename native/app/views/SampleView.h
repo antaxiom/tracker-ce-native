@@ -35,7 +35,9 @@ public:
     void togglePage() { setSubPage((subPage_ == SubPage::Playback) ? SubPage::Editor : SubPage::Playback); }
     void selectNextParam(int delta) {
         if (subPage_ == SubPage::Playback) {
-            activeParam_ = static_cast<Param>(std::clamp(static_cast<int>(activeParam_) + delta, 0, 5));
+            const int count = 7; // Start..Slices, wrapping like the legacy screen
+            activeParam_ = static_cast<Param>(
+                ((static_cast<int>(activeParam_) + delta) % count + count) % count);
         } else {
             selectedEditOp_ = static_cast<EditOp>(std::clamp(static_cast<int>(selectedEditOp_) + delta, 0, 6));
         }

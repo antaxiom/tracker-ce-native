@@ -67,6 +67,10 @@ void Engine::handleLiveEvent(const SongSnapshot* snapshot, const LiveEvent& ev) 
             currentOrderIndex_ = ev.orderIndex;
             currentRow_ = ev.row;
             rowProgressFrames_ = 0.0;
+            // Publish even while stopped so the transport display reflects the
+            // new cursor immediately (stop-then-rewind returns to the base row).
+            publishedOrder_.store(currentOrderIndex_, std::memory_order_relaxed);
+            publishedRow_.store(currentRow_, std::memory_order_relaxed);
             break;
         case LiveEvent::Type::NoteOn: {
             if (ev.track == -1) {
@@ -156,6 +160,11 @@ void Engine::allNotesOff() {
 
 bool Engine::isPlaying() const {
     return publishedPlaying_.load(std::memory_order_acquire);
+}
+
+void Engine::publishPosition(int orderIndex, int row) {
+    publishedOrder_.store(orderIndex, std::memory_order_relaxed);
+    publishedRow_.store(row, std::memory_order_relaxed);
 }
 
 PlayheadPosition Engine::getPlayhead() const {

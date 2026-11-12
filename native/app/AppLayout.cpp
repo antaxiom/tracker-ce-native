@@ -370,12 +370,12 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
             // Play/Song, Undo, Add/Slot, Delete/Slot, Pattern, (blank),
             // Tempo/<bpm>. Firmware labels; actions keep the same behaviour.
             btns[0] = {"Play", "Pattern", "", "", hw::UnderlineColor::Green, true, isPlaying, [&]() {
-                if (isPlaying) scrCtx.engineHost.stopPlayback();
+                if (isPlaying) { scrCtx.engineHost.stopPlayback(); scrCtx.engineHost.setPosition(scrCtx.currentOrderIdx, 0); }
                 else { scrCtx.engineHost.setPatternLoop(true); scrCtx.engineHost.setPosition(scrCtx.currentOrderIdx, 0); scrCtx.engineHost.play(); }
                 scheduler.requestRedraw();
             }};
             btns[1] = {"Play", "Song", "", "", hw::UnderlineColor::Green, true, false, [&]() {
-                if (isPlaying) scrCtx.engineHost.stopPlayback();
+                if (isPlaying) { scrCtx.engineHost.stopPlayback(); scrCtx.engineHost.setPosition(scrCtx.currentOrderIdx, 0); }
                 else { scrCtx.engineHost.setPatternLoop(false); scrCtx.engineHost.play(scrCtx.currentOrderIdx, 0); }
                 scheduler.requestRedraw();
             }};

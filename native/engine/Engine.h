@@ -75,6 +75,9 @@ public:
     PerformanceState getPerformanceState() const { return perfState_; }
 
     PlayheadPosition getPlayhead() const;
+    // Immediately publishes a transport position for the UI (used when
+    // stop-then-rewind must be visible without waiting for the audio thread).
+    void publishPosition(int orderIndex, int row);
     MeterLevels getTrackMeters(size_t trackIndex) const;
     MeterLevels getMasterMeters() const;
     bool isPreviewVoiceActive() const { return previewVoice_ && previewVoice_->isActive(); }

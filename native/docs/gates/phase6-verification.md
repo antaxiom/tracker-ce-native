@@ -15,7 +15,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 |---|---|---|
 | Unit tests | `./native/build/trakr_tests` | 133/133, 538,195 assertions |
 | UI robot (semantic default) | `./native/build/trakr_app --auto-test` | 114 frames, 0 ID conflicts/stack/numeric errors |
-| Functional smoke | `python3 native/tools/gui_audit/functional_smoke.py` | 9/17 (8 pre-existing scenario failures unchanged) |
+| Functional smoke | `python3 native/tools/gui_audit/functional_smoke.py` | 17/17 scenarios pass |
 | fwref strict oracle | `cd native/tools/fwref && python3 check_reference.py` | all gates pass, 0 unsupported / 0 approximations |
 | Hardware structural (calibrated) | `python3 native/tools/refcal/refcal.py --all` | 5/5 tiles (Instrument x2, Performance, Pattern, Track Mixer) |
 | Glyph coverage | `python3 native/tools/check_glyphs.py` | 0 non-ASCII codepoints, all covered |
@@ -63,10 +63,11 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
   app exposes a Master EQ page instead.
 - Sample Loader importer crop page, Config item editor and Perform grid page
   are not modeled.
-- Eight functional-smoke scenarios fail before and after the restart
-  (`pattern_record_undo`, `pattern_delete`, `pattern_copy_paste`,
-  `pattern_transport`, `song_cursor`, `song_pattern`, `song_insert`,
-  `sample_param`).
+- Functional smoke is fully green; its comparisons now crop to the workspace so
+  chrome-only changes (Undo availability, transport timer) are not mistaken for
+  screen state. Fixed along the way: stop rewinds the transport row, Song delete
+  returns the selection to the previous slot, and the Sample parameter selector
+  wraps like the legacy screen.
 - Calibrated hardware tiles exist for five views, not all sub-pages.
 
 ## Handoff

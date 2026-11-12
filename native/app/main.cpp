@@ -449,7 +449,12 @@ int main(int argc, char** argv) {
                 }
                 scheduler.requestRedraw(60);
             } else {
-                if (isPlaying) engineHost.stopPlayback(); else engineHost.play(currentOrderIdx, 0);
+                if (isPlaying) {
+                    engineHost.stopPlayback();
+                    engineHost.setPosition(currentOrderIdx, 0);
+                } else {
+                    engineHost.play(currentOrderIdx, 0);
+                }
                 scheduler.requestRedraw();
             }
         }

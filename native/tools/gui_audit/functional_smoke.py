@@ -18,6 +18,7 @@ sys.path.insert(0, os.path.join(ROOT, "native", "tools", "os_input"))
 from os_input_runner import read_image_rgb  # noqa: E402
 import numpy as np  # noqa: E402
 
+WS = [0, 28, 800, 396]  # workspace only: chrome undo/timer state is not screen state
 CTL = os.path.join(ROOT, "native", "tools", "gui_audit", "gui_ctl.py")
 APP = os.path.join(ROOT, "native", "build", "trakr_app")
 
@@ -25,33 +26,33 @@ APP = os.path.join(ROOT, "native", "build", "trakr_app")
 # reference is prev|base.
 SCENARIOS = [
     ("pattern_record_undo", "pattern", [
-        (["Ctrl+R"], "change", "base", None),
-        (["Z"], "change", "prev", None),
-        (["Ctrl+Z"], "change", "prev", None),
-        (["Ctrl+Y"], "same", 2, None),
-        (["Ctrl+R"], "change", "prev", None),
-        (["Ctrl+Z"], "change", "prev", None),
-        (["Up"], "same", "base", None),
+        (["Ctrl+R"], "change", "base", WS),
+        (["Z"], "change", "prev", WS),
+        (["Ctrl+Z"], "change", "prev", WS),
+        (["Ctrl+Y"], "same", 2, WS),
+        (["Ctrl+R"], "change", "prev", WS),
+        (["Ctrl+Z"], "change", "prev", WS),
+        (["Up"], "same", "base", WS),
     ]),
     ("pattern_delete", "pattern", [
-        (["Ctrl+R"], "change", "base", None),
-        (["Z"], "change", "prev", None),
-        (["Up"], "change", "prev", None),
-        (["Delete"], "change", "prev", None),
-        (["Up"], "same", 1, None),
+        (["Ctrl+R"], "change", "base", WS),
+        (["Z"], "change", "prev", WS),
+        (["Up"], "change", "prev", WS),
+        (["Delete"], "change", "prev", WS),
+        (["Up"], "same", 1, WS),
     ]),
     ("pattern_copy_paste", "pattern", [
-        (["Ctrl+R"], "change", "base", None),
-        (["Z"], "change", "prev", None),
-        (["Up"], "change", "prev", None),
-        (["Ctrl+C"], "same", "prev", None),
-        (["Down"], "change", "prev", None),
-        (["Ctrl+V"], "change", "prev", None),
-        (["Ctrl+Z"], "change", "prev", None),
-        (["Ctrl+Z"], "change", "prev", None),
-        (["Ctrl+R"], "change", "prev", None),
-        (["Up"], "change", "prev", None),
-        (["Up"], "same", "base", None),
+        (["Ctrl+R"], "change", "base", WS),
+        (["Z"], "change", "prev", WS),
+        (["Up"], "change", "prev", WS),
+        (["Ctrl+C"], "same", "prev", WS),
+        (["Down"], "change", "prev", WS),
+        (["Ctrl+V"], "change", "prev", WS),
+        (["Ctrl+Z"], "change", "prev", WS),
+        (["Ctrl+Z"], "change", "prev", WS),
+        (["Ctrl+R"], "change", "prev", WS),
+        (["Up"], "change", "prev", WS),
+        (["Up"], "same", "base", WS),
     ]),
     ("pattern_nav", "pattern", [
         (["Down"], "change", "base", None),
@@ -62,18 +63,18 @@ SCENARIOS = [
         (["Space"], "same", "base", [250, 0, 220, 24]),
     ]),
     ("song_cursor", "song", [
-        (["Insert"], "change", "base", None),
-        (["Up"], "change", "prev", None),
-        (["Down"], "change", "prev", None),
-        (["Delete"], "same", "base", None),
+        (["Insert"], "change", "base", WS),
+        (["Up"], "change", "prev", WS),
+        (["Down"], "change", "prev", WS),
+        (["Delete"], "same", "base", WS),
     ]),
     ("song_pattern", "song", [
-        (["Right"], "change", "base", None),
-        (["Left"], "same", "base", None),
+        (["Right"], "change", "base", WS),
+        (["Left"], "same", "base", WS),
     ]),
     ("song_insert", "song", [
-        (["Insert"], "change", "base", None),
-        (["Delete"], "same", "base", None),
+        (["Insert"], "change", "base", WS),
+        (["Delete"], "same", "base", WS),
     ]),
     ("instrument_value", "instrument", [
         (["Up"], "change", "base", None),

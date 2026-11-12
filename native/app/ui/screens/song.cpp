@@ -134,8 +134,7 @@ void SongScreen::update(Song& song,
             std::vector<int> next = song.order;
             next.erase(next.begin() + currentOrderIdx);
             commitOrder(std::move(next));
-            if (currentOrderIdx >= static_cast<int>(song.order.size()))
-                currentOrderIdx = static_cast<int>(song.order.size()) - 1;
+            currentOrderIdx = std::max(0, currentOrderIdx - 1);
         }
     }
 

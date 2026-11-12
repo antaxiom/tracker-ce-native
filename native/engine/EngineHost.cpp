@@ -60,6 +60,7 @@ void EngineHost::stopPlayback() {
 }
 
 void EngineHost::setPosition(int orderIndex, int row) {
+    engine_.publishPosition(orderIndex, row);
     LiveEvent ev;
     ev.type = LiveEvent::Type::SetPosition;
     ev.orderIndex = orderIndex;
