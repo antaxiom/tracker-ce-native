@@ -66,6 +66,19 @@ void InstrumentGeneralScreen::build() {
     auto& cover = display_.add<BlankCoverControl>("blankSpaceCover");
     cover.setRect(RectI{kColumnWidth * 7 + 1, kBarY, kBarWidth, kBarHeight});
 
+    for (int i = 0; i < 8; ++i) {
+        bars_[i]->setOnPress([this](int column) {
+            if (view_) view_->setSelectedColumn(column);
+        });
+    }
+    filterList_->setOnSelect([this](int index) {
+        if (!song_ || !view_ || !engineHost_ || !selectedInstIdx_) return;
+        auto& inst = song_->instruments[static_cast<size_t>(*selectedInstIdx_)];
+        inst.filterType = static_cast<Instrument::FilterType>(index);
+        view_->setSelectedColumn(4);
+        engineHost_->publish(*song_);
+    });
+
     built_ = true;
 }
 
@@ -99,6 +112,11 @@ void InstrumentGeneralScreen::update(Song& song,
                                      bool shiftHeld) {
     (void)history;
     build();
+    song_ = &song;
+    engineHost_ = &engineHost;
+    view_ = &view;
+    selectedInstIdx_ = &selectedInstIdx;
+
     if (song.instruments.empty()) return;
     if (selectedInstIdx < 0) selectedInstIdx = 0;
     if (selectedInstIdx >= static_cast<int>(song.instruments.size()))
@@ -147,16 +165,6 @@ void InstrumentGeneralScreen::update(Song& song,
             }
         }
     }
-
-    for (int i = 0; i < 8; ++i) {
-        bars_[i]->setOnPress([&view](int column) { view.setSelectedColumn(column); });
-    }
-    filterList_->setOnSelect([&](int index) {
-        auto& inst = song.instruments[static_cast<size_t>(selectedInstIdx)];
-        inst.filterType = static_cast<Instrument::FilterType>(index);
-        view.setSelectedColumn(4);
-        engineHost.publish(song);
-    });
 
     if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
         const LayoutContext lc = LayoutContext::fromWorkspace(workspace, profile);

@@ -48,6 +48,10 @@ private:
     ui::FrameControl* frame_{nullptr};
     ui::ListControl* filterList_{nullptr};
     ui::BarControl* bars_[8]{};
+    Song* song_{nullptr};
+    EngineHost* engineHost_{nullptr};
+    InstrumentView* view_{nullptr};
+    int* selectedInstIdx_{nullptr};
     bool built_{false};
 };
 
