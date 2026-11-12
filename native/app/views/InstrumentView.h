@@ -35,6 +35,8 @@ public:
     void setShiftHeld(bool s) { shiftHeld_ = s; }
     void togglePage(); // Toggle the secondary Effects page
 
+    int selectedAutoDest() const { return selectedAutoDest_; }
+    void setSelectedAutoDest(int dest) { selectedAutoDest_ = std::clamp(dest, 0, 5); }
     int selectedColumn() const { return selectedCol_; }
     void setSelectedColumn(int col);
 

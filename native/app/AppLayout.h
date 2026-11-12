@@ -22,6 +22,7 @@
 #include "ui/screens/file.h"
 #include "ui/screens/track_mixer.h"
 #include "ui/screens/mix_eq.h"
+#include "ui/screens/instrument_pages.h"
 #include <string>
 
 namespace trakr {
@@ -69,6 +70,7 @@ private:
     FileScreen guiFile_;
     TrackMixerScreen guiTrackMixer_;
     MasterEqScreen guiMasterEq_;
+    InstrumentPagesScreen guiInstrumentPages_;
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

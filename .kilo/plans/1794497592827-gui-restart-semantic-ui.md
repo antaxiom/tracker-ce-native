@@ -142,6 +142,9 @@ comparison after a primitive-level audit, never as the app's substrate.
   `MasterEqScreen` (legacy-equivalent; firmware page 3 is Global Mixer, which
   the desktop engine does not model). See
   `native/docs/gates/phase5-master-subpages.md`.
+- Instrument sub-pages ported: `InstrumentPagesScreen` covers Effects and
+  Automation (0.18% / 0.73% vs the legacy renderer). See
+  `native/docs/gates/phase5-instrument-subpages.md`.
 - `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
   post-marker, 2 cursor) to model NewDisplay's update/update2/update3; `cPoints`
   additive range background is painted in the prepass as an approximation.

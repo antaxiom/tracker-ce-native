@@ -92,6 +92,9 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextInstrument =
         layoutState.guiNext && activeScreen == Screen::Instrument &&
         scrCtx.instrumentView.subPage() == InstrumentView::SubPage::General;
+    const bool guiNextInstrumentPages =
+        layoutState.guiNext && activeScreen == Screen::Instrument &&
+        scrCtx.instrumentView.subPage() != InstrumentView::SubPage::General;
     const bool guiNextMaster =
         layoutState.guiNext && activeScreen == Screen::Master &&
         scrCtx.mixerView.subPage() == MixerView::SubPage::Master;
@@ -112,7 +115,7 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextFile = layoutState.guiNext && activeScreen == Screen::File;
     if (guiNextInstrument || guiNextMaster || guiNextPattern || guiNextSong || guiNextSample ||
         guiNextLoader || guiNextConfig || guiNextPerform || guiNextFile ||
-        guiNextTrackMixer || guiNextMasterEq) {
+        guiNextTrackMixer || guiNextMasterEq || guiNextInstrumentPages) {
         const ImRect workspace = display_.workspaceRect();
         ImGui::SetNextWindowPos(workspace.Min);
         ImGui::SetNextWindowSize(workspace.GetSize());
@@ -132,6 +135,7 @@ void AppLayout::render(ScreenContext& scrCtx,
                                : guiNextFile       ? "##gui_next_file"
                                : guiNextTrackMixer ? "##gui_next_track_mixer"
                                : guiNextMasterEq   ? "##gui_next_master_eq"
+                               : guiNextInstrumentPages ? "##gui_next_instrument_pages"
                                                    : "##gui_next_loader";
         if (ImGui::Begin(windowName, nullptr, flags)) {
             if (guiNextInstrument) {
@@ -189,6 +193,13 @@ void AppLayout::render(ScreenContext& scrCtx,
                                     layoutState.shiftHeld);
                 guiMasterEq_.render(ImGui::GetWindowDrawList(), workspace,
                                     ui::LayoutProfile::Classic);
+            } else if (guiNextInstrumentPages) {
+                guiInstrumentPages_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                           scrCtx.selectedInstIdx, scrCtx.instrumentView,
+                                           workspace, ui::LayoutProfile::Classic,
+                                           layoutState.shiftHeld);
+                guiInstrumentPages_.render(ImGui::GetWindowDrawList(), workspace,
+                                           ui::LayoutProfile::Classic);
             } else {
                 guiPattern_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
                                    scrCtx.currentOrderIdx, scrCtx.octave, scrCtx.editStep,
