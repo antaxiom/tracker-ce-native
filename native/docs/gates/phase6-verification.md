@@ -19,6 +19,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 | fwref strict oracle | `cd native/tools/fwref && python3 check_reference.py` | all gates pass, 0 unsupported / 0 approximations |
 | Hardware structural (calibrated) | `python3 native/tools/refcal/refcal.py --all` | 5/5 tiles (Instrument x2, Performance, Pattern, Track Mixer) |
 | Glyph coverage | `python3 native/tools/check_glyphs.py` | 0 non-ASCII codepoints, all covered |
+| Classic visual regression | `python3 native/tools/visreg/visreg.py --all --deterministic` | 12/12 cases >= 95% (97.85-99.78%), deterministic |
 | Classic parity | per-screen gate docs | all nine workspaces >= 95%; best 99.9% |
 
 ## Screen coverage
@@ -37,15 +38,20 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 
 ## Retirement decisions
 
-1. `--gui-classic` remains as a debug escape hatch; it is not part of the
-   supported product path. Semantic rendering is the default and sub-pages
-   with a port no longer fall back.
+1. `--gui-classic` is retired: semantic rendering is unconditional in
+   `AppLayout`, and the legacy `renderActiveScreen` path is no longer reachable
+   from the app (it remains only for the legacy regression harness and
+   dialogs/state plumbing).
 2. Legacy views remain for view state, edit commands, dialogs and the
    `--gui-classic` path. Deleting them requires porting the remaining
    app-defined dialogs (export deck, fill modal, import progress) first; this
    is tracked as post-Phase-6 cleanup rather than blocking the restart.
 3. Hand-drawn `FT812ScreensCore/Extra.cpp` references are retired from all
    gates; they remain only inside the legacy display-emulator tooling.
+5. `native/tools/visreg/visreg.py` replaces pixel parity as an architecture
+   constraint: it renders every semantic screen/sub-page, checks 800x480 and
+   determinism, and enforces a >= 95% similarity threshold against the audited
+   fwref references.
 4. fwref is labeled an audited advisory oracle: strict mode is on, and every
    used call is implemented or whitelisted. It is never an app dependency.
 

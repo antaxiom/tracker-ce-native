@@ -111,7 +111,6 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--polyend-font")) use_polyend_font = true;
         else if (!std::strcmp(argv[i], "--lcd-shot")) lcd_shot_mode = true;
         else if (!std::strcmp(argv[i], "--gui-next")) gui_next = true;
-        else if (!std::strcmp(argv[i], "--gui-classic")) gui_next = false;
         else if (!std::strcmp(argv[i], "--loader-dir") && i + 1 < argc) loader_dir = argv[++i];
         else if (!std::strcmp(argv[i], "--screenshot") && i + 1 < argc) screenshot_path = argv[++i];
         else if (!std::strcmp(argv[i], "--screen") && i + 1 < argc) init_screen = argv[++i];

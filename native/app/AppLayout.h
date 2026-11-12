@@ -32,7 +32,7 @@ struct AppLayoutState {
     bool showButtonDeck{true};
     bool shiftHeld{false};
     bool showMenuPopup{false};
-    bool guiNext{false};
+    bool guiNext{true}; // semantic renderer is unconditional (retained for layout callers)
 };
 
 class AppLayout {

@@ -151,6 +151,10 @@ comparison after a primitive-level audit, never as the app's substrate.
   legacy views remain only for dialog/state plumbing and `--gui-classic`.
 - Phase 6 complete: verification matrix, retirement decisions and handoff are
   recorded in `native/docs/gates/phase6-verification.md`.
+- `--gui-classic` retired; `AppLayout` always renders semantic screens, and the
+  legacy `renderActiveScreen` path remains only for the legacy test harness.
+- `native/tools/visreg/visreg.py` is the repeatable Classic gate: 12/12
+  screen/sub-page cases pass at 97.85-99.78% similarity with determinism.
 - `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
   post-marker, 2 cursor) to model NewDisplay's update/update2/update3; `cPoints`
   additive range background is painted in the prepass as an approximation.

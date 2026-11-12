@@ -39,6 +39,9 @@ python3 native/tools/os_input/os_input_runner.py
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots
 
+# Classic visual-regression gate (all screens/sub-pages vs fwref, >= 95%)
+python3 native/tools/visreg/visreg.py --all --deterministic
+
 # Calibrated hardware structural checks (needs ImageMagick, numpy, scipy)
 python3 native/tools/refcal/refcal.py --all --out /tmp/refcal
 python3 -m unittest discover native/tools/refcal
@@ -62,9 +65,9 @@ python3 native/tools/gui_audit/gui_ctl.py --out /tmp/op key Down
 python3 native/tools/gui_audit/gui_ctl.py --out /tmp/op stop
 ```
 
-The semantic UI path is the default for the nine main workspaces; `--gui-classic`
-opts back into the legacy renderer, and sub-pages without a semantic port fall
-back automatically.
+The semantic UI path is the only renderer: all nine main workspaces and every
+app-modeled sub-page render through it, and `--gui-next` is accepted but no
+longer required.
 `--script`/`--remote` accept `Ctrl+Z`, `Shift+Up`, `Alt+Up` chords. On macOS the
 Ctrl modifier is emitted as Cmd-equivalent (ImGui swaps them), matching shortcuts.
 `--remote` also accepts `click <x> <y>` (hover-then-click, pointer is held) and

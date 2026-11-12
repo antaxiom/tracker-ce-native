@@ -90,27 +90,27 @@ void AppLayout::render(ScreenContext& scrCtx,
 
     // 4. Render Central Workspace
     const bool guiNextInstrument =
-        layoutState.guiNext && activeScreen == Screen::Instrument &&
+        activeScreen == Screen::Instrument &&
         scrCtx.instrumentView.subPage() == InstrumentView::SubPage::General;
     const bool guiNextInstrumentPages =
-        layoutState.guiNext && activeScreen == Screen::Instrument &&
+        activeScreen == Screen::Instrument &&
         scrCtx.instrumentView.subPage() != InstrumentView::SubPage::General;
     const bool guiNextMaster =
-        layoutState.guiNext && activeScreen == Screen::Master &&
+        activeScreen == Screen::Master &&
         scrCtx.mixerView.subPage() == MixerView::SubPage::Master;
     const bool guiNextTrackMixer =
-        layoutState.guiNext && activeScreen == Screen::Master &&
+        activeScreen == Screen::Master &&
         scrCtx.mixerView.subPage() == MixerView::SubPage::TrackMixer;
     const bool guiNextMasterEq =
-        layoutState.guiNext && activeScreen == Screen::Master &&
+        activeScreen == Screen::Master &&
         scrCtx.mixerView.subPage() == MixerView::SubPage::MasterFx;
-    const bool guiNextPattern = layoutState.guiNext && activeScreen == Screen::Pattern;
-    const bool guiNextSong = layoutState.guiNext && activeScreen == Screen::Song;
-    const bool guiNextSample = layoutState.guiNext && activeScreen == Screen::Sample;
-    const bool guiNextLoader = layoutState.guiNext && activeScreen == Screen::SampleLoader;
-    const bool guiNextConfig = layoutState.guiNext && activeScreen == Screen::Config;
-    const bool guiNextPerform = layoutState.guiNext && activeScreen == Screen::Perform;
-    const bool guiNextFile = layoutState.guiNext && activeScreen == Screen::File;
+    const bool guiNextPattern = activeScreen == Screen::Pattern;
+    const bool guiNextSong = activeScreen == Screen::Song;
+    const bool guiNextSample = activeScreen == Screen::Sample;
+    const bool guiNextLoader = activeScreen == Screen::SampleLoader;
+    const bool guiNextConfig = activeScreen == Screen::Config;
+    const bool guiNextPerform = activeScreen == Screen::Perform;
+    const bool guiNextFile = activeScreen == Screen::File;
     if (guiNextInstrument || guiNextMaster || guiNextPattern || guiNextSong || guiNextSample ||
         guiNextLoader || guiNextConfig || guiNextPerform || guiNextFile ||
         guiNextTrackMixer || guiNextMasterEq || guiNextInstrumentPages) {
@@ -210,8 +210,6 @@ void AppLayout::render(ScreenContext& scrCtx,
         }
         ImGui::End();
         ImGui::PopStyleVar(3);
-    } else {
-        renderActiveScreen(activeScreen, scrCtx, display_.workspaceRect());
     }
 
     // 5. Update and render 8 Contextual Screen Buttons (y=424..480 logical)
