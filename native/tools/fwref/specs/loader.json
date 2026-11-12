@@ -1,0 +1,784 @@
+{
+ "screen": "loader",
+ "scenario": "loader",
+ "theme": "default",
+ "chrome": {
+  "title": "Sample Loader",
+  "rightLabel": ""
+ },
+ "chrome_on_top": true,
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0",
+   "y": "0",
+   "w": "0",
+   "h": "0",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@loader.selectedPlace",
+   "places": [
+    {
+     "x": "0 + 1",
+     "y": "31",
+     "w": "(800 / 8) * 3 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 3 + 1",
+     "y": "31",
+     "w": "(800 / 8) * 3 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 6 + 1",
+     "y": "31",
+     "w": "(800 / 8) * 1 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     8,
+     25
+    ],
+    "sha256": "c970795f45930696879eb2c82e9a03e841d20172aa013654441340c3ff5d293e"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Add",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     478,
+     500
+    ],
+    "sha256": "5f8ff0eec278eab68cca423ab35e668e84259a2aaab2c1242d60e86e98c66786"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Add next",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     148,
+     229
+    ],
+    "sha256": "3d6a209e7e513556903502dc172b02b9b2bb9b34550000c30b7ca002a995a0b2"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Preview",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     148,
+     229
+    ],
+    "sha256": "3d6a209e7e513556903502dc172b02b9b2bb9b34550000c30b7ca002a995a0b2"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    3355443
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Add",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     466,
+     476
+    ],
+    "sha256": "a2e66ecbde6548a082c7c048c5eb145979fcb81b4cf53f89d55b4f71723305d4"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Import",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     148,
+     229
+    ],
+    "sha256": "3d6a209e7e513556903502dc172b02b9b2bb9b34550000c30b7ca002a995a0b2"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    3355443
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 1,
+   "text": "Delete",
+   "text2": "unused",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     148,
+     229
+    ],
+    "sha256": "3d6a209e7e513556903502dc172b02b9b2bb9b34550000c30b7ca002a995a0b2"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Preview Vol",
+   "text2_format": "loader_preview_db",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     148,
+     229
+    ],
+    "sha256": "3d6a209e7e513556903502dc172b02b9b2bb9b34550000c30b7ca002a995a0b2"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Memory",
+   "text2_format": "loader_memory",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     27,
+     42
+    ],
+    "sha256": "959944e42a3efa2e1be0b9d6c2a6e1e748bad41850852d02eaae2aca64f2a2cd"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     148,
+     229
+    ],
+    "sha256": "3d6a209e7e513556903502dc172b02b9b2bb9b34550000c30b7ca002a995a0b2"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 255,
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     44,
+     52
+    ],
+    "sha256": "6efbcc9f843ed81ca6696e5ace38edda7983ee39e69cbe256a9c59f1a44314b0"
+   },
+   "override_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     197,
+     198
+    ],
+    "sha256": "1a21f7340ab9827f285af4d88415dab28e7c9dca0834f0682d060d5e04afed71"
+   }
+  },
+  {
+   "order": 10,
+   "control": "cLabel",
+   "x": "(800 / 16) * 3 - 1",
+   "y": "32",
+   "w": "(800 / 8) * 3 - 3",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "SD Card",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     54,
+     62
+    ],
+    "sha256": "c81a2437f4d7e16d98df9a7111f9f19f8d9306951b561585f5ddfe16a6654d39"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     200,
+     202
+    ],
+    "sha256": "30a9ca4960b9943223336671e948f10ad7a55e9de271390da8b2565384ee207a"
+   }
+  },
+  {
+   "order": 11,
+   "control": "cLabel",
+   "x": "(800 / 16) * 9 - 1",
+   "y": "32",
+   "w": "(800 / 8) * 3 - 3",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "Instruments",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     64,
+     69
+    ],
+    "sha256": "0316cbd49605914863e7f65baff2442fc355ae1265bc3b33ca2958cb93ba32fb"
+   },
+   "override_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     54,
+     62
+    ],
+    "sha256": "c81a2437f4d7e16d98df9a7111f9f19f8d9306951b561585f5ddfe16a6654d39"
+   },
+   "text_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     203,
+     205
+    ],
+    "sha256": "c31919491edb8b3f2ec88a1c8287bbe0741f837cf0186d3f5624482bbd90d7f8"
+   }
+  },
+  {
+   "order": 12,
+   "control": "cList",
+   "x": "0 + 1",
+   "y": "29 + 32",
+   "w": "(800 / 8) * 3 - 3",
+   "h": "394 - 32",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    13441048,
+    13441048,
+    5723991,
+    657930,
+    16777215,
+    16777215,
+    0
+   ],
+   "list": {
+    "from": "loader.files",
+    "start": "@loader.selectedFile",
+    "linesCount": 13,
+    "selectionActive": 1,
+    "lineWidthMax": 270,
+    "lineTextLenMax": 32
+   },
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     71,
+     84
+    ],
+    "sha256": "97bf3a42eafee373f55dc3103049e5a1fb225ba1a3a247c25f225b7787322765"
+   }
+  },
+  {
+   "order": 13,
+   "control": "cList",
+   "x": "(800 / 8) * 3 + 1",
+   "y": "29 + 32",
+   "w": "(800 / 8) * 3 - 3",
+   "h": "394 - 32",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16777215,
+    5723991,
+    657930,
+    16777215,
+    16777215,
+    0
+   ],
+   "list": {
+    "from": "loader.slots",
+    "start": "@loader.selectedSlot",
+    "linesCount": 13,
+    "selectionActive": 0,
+    "lineWidthMax": 270,
+    "lineTextLenMax": 34
+   },
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     86,
+     94
+    ],
+    "sha256": "0ab4e5933e15eff127d4b318c2983e0730d446b3f2fd732fe40282d652bd5553"
+   },
+   "override_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     77,
+     84
+    ],
+    "sha256": "d0bd2651fb6c367f683370331fb6e4408048e292dbc20f5b066ab366caf04a7e"
+   }
+  },
+  {
+   "order": 14,
+   "control": "cBar",
+   "x": "(800 / 8) * 7 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleCompareTwoValues",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow",
+    "controlStyleShow"
+   ],
+   "colors": [
+    16777215,
+    13441048,
+    3197759,
+    526344,
+    657930
+   ],
+   "bar_value": "loader_memory",
+   "bar_compare": "@loader.memoryUsageAdd",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     96,
+     104
+    ],
+    "sha256": "131af8b402ca466d5e6cf2d67a9e991876ecdc85e8a834c209238c0c7b284987"
+   },
+   "override_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     278,
+     304
+    ],
+    "sha256": "6ce4377156ef97bc8f90e1404d9670636d8064fce0918d1a8a9f7fdc06976ae2"
+   }
+  },
+  {
+   "order": 15,
+   "control": "cBar",
+   "x": "(800 / 8) * 6 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow",
+    "controlStyleShow"
+   ],
+   "bar_value": "loader_preview_volume",
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     106,
+     115
+    ],
+    "sha256": "c5699ab31081f0660b2e5460d1a8721ca0d3d96a1edfd1cc060c029e32172557"
+   },
+   "override_source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     264,
+     276
+    ],
+    "sha256": "52d9d2a8831c5e20c3e50cfbc3a815ad28fddb329f954c148de4649f93e970b1"
+   }
+  },
+  {
+   "order": 16,
+   "control": "cProgressCursor",
+   "x": "100",
+   "y": "75 + ((300 - (MAX_16BIT / 300)) / 2)",
+   "w": "600",
+   "h": "MAX_16BIT / 300",
+   "style": [],
+   "hidden": true,
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     124,
+     129
+    ],
+    "sha256": "265af2fbf81f8ded9d50acb442073c8308fdfdc74f91893b48e323279193469b"
+   }
+  },
+  {
+   "order": 17,
+   "control": "cPoints",
+   "x": "100",
+   "y": "75 + ((300 - (MAX_16BIT / 300)) / 2)",
+   "w": "600",
+   "h": "MAX_16BIT / 300",
+   "style": [],
+   "hidden": true,
+   "points": {
+    "type": 0,
+    "start": 0,
+    "end": "MAX_16BIT",
+    "loop1": -1,
+    "loop2": -1,
+    "selected": 0,
+    "zerocrossed": 0
+   },
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     117,
+     131
+    ],
+    "sha256": "8de727f33ef5109eff546891c0724bf6f6e9e90bc64ada9c6e3cfe9bbf667f66"
+   }
+  },
+  {
+   "order": 18,
+   "control": "cSpectrum",
+   "x": "100",
+   "y": "75 + ((300 - ((MAX_16BIT / 300))) / 2)",
+   "w": "600",
+   "h": "(MAX_16BIT / 300) / 2",
+   "style": [],
+   "hidden": true,
+   "spectrum": {
+    "type": 0,
+    "pointsLimit": 300,
+    "from": ""
+   },
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     133,
+     138
+    ],
+    "sha256": "39381ede1691214533b1c3ab9d5a783bd8f879db057558b744ba84b83c5bd535"
+   }
+  },
+  {
+   "order": 19,
+   "control": "cSpectrum",
+   "x": "100",
+   "y": "75 + ((300 - ((MAX_16BIT / 300))) / 2) + (MAX_16BIT / 300) / 2",
+   "w": "600",
+   "h": "(MAX_16BIT / 300) / 2",
+   "style": [],
+   "hidden": true,
+   "spectrum": {
+    "type": 0,
+    "pointsLimit": 300,
+    "from": ""
+   },
+   "source": {
+    "file": "core/interface/sampleImporter/gSampleImport.cpp",
+    "lines": [
+     140,
+     145
+    ],
+    "sha256": "9e96245c90d5548019d25928d6691488c94364d7b05d6305bd815400cc6c85e7"
+   }
+  }
+ ]
+}

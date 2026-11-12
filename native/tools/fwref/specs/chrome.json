@@ -1,0 +1,124 @@
+{
+ "screen": "chrome",
+ "theme": "default",
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 900,
+   "control": "cLabel",
+   "x": "9",
+   "y": "13",
+   "w": "270",
+   "h": "0",
+   "style": [
+    "controlStyleCenterY",
+    "controlStyleFont4",
+    "controlStyleLimitTextWidth"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@title",
+   "source": {
+    "file": "core/interface/core/titleBar.cpp",
+    "lines": [
+     31,
+     37
+    ],
+    "sha256": "bbff2fcee1babaef6c81ef2d1272a9d1ba48ce505741f93e7b8536b67edde652"
+   }
+  },
+  {
+   "order": 901,
+   "control": "cLabel",
+   "x": "790",
+   "y": "13",
+   "w": "270",
+   "h": "0",
+   "style": [
+    "controlStyleRightX",
+    "controlStyleCenterY",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@rightLabel",
+   "source": {
+    "file": "core/interface/core/titleBar.cpp",
+    "lines": [
+     33,
+     47
+    ],
+    "sha256": "9c94b2e6e1fee22ca8007f6b7589af139f028c340c1398a6d6a57ae178ccae70"
+   }
+  },
+  {
+   "order": 902,
+   "control": "cLabel",
+   "x": "0",
+   "y": "0",
+   "w": "800",
+   "h": "28",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "line": {
+    "x1": 0,
+    "y1": 28,
+    "x2": 800,
+    "y2": 28,
+    "color": 16777215
+   },
+   "source": {
+    "file": "core/interface/core/titleBar.cpp",
+    "lines": [
+     69,
+     83
+    ],
+    "sha256": "4e95171481812499c57f448283a893c90ced22af2bf7febda240e7e76acd4b01"
+   }
+  }
+ ]
+}

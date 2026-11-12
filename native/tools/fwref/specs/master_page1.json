@@ -1,0 +1,757 @@
+{
+ "screen": "master_page1",
+ "scenario": "master",
+ "theme": "default",
+ "chrome": {
+  "title": "Master 1/3",
+  "rightLabel": ""
+ },
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0 + 1",
+   "y": "31",
+   "w": "800 / 8 - 3",
+   "h": "391",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@master.selectedPlace",
+   "places": [
+    {
+     "x": "0 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 1 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 2 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 3 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 4 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 6 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 7 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     10,
+     19
+    ],
+    "sha256": "1f6a632fbe1d9983179df56ef8823168382799c33828563969f29754abf9c35f"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     931,
+     939
+    ],
+    "sha256": "af9803a087c433a6f9eb9193a2fd9de01809a34099af940d8974799618abe9db"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Volume",
+   "text2_format": "master_db",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Reverb",
+   "text2": " ",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Delay",
+   "text2": " ",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Limiter",
+   "text2": "",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "EQ",
+   "text2": " ",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Saturation",
+   "text2_format": "saturation",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Bass Boost",
+   "text2_format": "bass_boost",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Space",
+   "text2_format": "stereo_boost",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     264,
+     322
+    ],
+    "sha256": "626cf09432999ff5fe9cfe60c1db920d5c7a57535aeea16c7eba36b559c968b9"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     272,
+     297
+    ],
+    "sha256": "658856313ccb4e7aa27228db7d345e0248b565f42e54a5914150011089e781c3"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 255,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     69,
+     77
+    ],
+    "sha256": "bbc846da0103def028797bad13056be293019e898f197012b1baeb5cd6240eb7"
+   }
+  },
+  {
+   "order": 26,
+   "control": "cBar",
+   "x": "(800 / 8) * 0 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "master_volume",
+   "bar_data_white": true,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1031,
+     1036
+    ],
+    "sha256": "f02ab31ee974663968177713466073468b4c73999aebe7ecfbdd6f4681ff875d"
+   }
+  },
+  {
+   "order": 32,
+   "control": "cBar",
+   "x": "(800 / 8) * 6 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "bass_boost",
+   "bar_data_white": true,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1031,
+     1036
+    ],
+    "sha256": "f02ab31ee974663968177713466073468b4c73999aebe7ecfbdd6f4681ff875d"
+   }
+  },
+  {
+   "order": 33,
+   "control": "cBar",
+   "x": "(800 / 8) * 7 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "stereo_boost_bar",
+   "bar_data_white": true,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1031,
+     1036
+    ],
+    "sha256": "f02ab31ee974663968177713466073468b4c73999aebe7ecfbdd6f4681ff875d"
+   }
+  },
+  {
+   "order": 34,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + 2",
+   "y": "29",
+   "w": "(800 / 8) * 4 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow",
+    "controlStyleShow"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 0,
+   "text": "",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     138,
+     148
+    ],
+    "sha256": "ff2ae2fe1ae9442e8de1156f764df5af596799e89924cca29f271e9a073cbbd1"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     347,
+     348
+    ],
+    "sha256": "886d7573dd013a54f9492113fac37816aabd0fcef46e2dbaba20bbb518186490"
+   }
+  },
+  {
+   "order": 41,
+   "control": "cList",
+   "x": "(800 / 8) * (5) + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "list": {
+    "items": [
+     "Hard Clip",
+     "Soft Clip",
+     "Saturate",
+     "Overdrive",
+     "Drive+"
+    ],
+    "start": 0,
+    "length": 5,
+    "linesCount": 5
+   },
+   "value": "@master.saturationType",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     235,
+     250
+    ],
+    "sha256": "6faeb4cfd9f41f6ed06e10515c57a84a56cd6e91db41074085110cd611d0fe38"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1189,
+     1196
+    ],
+    "sha256": "82cfa78e9a8b063ae89a69ff54c5fcc0ab7c7cac4cef59e40d6502142dc848ea"
+   },
+   "text_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     21,
+     27
+    ],
+    "sha256": "f879f22b593601a9407a47ae1d4b5789a5f09197874c8629dc2a210a09bf85bc"
+   }
+  }
+ ]
+}

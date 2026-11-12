@@ -1,0 +1,2977 @@
+
+=== PAGE 1 ===
+I
+The Tracker+ Notebook : Reference & Guide
+Polyend
+Tracker+
+Essentials
+A Collection of Essential References
+for The Polyend Tracker+
+
+
+=== PAGE 2 ===
+II
+Polyend Tracker+ Essentials Rev 1
+
+
+=== PAGE 3 ===
+The Polyend Tracker+ is a modern hardware 
+implementation of a classic software music 
+application and is the next generation of 
+Polyend Tracker with upgraded hardware and 
+extended feature set. Trackers emerged in the 
+late 80’s as music making tools mainly on 
+gaming machines and in the 90’s Trackers also 
+became popular on personal computers. A 
+Tracker is a utility that assembles a linear 
+series of notes that typically triggers samples 
+and associated parameters. Unlike standard 
+digital audio workstations (DAW’s), Trackers 
+generally run top to bottom when playing 
+tracks. The Polyend Tracker can also play a 
+loop of selected note steps. Don't be fooled by 
+this quirky programming style of music making 
+which may appear unusual, but does provide a 
+very powerful and creative approach to 
+production. Polyend Tracker+ presents this 
+vintage application in a modern and stylish box 
+with 16 sequenced tracks and a variety of 
+synth and sample instruments, MIDI, effects and 
+audio inputs and outputs contained within 
+multiple workflow environments. The feature set 
+is wide with some interestingly creative and 
+unexpected elements such as retro games and a 
+radio receiver. Tracker+ brings more power and 
+more features contained within a familiar form 
+factor and user interface. Tracker+ includes a 
+stereo 
+audio 
+pathway 
+including 
+stereo 
+sampling with extended sample time. In 
+addition the ability to interface with other gear 
+using audio over USB covers multiple tracks. 
+Tracker+ introduces a collection of synthesizer 
+instrument models alongside sample based 
+instruments all of which support it’s portability 
+and position as an ‘all in one’ workstation. This 
+guide aims to help with the speed up of learning 
+and also to get the very best from the device. The 
+Tracker+ journey at first glance may appear 
+unusual but is a fun, powerful, professional 
+music making unit giving rewarding results.
+Overview
+3
+Polyend Tracker+ Essentials Rev 1
+
+
+=== PAGE 4 ===
+4
+Polyend Tracker+ Essentials Rev 1
+Tracker+ Essentials
+Out
+Line In
+Mic
+MIDI Out MIDI In
+Micro SD
+USB
+Power
+On / Off
+Switch
+Reset
+Switch
+USB Power Input
+USB-C to USB-A Cable Supplied
+3.5mm Audio 
+Mono In
+Stereo audio output also serves as headphone out.  
+3.5mm MIDI 
+Input & Output 
+microSD Card Slot.
+Pins face down.
+16GB microSD Card Supplied    
+Stereo Out. 3.5mm Male Stereo 
+TRS Jack to 2 x 6.3mm TR 
+Mono Female adapter supplied.
+microSD Card to USB-A 
+adapter supplied. 
+Input is TR Mono and output 
+TRS Stereo, also supports 
+headphones. 
+Supply is 5V, 1A so can use 
+the supplied mains to USB or a 
+battery power bank. 
+3.5mm Jack to 5 Pin MIDI 
+adapter (type B) supplied
+Hardware Overview
+282 mm
+207 
+mm
+33 mm
+
+
+=== PAGE 5 ===
+Tracker+ Essentials
+5
+Polyend Tracker+ Essentials Rev 1
+Start Up
+Tracker+ is a low power user and can therefore be powered from the 
+supplied mains USB adapter or from a rechargeable battery power bank. 
+When restarting Tracker+ the previously open project will be re-opened.
+▌ POWERING ON / OFF TRACKER+
+1. Connect the supplied USB-C Mains cable between Tracker+ and the 
+supplied USB plug. Also Tracker+ can operate with a portable USB 
+power bank*. Tracker+ uses a 5V, 1A rated supply. 
+2. Ensure the microSD Card is installed correctly for Tracker+ to operate.
+3. Quickly press the small power button located on the rear left (looking 
+from the top). Tracker+ will start up and the previous project reopened.
+4. To power off, press and hold the small power button located on the rear 
+left (looking from the top) until the timer bar ends. Tracker+ will power 
+off and the on/off button can be released.
+Supply is 5V, 1A from the supplied mains to USB adapter. 
+Alternatively use a battery power bank.
+Start up instantaneous current is approx 1.2A with normal state around 0.5A
+* It is recommended by Polyend to use a standard power bank without smart 
+features. Intelligent / smart power banks or PC / Mac power may have features that 
+interfere with the continuous supply required by Tracker +. A USB - C to USB - A 
+cable is supplied. Also a USB - C to USB - C can be used on later Tracker + models.
+Warning:
+Under-powering the Tracker from a hub or computer can result in performance issues or 
+microSD card failure. 
+USB
+Power
+NOTES
+
+
+=== PAGE 6 ===
+6
+Polyend Tracker+ Essentials Rev 1
+Tracker+ Audio Structure
+Track 1
+Bit-crusher 
+Overdrive 
+Filter 
+Delay 
+Reverb 
+Reverb
+Send & Return 
+Delay
+Send & Return 
+Mix & Pan
+MIDI Engine & 
+Parameters
+Instrument
+Synth 2
+Instrument
+Synth 1
+Instrument
+Synth 3
+FX
+FX
+FX
+Sample
+Wavetable
+Granular
+Out Right
+MIDI Out
+Line in
+MIDI In
+Mic In
+Out Left
+Extended Audio In/Out using the USB 14 Audio Channels
+Step
+Mix
+Note
+Instrument
+FX1
+FX2
+Step
+Step
+Track 16
+Track 16
+1
+128
+Project
+Firmware
+Instruments
+Mod
+trackerLog
+microSD Card
+Tracker+
+Games
+Manual
+Projects
+Samples
+Project
+Project
+Pattern
+Song
+Master
+Instrument Audio Engine
+FX Applications
+Sampler
+A correctly formatted microSD must be installed to 
+operate Tracker+ fully. Card default folder shown.
+Loaded Project
+Maximum 255 Patterns per Project
+48 Instrument & 3 Synth Slots are available per Project
+A variety of effects are selectable from the list of 29 FX.
+E.g. G
+E.g. T
+E.g. m
+…..  16 Tracks / Voices per Project   …..
+…..  Max 128 Steps per Track   …..
+.….
+.….
+100 Projects are visible and accessible from within Tracker+.
+More than 100 could be stored on the microSD Card.
+Track 1
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+Pattern
+Tracker+ Essentials
+Limiter 
+Space 
+Bass Boost 
+EQ 
+Saturation 
+Macros
+
+
+=== PAGE 7 ===
+7
+Polyend Tracker+ Essentials Rev 1
+LCD Display
+7 Inch, LCD TFT 800 x 480 Display.
+Screen Buttons
+Dynamic [Screen buttons] are dependant on the 
+function displayed above each button.
+Grid Pads
+4 x 12 grid of silicon multifunctional [PADS].
+Dedicated Note Button
+Selection of the [Note] element of a step.
+Jog Wheel
+Rotary (Jog) wheel used for navigation and 
+parameter adjustment.
+Dedicated Instrument Button
+Selection of the [Instrument] for a step.
+Dedicated FX1 Button
+Effect selection for [FX1] of a step.
+Instrument Parameter Button
+Opens the [Instrument Parameter] options.
+Config Button
+Opens the [Config] options.
+Play Button
+Plays when pressing [Play] the pattern or song. Pressing 
+again stops playback. Play again restarts.
+Insert / Home Button
+Pressing [Insert/Home] will insert. Pressing [Shift] + 
+[Insert/Home] will return ‘home’, to the top of the pattern. 
+Rec Button
+Pressing [Rec] will toggle the record mode on or off for 
+editing patterns and perform settings. 
+Navigation Buttons
+Four navigation buttons [Up], [Down], [Left], [Right]. Used 
+to manoeuvre through menus and options.
+Dedicated Pattern Button
+[Pattern] mode / page selection.
+Sample Loader Button
+[Sample Loader] opens browser for 
+sample selection.
+Sample Playback Button
+[Sample Playback] opens playback 
+option menu.
+Sample Editor Button
+[Sample Editor] opens editor options.
+Sample Recorder Button
+[Sample Recorder] mode / page 
+selection.
+Song Mode Button
+[Song] mode / page selection.
+Dedicated FX2 Button
+Effect selection for [FX2] of a step.
+Perform Mode Button
+Selects the [Perform] mode / page.
+File Button
+Selects the [File] management options.
+Master Button
+Selects the [Master] mode / page containing master 
+effects and the mixer functions.
+Copy / Paste Button
+Pressing [Copy/Paste] will copy the selected item. 
+[Shift] + [Copy/Paste] will paste any copied item.
+Delete / Backspace Button
+Pressing [Delete/Backspace] will reset or step back. 
+[Shift] + [Delete/Backspace] will delete the selected item.
+Shift Button
+Pressing [Shift] + Another button will select its 
+secondary function.
+Note that while the screen brightness is adjustable, the 
+command buttons are not backlit which may be an issue in dark 
+environments and during live gigs and performances.
+Instrument
+Parameters
+Sample
+Loader
+Note
+Play
+Rec
+Master
+Song
+Pattern
+Backspace
+Delete
+File
+Sample
+Editor
+FX1
+Insert
+Home
+Perform
+Sample
+Playback
+Instrument
+Copy
+Paste
+Shift
+Config
+Sample
+Recorder
+FX2
+1
+4
+5
+10
+15
+20
+24
+5
+7
+15
+16
+18
+20
+24
+22
+26
+9
+10
+11
+12
+13
+14
+6
+11
+16
+21
+25
+7
+12
+17
+22
+8
+13
+18
+26
+9
+14
+19
+23
+8
+17
+19
+21
+23
+25
+6
+4
+2
+2
+3
+3
+1
+Tracker+ Essentials
+
+
+=== PAGE 8 ===
+8
+Polyend Tracker+ Essentials Rev 1
+Page Layout.
+Each page will display the information and control options for the selected 
+function. While this may be unique to the context there are some common 
+features and navigation principles that apply across all (or most) of the 
+generic pages of Tracker+. There are 16 tracks available, the first 8 can be 
+Sample, MIDI or Synth while tracks 9-16 focus on MIDI or Synths.
+1
+1
+2
+C5 40 ---- P-25
+C5 40 ----
+C5 40 ---- P-25
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+P 25
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+C5 02 ---- P-20
+C5 40 ---- H-25
+C4 12 ---- A 4
+C5 40 ---- P-20
+C5 40 ---- P-25
+C5 40 ---- P-25
+2
+3
+3
+4
+4
+5
+5
+6
+6
+7
+7
+9
+9
+11
+11
+13
+13
+15
+15
+8
+8
+10
+10
+12
+12
+14
+14
+Pattern
+1
+Length
+32
+Step Jump
+0
+Fill
+Preview
+Undo
+Redo
+More
+Track 2
+Track 3
+Track 4
+Track 1
+Pattern 1
+0m:00s
+P1.008
+1.Analog 3 18p
+Pattern
+1
+Length
+32
+Step Jump
+0
+Fill
+Preview
+Undo
+Redo
+More
+Pattern 1
+0m:00s
+P1.008
+1.Analog 3 18p
+Central area contains specific 
+information to the selected function 
+and settings.
+Function / Page currently 
+selected and represented on the 
+page. Where multiple pages exist 
+this will also be shown i.e. 2/3
+Time position in Minutes & 
+Seconds of the current 
+playhead. This is total play time 
+not time in a pattern or song
+Current Pattern and 
+Step position
+Transport status
+Physical Screen Buttons 
+represent the command displayed 
+on the screen directly above.
+Up to 8 selectable context based 
+options. These can be menu options, 
+navigation commands or blank.
+Options are dimmed when not currently 
+available. For example, these may need 
+an item to be selected first.
+Selected instrument displayed, 
+although not shown on all pages. 
+This shows current project when in 
+the ‘File’ menu page.
+NOTES
+Tracker+ Essentials
+Select Page
+
+
+=== PAGE 9 ===
+9
+Polyend Tracker+ Essentials Rev 1
+NOTES
+QWERTY Keyboard.
+Some pages will require text editing for naming tracks or projects etc. The 
+same functionality applies whenever the Alpha numeric pop-up editor is 
+used. The screen will display the QWERTY keys and the text to edit, while 
+the 4 x 12 pad grid will act as the keyboard’s  keys. The screen buttons are 
+used to enter, cancel or save.
+The characters and the title can be selected by using [Up], [Down], 
+[Left] or [Right] to navigate and Press [Enter] - 1st Screen Button to 
+select the character. 
+Option to [Cancel] - 7th from Left Screen Button is also possible. Save 
+when complete using [Save] - 8th Screen Button to save the name.
+QWERTY Keyboard is represented by the 4 x 12 Grid Pads. The ‘f’ and 
+‘j’ keys are highlighted. The selected character using arrows will also 
+be highlighted bright. and lit on the pads to serve as a reference. Using 
+the pads is a simpler method in entering characters.
+Enter
+Cancel
+Auto Name
+Save
+The screen will display the keys which are represented by the grid 
+pads. The ‘f’ and ‘j’ keys are highlighted to give a reference between 
+the pads and the screen characters. 
+The following Tracker+ buttons operate in the naming editor when the 
+naming screen is presented:- 
+• 
+[Up], [Down], [Left], [Right] will navigate the selection across the 
+keyboard. Will navigate left / right in the text of the name when 
+the name is highlighted .
+• 
+[Insert/Home] will insert the currently highlighted character into 
+the name at the cursor position.
+• 
+[Delete/Backspace] to delete characters and backspace in the 
+name from the text cursor position.
+1
+q
+a
+z
+4
+r
+f
+v
+7
+u
+j
+m
+0
+p
+-
++
+@
+2
+w
+s
+x
+5
+t
+g
+b
+8
+i
+k
+Backspace
+Caps Lock
+Space
+3
+e
+d
+c
+6
+y
+h
+n
+9
+o
+l
+Tracker+ Essentials
+
+
+=== PAGE 10 ===
+10
+Polyend Tracker+ Essentials Rev 1
+Summary of Configuration Options
+A number of options can be set in the ‘Config’ menu. These defaults may be good enough to get 
+started but specific changes may suit certain workflows and situations better. The details of these 
+will be covered in relevant main manual sections. An overview of global settings is provided here.
+Tracker+ Essentials
+Menu
+Option
+Description
+Book Section
+Project Settings
+Performance Presets
+Allows performance presets to be saved either as 
+a global configuration or local to each project.
+Performance 
+Mode
+Project Settings
+Pattern Divider 
+Sets the highlight level for the selected step 
+offering better pattern visualisation.
+Pattern Format
+Project Settings
+Pads Scale
+Sets the scaling of the 4 x 12 grid pads when used 
+for note playback / selection.
+Sequencing 
+Steps
+Project Settings
+Pads Root Note
+Sets the root note between C2 - C4 of the bottom 
+left pad in the 4 x 12 grid pad matrix.
+Sequencing 
+Steps
+Project Settings
+Pads Layout
+Sets the note offset in semitones 1-12 for the pad 
+located directly above the root note in pad grid.
+Sequencing 
+Steps
+Project Settings
+Anti-aliasing
+Anti-aliasing set to ‘On’ gives a cleaner sound for 
+sample playback. Off is more lo-fi vintage feel.
+Project Settings
+Limiter Mode
+Sets the characteristics of the limiter attack and 
+release between subtle and extreme.
+Master Effects
+Project Settings
+Sends Mode
+Sets the sends to pre-fader i.e. independent of 
+volume or post-fader.
+Master Effects
+Project Settings
+Extra Headroom
+Avoid clipping by adding extra headroom in the 
+output audio.
+Project settings
+Snap to Zero
+Snap audio crossings to zero points, Used as 
+green markers in the sample playback page.
+Instruments
+General
+Radio Region
+Sets the radio frequencies to match the 
+geographic region, Europe, Australia, US, Japan.
+Audio
+General
+Display Brightness
+Adjusts the brightness level of the 7” display 
+between three settings: High, Medium, Low.
+System
+General
+Display Theme
+The colour scheme of the screen. Original has the 
+dark background while monochrome is bright. Also 
+10th Anniversary theme is available.
+System
+General
+Display Font
+Text font option. Original has the classic consolas 
+look while ‘new’ is smaller, more standard.
+System
+General
+Pad Brightness
+Adjusts the brightness of the 4 x 12 grid pads: 
+High, Medium, Low.
+System
+General
+Pads Preview
+Allows the grid pads to be used to highlight notes 
+in the active track or pattern lines in the grid editor.
+
+
+=== PAGE 11 ===
+11
+Polyend Tracker+ Essentials Rev 1
+Tracker+ Essentials
+Menu
+Option
+Description
+Book Section 
+General
+Recording Options
+Sets the options for what is recorded i.e. notes, 
+quantization, micro-timing, velocity.
+Sequencing 
+Steps
+General
+Numbering Mode
+Sets all numbers to the  decimal starting at 0 or 1 or 
+hexadecimal format. Classic look and feel.
+System
+General
+Pattern Arrangement
+Sets the pattern display to the traditional vertical 
+original, vertical revolver or horizontal display.
+Patterns
+General
+Pattern Top Info
+Allows the top part of the pattern screen to display 
+only the track name, additional info or off.
+Patterns
+General
+Line In Channel
+Selects the audio input of the line in between stereo, 
+mono left or mono right.
+Audio
+MIDI
+Clock In
+Sets the source of the master clock, Internal 
+(default) or external USB or MIDI In jack.
+MIDI
+MIDI
+Clock Out
+Sets the Tracker+ Mini clock output. Off, USB, MIDI 
+Out jack, USB + MIDI Out jack.
+MIDI
+MIDI
+Transport In
+Sets the source of transport control commands, 
+Internal (default) or external USB or MIDI In jack.
+MIDI
+MIDI
+Transport Out
+Sets the output of transport control commands, Off, 
+USB, MIDI Out jack or USB+MIDI jack options.
+MIDI
+MIDI
+Notes In
+Sets the input routing of external notes in. Set to Off, 
+USB, MIDI In jack or USB+MIDI jack options.
+MIDI
+MIDI
+Notes Input Channel
+Sets the MIDI channel for incoming notes from 
+external gear. Select All channels or Ch 1-16.
+MIDI
+MIDI
+MIDI Out 
+Sets the MIDI output routing between, Off, USB, 
+MIDI Out jack or USB+MIDI jack options.
+MIDI
+MIDI
+CC In
+Sets CC (control change) input routing to Off, USB, 
+MIDI In jack, USB+MIDI In jack.
+MIDI
+MIDI
+CC In channel
+Sets MIDI channel for CC (control change) incoming 
+messages. Select All channels or Ch 1-16.
+MIDI
+MIDI
+Middle C
+Sets middle C as C-3, C-4, C-5, C-6. Calibrates 
+range in Tracker+ with external gear.
+MIDI
+MIDI
+Clock Sync Correction
+Latency compensation for incoming sync. -6 to +6. 
+Use with MIDI Jack or USB clock in.
+MIDI
+
+
+=== PAGE 12 ===
+12
+Polyend Tracker+ Essentials Rev 1
+Tracker+ Essentials
+Menu
+Option
+Description
+Book Section
+Metronome
+State
+Turns the metronome on or off for live recording.
+Projects
+Metronome
+Pre Roll
+Provides a count in of 4 before starting to record.
+Projects
+Metronome
+Time signature num
+Upper numerator of the time signature
+Projects
+Metronome
+Time signature denum
+Lower denominator of the time signature
+Project
+Metronome
+Volume
+Volume level of metronome
+Projects
+Firmware
+Firmware Update
+Activates a firmware update based on the OS 
+located on the microSD card in the ‘firmware’ folder.
+System
+Firmware
+Current version 
+Displays current version of installed OS. Visual 
+indicator only.
+System
+Firmware
+Build
+Firmware build version display
+Firmware
+Reset config
+Resets this configuration menu to the default 
+original settings.
+System
+USB
+USB Storage
+A USB connected PC / Mac will see the Tracker+ 
+microSD Card as an external storage drive. Files 
+can be then be transferred directly to / from the 
+installed microSD when in this mode.
+System
+USB
+USB Audio
+Enables USB audio In, Out or both. Can also 
+disable the USB audio by setting to off.
+Audio
+The book sections referred are found in the main manual available as a separate download from Polyend.
+
+
+=== PAGE 13 ===
+13
+Polyend Tracker+ Essentials Rev 1
+Tracker+ Essentials
+NOTES
+Configuring a Pattern.
+Pattern and step editing is performed in ‘Pattern’ Mode. The first 
+requirement is to create the pattern itself where steps can later be added to 
+create the melody or beat. Commands for the pattern are available from the 
+dynamic screen buttons located at the bottom of the page. These will 
+change depending on the mode or selection made.
+The dynamic screen buttons labelled at the bottom of the page will control options for creating patterns. 
+Underscored red color indicates if recording mode is required to be on to access the command.
+Pattern
+1
+Length
+32
+Step Jump
+0
+Fill
+Preview
+Undo
+Redo
+More
+Render
+Selection
+Invert
+Duplicate
+Pattern
+Expand
+Pattern
+Shrink
+Pattern
+Copy
+Pattern
+Paste
+Pattern
+More
+Pattern
+Name
+Track
+Name
+More
+Menu Option
+Function
+Description
+Pattern
+Pattern Selection
+Selects a pattern to edit. This will select a pattern number 
+between 1-255 in the project.
+Length
+Pattern Length
+Adjust the number of step rows in the pattern. Default is 
+32 but a maximum of 128 rows are available in a pattern.
+Step Jump
+Programming Aid
+Assists in recording steps with the pads. Will 
+automatically jump the selection cursor in defined steps.
+Fill
+Programming Aid
+Assists in programming steps. Will automatically fill steps 
+based on defined selection criteria
+Preview
+Instrument Preview Will play the instrument for the step to allow previewing of 
+the sound.
+Undo
+Undo Last 
+Command
+If available, will reset the previous state prior to the last 
+action, effectively undoing the last (up to 20) commands.
+Redo
+Redo Last 
+Command 
+If available, will restore the previous state after to the last 
+action, effectively redoing the last (up to 20) commands.
+Render 
+Selection
+Bounce Audio
+Renders the selection to a new audio sample. Useful to 
+use elsewhere or to reduce track consumption.
+Invert
+Invert Steps
+Inverts all steps in the selection vertically
+Duplicate 
+Pattern
+Extends Pattern
+Extends the entire pattern and its associated steps, 
+extending the pattern to double the length.
+Expand 
+Pattern
+Extends Pattern
+Extends the pattern by adding blank steps in between 
+existing steps, extending the pattern to double the length.
+Shrink 
+Pattern
+Contracts Pattern
+Contracts the pattern length by deleting every 2nd step, 
+reducing the pattern to half the length.
+Copy 
+Pattern
+Copy 
+Copies the entire pattern to the virtual clipboard.
+Paste 
+Pattern
+Paste
+Pastes the copied pattern from the virtual clipboard into 
+the location starting at the current position.
+Pattern 
+Name
+Name the Pattern
+Opens the alpha-numeric keyboard to change or edit the 
+current pattern name.
+Track Name Name the Track
+Opens the alpha-numeric keyboard to change or edit the 
+current track name.
+More
+Change Page
+Selects the next page of commands
+
+
+=== PAGE 14 ===
+14
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Pattern and step editing is performed in ‘Pattern’ Mode, selected by 
+pressing the [Pattern] button. To edit steps, select [Rec]. The view in pattern 
+mode can be changed in the config options.
+Track 1
+– – –
+C5
+– – –
+– – –
+– – –
+– – –
+– – –
+– – –
+– – –
+C5
+C4
+D2
+– – –
+– – –
+– – –
+– – –
+– – –
+– – –
+C4
+– – –
+– – –
+– – –
+– – –
+– – –
+Track 5
+Track 3
+Track 7
+Track 2
+Track 6
+Track 4
+Track 8
+Track 1
+– – –
+– – –
+– – –
+– – –
+C5
+C5
+1
+2
+– – –
+– – –
+– – –
+– – –
+C5
+C5
+– – –
+– – –
+– – –
+– – –
+Track 2
+Track 1
+– – –
+– – –
+– – –
+– – –
+C5
+C5
+– – –
+– – –
+– – –
+– – –
+C5
+C5
+– – –
+– – –
+– – –
+– – –
+Track 2
+Press [Up] or [Down] or Turn (Jog) to navigate 
+vertically in the Tracker+ grid. Cursor will wrap 
+past the end to the start when using arrow keys
+Press [Shift] + [Insert / Home] to reset 
+the cursor position to the start, step 1
+Step Row
+Change the pattern info for the top bar in the 
+Config settings: General > Pattern top info.
+Top bar: Off, Tracks Only or additional Info
+Switch to 8 Track view.
+Displays a single element across blocks of 8 tracks
+[Pattern] + [Note] - Displays 8 tracks, with only the note parameters
+[Pattern] + [Instrument] - Displays 8 tracks, with only the instrument parameters
+[Pattern] + [FX1] - Displays 8 tracks, with only FX1 parameters
+[Pattern] + [FX2] - Displays 8 tracks, with only FX2 parameters
+Hold [Pattern] + A combo of max 2 parameter buttons: Note, Instrument, FX1, FX2 to 
+display 2 parameters per track across 8 tracks.
+Press [Pattern] to return to 4 tracks, all step parameters
+To select a step
+Press [Left] or [Right] to navigate 
+horizontally in the Tracker+ grid
+1
+1
+2
+C5 40 ---- P-25
+C5 40 ----
+C5 40 ---- P-25
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+P 25
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+C5 02 ---- P-20
+C5 40 ---- H-25
+C4 12 ---- A 4
+C5 40 ---- P-20
+C5 40 ---- P-25
+C5 40 ---- P-25
+2
+3
+3
+4
+4
+5
+5
+6
+6
+7
+7
+9
+9
+11
+11
+13
+13
+15
+15
+8
+8
+10
+10
+12
+12
+14
+14
+Pattern
+1
+Length
+32
+Step Jump
+0
+Fill
+Preview
+Undo
+Redo
+More
+Track 2
+Track 3
+Track 4
+Track 1
+Pattern 1
+0m:00s
+P1.008
+1.Analog 3 18p
+C5 40 ---- P-25
+C5 40 ----
+C5 40
+P 25
+-- --- ---- ----
+-- --- ---- ----
+P 25
+-- --- ---- ----
+-- --- ---- ----
+-- --- ---- ----
+Track 1
+The ‘top down’ view can be changed 
+to ‘left right’ in the Config settings; 
+General > Pattern Arrangement
+Tracker+ Essentials
+
+
+=== PAGE 15 ===
+15
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Steps.
+A step is a building block which triggers events such as playing a note or 
+beat or activating a MIDI action and is used for creating patterns. Steps are 
+programmed across pattern rows which represent each of the eight 
+available tracks in the pattern sequence. 
+A step is a combination of 4 main components each of which has a 
+dedicated selection button:-
+Note. This sets the pitch of the step and is important for creating 
+melodies or beats based on sample mapped drum hits. 
+Instrument. This is synth or a sample and the combination of 
+parameters and settings assigned to it. Also for setting MIDI Channel.
+FX1. The first effect slot where the modulation and audio effects can be 
+applied for the step.
+FX2. The second effect slot where the modulation and audio effects can 
+be applied for the step.
+P 25
+- -
+- -
+C5 40
+Step Dedicated Parameter Buttons
+Pattern page is selected by pressing [Pattern] while the Note, Instrument, 
+FX1 and FX2 have dedicated buttons for editing the selected step.
+The step selection box will show solid 
+colour on the selected option part.
+Example: Note is shown highlighted here.
+Note that sample based instruments can only be configured on Tracks 1-8. All tracks can use a synth 
+or MIDI based instrument.
+Parameters are colour coded in line with 
+the dedicated step function buttons
+Note
++ Octave 
+Effect Type 
++ Value
+Instrument 
+number, Synth 
+slot or MIDI 
+Effect Type 
++ Value
+Note
+Pattern
+FX1
+Instrument
+FX2
+C5
+40
+----
+P 25
+
+
+=== PAGE 16 ===
+16
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Steps are sequenced in the Tracker+ each of which contains a Note, 
+Instrument, and two FX slots options.  It is good practice to structure these 
+into tracks of relevance. For example kick drum on track 1, especially at the 
+starting point. 
+Pattern Format Set, 
+Instrument Pool Populated
+Navigate to the first step to 
+create / edit. It may help to 
+develop individual tracks first
+Select [Rec] Recording Mode.
+Step selection box red.
+Use [Rec] + [Play]
+Live Recording to 
+capture real time steps 
+and parameters.
+Press [Play]
+To play. Also Press [Rec] to 
+exit record mode.
+Hold [Note] + [PAD]
+To select the step note
+Hold [FX2] + [PAD]
+To select the effect
+Hold [Instrument] + [PAD]
+To select Instrument
+Hold [FX2] + [PAD]
+To select the effect
+Repeat Cycle to add 
+more steps manually. 
+Use (Jog) to edit 
+parameters
+Use ‘Fill’ and ‘Step 
+Jump’ to assist with 
+populating multiple 
+steps
+Pre-Requisite
+Select First Step
+Note
+FX1
+Edit & Add
+Instrument
+Fill & Jump
+FX2
+Recording Mode
+Live Recording Mode
+Create More Steps / 
+Develop Other Tracks
+Play
+E
+S
+Tracker+ Essentials
+
+
+=== PAGE 17 ===
+17
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Manual Step Entry
+Track 1
+Track 4
+Track 3
+Track 2
+Recording mode on to edit steps in the pattern
+Steps can be added individually.
+Example: Hold [Note] + [PAD] to select an option.
+Subsequent steps are recorded when pressing pads.
+This will record iteratively the selected parameter into 
+rows defined by the ‘Step jump’ intervals.
+Playing [PAD] in recording mode will record the respective parameter value depending 
+on 1) the parameter selected for the step and 2) the actual pad number chosen.
+Example shows Pad 2 selected.
+Note Selected, Pad 3 which represents D6. 
+Instrument Selected, Pad 3 which represents Instrument #3. 
+FX1 Selected, FX Effect not applied. 
+FX2 Selected, Pad 3 which represents effect #3 - Volume = 50. 
+Quick Tap Dedicated Parameter Button to lock the selection e.g. [Instrument]
+Select multiple step rows with [Shift] + [Up] or [Down]. 
+Also across multiple tracks [Shift] + [Left] + [Down]
+On the top row [Shift] + [Up] will select all steps in the 
+track. Press [Shift] + [Up] + [Up] to select all steps.
+Edits to any existing parameters can be made 
+simultaneously, but only If a parameter is already set. 
+These changes will be relative to the original value. 
+Unassigned elements of a step will remain empty.
+Step Jump
+1
+Step Jump
+2
+C5 40 ---- P 25
+D6 03 ---- V 50
+D6 03 ---- V 50
+D6 03 ---- V 50
+D6 03 ---- V 50
+D6 03 ---- V 10
+D6 03 ---- V 10
+D6 03 ----
+D6 03 ----
+----
+----
+----
+----
+--- ---
+--- ---
+V 50
+V 30
+Rec
+
+
+=== PAGE 18 ===
+18
+Polyend Tracker+ Essentials Rev 1
+NOTES
+When steps are added using a [PAD] the active step is automatically 
+advanced to the next step when complete. The intervals for this are based 
+on the ‘Step Jump’ feature. This is useful for creating patterns with defined 
+intervals and speeding up workflow.
+Step Jump Examples
+Track 1
+Track 2
+Recording mode on to edit steps in the pattern
+Step Jump
+0
+1
+1
+1
+3
+5
+2
+2
+2
+4
+6
+Step Jump
+1
+Step Jump
+4
+[PAD]
+[PAD]
+[PAD]
+The selected step will not 
+advance and will remain at the 
+same step position
+The selected step will 
+advance automatically to 
+select the next step position
+The selected step will 
+advance four steps forward. In 
+this example selecting the 
+next ‘on beat’ position.
+The Step Jump setting is useful when populating specific intervals, for example each on beat step or 
+each off beat step or alternate steps for percussion. This speeds up the workflow and helps in 
+creating interesting sequences.
+=
+C5 40 ---- P 25
+C5 40 ---- P 25
+C5 40 ---- P 25
+C5 40 ---- P 25
+C5 40 ---- P 25
+D5 40 ---- P 25
+D5 40 ---- P 25
+D5 40 ---- P 25
+D5 40 ---- P 45
+D5 40 ---- P 45
+D5 40 ---- P 45
+Rec
+Tracker+ Essentials
+
+
+=== PAGE 19 ===
+19
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+FX Steps.
+The two FX slots can be populated from a library of FX effects. Each FX 
+has an effect type plus the associated value.
+FX Type Description
+-
+None. Empty FX1 or FX1 effect. No effect applied.
+!
+Off. Will toggle off the effect used on the prior effect step.
+V
+Volume or Velocity (NOTE OFF) for MIDI. 
+P
+Positions the step sound left / right in the stereo plane.
+M
+Micro Tune. Fine pitch tuning of note and MIDI Out.
+G
+Glide time from previous to current note - based on the note pitch.
+T
+Tempo change. Changes the pattern tempo.
+I
+Swing. Applies a swing from any step track for the entire pattern.
+m
+Micro move nudges forward by a small amount the step position.
+q
+Gate length. Adjusts the step note gate length.
+C
+Chance is the probability of a note playing.
+R
+Roll, beat repeats the note also with options for volume or pitch inc/dec.
+A
+Arpeggiator, for creating pitch based melodies. (Also needs MIDI Chord)
+n
+Random note. Sets a range of notes for random playback.
+i
+Random instrument. Sets a range of instruments for random playback.
+f
+Random FX. Sets a random FX to the step from a selected range.
+v
+Random Volume. Sets a random velocity variation on each cycle
+r
+Reverses sample playback. Played end to start.
+p
+Sets the playback position for a sample start, wavetable or granular position
+S
+Plays the selected slice for the step - sliced samples
+g
+Volume LFO Rate
+h
+Panning LFO Rate
+j
+Filter LFO Rate
+k
+Position LFO Rate
+I
+Finetune LFO Rate
+
+
+=== PAGE 20 ===
+20
+Polyend Tracker+ Essentials Rev 1
+FX Type Description
+D
+Overdrive amount for the step
+L
+Low Pass Filter Cutoff. Frequency represented by 0-100%
+B
+Low Pass Filter Cutoff. Frequency represented by 0-100%
+H
+Low Pass Filter Cutoff. Frequency represented by 0-100%
+s
+Delay. Amount of send effect 0-100%
+t
+Reverb. Amount of send effect 0-100%
+E
+Bit depth. 4 Bits to 16 Bits.
+U
+Tuning. -24 semitones to +24 Semitones. 4 Octave range.
+F
+Slide up amount. Range is 0-255 with 1/16th semitone increments.
+J
+Slide down amount. Range is 0-255 with 1/16th semitone increments.
+a
+CC A / Macro 1 (MIDI CC Number of Synth Macro). MIDI also needs an 
+assigned channel & Instrument to the step. 
+b
+CC B / Macro 2 (MIDI CC Number of Synth Macro). MIDI also needs an 
+assigned channel & Instrument to the step. 
+c
+CC C / Macro 3 (MIDI CC Number of Synth Macro). MIDI also needs an 
+assigned channel & Instrument to the step. 
+d
+CC D / Macro 4 (MIDI CC Number of Synth Macro). MIDI also needs an 
+assigned channel & Instrument to the step. 
+e
+CC E / Macro 5 (MIDI CC Number of Synth Macro). MIDI also needs an 
+assigned channel & Instrument to the step. 
+f
+CC F / Macro 6 (MIDI CC Number of Synth Macro). MIDI also needs an 
+assigned channel & Instrument to the step. 
+0
+MIDI Chord, note output. (Used also with Arp).
+NOTES
+Tracker+ Essentials
+
+
+=== PAGE 21 ===
+21
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Recording Audio
+Sampling in Tracker+ takes place in the ‘Sample Recorder’ page. This is 
+the first step in the process and is followed by editing the audio captured. 
+Sampling in this page can be stereo or mono L or R (set in configuration) 
+from the Line In or Radio, Mic LG or HG audio sources. 
+Connect an external synth or 
+audio source or microphone 
+or tune the radio to a channel.
+Open the [Sample Recorder] 
+page to set up for sampling.
+Select the source to record from. 
+Options are; Line In, Mic, Radio.
+Save only to the 
+microSD card.
+Save to the microSD 
+card and also load into 
+the instrument list.
+Program using the 
+instrument into a pattern.
+Adjust gain to set to a 
+suitable level.
+Play the connected 
+audio source.
+Press [Record] to capture 
+the audio sample.
+[Stop] sampling.
+Max ~350 Sec Stereo 
+audio sample*.
+*Sample Time: Max ~350 Sec Stereo / ~700 Sec Mono.
+Save the sample.
+Trim the start and end 
+of the sample to select 
+the area to save.
+Connect Gear
+Sample Recorder
+Gain
+Play
+Save
+Record
+Crop
+Stop
+Select Source
+Save to microSD
+Save & Load
+Pattern
+E
+S
+
+
+=== PAGE 22 ===
+22
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Audio Sources
+There are a number of sources where Tracker+ can access audio. Some of 
+which are ‘live’ sources and can easily be sampled. Others manually 
+managed or rendered within the device.
+Tracker+ Essentials
+USB
+Power
+Out
+Line In
+Mic
+MIDI Out MIDI In
+Micro SD
+6
+Folder
+3
+3
+7
+2
+2
+4
+6
+7
+5
+4
+1
+1
+5
+Render
+Bounce Internal Audio.
+Microphone Input
+External microphone.
+Tracker+ is supplied with a 3.5mm Stereo Male Jack to 2 x 6.3mm Mono Female Socket adapter to allow 
+interfacing with external gear and using the more common 6.3mm mono cables.
+USB Audio
+The USB Audio interface allows sending 14 stereo tracks: a master stereo track, eight stereo 
+sample-based tracks, three synth instrument tracks, reverb and delay sends to a connected DAW or 
+compatible audio device. USB Audio is designed for recording completed songs. Composing, and 
+sound design over USB can cause audio playback issues. Scrolling synth patches during audio 
+playback via USB is not recommended. Loading projects while USB audio is engaged can also 
+cause connection issues.
+Mass Storage Device
+Audio files can be transferred to/from the Tracker+ with a PC or Mac. Tracker acts like a remote hard 
+drive when connected.
+microSD Card
+Audio samples are stored on the microSD Card. These can be sampled and stored from within 
+Tracker+ but also can be manually transferred onto the microSD card from and external source 
+using a PC or Mac. 
+FM Radio
+Tracker+ has an inbuilt FM radio. Reception can be improved by connecting an arial or cable into the 
+output connection. The reception region can be set in the radio function. Radio can be recorded and 
+sampled directly within Tracker+.
+Mic Input
+3.5mm Microphone Input jack which allows Mono (TS) audio inputs. Stereo signals are converted to 
+mono when recorded as L or R. This does not supply 48V phantom power so typically use a dynamic 
+microphone. Mic has a Low Gain - LG and High Gain - HG option.
+Render
+A feature which is available with the internal functions is render. This bounces or exports an audio 
+file based on the selected pattern / tracks which can then be made immediately available as a 
+sample or to use from the instrument list.
+Line Input
+3.5mm Input jack which allows Stereo (TRS) audio inputs. Stereo signals are recorded as stereo.
+Line Input
+External audio gear connection.
+Radio
+Sample from FM Radio 
+USB Audio
+14 Stereo Tracks
+Mass Storage Device
+Transfer files to / from the device
+microSD Card Samples
+Audio samples 
+
+
+=== PAGE 23 ===
+23
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Sample Playback Overview
+An instrument can be a synth or a sample, edited or raw. A raw ‘.wav’ 
+sample can be added to the instrument list. When a sample is edited and 
+developed further as an instrument it can be saved as a ‘.pti’ instrument, for 
+example ‘drumkit1.pti’. This can be used across all projects or distributed to 
+other producers. Sample based instruments are only used on steps in 
+Tracks 1-8 while MIDI and Synths can be used on all tracks.
+This section covers the basics of using .pti instruments, and not the end-to-
+end capturing, editing and  sampling which is covered elsewhere. 
+How a sample is applied as an instrument is handled in the ‘Sample 
+Playback’ page, accessed by the dedicated [Sample Playback] button.
+Type
+Play Mode
+Description
+Play
+1-Shot
+Basic sample playback. Plays start to end once. 
+Loop
+Forward Loop
+Sample playback. Plays start to end and cycles on loop. 
+Loop
+Backward Loop Sample playback. Plays end to start and cycles on loop.
+Loop
+Pingpong Loop
+Sample playback. Plays start to end to start on loop.
+Slice
+Slice
+Sample is sliced
+Slice
+Beat Slice
+Sample is sliced
+Synthesizer
+Wavetable
+Sample is used as the wavetable, like a synth. 
+Synthesizer
+Granular
+Sample grains are used and played, like a granular synth
+Preview
+0.000s
+Start
+0.000s
+Zoom
+1.00
+End
+6.000s
+Play Mode
+Sample Playback
+0m:00s
+P3.002
+1-Shot
+Slice
+Forward loop
+Beat Slice
+Backward loop
+Wavetable
+Pingpong loop
+Granular
+16.hh3
+Sample
+Playback
+Current Instrument 
+Selected
+Sample Waveform
+Display matches play mode.
+Play Mode List.
+How the sample will be 
+played in the instrument
+Playback Parameters
+settings, based on play 
+mode, for sample playback
+Note: Playback is not visually animated in the waveform display when playing.
+
+
+=== PAGE 24 ===
+24
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Synthesizers.
+Tracker+ has 3 synthesizer slots each of which can be assigned 1 of 5 
+synthesizer models. Each synthesizer has six editable, model dependant 
+macros directly available within the knob section and which contribute to 
+the overall synth patch. 
+PERC is a unique drum 
+machine that is loaded into 
+one synth engine instrument. It uses 1 voice 
+but can play back up to five unique drum 
+sounds at once. Drums include a Kick, Tom, 
+Snare, open and closed Hi-Hats, Cymbal, 
+and Perc. The perc drum has multiple 
+options including snare, clap, cowbell and 
+more. Each drum is individually tweakable 
+with multiple parameters for each hit, for a 
+massive variety of drum tones.
+Hold [Instrument] to select a synth for the step. On a synth instrument step to select 
+the synth to assign a model, Press [Instrument Parameters]. Select from the 5 
+available synth models to assign per slot or load a synth patch.
+More new synth models will be added to the Tracker+ option list in future OS updates.
+ACD
+VAP
+PERC
+FAT
+WTFM
+ACD transports you back to 
+the golden age of electronic 
+music with its recreation of iconic single-
+oscillator monophonic analog synths. Paying 
+homage to Japanese legends, ACD not only 
+captures the essence of these classics but 
+also propels you into the future with a 
+lightning-fast synthesis experience. It offers a 
+rich palette of options, ranging from faithful 
+monophonic analog recreations to entirely 
+unique and innovative soundscapes.
+VAP 
+is 
+a 
+virtual 
+analog 
+polysynth,  boasting a dual-
+oscillator 
+architecture 
+and 
+a 
+versatile 
+modulation matrix. Complete with multiple 
+filter flavors and pulse width modulation, VAP 
+allows you to sculpt intricate patterns. This 
+engine shines when it comes to creating 
+mesmerizing, evolving textures, crafting lush 
+pads, and conjuring up one-of-a-kind sound 
+effects.
+FAT is a powerhouse synth 
+engine that epitomizes the 
+lush, vintage warmth of classic analog 
+synthesizers. At its core, FAT  hosts three 
+virtual analog oscillators and offers an 
+intuitive drift and detune control, ensuring 
+you can effortlessly sculpt iconic massive 
+sounds. The presets contain two distinct 
+flavors of ladder filters inspired by two unique 
+analog classics.  It offers a versatile range of 
+sounds, from deep reese basses to ethereal 
+pads, 
+expressive 
+leads 
+and 
+classic 
+keyboards. 
+WTFM is a unique 2-operator 
+FM synth engine that utilized 
+wavetable based oscillators driven by a 3x 
+feedback system. The operators are based 
+on sweeping wavetables, ranging from 
+fundamental sine waves to harmonically rich 
+timbres, offering a diverse tonal palette. 
+Whether you're sculpting smooth, enveloping 
+pads or crafting cutting-edge metallic tones, 
+WTFM empowers you to achieve unique 
+textures with precision and authenticity.
+
+
+=== PAGE 25 ===
+25
+Polyend Tracker+ Essentials Rev 1
+NOTES
+▌ SELECTING A SYNTH
+1. Ensure the project in which to work is open and active and a pattern 
+selected for editing.
+2. Select a synth for the step instrument. On the desired step, Hold 
+[Instrument] + Turn (Jog) or use arrows to select Synth 1, Synth 2 or 
+Synth 3 instrument slot. 
+3. The selected Synth and its assigned model will be applied to the step. 
+Synths can be applied on steps for any of the 16 tracks.
+4. To edit the synth and change the model for the synth on the selected 
+step, Press [Instrument Parameters]. Ensure page 1/2 is selected.
+5. Press [Model] to cycle the synth model for the selected slot.
+6. A synth patch can be loaded by pressing [Load Patch].
+7. Other parameters are available in the instrument parameter page. To 
+configure and design a synth patch, Press [Edit Patch] to open the 
+patch editor to create and save sounds.
+8. The synth macros allow assignment of specifically assigned easy 
+access parameters. These are available for adjustment on page 2/2 of 
+the instrument parameters page and are assigned within the patch.
+Tracker+ Essentials
+Model
+Polyphony
+1
+Gain
+-9.00 dB
+Delay Send
+-inf dB
+Panning
+0
+Load
+Patch
+Edit
+Patch
+Reverb Send
+-inf dB
+Synth Parameters 1/2
+0m:00s
+P1.008
+Patch:
+Init
+Synth 3 (FAT)
+M1 Timbre
+0
+M2 Movement
+0
+M3 Experiment
+0
+M6 Filter En
+0
+M4 Filter Cu
+0
+M5 Filter Re
+0
+Synth Macros 2/2
+0m:00s
+P1.008
+Synth 3 (FAT)
+Synth model, editor and patch selection is available on page 1 and patch specific macros are 
+available within page 2 of the instrument parameters page. 
+Example Synth Parameters & Macros
+Timbre
+Filter Cutoff
+Movement
+Filter Resonance
+Experiment
+Filter Env Amount
+Macro 1
+ACD
+VAP
+FAT
+WTFM
+PERC
+Macro 4
+Macro 2
+Macro 5
+Macro 3
+Macro 6
+
+
+=== PAGE 26 ===
+26
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Synthesizer Patch Editor
+Tracker+ has 3 synthesizers which operate with patches to define the 
+precise sound. Each patch will be representative of the synth model 
+assigned. Parameters can be controlled directly from the macro knobs. A 
+patch can be created and edited within Tracker+ patch editor. The macro 
+assignments and parameter settings of the knobs can also be configured 
+for each patch.
+Patches can be edited and saved when selecting a synth step. The synth 
+patch editor is located in the [Instrument Parameters] section.
+• 
+The model is changed directly on instrument parameter page 1.
+• 
+Select [Load Patch], button 7 to load a patch from the microSD.
+• 
+Select the [Edit Patch], button 8 to open the synth editor. 
+• 
+The 4x4 Pads will select the synth function to edit. The available 
+options will be based on the synth model type selected.
+• 
+Navigate parameters with the arrow buttons and use the (Jog) 
+control for parameter value editing.
+3 Synths are available, each can be assigned one of the 5 synth models
+The patch editor is located [Instrument parameters] - Page 2 When a Synth is selected.
+Synth 1
+Synth 2
+Synth 3
+Patch
+Patch
+Patch
+Patches for each synth model can be edited and can 
+be saved to the microSD card. These then are 
+available to be loaded per synth slot.
+Save
+Save As
+Init
+Patch
+Oscillator
+Fatness
+10
+Brightness
+100
+Timbre
+0
+LFO Amt
+5 %
+Noise
+0 %
+Reset
+On
+Osc
+LFO 1
+M3
+M7
+Filter
+Voice
+M4
+Amp Env
+M1
+M5
+Env 1
+M2
+M6
+Back
+Edit Patch: sharp quince
+Synth 3 (FAT)
+M
+M
+M
+M
+M
+M
+M
+Sub Folders
+microSD Card
+/Root Directory 
+/Patches
+/ACD
+/FAT
+/VAP
+/PERC
+/WTFM
+
+
+=== PAGE 27 ===
+27
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Song Mode
+Select the song page by pressing [Song] or hold [Song] to temporarily 
+display the page from within another page, reverting back to this page when 
+[Song] is released. The interface for song mode is by default empty other 
+than a single slot 1 with pattern 1. Up to 255 Song slots are available. 
+Pressing [Play] in song mode will play the song not just individual pattern. 
+Tracks in a pattern for the slot are represented as cell clips.
+Rec
+Play
+Pattern
+Play
+Song
+Undo
+Add
+Slot
+Delete
+Slot
+Pattern
+Tempo
+130.0 BPM
+Song
+0m:00s
+P1.001
+1
+2
+3
+3
+4
+5
+6
+Track 1
+Track 5
+Midi 9
+Midi 13
+Track 2
+Track 6
+Midi 10
+Midi 14
+Track 4
+Track 8
+Midi 12
+Midi 16
+Track 3
+Track 7
+Midi 11
+Midi 15
+Pattern
+Pattern
+Pattern number assigned 
+to the song slot
+Slot
+Each slot row hosts a pattern 
+and plays top to bottom
+‘Green’ Mode - [Rec] Off.
+Only playback options are available
+‘Red’ Mode - [Rec] On.
+Playback and edit options are available
+Dark Tracks
+Track has no steps in the selected pattern. There 
+are no steps to play in a song.
+White Tracks
+Track is unmuted and has active steps in the 
+pattern. These will be audible in the song.
+Muting Tracks
+Muting is not performed in song mode. Use the Pattern page or the Track Mixer - Master Page 2/3 to mute / unmute.
+Dimmed Tracks
+Track is muted and has active steps in the 
+pattern. These will not be audible in the song.
+Play 
+Pattern 
+Play 
+Pattern 
+Play 
+Song
+Off
+On
+Play 
+Song
+Undo
+Add 
+Slot
+Delete 
+Slot
+Pattern 
+<<
+>>
+Tracks
+Columns represent each of 
+the tracks in a pattern
+Track Cell Clips
+Tracker+ Essentials
+
+
+=== PAGE 28 ===
+28
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+MIDI
+A pre-requisite to working with MIDI is to ensure that the configuration 
+settings in the [Config] menu are applied for the desired MIDI gear setup. 
+These will dictate if Tracker+ leads on functions like clock and transport or if 
+it acts as a secondary follower, responding to control and synchronisation 
+from another primary device control. Also Note and CC behaviour is set.
+Velocity can be recorded from an external MIDI controller, but this must be 
+set in the recording options.
+Menu
+Option
+Description
+MIDI
+Clock In
+Sets the Tracker+ clock between the internal 
+generated clock (default) or an external clock 
+received through the USB or MIDI In jack.
+MIDI
+Clock Out
+Sends the Tracker+ clock output to other devices. 
+Off, USB, MIDI Out jack or USB+MIDI jack options.
+MIDI
+Transport In
+Sets the source of transport control commands, 
+Internal (default), or control from an external 
+device received through the  USB or MIDI In jack.
+MIDI
+Transport Out
+Sends Tracker+ transport control commands to 
+other devices. Set to Off, USB, MIDI Out jack or 
+USB+MIDI jack options.
+MIDI
+Notes In
+Sets the input of how notes are received from an 
+external device. Set to Off, USB, MIDI In jack or 
+USB+MIDI jack options.
+MIDI
+Notes Input Channel
+Sets the MIDI channel for external note inputs. 
+Select All channels or Ch 1-16.
+MIDI
+MIDI Out 
+Sets the output routing of MIDI to communicate to 
+other devices. Set to Off, USB, MIDI Out jack or 
+USB+MIDI jack options.
+MIDI
+CC In
+Defines how the CC (control change) input from 
+external devices is handled. Set to Off, USB, MIDI 
+In jack, USB+MIDI In jack.
+MIDI
+CC In channel 
+Sets the MIDI channel that is used to receive CC 
+(control change) messages. Select All channels or 
+Ch 1-16.
+MIDI
+Middle C
+Sets Tracker+’s middle C as C-3, C-4, C-5, C-6. 
+This will calibrate the note ranges to external gear 
+if this does not naturally match.
+MIDI
+Clock Sync Delay
+Latency compensation for incoming clock 
+synchronisation. Options range from -50 to +50 
+with each unit = 1/250 of pattern step. Leave at the 
+default 0.0 unless there are synchronisation errors.
+Menu
+Option
+Description
+Project
+Recording Options
+This option sets the recording options for the 
+project. To record velocity from an external 
+controller one of the velocity inclusive options 
+should be selected.
+
+
+=== PAGE 29 ===
+29
+Polyend Tracker+ Essentials Rev 1
+NOTES
+There are many configurations that can be set up with MIDI gear. Some are 
+complex and involve multiple devices while a simple set up can have two 
+devices communicating. Some typical examples are shown.
+Velocity
+127
+CC A
+40
+CC B
+5
+CC C
+7
+Offset
+0
+13
+13
+52
+Tracker+: Config > MIDI
+Tracker+: Steps Set for MIDI Output
+USB MIDI
+Instrument; M01 = MIDI Channel 1
+FX1; a 50 = MIDI CC A, Value of 50
+CC A can be set in the instrument 
+parameter page. CC A  set to 40 for 
+control change in this example, 
+transmitted with the value in the step
+Clock In
+Clock out
+Transport in
+Transport out
+Notes In
+Notes in channel
+MIDI out
+CC in
+CC in channel
+Middle C
+Clock sync delay
+Internal
+MIDI Out jack
+Internal
+MIDI Out jack
+Off
+ALL
+MIDI Out jack
+Off
+ALL
+C-5
+0.0
+HY B R I D 
+S Y N T H E S I Z E R
+OSCILLATORS
+PLAY MODE
+FILTER
+ENVELOPE
+MIXER
+VOLUME
+LFO
+Transport control e.g. Play, Stop 
+and Clock is dictated by Tracker+ 
+and its current Tempo.
+Polyend Medusa will follow the lead 
+of Tracker+ as will other devices.
+Devices should be configured to receive clock and transport and the MIDI Channel which 
+Tracker+ communicates, for example, Channel 1. CC 40 In Medusa represents the Filter Cutoff 
+frequency in this example each step in Tracker+ will set the filter cutoff.
+A 2nd device as an extended part of 
+the MIDI Network.
+Drum Machine
+Example Configuration 1: Tracker+ as the primary lead.
+MIDI IN
+MIDI OUT
+MIDI THRU
+MIDI IN
+Instrument
+Parameters
+Sample
+Loader
+Note
+Play
+Rec
+Master
+Song
+Pattern
+Backspace
+Delete
+File
+Sample
+Editor
+FX1
+Insert
+Home
+Perform
+Sample
+Playback
+Instrument
+Copy
+Paste
+Shift
+Config
+Sample
+Recorder
+FX2
+C5
+M01 a 50
+ - -
+ - -
+Tracker+ Essentials
+
+
+=== PAGE 30 ===
+30
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Performance Mode Overview 
+Performance mode allows real time improvisation control over tracks, 
+patterns and songs adding variation and interest when playing live. This is 
+normally handled in the ‘Perform’ page although MIDI Input can also be set 
+to control the performance parameters.
+Perform
+Rec
+Track 1
+Patt: 1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+---
+---
+-1
+-1
+-1
+>>>
+>>>
+/16
+/16
+/16
+Fwd
+Fwd
+Fwd
+Fwd
+Fwd
+Track 2
+Patt: 1
+Track 3
+Patt: 1
+Track 4
+Patt: 1
+Track 6
+Patt: 1
+Track 5
+Patt: 1
+Track 7
+Patt: 1
+Track 8
+Patt: 1
+Performance FX
+Volume
+High-pass cutoff
+Sample end
+Tune
+Delay send
+Sample Playback
+Panning
+Band-pass cutoff
+Low-pass cutoff
+Sample position
+Reverb send
+Pattern Play Mode
+0m:00s
+P1.028
+Punch In Effects
+12 Configurable 
+performance effect slots
+MIDI CC
+Indicates the top row, MIDI 
+CC controllable values.
+Track Selection
+Selects which tracks will be 
+affected by the performance 
+effects applied, indicated red.
+Punch In Parameters
+Effect parameters (4 per effect) 
+each represented by a pad in the 
+4 x 12 Pad grid
+Pad Grid
+Each pad represents the turning On or Off of the value defined 
+for the 12 effects. The effect values are configurable with row 1, 
+by default set to off (- - -).
+Performance Mode
+Press [Perform] to select the performance mode screen, Edit parameters and 
+configure the effects in record mode, press [Rec]. It is possible to cycle between 
+pattern and song pages while performance mode is active.
+REC Mode
+Press [Rec] to edit the perform configuration. The selections will be 
+indicated red as will the effect selection bounding box. Effects can 
+be configured and the values edited in REC mode of Perform.
+---
+---
+-1
+-1
+-1
+Volume
+Selected effects are indicated green or red (if editing) on 
+the Tracker+ screen and the respective pad is lit.
+Playback Status
+Shows pattern loop    playback 
+or full song    playback
+Perform Status
+Shows Performance Mode is 
+active.
+-1
+-1
+-1
+-1
+-1
+/16
+-1
+-1
+-1
+-1
+-1
+Fwd
+---
+---
+---
+---
+---
+>>>
+---
+---
+---
+---
+---
+Fwd
+-1
+-1
+-1
+-1
+-1
+/16
+-1
+-1
+-1
+-1
+-1
+Fwd
+-1
+-1
+-1
+-1
+-1
+/16
+-1
+-1
+-1
+-1
+-1
+Fwd
+
+
+=== PAGE 31 ===
+31
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Perform Effects List
+Tracker+ has 21 performance effects that can be selected and loaded into 
+each of the 12 effect slots. The same effect can be applied to multiple slots. 
+While these are called effects, they in fact control parameters that apply 
+variations to the parameter values.
+Effect #
+ Name
+Range / Comments
+1
+Volume
+-100 to +100.
+Volume level adjustment
+2
+Panning
+-100 to +100
+Stereo Position
+3
+Tune
+-48 to +48
+Semitones. Also applies to MIDI.
+4
+Low-Pass Cutoff
+-100 to +100.
+Filter frequency adjustment
+5
+High-Pass Cutoff
+-100 to +100.
+Filter frequency adjustment
+6
+Band-Pass Cutoff
+-100 to +100.
+Filter frequency adjustment
+7
+Reverb Send
+-100 to +100.
+FX Send level
+8
+Delay Send
+-100 to +100.
+FX Send level
+9
+Sample Position
+-100 to +100.
+Audio sample start position
+10
+Sample End
+-100 to +100.
+Audio sample end position
+11
+Sample Playback
+<<<  >>>
+Backward, Forward direction. 
+12
+Volume LFO Speed
+-28 to +28.
+LFO Speed
+13
+Panning LFO Speed
+-28 to +28.
+LFO Speed
+14
+Finetune LFO Speed
+-28 to +28.
+LFO Speed
+15
+Filter LFO Speed
+-28 to +28.
+LFO Speed
+16
+Grain/WT LFO Speed
+-28 to +28.
+LFO Speed
+17
+Step Repeater
+Off, 16, 12, 8, 6, 4, 3, 2, 1, 1/2, 1/3, 1/4, 1/6, 
+1/8, 1/12, 1/16.
+18
+Pattern Play Mode
+Fwd, Back, Rnd, C1-C20
+Fixed or Predefined algorithm ‘C’ play modes
+19
+Pattern Length
+1-128
+Total length (all tracks - selected or not)
+20
+Bit Depth
+-12 to +12
+Bit depth adjustment
+21
+Overdrive
+-100 to +100
+Overdrive adjustment
+Tracker+ Essentials
+
+
+=== PAGE 32 ===
+32
+Polyend Tracker+ Essentials Rev 1
+NOTES
+Tracker+ Essentials
+Generic Firmware Update 
+Firmware updates may be provided by Polyend from time to time, to fix 
+bugs or add new features. The process of updating can be performed in 
+several ways. When performing updates it is strongly advised to follow the 
+Polyend instructions supplied with each update. The instructions here are a 
+generic guide.
+▌ FIRMWARE UPDATE
+1. Download the latest firmware from the official Polyend Site for Tracker+.
+2. Copy the downloaded .ptf firmware file into the /Firmware folder. This 
+can be found in the root directory of the microSD card.
+3. Insert the microSD card into Tracker+ and power up
+4. Press [Config] to open the configuration and settings menu. 
+5. Navigate to the ‘Firmware’ menu. In the central window, select the 
+firmware option to install.
+6. Press [Confirm], Screen button.
+7. The firmware will install and the on screen prompts provided will guide. 
+The install process is typically less than 1 minute.
+8. Tracker+ should restart, but press On/Off if a manual start is required 
+after 100% of the update is completed.
+Download firmware
+[Config] - ‘Firmware’ - [Confirm]
+Sub Folders
+microSD card
+/Root Directory 
+/Firmware
+PolyendTracker_1.6.0.ptf
+PolyendTracker_1.7.0.ptf
+PolyendTracker_1.5.0.ptf
+1
+2
+5
+6
+4
+
+
+=== PAGE 33 ===
+33
+Polyend Tracker+ Essentials Rev 1
+Emergency Firmware Update 
+Alternative options for firmware update are available which are not the 
+preferred first choice but may be used in troubleshooting instances. A reset 
+button is provided, recessed behind the rear panel. Also a special Polyend 
+tool can be downloaded and used for updates. Both methods should only 
+be used if there are issues with the primary update method or to clear 
+Tracker+ issues and should not be used as a regular process for updates.
+▌ TRACKER+ & FIRMWARE RESET
+1. Download the latest firmware from the official Polyend Site for Tracker+.
+2. Copy the downloaded .ptf firmware file into the /Firmware folder. This 
+can be found in the root directory of the microSD card. Also ensure any 
+previous update files remain in the firmware folder.
+3. Insert the microSD card into Tracker+.
+4. Use a pin or thin object to press the internal reset button. This is located 
+on the rear of the device behind the case next to the USB connection.
+5. Tracker+ will reset and search the firmware folder on the microSD card. 
+A random firmware will be selected and installed in order to recover 
+Tracker+ to a working state. The install process is typically less than 1 
+minute.
+The reset option is useful if any lock ups or freezing occurs on Tracker+. It is not necessary in these 
+situations to download a new OS. It is advised to keep a series official, known good, firmware releases in the 
+/firmware folder. For example 1.7.0, 1.6.0, 1.5.0. That way steps 4-5 can be performed in case of issues and 
+a random update will be performed from a known state. A manual update in the ‘config’ menu to select the 
+latest version can then follow.
+Recessed reset button. Use a 
+pin or thin object to trigger reset
+Rear Panel
+Power
+USB
+Tracker+ Essentials
+NOTES
+
+
+=== PAGE 34 ===
+34
+Polyend Tracker+ Essentials Rev 1
+Tracker+ Essentials
+Function
+Action
+Tracker+ Buttons
+Description
+Master
+Master Volume
+[Master] + Turn (Jog)
+Adjusts the master output 
+Master
+Master Tempo
+[Song] + Turn (Jog)
+Adjusts the master tempo 
+Master
+General Navigation
+[Up], [Down], (Jog)
+Generally navigate, scroll menu selections and options
+Master
+General Navigation
+[Left], [Right]
+Generally navigate, across page windows, sub menu’s, 
+functions and display columns.
+Master
+Copy / Paste
+[Copy/Paste]
+Depending on the context, will copy and paste between 
+functions ie copy patterns.
+Master
+Delete / Backspace
+[Delete/Backspace]
+Depending on the context, will delete / backup. Will also reset 
+any selected parameter to its default state.
+Master
+Edit Values
+[Shift] + Turn (Jog)
+Faster incremental changes on all pages. Use (Jog) alone for 
+standard adjustment.
+Pattern 
+Pattern Mode Page
+[Pattern]
+Selects the pattern mode page.
+Pattern 
+Play Pattern
+[Play]
+Plays the pattern from the start. Stops / Pauses the pattern if it 
+is already playing
+Pattern
+Continue or Loop
+[Shift] + [Play]
+Restarts play of the pattern from the currently paused position. 
+If a range of steps are selected, plays these on loop.
+Pattern
+Play Song
+[Song] + [Play]
+Play song from within the pattern mode page.
+Pattern
+8 Track Note View
+[Pattern] + [Note]
+Display all 8 tracks with only notes instead of default 4 tracks. 
+2 elements can be displayed i.e. + [FX1], [FX2], [Instrument]
+Pattern
+8 Track Inst View
+[Pattern] + [Instrument]
+Display 8 tracks with only instrument instead of 4 tracks.
+2 elements can be displayed i.e. + [FX1], [FX2], [Note]
+Pattern
+8 Track FX View
+[Pattern] + [FX1] or [FX2]
+Display all 8 tracks with only FX instead of default 4 tracks.     
+2 elements can be displayed i.e. + [Note], [Instrument]
+Pattern
+4 Track View
+[Pattern] 
+Restores default 4 tracks when viewing 8 tracks
+Pattern
+Check Patterns
+Hold [Pattern] Screen Button
+Hold pattern screen button to display the available patterns 
+reflected by the lit pads.
+Pattern
+Select Pattern
+[Pattern] + [Up], [Down], (Jog)
+Select Pattern number
+Pattern
+Sequential change
+[Pattern] + [Left] or [Right]
+When playing, selects a new pattern to cue playback to start 
+when the current pattern ends. Pattern blinks red. 
+Pattern
+Sequential change
+[Pattern] + [Left] or [Right]
+When playing, selects a new pattern to cue playback to start 
+when the current pattern ends. Pattern blinks red. 
+Pattern
+Immediate change
+[Pattern] + [Up] or [Down]
+When playing, selects a new pattern to trigger a start 
+immediately.
+Pattern
+Immediate change
+[Up] or [Down] or (Jog) or [PAD]
+When playing, selects a new pattern to trigger a start 
+immediately. 
+Pattern
+Multiple Step Select [Shift] + [Up] [Down] [Left] [Right]
+Will select groups of multiple steps for editing collectively.
+Pattern
+Multiple Step Select [Shift] + [Up] On first step
+Will select all steps for the current the track
+Pattern
+Multiple Step Select [Shift] + [Up] + [Up] On first step
+Will select all steps for all of the tracks
+Pattern
+Mute Tracks
+[Shift] + Screen Button
+Screen button 1 - 8 will toggle mute / unmute tracks 1 - 8 
+respectively when in pattern mode page.
+Pattern
+Lock Parameter 
+Selection
+Tap Dedicated Param Btn
+Will lock the selection of the Note, Instrument, FX1 or FX2 
+parameter when editing or navigating. Also [Shift] +
+Quick Reference Commands
+
+
+=== PAGE 35 ===
+35
+Polyend Tracker+ Essentials Rev 1
+Function
+Action
+Tracker+ Buttons
+Description
+Pattern
+Arm / Disarm
+[Shift] + [Rec] + Screen Btn
+Arms or Disarms the track for recording. Disarmed tracks will 
+not allow recording. Screen buttons represent tracks.
+Pattern
+Live Rec > Play
+[Rec]
+When live recording, pressing [Rec] will continue to play but 
+leave recording mode.
+Pattern
+Live Rec Start
+[Shift] + [Rec]
+Start Live Recording
+Pattern
+Select Top Row
+[Shift] + [Insert/Home]
+When stopped, resets the playhead to the top row start of the 
+song or start of the pattern.
+Song Mode
+Song
+Press or Hold [Song]
+Pressing [Song] switches to song page. Holding [Song] button 
+will temporarily display song page from within another page.
+Song Mode
+Play Song
+[Play]
+Plays the song from the start of the current song row.
+Song Mode
+Stop Song
+[Play]
+Stops / Pauses the song playback.
+Song Mode
+Loop Row
+[Shift] + [Play]
+Loops the current song row / pattern playback
+Song Mode
+Select Top Row
+[Shift] + [Insert/Home]
+When stopped, resets the playhead to the top row start of the 
+song or start of the pattern.
+Song Mode
+Tempo
+[Song] + Turn (Jog) 
+Adjust project tempo,  40 - 800 BPM in 1 BPM increments.
+Also option to use [Up] or [Down] Instead of (Jog)
+Song Mode
+Tempo
+[Shift] + [Song] + Turn (Jog) 
+Adjust project tempo,  40 - 800 BPM in 0.1 BPM increments.
+Also option to use [Up] or [Down] Instead of (Jog)
+Perform
+Play
+[Play]
+Plays pattern
+Perform
+Play
+[Shift] + [Play]
+Plays song
+Perform
+In Rec Mode
+[Shift] + [Up], [Down] or (Jog)
+Change performance effect in current slot
+Perform
+In Rec Mode
+[Shift] + [Left] or [Right]
+Swap effects between slots
+Perform
+In Rec Mode
+[PAD] + Turn (Jog)
+Edit the effect value offset for the respective pad row
+Perform
+Not In Rec Mode
+[PAD] + Turn (Jog)
+Temporary change effect value for the respective pad row
+Perform
+Select 
+[Track x] 
+Selects tracks to apply any triggered effect. Track labelled red.
+Perform
+Perform
+[PAD]
+Triggers the selected value for the effect for the selected track.
+Perform
+Remix
+[Track x] + Turn (Jog)
+Immediately load a new pattern for the selected track(s). Live 
+remix mode. Live remix mode.
+Perform
+Remix
+[Track x] + [Up] or [Down]
+Immediately load a new pattern for the selected track(s). Live 
+remix mode.  Live remix mode
+Perform
+Remix
+[Track x] + [Left] or [Right]
+Load a new pattern for the selected track(s) once the current 
+pattern completes.  Live remix mode. 
+Perform
+Mute / Unmute
+[Shift] + [Track x] 
+Mute or unmute the selected track
+Sample 
+Loader
+Navigate
+Hold [Left]
+In the sample loader browser  hold [Left] to jump to start of the 
+left side microSD card browser.
+Sample 
+Loader
+Batch Select
+[Shift] + Arrows
+Batch select sample in the sample loader
+Quick Reference Commands
+Tracker+ Essentials
+
+
+=== PAGE 36 ===
+36
+Polyend Tracker+ Manual
+
+
+=== PAGE 37 ===
+Copyright © 2025 by Polyend
+All rights reserved. This book or any portion thereof may not be reproduced or 
+used in any manner whatsoever without the express written permission of the 
+publisher except for the use of brief quotations in a book review. 
+October 2025 - Tracker+ OS 1.2.0 a 
+Manual Produced in the United Kingdom
+by
+Synthdawg
+www.synthdawg.com
+37
+Polyend Tracker+ Essentials Rev 1
+
+
+=== PAGE 38 ===
+38
+Polyend Tracker+ Essentials Rev 1

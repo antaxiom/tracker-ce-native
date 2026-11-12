@@ -1,0 +1,52 @@
+[
+  {
+    "name": "loader_browse",
+    "screen": "loader",
+    "keys": [
+      "Down",
+      "Down",
+      "Right",
+      "Down"
+    ],
+    "expect": [
+      "initial Sample Loader frame: SD card folders and instrument list visible, red box on the selected item",
+      "selection moves down one entry in the Browser pane",
+      "selection moves down another entry",
+      "focus moves to the right Sample Pool pane (red box moves)",
+      "selection moves down one slot in the Sample Pool pane"
+    ],
+    "manual": "Sample Loader: lists SD card folders/samples and instrument slots. Press [Left] or [Right] to navigate between the option windows; a red bounding box indicates the selected window. Press [Up] or [Down] or turn the jog wheel to navigate the selected list."
+  },
+  {
+    "name": "config_nav",
+    "screen": "config",
+    "keys": [
+      "Down",
+      "Down",
+      "Right"
+    ],
+    "expect": [
+      "initial Configuration frame: General category selected, first option row highlighted",
+      "selection moves down to the next option",
+      "selection moves down again",
+      "category switches to the next category (Left/Right selects the Category window, per the on-screen 'Category' button)"
+    ],
+    "manual": "Configuration screen: Up/Down navigates the selected list; Left/Right switches the focused window/category (Category button). A red/green box marks the focused row."
+  },
+  {
+    "name": "pattern_edit",
+    "screen": "pattern",
+    "keys": [
+      "Down",
+      "Down",
+      "Up"
+    ],
+    "expect": [
+      "initial Pattern frame centered on row 8 of track 1 with the cursor cell outlined",
+      "cursor moves down one row, frame scrolls when needed",
+      "cursor moves down another row",
+      "cursor moves back up one row"
+    ],
+    "manual": "Pattern screen: Up/Down moves the edit cursor by one row; the view follows the cursor. The active cell is outlined and its sub-column is highlighted."
+  }
+]

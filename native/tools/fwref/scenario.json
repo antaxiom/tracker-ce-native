@@ -1,0 +1,395 @@
+{
+ "instrument": {
+  "name": "909 Kick",
+  "rightLabel": "1. 909 Kick",
+  "volume": 50,
+  "panning": 50,
+  "tune": 0,
+  "fineTune": 0,
+  "filterEnable": 1,
+  "filterType": "lowPass",
+  "cutOff": 1.0,
+  "resonance": 0.0,
+  "selectedPlace": 0
+ },
+ "master": {
+  "volume": 81,
+  "saturationType": 0,
+  "bassBoost": 0,
+  "stereoBoost": 0,
+  "selectedPlace": 0,
+  "trackNames": [
+   "Track 1",
+   "Track 2",
+   "Track 3",
+   "Track 4",
+   "Track 5",
+   "Track 6",
+   "Track 7",
+   "Track 8"
+  ],
+  "trackVolume": [
+   100,
+   100,
+   100,
+   100,
+   100,
+   100,
+   100,
+   100
+  ],
+  "trackMute": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "trackLevel": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "delayVolume": 100,
+  "reverbVolume": 100,
+  "dryMixVolume": 100,
+  "lineInVolume": 0,
+  "delayMute": false,
+  "reverbMute": false,
+  "dryMixMute": false,
+  "lineInMute": true,
+  "delayLevel": 0,
+  "reverbLevel": 0,
+  "dryMixLevel": 0,
+  "lineInLevel": 0
+ },
+ "config": {
+  "selectedBase": 0,
+  "selectedItem": 0,
+  "selectedPlace": 0,
+  "gridSelected": 0,
+  "baseMenu": [
+   "Project Settings",
+   "General",
+   "MIDI",
+   "Metronome",
+   "About"
+  ],
+  "items": [
+   [
+    "Performance presets",
+    "Global"
+   ],
+   [
+    "Pattern divider",
+    "4"
+   ],
+   [
+    "Notes scale",
+    "Chromatic"
+   ],
+   [
+    "Root note",
+    "C"
+   ],
+   [
+    "Notes layout",
+    "Standard 4-Row"
+   ],
+   [
+    "Anti-aliasing",
+    "Enabled"
+   ],
+   [
+    "Limiter mode",
+    "Clean (-0.4 dBFS)"
+   ],
+   [
+    "Extra headroom",
+    "Disabled (0.0 dB)"
+   ],
+   [
+    "Snap to zero",
+    "Enabled"
+   ]
+  ],
+  "credits": "Trakr Native",
+  "description": "Project Settings"
+ },
+ "perform": {
+  "editPlace": -1,
+  "trackNames": [
+   "Track 1",
+   "Track 2",
+   "Track 3",
+   "Track 4",
+   "Track 5",
+   "Track 6",
+   "Track 7",
+   "Track 8"
+  ],
+  "activeTracks": [
+   true,
+   true,
+   true,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "trackMuted": [
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "trackPatterns": [
+   "Patt: 1",
+   "Patt: 1",
+   "Patt: 1",
+   "",
+   "",
+   "",
+   "",
+   ""
+  ]
+ },
+ "pattern": {
+  "actualPattern": 1,
+  "rightLabel": "1. 909 Kick",
+  "patternLength": 64,
+  "actualStep": 0,
+  "actualTrack": 0,
+  "firstVisibleTrack": 0,
+  "stepDevider": 4,
+  "selectState": 1,
+  "selectColor": 1,
+  "selectedParam": 0,
+  "viewMode": 0,
+  "showPlayhead": false,
+  "playheadPosition": 0,
+  "selectedPlace": 0,
+  "editStep": 1,
+  "timerMinutes": 0,
+  "timerSeconds": 0,
+  "trackNames": [
+   "Track 1",
+   "Track 2",
+   "Track 3",
+   "Track 4",
+   "Track 5",
+   "Track 6",
+   "Track 7",
+   "Track 8",
+   "Midi 9",
+   "Midi 10",
+   "Midi 11",
+   "Midi 12",
+   "Midi 13",
+   "Midi 14",
+   "Midi 15",
+   "Midi 16"
+  ]
+ },
+ "song": {
+  "selectedSlot": 0,
+  "linesCount": 12,
+  "playlist": [
+   1,
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   2,
+   2,
+   3,
+   3,
+   3,
+   3,
+   4
+  ],
+  "normalTracksCount": 8,
+  "midiTracksCount": 8,
+  "trackNames": [
+   "Track 1",
+   "Track 2",
+   "Track 3",
+   "Track 4",
+   "Track 5",
+   "Track 6",
+   "Track 7",
+   "Track 8",
+   "Midi 9",
+   "Midi 10",
+   "Midi 11",
+   "Midi 12",
+   "Midi 13",
+   "Midi 14",
+   "Midi 15",
+   "Midi 16"
+  ],
+  "normalMuted": [
+   false,
+   false,
+   true,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "midiMuted": [
+   false,
+   true,
+   false,
+   false,
+   false,
+   false,
+   false,
+   false
+  ],
+  "normalPatternMask": [
+   15,
+   19,
+   60,
+   1
+  ],
+  "midiPatternMask": [
+   2
+  ],
+  "isListActive": 1,
+  "editMode": 0,
+  "selection": {
+   "isActive": 0,
+   "startSongPosition": 0,
+   "patternSelectionLength": 1,
+   "startTrack": 0,
+   "trackSelectionLength": 1
+  },
+  "progress": {
+   "isPlaying": 1,
+   "trackPreview": 255,
+   "currentSongPosition": 0,
+   "patternLength": 64,
+   "positionInPattern": 32
+  },
+  "globalTempo": 130.0,
+  "hexNumbers": false
+ },
+ "loader": {
+  "selectedFile": 1,
+  "selectedSlot": 0,
+  "selectedPlace": 0,
+  "memoryUsage": 12,
+  "memoryUsageAdd": 14,
+  "previewVolume": 86,
+  "slotCount": 48,
+  "files": [
+   "/..",
+   "909_Kick.wav",
+   "909_Snare.wav",
+   "909_Clap.wav",
+   "909_ClosedHat.wav",
+   "909_OpenHat.wav",
+   "909_LowTom.wav",
+   "909_MidTom.wav",
+   "909_HiTom.wav",
+   "909_Rimshot.wav",
+   "909_Cowbell.wav",
+   "909_Crash.wav",
+   "909_Ride.wav",
+   "/Acoustic",
+   "/Percussion",
+   "kick_01.wav",
+   "snare_01.wav",
+   "hat_01.wav",
+   "clap_01.wav",
+   "tom_01.wav"
+  ],
+  "slots": [
+   "1.909 Kick",
+   "2.909 Snare",
+   "3.909 Clap",
+   "4.909 ClosedHat",
+   "5.909 OpenHat",
+   "6.909 LowTom",
+   "7.909 MidTom",
+   "8.909 HiTom"
+  ]
+ },
+ "sample": {
+  "rightLabel": "1. 909 Kick",
+  "playMode": 1,
+  "selectedPlace": 0,
+  "progress": 180,
+  "startPoint": 40,
+  "endPoint": 580,
+  "loop1": 150,
+  "loop2": 450,
+  "selected": 0,
+  "zerocrossed": 0,
+  "startTime": 0.089,
+  "endTime": 1.312,
+  "loop1Time": 0.336,
+  "loop2Time": 1.008,
+  "zoom": 1.0,
+  "waveform": {
+   "points": 300,
+   "amplitude": 100,
+   "frequency": 0.11,
+   "decay": 0.004
+  },
+  "region": {
+   "start": 460,
+   "end": 500
+  },
+  "sliceSelected": 0,
+  "slices": [
+   100,
+   250,
+   400,
+   550
+  ],
+  "wavetable": {
+   "position": 0,
+   "window": 32,
+   "positionMax": 128
+  }
+ },
+ "file": {
+  "selectedPlace": 0,
+  "selectedProject": 0,
+  "projectName": "New Project",
+  "projects": [
+   "01. New Project",
+   "02. Demo Song",
+   "03. Album Sketch",
+   "04. Live Set 01",
+   "05. Bassline Idea",
+   "06. Chiptune 01",
+   "07. Drum Kit Test",
+   "08. Untitled 07",
+   "09. Untitled 08",
+   "10. Untitled 09",
+   "11. Untitled 10",
+   "12. Untitled 11",
+   "13. Untitled 12"
+  ],
+  "recent": []
+ }
+}

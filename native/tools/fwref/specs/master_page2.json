@@ -1,0 +1,1440 @@
+{
+ "screen": "master_page2",
+ "scenario": "master",
+ "theme": "default",
+ "chrome": {
+  "title": "Track Mixer 2/3",
+  "rightLabel": ""
+ },
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0",
+   "y": "0",
+   "w": "0",
+   "h": "0",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@master.selectedPlace",
+   "hidden": true,
+   "places": [
+    {
+     "x": "0 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 1 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 2 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 3 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 4 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 6 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 7 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     10,
+     19
+    ],
+    "sha256": "1f6a632fbe1d9983179df56ef8823168382799c33828563969f29754abf9c35f"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.0",
+   "text2": "@master.mixMute.0",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.1",
+   "text2": "@master.mixMute.1",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.2",
+   "text2": "@master.mixMute.2",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.3",
+   "text2": "@master.mixMute.3",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.4",
+   "text2": "@master.mixMute.4",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.5",
+   "text2": "@master.mixMute.5",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.6",
+   "text2": "@master.mixMute.6",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "@master.trackDb.7",
+   "text2": "@master.mixMute.7",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     57,
+     67
+    ],
+    "sha256": "fa37cb3628fd4e6f3fbc2ddd73884d11b2984f757fbd5f8f6c6b8c4623a46cee"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 255,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     69,
+     77
+    ],
+    "sha256": "bbc846da0103def028797bad13056be293019e898f197012b1baeb5cd6240eb7"
+   }
+  },
+  {
+   "order": 10,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.0",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 11,
+   "control": "cBar",
+   "x": "(800 / 8) * 0 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 0,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 12,
+   "control": "cBar",
+   "x": "(800 / 8) * 0 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 0,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 13,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.1",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 14,
+   "control": "cBar",
+   "x": "(800 / 8) * 1 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 1,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 15,
+   "control": "cBar",
+   "x": "(800 / 8) * 1 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 1,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 16,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.2",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 17,
+   "control": "cBar",
+   "x": "(800 / 8) * 2 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 2,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 18,
+   "control": "cBar",
+   "x": "(800 / 8) * 2 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 2,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 19,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.3",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 20,
+   "control": "cBar",
+   "x": "(800 / 8) * 3 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 3,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 21,
+   "control": "cBar",
+   "x": "(800 / 8) * 3 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 3,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 22,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.4",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 23,
+   "control": "cBar",
+   "x": "(800 / 8) * 4 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 4,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 24,
+   "control": "cBar",
+   "x": "(800 / 8) * 4 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 4,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 25,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.5",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 26,
+   "control": "cBar",
+   "x": "(800 / 8) * 5 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 5,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 27,
+   "control": "cBar",
+   "x": "(800 / 8) * 5 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 5,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 28,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.6",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 29,
+   "control": "cBar",
+   "x": "(800 / 8) * 6 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 6,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 30,
+   "control": "cBar",
+   "x": "(800 / 8) * 6 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 6,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 31,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "32",
+   "w": "800 / 8 - 4",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "@master.trackName.7",
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     79,
+     89
+    ],
+    "sha256": "8c5b287e3f3b31b2c0b07b2010279865169f6876b3e95cd4f40f86d56234a6ae"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1350,
+     1417
+    ],
+    "sha256": "12336c6c56e9f9b9582e4dcd7aebc8accdaacdb6fb8feee127d5bb92b7c137be"
+   }
+  },
+  {
+   "order": 32,
+   "control": "cBar",
+   "x": "(800 / 8) * 7 + 2",
+   "y": "64",
+   "w": "800 / 16 - 3",
+   "h": "359",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_volume",
+   "bar_arg": 7,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     94,
+     101
+    ],
+    "sha256": "b4d86fae7602eb12f95f5534b7c5caf5d6b473234fc297fe99a4a8f062e05e74"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  },
+  {
+   "order": 33,
+   "control": "cBar",
+   "x": "(800 / 8) * 7 + 2",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "track_level",
+   "bar_arg": 7,
+   "source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     103,
+     114
+    ],
+    "sha256": "af0731f70bc3b3d69f6c2eb62cfa694269d29183a661e5cc053c69d611458b23"
+   },
+   "override_source": {
+    "file": "core/interface/masterParams/gMasterParams.cpp",
+    "lines": [
+     1046,
+     1062
+    ],
+    "sha256": "eefad1dd0aa70b2ad646dc9e36196d1ce0251c2c0c3b8809fc3e8db04723e4cb"
+   }
+  }
+ ]
+}

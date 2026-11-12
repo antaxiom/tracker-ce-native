@@ -1,0 +1,757 @@
+{
+ "screen": "config",
+ "scenario": "config",
+ "theme": "default",
+ "chrome": {
+  "title": "Config",
+  "rightLabel": ""
+ },
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cLabel",
+   "x": "400",
+   "y": "320",
+   "w": "800 - 10",
+   "h": "100",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "colors": [
+    16777215,
+    2236962,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     50,
+     59
+    ],
+    "sha256": "0c5cf44c4e3c54150e8ee1ba9bd88e565ec3a0ccff9b878c4c39f0f4503c6c0b"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cFrame",
+   "x": "0",
+   "y": "0",
+   "w": "0",
+   "h": "0",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@config.selectedPlace",
+   "places": [
+    {
+     "x": "(800 / 8) * 0 + 1",
+     "y": "31",
+     "w": "800 / 4 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 2 + 1",
+     "y": "31",
+     "w": "800 / 2 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "31",
+     "w": "800 / 4 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "31",
+     "w": "600 / 2 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     61,
+     65
+    ],
+    "sha256": "7f829792bc9725f679df248b715d55594f6098e01bbc165ba54d56db914c3662"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     305,
+     315
+    ],
+    "sha256": "0679fbc07a98e15bb7ebb8bb5e4501337bc8dd24bd9f782ad7f6ed951e1033cc"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 8)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShowBitmap"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 8)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShowBitmap"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text": "Enter",
+   "text2": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     81,
+     106
+    ],
+    "sha256": "493f7674ad54985be19625870ec62eb5f06204d22d20d8e1abec21f1eacbdbb1"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     274,
+     322
+    ],
+    "sha256": "04717ed0d987d501fcd30570b78aaa3d25fad7c52674ae2be2b8b95261270965"
+   }
+  },
+  {
+   "order": 10,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 196,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     108,
+     117
+    ],
+    "sha256": "6586cbd24d3a76788c27d73fe278e66cc8270855c3d6d653a20239066ff1bbb6"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     312,
+     313
+    ],
+    "sha256": "e6bad303468461d639a22a407fa5f08a507836a2cc5a784378004b83d30c4cfe"
+   }
+  },
+  {
+   "order": 11,
+   "control": "cList",
+   "x": "(800 / 8) * 0 + 1",
+   "y": "29",
+   "w": "800 / 4 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleFont1",
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "list": {
+    "from": "config.baseMenu",
+    "start": "@config.selectedBase",
+    "length": 5,
+    "linesCount": 14
+   },
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     119,
+     128
+    ],
+    "sha256": "476b3c5592910765e3a638576eae82a8d566efdd5eb1b24e8048cb260afdb700"
+   }
+  },
+  {
+   "order": 12,
+   "control": "cParamValueList",
+   "x": "(800 / 8) * 2 + 1",
+   "y": "29",
+   "w": "800 / 2 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleFont1",
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "param_list": {
+    "from": "config.items",
+    "start": "@config.selectedItem",
+    "length": 0,
+    "linesCount": 14
+   },
+   "value": "@config.selectedItem",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     129,
+     137
+    ],
+    "sha256": "64888d113f4bdc8f2f58b61560ed4fa097c67e30707b346ec1e7690fa4904a7d"
+   }
+  },
+  {
+   "order": 13,
+   "control": "cList",
+   "x": "(800 / 8) * 5 + 1",
+   "y": "29",
+   "w": "800 / 4 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleFont1",
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "list": {
+    "start": 0,
+    "length": 0,
+    "linesCount": 14
+   },
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     138,
+     145
+    ],
+    "sha256": "4cb97e04808766507144ce14d0d42665888ec42d80e45a7e3649f588689618e3"
+   }
+  },
+  {
+   "order": 14,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + 15",
+   "y": "27",
+   "w": "800 / 4 - 18",
+   "h": "55",
+   "style": [
+    "controlStyleFont3"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 0,
+   "text": "",
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     146,
+     153
+    ],
+    "sha256": "0a91ac3fddca83d73a89f4ba5bf551309743bc3f028f6588176b7da5bc19fb09"
+   }
+  },
+  {
+   "order": 15,
+   "control": "cTextBox",
+   "x": "0",
+   "y": "30",
+   "w": "780",
+   "h": "450",
+   "style": [
+    "controlStyleFont5"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 3,
+   "text": "@config.credits",
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     155,
+     164
+    ],
+    "sha256": "68c3336d19410519d4a53c30ee36ca04ac755b814c573058ba73943c0b3c1f5a"
+   }
+  },
+  {
+   "order": 16,
+   "control": "cTextBox",
+   "x": "(800 / 8) * 2 + 10",
+   "y": "60",
+   "w": "800 / 4 - 15",
+   "h": "365",
+   "style": [
+    "controlStyleFont5"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 3,
+   "text": "@config.description",
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     165,
+     173
+    ],
+    "sha256": "09f6dd3d5e613ff71da163b0faebd087643fc255f9b2455e7a774046dc414d8a"
+   }
+  },
+  {
+   "order": 17,
+   "control": "cGridEditorPopup",
+   "x": "13",
+   "y": "130",
+   "w": "780",
+   "h": "260",
+   "style": [],
+   "colors": [
+    657930,
+    16777215,
+    13441048
+   ],
+   "value": "@config.gridSelected",
+   "grid": {
+    "selected": "@config.gridSelected",
+    "count": 48
+   },
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     175,
+     196
+    ],
+    "sha256": "d0a4cb195c3b8d7a506ad8c517b7431f0b8a1fe759270947416fa2aaa18e99a2"
+   }
+  },
+  {
+   "order": 18,
+   "control": "cBar",
+   "x": "(800 / 8) * 0 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleValue_0_100",
+    "controlStyleBackground"
+   ],
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     198,
+     204
+    ],
+    "sha256": "cc245774a3fc350b34498779b9749a2a3ce8573053402e18e69b69aee2f494f8"
+   }
+  },
+  {
+   "order": 19,
+   "control": "cBar",
+   "x": "(800 / 8) * 1 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleValueLeftRight_100_100",
+    "controlStyleBackground"
+   ],
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     206,
+     211
+    ],
+    "sha256": "4db76d4cfbfb6296fa5e57fd8c575d70be360501cfc942fe5b6367d60deaa789"
+   }
+  },
+  {
+   "order": 20,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + 1",
+   "y": "29",
+   "w": "800 / 4 - 2",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 0,
+   "text": "",
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     259,
+     268
+    ],
+    "sha256": "e4d1c4d3fc57c94b9d96b958eda99e8c686d3d193a9a80eae7feedfcbdb8811f"
+   },
+   "override_source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     302,
+     303
+    ],
+    "sha256": "0cc6411efe754eff12661ec814a8af5cc3a95deeae1e6ae6b97040f7bc400add"
+   }
+  },
+  {
+   "order": 21,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + 1",
+   "y": "29",
+   "w": "800 / 4 - 2",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 0,
+   "text": "",
+   "hidden": true,
+   "source": {
+    "file": "core/interface/configEditor/gConfigEdit.cpp",
+    "lines": [
+     259,
+     271
+    ],
+    "sha256": "0a8e0ac57c310033b46b46e5b8610ec35c0f1372577c56d6f7e4d6145d167a3d"
+   }
+  }
+ ]
+}

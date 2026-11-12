@@ -1,0 +1,598 @@
+{
+ "screen": "file",
+ "scenario": "file",
+ "theme": "default",
+ "chrome": {
+  "title": "File",
+  "rightLabel": "@file.projectName"
+ },
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0",
+   "y": "0",
+   "w": "0",
+   "h": "0",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@file.selectedPlace",
+   "places": [
+    {
+     "x": "0 + 1",
+     "y": "31",
+     "w": "(800 / 8) * 3 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 3 + 1",
+     "y": "31",
+     "w": "(800 / 8) * 3 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     12,
+     15
+    ],
+    "sha256": "9796ac9515649120f6b050f5331187eed04c384139ae43a673065b0e67bea113"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "New",
+   "text2": "Project",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "Open",
+   "text2": "",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "Import Mod",
+   "text2": "",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "Save",
+   "text2": "",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "Save As",
+   "text2": "",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "Export",
+   "text2": "",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "value": 1,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     25,
+     39
+    ],
+    "sha256": "4050b80ff9ca3f8ef47c8bd6321a9f5cee3a3f304317cff7b333e72beed1a43c"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     140,
+     156
+    ],
+    "sha256": "24e8e56aa8e7d6d04908d3b9460103a8f644328677b2d38b1c144ffd65ca38f5"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 255,
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     41,
+     50
+    ],
+    "sha256": "2a2fc77f84f899ede3c8641db1d26409dc996d57c295619d97d3b090dad700d8"
+   }
+  },
+  {
+   "order": 10,
+   "control": "cLabel",
+   "x": "(800 / 16) * 3",
+   "y": "32",
+   "w": "(800 / 8) * 3 - 6",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "SD Card",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     52,
+     60
+    ],
+    "sha256": "82a4b477c5d3d765d038f0050d3e04e770269600db965ccda6a460f515ebebbf"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     267,
+     267
+    ],
+    "sha256": "26ffbd3655973a341c4726c542be4541cb33d9aba02e46c7cbb042f9230cea5d"
+   }
+  },
+  {
+   "order": 11,
+   "control": "cLabel",
+   "x": "(800 / 16) * 9",
+   "y": "32",
+   "w": "(800 / 8) * 3 - 6",
+   "h": "26",
+   "style": [
+    "controlStyleShow",
+    "controlStyleBackground",
+    "controlStyleCenterY",
+    "controlStyleCenterX",
+    "controlStyleFont4"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    16777215,
+    16777215
+   ],
+   "value": 0,
+   "text": "Recent",
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     62,
+     67
+    ],
+    "sha256": "0568eae920754b2b9bdbdc1ded5b0a0760592565653c1682831cbd1b0b5e0523"
+   },
+   "override_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     52,
+     60
+    ],
+    "sha256": "82a4b477c5d3d765d038f0050d3e04e770269600db965ccda6a460f515ebebbf"
+   },
+   "text_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     249,
+     249
+    ],
+    "sha256": "377215fe775bb6a350b57a60769cdcb9e69416ad8e5791c3eebc23ecc999762d"
+   }
+  },
+  {
+   "order": 12,
+   "control": "cList",
+   "x": "0 + 1",
+   "y": "29 + 32",
+   "w": "(800 / 8 * 3) - 3",
+   "h": "394 - 32",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    13441048,
+    13441048,
+    5723991,
+    657930,
+    16777215,
+    3197759,
+    0
+   ],
+   "list": {
+    "from": "file.projects",
+    "start": "@file.selectedProject",
+    "linesCount": 13,
+    "selectionActive": 1,
+    "lineWidthMax": 270,
+    "lineTextLenMax": 32
+   },
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     69,
+     80
+    ],
+    "sha256": "b0d1260321836041f44fbfc3a9424244defdfbeb3daafe7d7df524f119f04e3f"
+   }
+  },
+  {
+   "order": 13,
+   "control": "cList",
+   "x": "(800 / 8) * 3 + 1",
+   "y": "29 + 32",
+   "w": "(800 / 8 * 3) - 3",
+   "h": "394 - 32",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16777215,
+    5723991,
+    657930,
+    16777215,
+    3197759,
+    0
+   ],
+   "list": {
+    "from": "file.recent",
+    "start": "@file.selectedProject",
+    "linesCount": 10,
+    "selectionActive": 0,
+    "lineWidthMax": 270,
+    "lineTextLenMax": 32
+   },
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     82,
+     93
+    ],
+    "sha256": "343169c1b520831db8ab1fa31bea710e0298ae51007dbb660d5834c8833222be"
+   }
+  },
+  {
+   "order": 14,
+   "control": "cLabel",
+   "x": "600 + 1",
+   "y": "29",
+   "w": "200",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 0,
+   "source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     105,
+     114
+    ],
+    "sha256": "2d5852a68b0bce2ee610aa668952dd3f90c806ae3e8b8111dc9e2f564c41209d"
+   },
+   "override_source": {
+    "file": "core/interface/projectEditor/gProjEdit.cpp",
+    "lines": [
+     249,
+     265
+    ],
+    "sha256": "4b9ccd3d7d33b560d7ab2449ef9a255119eb7cf0bbc01c9c4ebbba8d1ae0399d"
+   }
+  }
+ ]
+}

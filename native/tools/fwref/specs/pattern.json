@@ -1,0 +1,703 @@
+{
+ "screen": "pattern",
+ "scenario": "pattern",
+ "theme": "default",
+ "chrome": {
+  "title": "Pattern 1",
+  "rightLabel": "@pattern.rightLabel"
+ },
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0",
+   "y": "0",
+   "w": "0",
+   "h": "0",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@pattern.selectedPlace",
+   "places": [
+    {
+     "x": "0 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 1 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 2 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 3 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 4 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 6 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 7 + 1",
+     "y": "423",
+     "w": "800 / 8 - 1",
+     "h": "55"
+    }
+   ],
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     14,
+     23
+    ],
+    "sha256": "632bf1eb1fd6ed7e419c59837255256a32614eb25578b8741962c86cf1de1b98"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     84,
+     91
+    ],
+    "sha256": "7515ff2bbf78ed519c5d20c937d0777f376b1fd1e0c32493fd4cb0b9b5cc9a6f"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Pattern",
+   "text2": "@pattern.patternNumber",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 3197759
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Length",
+   "text2": "@pattern.length",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 3197759
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Step jump",
+   "text2": "@pattern.editStep",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 3197759
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    5723991
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Fill",
+   "text2": "",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 13441048
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Preview",
+   "text2": "",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 3197759
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    3355443
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Undo",
+   "text2": "",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 13441048
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    5723991
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Redo",
+   "text2": "",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 13441048
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx2"
+   ],
+   "colors": [
+    7829367,
+    2236962,
+    7829367,
+    2236962
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "More",
+   "text2": "",
+   "dots": {
+    "count": 3,
+    "current": 0
+   },
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     95,
+     107
+    ],
+    "sha256": "c955455838e5a0a0345736d1bb608c4579c9614507fe0661e28184a359a0ad63"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     1436,
+     1502
+    ],
+    "sha256": "1310b255acc498f14c01f4fb6e76f6e7e3b5dea584206ecac8d523f7c03358c8"
+   },
+   "text_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     123,
+     136
+    ],
+    "sha256": "2e4dd899b017110290de04ef74cb5c4d0428b0e5828aaae29015e2ea539eed59"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 255,
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     109,
+     118
+    ],
+    "sha256": "72cf1fdd97eefc4570c531577d0cb14a7fb5640ebc60a141a735b9a98bfa779f"
+   },
+   "override_source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     287,
+     288
+    ],
+    "sha256": "f3e4b0f4fb83601017537f36040b4ec0a11e52c9ba1bc9b73446931abc915936"
+   }
+  },
+  {
+   "order": 22,
+   "control": "cTracker",
+   "x": "0",
+   "y": "28",
+   "w": "800",
+   "h": "395",
+   "style": [
+    "controlStyleFont4",
+    "controlStyleStartNumbersFrom1",
+    "controlStyleBottomShadow",
+    "controlStyleGradient",
+    "controlStyleShow"
+   ],
+   "colors": [
+    0,
+    526344,
+    59582,
+    16709449,
+    12278001,
+    5763583,
+    14643,
+    4537115,
+    3284794,
+    1587012,
+    13441048,
+    921102,
+    1513239,
+    0,
+    16777215,
+    0,
+    5723991,
+    3197759,
+    4473668,
+    5723991,
+    16709449
+   ],
+   "value": "@pattern.viewMode",
+   "source": {
+    "file": "core/interface/patternEditor/gPatternEdit.cpp",
+    "lines": [
+     213,
+     230
+    ],
+    "sha256": "b2eacb2c8e0e94f777554dc27705445797a1e913feaf52468295c84faa8b9478"
+   }
+  },
+  {
+   "order": 899,
+   "control": "cLabel",
+   "x": "280",
+   "y": "0",
+   "w": "0",
+   "h": "26",
+   "style": [
+    "controlStyleFont4",
+    "controlStyleCenterY"
+   ],
+   "colors": [
+    16777215,
+    526344,
+    13441048,
+    16777215
+   ],
+   "value": 0,
+   "text_format": "song_timer",
+   "source": {
+    "file": "core/interface/core/songTimer.cpp",
+    "lines": [
+     15,
+     23
+    ],
+    "sha256": "7c90bc2ba32bd6471134dc68e6419da4d5984920d8b6efa3845c6a2f50161f33"
+   },
+   "text_source": {
+    "file": "core/interface/core/songTimer.cpp",
+    "lines": [
+     113,
+     135
+    ],
+    "sha256": "f5124f4bdca330d458b1271c208e3b2baafe89462760242172f1d4bc12b44594"
+   }
+  }
+ ]
+}

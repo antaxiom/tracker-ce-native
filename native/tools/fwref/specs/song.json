@@ -1,0 +1,534 @@
+{
+ "screen": "song",
+ "scenario": "song",
+ "theme": "default",
+ "chrome": {
+  "title": "Song",
+  "rightLabel": ""
+ },
+ "chrome_on_top": true,
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0",
+   "y": "0",
+   "w": "0",
+   "h": "0",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": 0,
+   "hidden": true,
+   "places": [
+    {
+     "x": "(800 / 8) * 0 + 1",
+     "y": "31",
+     "w": "500 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "31",
+     "w": "800 / 4 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 7 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     13,
+     27
+    ],
+    "sha256": "6b7b8fb237dbd12e0fd9600dc50527ca96288629452363a8f932b75cc6ed974b"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cBar",
+   "x": "(800 / 8) * 7 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow",
+    "controlStyleShow"
+   ],
+   "bar_value": "song_tempo",
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     29,
+     37
+    ],
+    "sha256": "3457d2c0cf8c1710a2cbcae266505cd7db6a29792e7c073a01145367ace17efa"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 1,
+   "text": "Play",
+   "text2": "Pattern",
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 1,
+   "text": "Play",
+   "text2": "Song",
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    3355443
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 0,
+   "text": "Undo",
+   "text2": "",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 13441048
+   },
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    3355443
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 1,
+   "text": "Add",
+   "text2": "Slot",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 13441048
+   },
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    3355443
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 1,
+   "text": "Delete",
+   "text2": "Slot",
+   "line": {
+    "x1": -40,
+    "y1": 50,
+    "x2": 40,
+    "y2": 50,
+    "color": 13441048
+   },
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 8)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx"
+   ],
+   "colors": [
+    3355443,
+    3289394,
+    13441048,
+    3355443
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 0,
+   "text": "Pattern",
+   "text2": "",
+   "line": {
+    "x1": -90,
+    "y1": 50,
+    "x2": 90,
+    "y2": 50,
+    "color": 13441048
+   },
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 1,
+   "text": "",
+   "text2": "",
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Tempo",
+   "text2_format": "song_tempo_text",
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     58,
+     81
+    ],
+    "sha256": "c6532b1ddc3435885223945c516017fba7454dee843fd29c34925d74b3d2da16"
+   },
+   "text_source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     148,
+     220
+    ],
+    "sha256": "96283c9c2747efc792446b5a19f9bb55d843d9285353f957dc866944d1883599"
+   }
+  },
+  {
+   "order": 10,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 191,
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     83,
+     91
+    ],
+    "sha256": "fcdc4e2600ee5e4aaefec45cdab0ae3f8e9ad271b138d8001f206bee8b7f2c8c"
+   }
+  },
+  {
+   "order": 11,
+   "control": "cSongPlayer",
+   "x": "0 + 1",
+   "y": "29",
+   "w": "((800 / 8) * 7) - 3",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleVerticalText",
+    "controlStyleStartNumbersFrom1",
+    "controlStyleBottomShadow",
+    "controlStyleShow"
+   ],
+   "song": {
+    "start": "@song.selectedSlot",
+    "linesCount": 12
+   },
+   "source": {
+    "file": "core/interface/songEditor/gSongEdit.cpp",
+    "lines": [
+     93,
+     107
+    ],
+    "sha256": "af288d7f154266b4123350d4df535eccfaa034a8b1f005e3c4609ad2b820c5e7"
+   }
+  }
+ ]
+}

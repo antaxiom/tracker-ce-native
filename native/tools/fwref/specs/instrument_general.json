@@ -1,0 +1,875 @@
+{
+ "screen": "instrument_general",
+ "scenario": "instrument",
+ "theme": "default",
+ "chrome": {
+  "title": "Instrument Parameters 1/2",
+  "rightLabel": "@instrument.rightLabel"
+ },
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0 + 1",
+   "y": "31",
+   "w": "800 / 8 - 3",
+   "h": "391",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@instrument.selectedPlace",
+   "places": [
+    {
+     "x": "0 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 1 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 2 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 3 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 4 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 6 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    },
+    {
+     "x": "(800 / 8) * 7 + 1",
+     "y": "31",
+     "w": "800 / 8 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     15,
+     24
+    ],
+    "sha256": "1f6a632fbe1d9983179df56ef8823168382799c33828563969f29754abf9c35f"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     1168,
+     1176
+    ],
+    "sha256": "d90eefac1df04b9e76b84a337535480658d051f8b22d68c5a7654b67ed850f59"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Volume",
+   "text2_format": "volume_db",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cBar",
+   "x": "(800 / 8) * 0 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "volume",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     163,
+     172
+    ],
+    "sha256": "0703a6fdede2b64ae9eedd02fcd56091e75ce66a7716a5a1d3cadb1c5080aadd"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     897,
+     920
+    ],
+    "sha256": "c51dc16073d9dbd7c2ff3dd509b172c9cf8a3600a9287a1f840571e004a1d113"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Panning",
+   "text2_format": "panning",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cBar",
+   "x": "(800 / 8) * 1 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValueLeftRight_100_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "pan_leftright",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     163,
+     172
+    ],
+    "sha256": "0703a6fdede2b64ae9eedd02fcd56091e75ce66a7716a5a1d3cadb1c5080aadd"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     897,
+     920
+    ],
+    "sha256": "c51dc16073d9dbd7c2ff3dd509b172c9cf8a3600a9287a1f840571e004a1d113"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Tune",
+   "text2_format": "tune",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cBar",
+   "x": "(800 / 8) * 2 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValueLeftRight_100_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "tune_leftright",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     163,
+     172
+    ],
+    "sha256": "0703a6fdede2b64ae9eedd02fcd56091e75ce66a7716a5a1d3cadb1c5080aadd"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     897,
+     920
+    ],
+    "sha256": "c51dc16073d9dbd7c2ff3dd509b172c9cf8a3600a9287a1f840571e004a1d113"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Finetune",
+   "text2_format": "finetune",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cBar",
+   "x": "(800 / 8) * 3 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValueLeftRight_100_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "fine_leftright",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     163,
+     172
+    ],
+    "sha256": "0703a6fdede2b64ae9eedd02fcd56091e75ce66a7716a5a1d3cadb1c5080aadd"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     897,
+     920
+    ],
+    "sha256": "c51dc16073d9dbd7c2ff3dd509b172c9cf8a3600a9287a1f840571e004a1d113"
+   }
+  },
+  {
+   "order": 10,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    7829367
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3"
+   ],
+   "value": 1,
+   "text": "Filter Type",
+   "text2_format": "filter",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 12,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Cutoff",
+   "text2_format": "cutoff",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 13,
+   "control": "cBar",
+   "x": "(800 / 8) * 5 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "cutoff",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     163,
+     172
+    ],
+    "sha256": "0703a6fdede2b64ae9eedd02fcd56091e75ce66a7716a5a1d3cadb1c5080aadd"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     897,
+     920
+    ],
+    "sha256": "c51dc16073d9dbd7c2ff3dd509b172c9cf8a3600a9287a1f840571e004a1d113"
+   }
+  },
+  {
+   "order": 14,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Resonance",
+   "text2_format": "resonance",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 15,
+   "control": "cBar",
+   "x": "(800 / 8) * 6 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleShow",
+    "controlStyleValue_0_100",
+    "controlStyleBackground",
+    "controlStyleGradient",
+    "controlStyleBottomShadow"
+   ],
+   "colors": [
+    16777215,
+    16711680,
+    65280,
+    526344,
+    657930
+   ],
+   "bar_value": "resonance",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     163,
+     172
+    ],
+    "sha256": "0703a6fdede2b64ae9eedd02fcd56091e75ce66a7716a5a1d3cadb1c5080aadd"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     897,
+     920
+    ],
+    "sha256": "c51dc16073d9dbd7c2ff3dd509b172c9cf8a3600a9287a1f840571e004a1d113"
+   }
+  },
+  {
+   "order": 16,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleSpecialFx2"
+   ],
+   "colors": [
+    7829367,
+    2236962,
+    7829367,
+    2236962
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "More",
+   "text2_format": "",
+   "dots": {
+    "count": 2,
+    "current": 0
+   },
+   "text2": "",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     153,
+     161
+    ],
+    "sha256": "c0da201b78c7df24990a123736b6a7ef7187c70a981315e39e8207b9d866585a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     798,
+     851
+    ],
+    "sha256": "8fd7fa1a66cd00ae0f43051f3dff0b07991bf7283da0d1ae562a1e43f3648d1f"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     831,
+     851
+    ],
+    "sha256": "86c35ae459514a15544435f7d2c5759df266820a91a88234675f678e748b7e59"
+   }
+  },
+  {
+   "order": 18,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 255,
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     175,
+     183
+    ],
+    "sha256": "190a1b2897faf773edae38a597765bf9d328b2e7910ef27c2ac3fd78f8a9e4ab"
+   }
+  },
+  {
+   "order": 19,
+   "control": "cList",
+   "x": "(800 / 8) * (4) + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "list": {
+    "items": [
+     "Disabled",
+     "Low-pass",
+     "High-pass",
+     "Band-pass"
+    ],
+    "start": "@instrument.filterListPos",
+    "length": 4,
+    "linesCount": 5
+   },
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     185,
+     197
+    ],
+    "sha256": "c3a5690e7d983717738f28af837120302ac0f66178a7d6f2248de4bedbef8afc"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     1612,
+     1643
+    ],
+    "sha256": "18ec4bf8483fff87d9e46cc5bd25ce05568661eeff01f505204ff371bc219880"
+   },
+   "text_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     48,
+     53
+    ],
+    "sha256": "e6fe1f3dc2c819a1a2880de0d16b9c012b494e52d687fddc69beb928de06d171"
+   }
+  },
+  {
+   "order": 36,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + 1",
+   "y": "29",
+   "w": "800 / 8 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow",
+    "controlStyleShow"
+   ],
+   "colors": [
+    16777215,
+    657930,
+    16711680,
+    0
+   ],
+   "value": 0,
+   "text": "",
+   "source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     330,
+     341
+    ],
+    "sha256": "71ea66a2af84cb203b511a7bfcb289cd09ceffc337377ee25143cae5f992af1a"
+   },
+   "override_source": {
+    "file": "core/interface/instrumentEditor/gInstrEdit.cpp",
+    "lines": [
+     855,
+     856
+    ],
+    "sha256": "c8f4a1e933336d2aaf730fc080ffaee8ca150e5d3c852ff64109d53e0d9ac748"
+   }
+  }
+ ]
+}

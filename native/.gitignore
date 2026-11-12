@@ -1,0 +1,20 @@
+# Vendored third-party dependencies (set up by the build environment)
+external/
+
+# Build outputs
+build/
+bin/
+out/
+
+# Local Python environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+
+# Large reference media (kept on disk, not in git)
+docs/reference/videos/
+docs/reference/*.pdf
+
+# Editor/OS noise
+.DS_Store
+imgui.ini
