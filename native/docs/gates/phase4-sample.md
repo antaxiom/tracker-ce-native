@@ -31,6 +31,7 @@ delegated to `SampleView`; play-mode clicks write `Instrument::loop` and publish
 |---|---|
 | Unit tests | 130/130 pass; includes zoom-window point mapping |
 | App vs fwref (full frame) | 1.74% pixels differ; legacy path 2.13% |
+| Multi-state vs fwref | Slice 2.15%, Granular 2.15% (`fwref_gen --sample-state slice\|granular`, app state via Up presses) |
 | Input parity (script) | Right selects Play Mode, Up advances Forward -> Backward Loop |
 | Robot audit | 114 frames pass with and without `--gui-next` |
 | Hardware structural (refcal) | No Sample tile yet |
@@ -41,7 +42,7 @@ delegated to `SampleView`; play-mode clicks write `Instrument::loop` and publish
    expressed in ImGui; it is painted in the `Display` prepass (layer -1) before
    the spectrum, matching the legacy approximation.
 2. The zoom window is centred (`MAX_16BIT/2`); firmware follows the edit cursor
-   when zoomed. Non-1.0 zoom is not independently compared.
+   when zoomed. Non-1.0 zoom is still not independently compared.
 3. The Sample Editor sub-page and the 8 bottom labels remain legacy/app chrome.
 4. No calibrated hardware tile for Sample; refcal coverage pending.
 

@@ -100,7 +100,7 @@ static ImGuiKey scriptModKey(unsigned int bit) {
 }
 
 int main(int argc, char** argv) {
-    bool smoke_test_mode = false, auto_test_mode = false, select_demo = false, start_wide = false, use_polyend_font = false, lcd_shot_mode = false, gui_next = false;
+    bool smoke_test_mode = false, auto_test_mode = false, select_demo = false, start_wide = false, use_polyend_font = false, lcd_shot_mode = false, gui_next = true;
     std::string screenshot_path, init_screen, script_arg, remote_fifo, loader_dir;
     for (int i = 1; i < argc; ++i) {
         if (!std::strcmp(argv[i], "--smoke-test")) smoke_test_mode = true;
@@ -111,6 +111,7 @@ int main(int argc, char** argv) {
         else if (!std::strcmp(argv[i], "--polyend-font")) use_polyend_font = true;
         else if (!std::strcmp(argv[i], "--lcd-shot")) lcd_shot_mode = true;
         else if (!std::strcmp(argv[i], "--gui-next")) gui_next = true;
+        else if (!std::strcmp(argv[i], "--gui-classic")) gui_next = false;
         else if (!std::strcmp(argv[i], "--loader-dir") && i + 1 < argc) loader_dir = argv[++i];
         else if (!std::strcmp(argv[i], "--screenshot") && i + 1 < argc) screenshot_path = argv[++i];
         else if (!std::strcmp(argv[i], "--screen") && i + 1 < argc) init_screen = argv[++i];

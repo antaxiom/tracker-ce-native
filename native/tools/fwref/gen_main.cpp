@@ -14,7 +14,7 @@ namespace
 int usage()
 {
     std::fprintf(stderr,
-                 "usage: fwref_gen [--out DIR] [--scenario FILE] [--strict]\n"
+                 "usage: fwref_gen [--out DIR] [--scenario FILE] [--sample-state forward|slice|granular] [--strict]\n"
                  "       fwref_gen --selftest\n");
     return 2;
 }
@@ -25,6 +25,7 @@ int main(int argc, char** argv)
 {
     std::string outDir = "render/fwref";
     std::string scenarioPath = fwref::scenarioFile();
+    std::string sampleState = "forward";
     bool strict = false;
 
     for (int i = 1; i < argc; ++i)
@@ -34,6 +35,8 @@ int main(int argc, char** argv)
             outDir = argv[++i];
         else if (a == "--scenario" && i + 1 < argc)
             scenarioPath = argv[++i];
+        else if (a == "--sample-state" && i + 1 < argc)
+            sampleState = argv[++i];
         else if (a == "--strict")
             strict = true;
         else if (a == "--selftest")
@@ -207,6 +210,22 @@ int main(int argc, char** argv)
         std::printf("wrote %s\n", path.c_str());
     }
 
+    if (sampleState == "slice")
+    {
+        scenario.sample.playMode = 4; // playModeSlice
+    }
+    else if (sampleState == "granular")
+    {
+        scenario.sample.playMode = 7; // playModeGranular
+        scenario.sample.regionStart = 460;
+        scenario.sample.regionEnd = 500;
+    }
+    else if (sampleState != "forward")
+    {
+        std::fprintf(stderr, "fwref_gen: unknown --sample-state %s\n", sampleState.c_str());
+        return usage();
+    }
+
     {
         trakr::emulator::FT812DisplayEmulator emu;
         if (!fwref::renderSample(emu, scenario.sample))
@@ -214,7 +233,10 @@ int main(int argc, char** argv)
             std::fprintf(stderr, "fwref_gen: failed to render sample\n");
             return 1;
         }
-        const std::string path = outDir + "/sample.png";
+        const std::string path = outDir + "/sample" +
+                                 (sampleState == "forward" ? std::string()
+                                                           : "_" + sampleState) +
+                                 ".png";
         if (!emu.savePng(path))
         {
             std::fprintf(stderr, "fwref_gen: cannot write %s\n", path.c_str());

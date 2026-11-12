@@ -62,7 +62,9 @@ python3 native/tools/gui_audit/gui_ctl.py --out /tmp/op key Down
 python3 native/tools/gui_audit/gui_ctl.py --out /tmp/op stop
 ```
 
-`--gui-next` is the opt-in semantic UI path.
+The semantic UI path is the default for the nine main workspaces; `--gui-classic`
+opts back into the legacy renderer, and sub-pages without a semantic port fall
+back automatically.
 `--script`/`--remote` accept `Ctrl+Z`, `Shift+Up`, `Alt+Up` chords. On macOS the
 Ctrl modifier is emitted as Cmd-equivalent (ImGui swaps them), matching shortcuts.
 `--remote` also accepts `click <x> <y>` (hover-then-click, pointer is held) and
