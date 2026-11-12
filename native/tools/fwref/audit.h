@@ -27,6 +27,7 @@ void auditCall(const char* api, AuditClass cls, const char* detail = nullptr);
 void resetAudit();
 int auditFailures();
 int auditWarnings();
+bool auditFailed();
 void printAuditReport(const char* context);
 
 } // namespace fwref

@@ -29,6 +29,6 @@ Restart the UI layer, not the application:
 ## Consequences
 
 - Short-term dual path for screens not yet migrated; gated per screen.
-- No data-model or audio changes; history/undo behavior is preserved.
+- No data-model or audio changes; history behavior stays as-is (instrument edits do not record history today; a command model is required before Phase 4).
 - The restart is reversible per screen and the `pre-gui-restart` tag is the
   fallback baseline.

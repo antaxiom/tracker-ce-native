@@ -12,15 +12,18 @@ TEST_CASE("fwref audit separates unsupported calls from approximations", "[fwref
 
     CHECK(fwref::auditFailures() == 1);
     CHECK(fwref::auditWarnings() == 1);
+    CHECK(fwref::auditFailed());
 
     fwref::resetAudit();
     CHECK(fwref::auditFailures() == 0);
     CHECK(fwref::auditWarnings() == 0);
+    CHECK_FALSE(fwref::auditFailed());
 }
 
-TEST_CASE("fwref strict mode is opt-in", "[fwref][audit]") {
+TEST_CASE("fwref strict mode can be toggled", "[fwref][audit]") {
     fwref::setStrict(true);
     CHECK(fwref::strict());
     fwref::setStrict(false);
     CHECK_FALSE(fwref::strict());
+    fwref::setStrict(true);
 }

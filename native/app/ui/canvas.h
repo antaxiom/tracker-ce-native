@@ -22,8 +22,11 @@ public:
     const LayoutContext& layout() const { return lc_; }
 
     void fillRect(const RectI& r, ImU32 color) const;
-    // Banded stroke in device pixels (EVE line widths are 1/16 px).
+    // Inset band stroke (kept for panels that draw inside their rect).
     void strokeRect(const RectI& r, ImU32 color, float deviceThickness = 2.0f) const;
+    // EVE-faithful centred stroke: half the width lies outside the rect edge,
+    // matching API_BEGIN(LINES) with square caps (cFrame, cList selection).
+    void strokeRectCentered(const RectI& r, ImU32 color, float deviceThickness = 1.5f) const;
     void vGradient(const RectI& r, ImU32 top, ImU32 bottom) const;
     void hGradient(const RectI& r, ImU32 left, ImU32 right) const;
 

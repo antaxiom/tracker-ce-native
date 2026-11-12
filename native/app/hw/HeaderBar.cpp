@@ -35,6 +35,18 @@ void HeaderBar::render(const ImRect& rect,
                        bool showBottomSeparator,
                        bool showTransport) {
     (void)theme;
+
+    // The header window is exactly 28 device px tall. ImGui's default minimum
+    // window size (32px) would extend it into the workspace and paint over the
+    // first rows of the LCD, so clamp the min size for this window only.
+    struct WindowMinSizeGuard {
+        ImVec2 saved;
+        WindowMinSizeGuard() : saved(ImGui::GetStyle().WindowMinSize) {
+            ImGui::GetStyle().WindowMinSize = ImVec2(1.0f, 1.0f);
+        }
+        ~WindowMinSizeGuard() { ImGui::GetStyle().WindowMinSize = saved; }
+    } minSizeGuard;
+
     ImGui::SetNextWindowPos(rect.Min);
     ImGui::SetNextWindowSize(rect.GetSize());
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));

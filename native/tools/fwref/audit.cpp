@@ -9,7 +9,7 @@ namespace fwref
 namespace
 {
 
-bool gStrict = false;
+bool gStrict = true;
 int gFailures = 0;
 int gWarnings = 0;
 std::set<std::string> gSeen;
@@ -62,6 +62,7 @@ void resetAudit()
 
 int auditFailures() { return gFailures; }
 int auditWarnings() { return gWarnings; }
+bool auditFailed() { return gFailures > 0 || gWarnings > 0; }
 
 void printAuditReport(const char* context)
 {

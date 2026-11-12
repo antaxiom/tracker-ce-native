@@ -224,7 +224,7 @@ int main(int argc, char** argv)
     }
 
     fwref::printAuditReport("fwref_gen");
-    if (strict && fwref::auditFailures() > 0)
+    if (strict && fwref::auditFailed())
     {
         std::fprintf(stderr, "fwref_gen: strict mode failed with %d unsupported call(s)\n",
                      fwref::auditFailures());

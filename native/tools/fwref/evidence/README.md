@@ -29,6 +29,17 @@ FW-1 strict mode is implemented (`native/tools/fwref/audit.{h,cpp}`):
   text, unsupported text option bits, non-quarter matrix rotations, unsupported
   number bases.
 
+## Known spec/runtime nuances
+
+- Instrument General: the control is created with 8 frame places, but
+  `showInstrumentParams()` / `refreshFramePosition()` sets `placesCount = 7` at
+  runtime and `activateLabelsBorder` refuses place 7 ("More"). The app clamps
+  the frame to places 0..6. fwref specs keep the creation-time 8 places; the
+  default renders place 0, so references are unaffected. Multi-state specs must
+  model the runtime `placesCount`.
+- Strict mode is enforced per screen in `renderSpec`; a failing screen returns
+  false and prints the audit report.
+
 ## Hardware status
 
 Still **not validated against hardware**. fwref remains an approximate,

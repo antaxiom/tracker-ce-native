@@ -44,6 +44,31 @@ void Canvas::strokeRect(const RectI& r, ImU32 color, float deviceThickness) cons
     dl_->AddRectFilled(ImVec2(std::max(x0, x1 - ft), std::min(y1, y0 + ft)), ImVec2(x1, std::max(y0, y1 - ft)), color);
 }
 
+void Canvas::strokeRectCentered(const RectI& r, ImU32 color, float deviceThickness) const {
+    if (!dl_ || r.empty()) return;
+    const float x0 = lc_.edgeX(static_cast<float>(r.x));
+    const float y0 = lc_.edgeY(static_cast<float>(r.y));
+    const float x1 = lc_.edgeX(static_cast<float>(r.right()));
+    const float y1 = lc_.edgeY(static_cast<float>(r.bottom()));
+    if (x1 <= x0 || y1 <= y0) return;
+
+    const int t = std::max(1, static_cast<int>(std::lround(deviceThickness * lc_.scaleY)));
+    const float lo = static_cast<float>(t / 2);
+    const float hi = static_cast<float>(t - t / 2);
+
+    const float left = x0 - lo;
+    const float right = x1 + hi;
+    const float top = y0 - lo;
+    const float bottom = y1 + hi;
+
+    dl_->AddRectFilled(ImVec2(left, top), ImVec2(right, top + static_cast<float>(t)), color);
+    dl_->AddRectFilled(ImVec2(left, bottom - static_cast<float>(t)), ImVec2(right, bottom), color);
+    dl_->AddRectFilled(ImVec2(left, top + static_cast<float>(t)),
+                       ImVec2(left + static_cast<float>(t), bottom - static_cast<float>(t)), color);
+    dl_->AddRectFilled(ImVec2(right - static_cast<float>(t), top + static_cast<float>(t)),
+                       ImVec2(right, bottom - static_cast<float>(t)), color);
+}
+
 void Canvas::vGradient(const RectI& r, ImU32 top, ImU32 bottom) const {
     if (!dl_ || r.empty()) return;
     const ImVec2 a = minScreen(lc_, r);

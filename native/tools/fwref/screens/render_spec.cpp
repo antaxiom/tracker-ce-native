@@ -1,5 +1,7 @@
 #include "render_spec.h"
 
+#include "audit.h"
+
 #include "commonControls.h"
 #include "display.h"
 #include "fwref_internal.h"
@@ -51,6 +53,7 @@ bool renderSpec(trakr::emulator::FT812DisplayEmulator& emu,
                 const std::vector<SpecEntry>& chrome,
                 const Scenario& scenario)
 {
+    resetAudit();
     initFonts();
     setTarget(&emu);
 
@@ -166,6 +169,12 @@ bool renderSpec(trakr::emulator::FT812DisplayEmulator& emu,
     }
 
     display.renderAll();
+
+    if (strict() && auditFailed())
+    {
+        printAuditReport(spec.title.empty() ? "renderSpec" : spec.title.c_str());
+        return false;
+    }
     return true;
 }
 

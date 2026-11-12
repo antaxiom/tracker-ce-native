@@ -22,6 +22,8 @@ excellent for the former and structurally wrong for the latter.
 ## Consequences
 
 - One windowing/input stack, no second toolkit.
-- LCD pixels are independent of ImGui style and theme.
+- LCD pixels are independent of ImGui style and theme inside the workspace.
+- The host window z-order must not cover LCD rows: the 28px header window has
+  its minimum height clamped so it cannot paint over the workspace.
 - The new path is opt-in until each screen passes its gate, then it becomes the
   default.

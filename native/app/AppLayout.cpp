@@ -101,8 +101,7 @@ void AppLayout::render(ScreenContext& scrCtx,
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
         const ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
                                        ImGuiWindowFlags_NoSavedSettings |
-                                       ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground |
-                                       ImGuiWindowFlags_NoBringToFrontOnFocus;
+                                       ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoBringToFrontOnFocus;
         if (ImGui::Begin("##gui_next_instrument", nullptr, flags)) {
             guiInstrument_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
                                   scrCtx.selectedInstIdx, scrCtx.instrumentView, workspace,

@@ -6,8 +6,6 @@
 namespace trakr::ui {
 namespace {
 
-ImU32 transparentOf(ImU32 color) { return color & 0x00FFFFFFu; }
-
 void drawRowText(Canvas& canvas, int x, int centerY, ImU32 color, const std::string& s) {
     const int h = canvas.textHeight(trakr::hw::FwFont::Light14);
     canvas.text(trakr::hw::FwFont::Light14, x, centerY - h / 2, color, s);
@@ -16,8 +14,10 @@ void drawRowText(Canvas& canvas, int x, int centerY, ImU32 color, const std::str
 } // namespace
 
 void drawBottomShadow(Canvas& canvas, const RectI& rect, ImU32 background) {
-    const RectI shadow{rect.x, rect.bottom() - 10, rect.w, 12};
-    canvas.vGradient(shadow, background, transparentOf(background));
+    // cBar/cList use BLEND_FUNC(SRC_ALPHA, ZERO): the gradient overwrites the
+    // destination and ends in black. One column wider than the control.
+    const RectI shadow{rect.x, rect.bottom() - 10, rect.w + 1, 12};
+    canvas.vGradient(shadow, background, IM_COL32(0, 0, 0, 255));
 }
 
 FrameControl::FrameControl(std::string id, std::vector<RectI> places, int selected)
@@ -35,7 +35,7 @@ void FrameControl::setSelected(int index) {
 
 void FrameControl::draw(Canvas& canvas) const {
     if (places_.empty() || selected_ < 0 || selected_ >= static_cast<int>(places_.size())) return;
-    canvas.strokeRect(places_[selected_], kFrameColors[0], kFrameLineWidth / 16.0f);
+    canvas.strokeRectCentered(places_[selected_], kFrameColors[0], kFrameLineWidth / 16.0f);
 }
 
 BarControl::BarControl(std::string id, int column, Mode mode)
@@ -52,8 +52,10 @@ void BarControl::draw(Canvas& canvas) const {
 
     canvas.fillRect(r, c[4]);
     drawBottomShadow(canvas, r, c[4]);
-    canvas.fillRect(RectI{r.x + 10, r.y + 11, r.w - 20, r.h - 25}, c[3]);
-    canvas.hGradient(RectI{r.x + 10, r.y + 11, 8, r.h - 25}, transparentOf(c[4]), c[3]);
+    if (mode_ == Mode::LeftRight || value_ >= 0) {
+        canvas.fillRect(RectI{r.x + 10, r.y + 11, r.w - 20, r.h - 25}, c[3]);
+        canvas.hGradient(RectI{r.x + 10, r.y + 11, 8, r.h - 25}, IM_COL32(0, 0, 0, 255), c[3]);
+    }
 
     if (mode_ == Mode::LeftRight) {
         if (value_ < -100 || value_ > 100) return;
@@ -113,8 +115,9 @@ void ListControl::draw(Canvas& canvas) const {
     const int wBar = (count > visibleLines_) ? r.w - 13 : r.w - 6;
 
     if (barPos >= 0 && barPos < visible) {
-        canvas.strokeRect(RectI{r.x + 3, top + barPos * kListRowHeight, wBar, kListRowHeight},
-                          kActiveListColors[0], kFrameLineWidth / 16.0f);
+        canvas.strokeRectCentered(
+            RectI{r.x + 3, top + barPos * kListRowHeight, wBar, kListRowHeight},
+            kActiveListColors[0], kFrameLineWidth / 16.0f);
     }
 
     for (int i = 0; i < visible; ++i) {
@@ -170,7 +173,7 @@ LabelControl::LabelControl(std::string id, std::string text, trakr::hw::FwFont f
 
 void LabelControl::draw(Canvas& canvas) const {
     if (showBackground_) canvas.fillRect(rect_, bgColor_);
-    if (showFrame_) canvas.strokeRect(rect_, frameColor_, kFrameLineWidth / 16.0f);
+    if (showFrame_) canvas.strokeRectCentered(rect_, frameColor_, kFrameLineWidth / 16.0f);
     canvas.textCentered(font_, rect_, textColor_, text_);
 }
 

@@ -14,7 +14,7 @@ file dialogs).
 
 ## Key Constraints
 - **Edit Scope**: ONLY edit files in `native/` directory (never `core/`, `platforms/`, `synth/`, `util/`)
-- **Fidelity**: source-true screens must hold ≥95.0% pixel similarity against their `fwref` reference
+- **Fidelity**: the Classic profile must pass calibrated visual regression and layout invariants; `fwref` is an audited advisory oracle (ADR-0003), not ground truth
 - **Testing**: 100% test pass rate required
 
 ## Commands
@@ -107,6 +107,6 @@ and markers align within ~1px.
 1. Never edit files in `core/`, `platforms/`, `synth/`, or `util/` directories
 2. Maintain brand parity (no "hardware" or "Polyend" in the user-facing UI; "Trakr" is a placeholder name)
 3. Follow the firmware-faithful port structure: each view mirrors its `core/interface/*/g*.cpp` screen editor
-4. Use source-true `fwref` references (`render/fwref/*.png` + `native/tools/fwref/specs`) as ground truth for colors/geometry, not the hand-drawn `FT812ScreensCore/Extra.cpp`
+4. Use firmware source (`core/interface/*/g*.cpp`, `NewDisplay`, `Themes.cpp`) as ground truth; `fwref` is advisory (audited, source-derived), and the hand-drawn `FT812ScreensCore/Extra.cpp` is retired
 5. Perform visual review after each significant change
 6. Use a cheap vision operator (Qwen3 VL 8B) for interactive audits; reserve Hy4 for stuck decisions only

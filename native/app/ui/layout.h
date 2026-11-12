@@ -56,12 +56,27 @@ struct LayoutContext {
         return ImVec2((p.x - origin.x) / sx, (p.y - origin.y) / sy + deviceTop);
     }
 
-    // Classic host rect: workspace occupies device y = 28..425.
+    // Classic host rect: workspace occupies device y = 28..425. Classic uses an
+    // integer scale (crisp device pixels) centered in the host rect; Studio may
+    // use a fit scale until it grows a reflow layout.
     static LayoutContext fromWorkspace(const ImRect& rect, LayoutProfile profile) {
         LayoutContext lc;
-        lc.origin = rect.Min;
-        lc.scaleX = rect.GetWidth() / static_cast<float>(kDeviceWidth);
-        lc.scaleY = rect.GetHeight() / static_cast<float>(kWorkspaceSpanY);
+        float scale = 0.0f;
+        if (profile == LayoutProfile::Classic) {
+            scale = std::floor(rect.GetHeight() / static_cast<float>(kWorkspaceSpanY));
+            if (scale < 1.0f)
+                scale = rect.GetHeight() / static_cast<float>(kWorkspaceSpanY);
+        } else {
+            scale = std::min(rect.GetWidth() / static_cast<float>(kDeviceWidth),
+                             rect.GetHeight() / static_cast<float>(kWorkspaceSpanY));
+        }
+        if (scale <= 0.0f) scale = 1.0f;
+
+        lc.scaleX = scale;
+        lc.scaleY = scale;
+        lc.origin.y = rect.Min.y;
+        lc.origin.x = rect.Min.x +
+                      std::floor((rect.GetWidth() - kDeviceWidth * scale) * 0.5f);
         lc.deviceTop = kWorkspaceTop;
         lc.profile = profile;
         return lc;
