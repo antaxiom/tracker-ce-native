@@ -3,7 +3,7 @@
 - Date: 2026-11-12
 - Profile: Classic (800x480)
 - Paths: `--screen instrument`, click More (Effects), click Automation Page
-- Decision: **PASS (legacy-equivalent; no fwref state for these pages)**
+- Decision: **PASS (source-true fwref states added)**
 
 ## Scope
 
@@ -26,20 +26,19 @@ selection writes the instrument automation slot and publishes to the engine.
 | Check | Result |
 | --- | --- |
 | Unit tests | 133/133 pass |
-| Effects vs legacy render | 0.18% pixels differ (L4 vs TTF glyphs) |
-| Automation vs legacy render | 0.73% pixels differ (L4 vs TTF glyphs) |
+| Effects vs fwref workspace | 0.01% pixels differ (99.99% similarity) |
+| Automation vs fwref workspace | 0.02% pixels differ (99.98% similarity) |
 | Robot audit | 114 frames pass on the default semantic path |
-| fwref | No Effects/Automation state in the instrument spec (FW-7 gap) |
+| fwref | `instrument_effects.json` and `instrument_automation.json`; strict audit 0/0 |
 
 ## Conditions
 
-1. No source-true fwref state for these pages; parity is legacy-equivalence
-   plus layout invariants, not pixel comparison against the firmware oracle.
+1. References are workspace-cropped because the bottom page buttons differ by
+   design (the desktop deck spells out Overdrive/Bit depth/... labels).
 2. The bottom labels and page buttons remain app chrome.
 3. Effects page hides columns 4..7 with the firmware blank cover; automation
    lists are recreated by the semantic display rather than reused per page.
 
 ## Next
 
-Add Effects/Automation fwref states (requires new spec entries), then retire
-the legacy Instrument renderer.
+Both states now exist; next is retiring the legacy Instrument renderer.

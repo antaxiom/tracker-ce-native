@@ -116,6 +116,38 @@ int main(int argc, char** argv)
 
     {
         trakr::emulator::FT812DisplayEmulator emu;
+        if (!fwref::renderInstrumentEffects(emu, scenario.instrument))
+        {
+            std::fprintf(stderr, "fwref_gen: failed to render instrument effects\n");
+            return 1;
+        }
+        const std::string path = outDir + "/instrument_effects.png";
+        if (!emu.savePng(path))
+        {
+            std::fprintf(stderr, "fwref_gen: cannot write %s\n", path.c_str());
+            return 1;
+        }
+        std::printf("wrote %s\n", path.c_str());
+    }
+
+    {
+        trakr::emulator::FT812DisplayEmulator emu;
+        if (!fwref::renderInstrumentAutomation(emu, scenario.instrument))
+        {
+            std::fprintf(stderr, "fwref_gen: failed to render instrument automation\n");
+            return 1;
+        }
+        const std::string path = outDir + "/instrument_automation.png";
+        if (!emu.savePng(path))
+        {
+            std::fprintf(stderr, "fwref_gen: cannot write %s\n", path.c_str());
+            return 1;
+        }
+        std::printf("wrote %s\n", path.c_str());
+    }
+
+    {
+        trakr::emulator::FT812DisplayEmulator emu;
         if (!fwref::renderMasterPage2(emu, scenario.master))
         {
             std::fprintf(stderr, "fwref_gen: failed to render master page 2\n");

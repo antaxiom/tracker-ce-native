@@ -26,4 +26,36 @@ bool renderInstrumentGeneral(trakr::emulator::FT812DisplayEmulator& emu,
     return renderSpec(emu, spec, chrome, s);
 }
 
+namespace
+{
+bool renderNamed(trakr::emulator::FT812DisplayEmulator& emu,
+                 const InstrumentScenario& scenario,
+                 const char* specName)
+{
+    const std::string dir = specDirectory();
+    ScreenSpec spec;
+    std::string error;
+    if (!loadScreenSpecJson(dir + "/" + specName, spec, error))
+        return false;
+    std::vector<SpecEntry> chrome;
+    if (!loadChromeSpecJson(dir + "/chrome.json", chrome, error))
+        return false;
+    Scenario s;
+    s.instrument = scenario;
+    return renderSpec(emu, spec, chrome, s);
+}
+} // namespace
+
+bool renderInstrumentEffects(trakr::emulator::FT812DisplayEmulator& emu,
+                             const InstrumentScenario& scenario)
+{
+    return renderNamed(emu, scenario, "instrument_effects.json");
+}
+
+bool renderInstrumentAutomation(trakr::emulator::FT812DisplayEmulator& emu,
+                                const InstrumentScenario& scenario)
+{
+    return renderNamed(emu, scenario, "instrument_automation.json");
+}
+
 } // namespace fwref

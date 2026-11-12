@@ -38,12 +38,18 @@ class Case:
     screen: str
     ref: str | None
     script: str | None = None
+    args: tuple[str, ...] = ()
+    crop: tuple[int, int, int, int] | None = None
 
 
 CASES = [
     Case("pattern", "pattern", "pattern.png"),
     Case("song", "song", "song.png"),
     Case("instrument", "instrument", "instrument_params.png"),
+    Case("instrument_effects", "instrument", "instrument_effects.png",
+         args=("--instrument-page", "effects"), crop=(0, 28, 800, 396)),
+    Case("instrument_automation", "instrument", "instrument_automation.png",
+         args=("--instrument-page", "automation"), crop=(0, 28, 800, 396)),
     Case("master1", "master", "master_page1.png"),
     Case("master2", "master", "master_page2.png", "Tab"),
     Case("sample", "sample", "sample.png"),
@@ -88,6 +94,7 @@ def run_case(case: Case, app: str, refs: str, out_dir: str) -> tuple[str, float 
     cmd = [app, "--screen", case.screen, "--lcd-shot"]
     if case.script:
         cmd += ["--script", case.script]
+    cmd += list(case.args)
     cmd += ["--screenshot", shot]
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
@@ -112,6 +119,13 @@ def run_case(case: Case, app: str, refs: str, out_dir: str) -> tuple[str, float 
     ref_path = os.path.join(refs, case.ref)
     if not os.path.exists(ref_path):
         return case.name, None, 0.0, f"missing reference {case.ref}"
+
+    if case.crop:
+        x, y, w, h = case.crop
+        for src, dst in ((produced, produced + ".crop.png"), (ref_path, ref_path + ".crop.png")):
+            subprocess.run(["magick", src, "-crop", f"{w}x{h}+{x}+{y}", "+repage", dst],
+                           check=True)
+        produced, ref_path = produced + ".crop.png", ref_path + ".crop.png"
 
     diff = mismatch(produced, ref_path)
     return case.name, diff, 1.0 - diff, ""

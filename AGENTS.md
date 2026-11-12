@@ -39,7 +39,7 @@ python3 native/tools/os_input/os_input_runner.py
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots
 
-# Classic visual-regression gate (all screens/sub-pages vs fwref, >= 95%)
+# Classic visual-regression gate (14 screen/sub-page states vs fwref, >= 95%)
 python3 native/tools/visreg/visreg.py --all --deterministic
 
 # Calibrated hardware structural checks (needs ImageMagick, numpy, scipy)

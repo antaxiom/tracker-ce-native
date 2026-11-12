@@ -253,6 +253,10 @@ Scenario defaultComparisonScenario();
 // using the unmodified NewDisplay control sources.
 bool renderInstrumentGeneral(trakr::emulator::FT812DisplayEmulator& emu,
                              const InstrumentScenario& scenario);
+bool renderInstrumentEffects(trakr::emulator::FT812DisplayEmulator& emu,
+                             const InstrumentScenario& scenario);
+bool renderInstrumentAutomation(trakr::emulator::FT812DisplayEmulator& emu,
+                                const InstrumentScenario& scenario);
 
 // Renders Master page 1/3.
 bool renderMasterPage1(trakr::emulator::FT812DisplayEmulator& emu,

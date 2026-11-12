@@ -153,8 +153,10 @@ comparison after a primitive-level audit, never as the app's substrate.
   recorded in `native/docs/gates/phase6-verification.md`.
 - `--gui-classic` retired; `AppLayout` always renders semantic screens, and the
   legacy `renderActiveScreen` path remains only for the legacy test harness.
-- `native/tools/visreg/visreg.py` is the repeatable Classic gate: 12/12
-  screen/sub-page cases pass at 97.85-99.78% similarity with determinism.
+- `native/tools/visreg/visreg.py` is the repeatable Classic gate: 14/14
+  screen/sub-page cases pass at 97.85-99.99% similarity with determinism.
+- Multi-state fwref added for Instrument Effects/Automation (0.01%/0.02%);
+  functional smoke is green 17/17 after transport/song/sample fixes.
 - `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
   post-marker, 2 cursor) to model NewDisplay's update/update2/update3; `cPoints`
   additive range background is painted in the prepass as an approximation.
