@@ -36,6 +36,21 @@ public:
     int selectedItem() const { return selectedItem_; }
     void setSelectedItem(int i) { selectedItem_ = i; }
 
+    // Semantic UI port (ConfigScreen) hooks.
+    struct ConfigRow {
+        std::string name;
+        std::string value;
+    };
+    static constexpr int kGroupCount = 5;
+    static const char* groupName(int index);
+    std::vector<ConfigRow> currentRows(const Song& song) const;
+    int selectedPlace() const { return selectedPlace_; }
+    void setSelectedPlace(int place) { selectedPlace_ = static_cast<int>(place); }
+    void moveSelection(int delta);
+    void switchGroup(int delta);
+    void selectGroup(int index);
+    void selectItem(int index);
+
 private:
     Group activeGroup_{Group::ProjectSettings};
     int selectedItem_{0};

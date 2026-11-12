@@ -227,6 +227,19 @@ void PerformView::triggerSlotPad(int col, int row, EngineHost& engineHost) {
     applyToEngine(engineHost);
 }
 
+void PerformView::selectTop(int place, EngineHost& engineHost) {
+    if (place < 0 || place >= 12) return;
+    slots_[place].activeRow = 0;
+    performanceEditPlace_ = (performanceEditPlace_ == place) ? -1 : place;
+    applyToEngine(engineHost);
+}
+
+void PerformView::selectRow(int place, int row, EngineHost& engineHost) {
+    if (place < 0 || place >= 12) return;
+    performanceEditPlace_ = place;
+    triggerSlotPad(place, row, engineHost);
+}
+
 void PerformView::clearAllFx(EngineHost& engineHost) {
     for (auto& s : slots_) s.activeRow = 0;
     applyToEngine(engineHost);

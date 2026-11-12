@@ -209,6 +209,10 @@ add_executable(trakr_app
     app/ui/controls/song_player.h
     app/ui/controls/waveform.cpp
     app/ui/controls/waveform.h
+    app/ui/controls/param_value_list.cpp
+    app/ui/controls/param_value_list.h
+    app/ui/controls/multi_label.cpp
+    app/ui/controls/multi_label.h
     app/ui/screens/instrument_general.cpp
     app/ui/screens/instrument_general.h
     app/ui/screens/master_page1.cpp
@@ -221,6 +225,12 @@ add_executable(trakr_app
     app/ui/screens/sample.h
     app/ui/screens/sample_loader.cpp
     app/ui/screens/sample_loader.h
+    app/ui/screens/config.cpp
+    app/ui/screens/config.h
+    app/ui/screens/perform.cpp
+    app/ui/screens/perform.h
+    app/ui/screens/file.cpp
+    app/ui/screens/file.h
 )
 target_include_directories(trakr_app PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model
@@ -458,12 +468,17 @@ add_executable(trakr_tests
     app/ui/controls/tracker.cpp
     app/ui/controls/song_player.cpp
     app/ui/controls/waveform.cpp
+    app/ui/controls/param_value_list.cpp
+    app/ui/controls/multi_label.cpp
     app/ui/screens/instrument_general.cpp
     app/ui/screens/master_page1.cpp
     app/ui/screens/pattern.cpp
     app/ui/screens/song.cpp
     app/ui/screens/sample.cpp
     app/ui/screens/sample_loader.cpp
+    app/ui/screens/config.cpp
+    app/ui/screens/perform.cpp
+    app/ui/screens/file.cpp
 )
 target_include_directories(trakr_tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model

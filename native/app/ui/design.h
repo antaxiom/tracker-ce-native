@@ -109,6 +109,15 @@ constexpr ImU32 kSampleLoadMemBarNormalColors[5] = {kWhite, kOneTrueRed, kOneTru
 constexpr ImU32 kSampleLoadMemBarFullColors[5] = {kOneTrueRed, kOneTrueRed, kOneTrueRed, kGrey08,
                                                   kGrey0A};
 
+// themeDefault project browser list colors (File screen).
+constexpr ImU32 kProjectActiveListColors[7] = {kOneTrueRed, kOneTrueRed, kGrey57, kGrey0A,
+                                               kWhite, kOneTrueGreen, kBlack};
+constexpr ImU32 kProjectInactiveListColors[7] = {kWhite, kWhite, kGrey57, kGrey0A,
+                                                 kWhite, kOneTrueGreen, kBlack};
+
+// themeDefault.fxNameTextLabelColors[0] (Performance FX vertical names).
+constexpr ImU32 kPerfFxNameTextColor = kWhite;
+
 // themeDefault waveform colors.
 constexpr ImU32 kWaveformColors[2] = {kWhite, kGrey77};
 constexpr ImU32 kWaveformPointsColors[4] = {kWhite, kGrey0A, kOneTrueRed, kOneTrueGreen};

@@ -223,6 +223,22 @@ int main(int argc, char** argv)
         std::printf("wrote %s\n", path.c_str());
     }
 
+    {
+        trakr::emulator::FT812DisplayEmulator emu;
+        if (!fwref::renderFile(emu, scenario.file))
+        {
+            std::fprintf(stderr, "fwref_gen: failed to render file\n");
+            return 1;
+        }
+        const std::string path = outDir + "/file.png";
+        if (!emu.savePng(path))
+        {
+            std::fprintf(stderr, "fwref_gen: cannot write %s\n", path.c_str());
+            return 1;
+        }
+        std::printf("wrote %s\n", path.c_str());
+    }
+
     fwref::printAuditReport("fwref_gen");
     if (strict && fwref::auditFailed())
     {

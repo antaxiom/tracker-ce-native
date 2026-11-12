@@ -22,7 +22,7 @@ file dialogs).
 # Build application and tests
 cmake --build native/build -j8
 
-# Run unit tests (130 test cases)
+# Run unit tests (132 test cases)
 ./native/build/trakr_tests
 
 # Run UI robot audit (1,103 frames)
@@ -102,10 +102,14 @@ Current source-true scores (≥95.0% target):
 | Song | 98.91% | ✅ |
 | Sample Playback | 98.26% | ✅ |
 | Sample Loader | 99.15% | ✅ |
+| Config | 99.64% | ✅ |
+| Performance | 98.25% | ✅ |
+| File | 98.88% | ✅ |
 
-Song/Sample/Loader figures are full-frame comparisons against the fwref
-scenario (legacy path: 98.55% / 97.87% / 98.53%); the remaining difference is
-mostly app chrome and rotated/bitmap glyph rasterization. See
+Song/Sample/Loader/Config/Perform/File figures are full-frame comparisons
+against the fwref scenario (legacy path: 98.55% / 97.87% / 98.53% / 98.09% /
+98.25% / 98.03%); the remaining difference is mostly app chrome and
+rotated/bitmap glyph rasterization. See
 `native/docs/gates/phase4-*.md` for per-screen scope and conditions.
 
 **Measurement note**: screenshots are rendered with `--lcd-shot`, an exact 800x480

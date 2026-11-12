@@ -43,6 +43,13 @@ public:
     int selectedProject() const { return selectedProject_; }
     void setSelectedProject(int idx) { selectedProject_ = idx; }
 
+    // Semantic UI port (FileScreen) hooks.
+    const std::vector<std::string>& projects() const { return projects_; }
+    int listStart() const { return listStart_; }
+    void moveSelection(int delta);
+    void selectProject(int index);
+    void openSelected() { if (onOpen_) onOpen_(); }
+
 private:
     std::vector<std::string> projects_;
     int selectedProject_{0};

@@ -101,8 +101,11 @@ void AppLayout::render(ScreenContext& scrCtx,
         layoutState.guiNext && activeScreen == Screen::Sample &&
         scrCtx.sampleView.subPage() == SampleView::SubPage::Playback;
     const bool guiNextLoader = layoutState.guiNext && activeScreen == Screen::SampleLoader;
+    const bool guiNextConfig = layoutState.guiNext && activeScreen == Screen::Config;
+    const bool guiNextPerform = layoutState.guiNext && activeScreen == Screen::Perform;
+    const bool guiNextFile = layoutState.guiNext && activeScreen == Screen::File;
     if (guiNextInstrument || guiNextMaster || guiNextPattern || guiNextSong || guiNextSample ||
-        guiNextLoader) {
+        guiNextLoader || guiNextConfig || guiNextPerform || guiNextFile) {
         const ImRect workspace = display_.workspaceRect();
         ImGui::SetNextWindowPos(workspace.Min);
         ImGui::SetNextWindowSize(workspace.GetSize());
@@ -117,6 +120,9 @@ void AppLayout::render(ScreenContext& scrCtx,
                                : guiNextPattern    ? "##gui_next_pattern"
                                : guiNextSong       ? "##gui_next_song"
                                : guiNextSample     ? "##gui_next_sample"
+                               : guiNextConfig     ? "##gui_next_config"
+                               : guiNextPerform    ? "##gui_next_perform"
+                               : guiNextFile       ? "##gui_next_file"
                                                    : "##gui_next_loader";
         if (ImGui::Begin(windowName, nullptr, flags)) {
             if (guiNextInstrument) {
@@ -147,6 +153,21 @@ void AppLayout::render(ScreenContext& scrCtx,
                                   ui::LayoutProfile::Classic);
                 guiLoader_.render(ImGui::GetWindowDrawList(), workspace,
                                   ui::LayoutProfile::Classic);
+            } else if (guiNextConfig) {
+                guiConfig_.update(scrCtx.song, scrCtx.engineHost, scrCtx.theme,
+                                  scrCtx.configView, workspace, ui::LayoutProfile::Classic);
+                guiConfig_.render(ImGui::GetWindowDrawList(), workspace,
+                                  ui::LayoutProfile::Classic);
+            } else if (guiNextPerform) {
+                guiPerform_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                   scrCtx.performView, workspace, ui::LayoutProfile::Classic);
+                guiPerform_.render(ImGui::GetWindowDrawList(), workspace,
+                                   ui::LayoutProfile::Classic);
+            } else if (guiNextFile) {
+                guiFile_.update(scrCtx.song, scrCtx.engineHost, scrCtx.fileView, workspace,
+                                ui::LayoutProfile::Classic);
+                guiFile_.render(ImGui::GetWindowDrawList(), workspace,
+                                ui::LayoutProfile::Classic);
             } else {
                 guiPattern_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
                                    scrCtx.currentOrderIdx, scrCtx.octave, scrCtx.editStep,

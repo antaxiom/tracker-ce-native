@@ -4,6 +4,8 @@
 #include "ui/controls/primitives.h"
 #include "ui/controls/song_player.h"
 #include "ui/controls/waveform.h"
+#include "ui/controls/param_value_list.h"
+#include "ui/controls/multi_label.h"
 #include "ui/display.h"
 #include "ui/layout.h"
 
@@ -156,4 +158,32 @@ TEST_CASE("Waveform point mapping honours the zoom window", "[ui][waveform]") {
     const int mid = trakr::ui::waveform_detail::pointX(state, 501);
     CHECK(mid >= 0);
     CHECK(mid <= 599);
+}
+
+TEST_CASE("ParamValueListControl selects rows and keeps its anchor", "[ui][paramlist]") {
+    trakr::ui::ParamValueListControl list("submenu", 14);
+    list.setRect(trakr::ui::RectI{201, 29, 397, 394});
+    list.setRows({{"Pattern divider", "4"}, {"Root note", "C"}, {"Notes scale", "Chromatic"}});
+    int selected = -1;
+    list.setOnSelect([&selected](int index) { selected = index; });
+
+    const int rowY = 29 + trakr::ui::kListTopInset + trakr::ui::kListRowHeight + 6;
+    CHECK(list.onPress(300, rowY));
+    CHECK(list.selected() == 1);
+    CHECK(selected == 1);
+    CHECK_FALSE(list.onPress(10, rowY));
+}
+
+TEST_CASE("MultiLabelControl routes top and preset row presses", "[ui][multilabel]") {
+    trakr::ui::MultiLabelControl cell("value");
+    cell.setRect(trakr::ui::RectI{11, 34, 62, 389});
+    int top = 0, row = -1;
+    cell.setOnTop([&top] { ++top; });
+    cell.setOnRow([&row](int r) { row = r; });
+
+    CHECK(cell.onPress(40, 50));   // CC value cell
+    CHECK(top == 1);
+    CHECK(cell.onPress(40, 34 + 35 + 210 + 2 * 30 + 5)); // fourth preset row
+    CHECK(row == 2);
+    CHECK_FALSE(cell.onPress(40, 34 + 35 + 4)); // gap between cells
 }

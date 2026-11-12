@@ -17,6 +17,9 @@
 #include "ui/screens/song.h"
 #include "ui/screens/sample.h"
 #include "ui/screens/sample_loader.h"
+#include "ui/screens/config.h"
+#include "ui/screens/perform.h"
+#include "ui/screens/file.h"
 #include <string>
 
 namespace trakr {
@@ -59,6 +62,9 @@ private:
     SongScreen guiSong_;
     SampleScreen guiSampleScreen_;
     SampleLoaderScreen guiLoader_;
+    ConfigScreen guiConfig_;
+    PerformScreen guiPerform_;
+    FileScreen guiFile_;
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

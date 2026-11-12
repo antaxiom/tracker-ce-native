@@ -126,6 +126,16 @@ comparison after a primitive-level audit, never as the app's substrate.
 - Loader gate passed: `SampleLoaderScreen` (lists, headers, memory/preview bars);
   0.85% vs fwref (legacy 1.47%); importer crop page still legacy. See
   `native/docs/gates/phase4-loader.md`.
+- Config gate passed: `ParamValueListControl` + `ConfigScreen`; 0.36% vs fwref
+  (legacy 1.91%); item editor/text boxes pending. See
+  `native/docs/gates/phase4-config.md`.
+- Perform gate passed: `MultiLabelControl`/`VerticalLabelControl` +
+  `PerformScreen`; 1.75% vs fwref (legacy 1.75%, residual is track row/chrome).
+  See `native/docs/gates/phase4-perform.md`.
+- File gate passed: `FileScreen` (project/recent lists, labels, blank cover);
+  1.12% vs fwref (legacy 1.97%). See `native/docs/gates/phase4-file.md`.
+- All nine screens now have a semantic workspace path behind `--gui-next`;
+  legacy paths remain for sub-pages, popups and chrome.
 - `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
   post-marker, 2 cursor) to model NewDisplay's update/update2/update3; `cPoints`
   additive range background is painted in the prepass as an approximation.

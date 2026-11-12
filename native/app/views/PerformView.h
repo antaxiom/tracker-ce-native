@@ -35,6 +35,11 @@ public:
     const std::array<PerformSlot12, 12>& slots() const { return slots_; }
     void triggerSlotPad(int col, int row, EngineHost& engineHost);
 
+    // Semantic UI port (PerformScreen) hooks.
+    int performanceEditPlace() const { return performanceEditPlace_; }
+    void selectTop(int place, EngineHost& engineHost);
+    void selectRow(int place, int row, EngineHost& engineHost);
+
 private:
     void applyToEngine(EngineHost& engineHost);
 

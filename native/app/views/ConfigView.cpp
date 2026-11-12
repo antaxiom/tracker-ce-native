@@ -47,7 +47,6 @@ constexpr int kFramePlaces[4][4] = {
     {(800 / 8) * 5 + 1, 31, 600 / 2 - 3, 391},
 };
 
-struct ConfigRow { std::string name; std::string value; };
 ImU32 rgb(const ImVec4& c) { return ImGui::ColorConvertFloat4ToU32(c); }
 
 // One pass of the firmware config controls. Coordinates stay in firmware device
@@ -59,7 +58,7 @@ struct ConfigControls {
     const Theme* theme{};
     int group{0}, selected{0}, place{0};
     bool configListShown{false};
-    std::vector<ConfigRow>* rows{};
+    std::vector<ConfigView::ConfigRow>* rows{};
     int clickedGroup{-1}, clickedItem{-1};
     ImFont* font{};
     ImFont* boldFont{};
@@ -185,6 +184,94 @@ struct ConfigControls {
 ConfigView::ConfigView() = default;
 void ConfigView::draw(bool* p_open) { (void)p_open; }
 
+const char* ConfigView::groupName(int index) {
+    static const char* const names[] = {"Project Settings", "General", "MIDI", "Metronome", "About"};
+    if (index < 0 || index >= kGroupCount) return "";
+    return names[index];
+}
+
+std::vector<ConfigView::ConfigRow> ConfigView::currentRows(const Song& song) const {
+    switch (activeGroup_) {
+        case Group::ProjectSettings:
+            return {
+                {"Performance presets", "Global"},
+                {"Pattern divider", std::to_string(song.lpb)},
+                {"Notes scale", "Chromatic"},
+                {"Root note", "C"},
+                {"Notes layout", "Standard 4-Row"},
+                {"Anti-aliasing", "Enabled"},
+                {"Limiter mode", "Clean (-0.4 dBFS)"},
+                {"Extra headroom", (song.masterGainDb < 0.0f) ? "Enabled (-3.5 dB)"
+                                                              : "Disabled (0.0 dB)"},
+                {"Snap to zero", "Enabled"}};
+        case Group::General:
+            return {
+                {"Pattern top info", "Tracks Only"},
+                {"Recording options", "All"},
+                {"Numbering mode", hexDisplay_ ? "Hexadecimal" : "Decimal"},
+                {"Middle C", "C-4"},
+                {"Clock sync correction", "0"}};
+        case Group::Midi: {
+            auto ports = MidiManager::instance().getPortNames();
+            int cur = MidiManager::instance().getCurrentPort();
+            std::string portName =
+                (cur >= 0 && cur < static_cast<int>(ports.size())) ? ports[cur]
+                                                                   : "None / Disconnected";
+            return {
+                {"MIDI in device", portName},
+                {"Clock in", "Internal"},
+                {"Clock out", "Enabled"},
+                {"Transport in", "Enabled"},
+                {"Transport out", "Enabled"},
+                {"Notes in channel", "ALL"},
+                {"Clock sync correction", "0"}};
+        }
+        case Group::Metronome:
+            return {{"State", "Off"},
+                    {"Volume", "50"},
+                    {"Pre roll", "Off"},
+                    {"Time signature num", "4"},
+                    {"Time signature denum", "4"}};
+        case Group::About:
+            return {{"Product name", "Trakr Native"},
+                    {"Architecture", "Desktop Tracker"},
+                    {"Audio engine", "Tracker DSP Engine"},
+                    {"Display engine", "SDL GPU Accelerated"}};
+    }
+    return {};
+}
+
+void ConfigView::moveSelection(int delta) {
+    int count = 0;
+    switch (activeGroup_) {
+        case Group::ProjectSettings: count = 9; break;
+        case Group::General: count = 5; break;
+        case Group::Midi: count = 7; break;
+        case Group::Metronome: count = 5; break;
+        case Group::About: count = 4; break;
+    }
+    selectedItem_ = std::clamp(selectedItem_ + delta, 0, std::max(0, count - 1));
+}
+
+void ConfigView::switchGroup(int delta) {
+    activeGroup_ =
+        static_cast<Group>(((static_cast<int>(activeGroup_) + delta) % kGroupCount +
+                            kGroupCount) % kGroupCount);
+    selectedItem_ = 0;
+    selectedPlace_ = 0;
+}
+
+void ConfigView::selectGroup(int index) {
+    activeGroup_ = static_cast<Group>(std::clamp(index, 0, kGroupCount - 1));
+    selectedItem_ = 0;
+    selectedPlace_ = 0;
+}
+
+void ConfigView::selectItem(int index) {
+    selectedItem_ = std::max(0, index);
+    selectedPlace_ = 1;
+}
+
 void ConfigView::adjustSelectedValue(Song& song, EngineHost& engineHost, Theme& theme, int delta) {
     switch (activeGroup_) {
         case Group::ProjectSettings:
@@ -271,60 +358,7 @@ void ConfigView::update(Song& song, EngineHost& engineHost, Theme& theme) {
         if (ImGui::IsKeyPressed(ImGuiKey_Equal)) { selectedPlace_ = 1; adjustSelectedValue(song, engineHost, theme, 1); }
     }
 
-    std::vector<ConfigRow> rows;
-    switch (activeGroup_) {
-        case Group::ProjectSettings:
-            rows = {
-                {"Performance presets", "Global"},
-                {"Pattern divider", std::to_string(song.lpb)},
-                {"Notes scale", "Chromatic"},
-                {"Root note", "C"},
-                {"Notes layout", "Standard 4-Row"},
-                {"Anti-aliasing", "Enabled"},
-                {"Limiter mode", "Clean (-0.4 dBFS)"},
-                {"Extra headroom", (song.masterGainDb < 0.0f) ? "Enabled (-3.5 dB)" : "Disabled (0.0 dB)"},
-                {"Snap to zero", "Enabled"}
-            };
-            break;
-        case Group::General:
-            rows = {
-                {"Pattern top info", "Tracks Only"},
-                {"Recording options", "All"},
-                {"Numbering mode", hexDisplay_ ? "Hexadecimal" : "Decimal"},
-                {"Middle C", "C-4"},
-                {"Clock sync correction", "0"}
-            };
-            break;
-        case Group::Midi: {
-            auto ports = MidiManager::instance().getPortNames();
-            int cur = MidiManager::instance().getCurrentPort();
-            std::string portName = (cur >= 0 && cur < static_cast<int>(ports.size())) ? ports[cur] : "None / Disconnected";
-            rows = {
-                {"MIDI in device", portName},
-                {"Clock in", "Internal"},
-                {"Clock out", "Enabled"},
-                {"Transport in", "Enabled"},
-                {"Transport out", "Enabled"},
-                {"Notes in channel", "ALL"},
-                {"Clock sync correction", "0"}
-            };
-            break;
-        }
-        case Group::Metronome:
-            rows = {
-                {"State", "Off"}, {"Volume", "50"}, {"Pre roll", "Off"},
-                {"Time signature num", "4"}, {"Time signature denum", "4"}
-            };
-            break;
-        case Group::About:
-            rows = {
-                {"Product name", "Trakr Native"},
-                {"Architecture", "Desktop Tracker"},
-                {"Audio engine", "Tracker DSP Engine"},
-                {"Display engine", "SDL GPU Accelerated"}
-            };
-            break;
-    }
+    std::vector<ConfigView::ConfigRow> rows = currentRows(song);
 
     selectedItem_ = std::clamp(selectedItem_, 0, std::max(0, static_cast<int>(rows.size()) - 1));
     const ImVec2 avail = ImGui::GetContentRegionAvail();

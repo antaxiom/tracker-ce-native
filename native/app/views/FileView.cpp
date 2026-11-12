@@ -263,6 +263,17 @@ void FileView::setParityState() {
 
 void FileView::draw(bool* p_open) { (void)p_open; }
 
+void FileView::moveSelection(int delta) {
+    if (projects_.empty()) return;
+    selectedProject_ =
+        std::clamp(selectedProject_ + delta, 0, static_cast<int>(projects_.size()) - 1);
+}
+
+void FileView::selectProject(int index) {
+    if (projects_.empty()) return;
+    selectedProject_ = std::clamp(index, 0, static_cast<int>(projects_.size()) - 1);
+}
+
 void FileView::setActions(std::function<void()> onOpen, std::function<void()> onSave,
                           std::function<void()> onSaveAs) {
     onOpen_ = std::move(onOpen);
