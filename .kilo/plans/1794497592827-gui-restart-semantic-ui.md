@@ -110,6 +110,9 @@ comparison after a primitive-level audit, never as the app's substrate.
 - Phase 2 gate passed for Instrument General: semantic controls, L4 text,
   integer Classic scale, input parity, 5/5 calibrated hardware tiles.
   See `native/docs/gates/phase2-instrument.md`.
+- Master 1/3 gate passed for the Classic workspace (0.02% vs fwref, input
+  parity); hardware capture for Master is pending. See
+  `native/docs/gates/phase4-master1.md`.
 - fwref FW-1 implemented: strict by default, per-screen audit in `renderSpec`,
   fails on unsupported or approximate calls; current result 0/0.
 - `Canvas` is ImGui-backed today; a recording/software backend is Phase 5 work.

@@ -12,6 +12,7 @@
 #include "ScreenManager.h"
 #include "RenderScheduler.h"
 #include "ui/screens/instrument_general.h"
+#include "ui/screens/master_page1.h"
 #include <string>
 
 namespace trakr {
@@ -49,6 +50,7 @@ private:
     hw::ButtonDeck buttonDeck_;
     hw::MenuPopup menuPopup_;
     InstrumentGeneralScreen guiInstrument_;
+    MasterPage1Screen guiMaster_;
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

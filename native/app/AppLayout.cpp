@@ -92,7 +92,10 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextInstrument =
         layoutState.guiNext && activeScreen == Screen::Instrument &&
         scrCtx.instrumentView.subPage() == InstrumentView::SubPage::General;
-    if (guiNextInstrument) {
+    const bool guiNextMaster =
+        layoutState.guiNext && activeScreen == Screen::Master &&
+        scrCtx.mixerView.subPage() == MixerView::SubPage::Master;
+    if (guiNextInstrument || guiNextMaster) {
         const ImRect workspace = display_.workspaceRect();
         ImGui::SetNextWindowPos(workspace.Min);
         ImGui::SetNextWindowSize(workspace.GetSize());
@@ -102,12 +105,20 @@ void AppLayout::render(ScreenContext& scrCtx,
         const ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
                                        ImGuiWindowFlags_NoSavedSettings |
                                        ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoBringToFrontOnFocus;
-        if (ImGui::Begin("##gui_next_instrument", nullptr, flags)) {
-            guiInstrument_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
-                                  scrCtx.selectedInstIdx, scrCtx.instrumentView, workspace,
+        const char* windowName = guiNextInstrument ? "##gui_next_instrument" : "##gui_next_master";
+        if (ImGui::Begin(windowName, nullptr, flags)) {
+            if (guiNextInstrument) {
+                guiInstrument_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                      scrCtx.selectedInstIdx, scrCtx.instrumentView, workspace,
+                                      ui::LayoutProfile::Classic, layoutState.shiftHeld);
+                guiInstrument_.render(ImGui::GetWindowDrawList(), workspace,
+                                      ui::LayoutProfile::Classic);
+            } else {
+                guiMaster_.update(scrCtx.song, scrCtx.engineHost, scrCtx.mixerView, workspace,
                                   ui::LayoutProfile::Classic, layoutState.shiftHeld);
-            guiInstrument_.render(ImGui::GetWindowDrawList(), workspace,
+                guiMaster_.render(ImGui::GetWindowDrawList(), workspace,
                                   ui::LayoutProfile::Classic);
+            }
         }
         ImGui::End();
         ImGui::PopStyleVar(3);

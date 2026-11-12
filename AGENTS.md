@@ -31,8 +31,9 @@ cmake --build native/build -j8
 # Generate FT812 reference images
 python3 native/tools/os_input/os_input_runner.py
 
-# New semantic UI path (Instrument General vertical slice)
+# New semantic UI path (Instrument General, Master 1/3)
 ./native/build/trakr_app --screen instrument --gui-next --lcd-shot --screenshot /tmp/instrument.png
+./native/build/trakr_app --screen master --gui-next --lcd-shot --screenshot /tmp/master.png
 
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots

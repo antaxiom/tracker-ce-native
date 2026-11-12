@@ -205,6 +205,8 @@ add_executable(trakr_app
     app/ui/controls/primitives.h
     app/ui/screens/instrument_general.cpp
     app/ui/screens/instrument_general.h
+    app/ui/screens/master_page1.cpp
+    app/ui/screens/master_page1.h
 )
 target_include_directories(trakr_app PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model
@@ -440,6 +442,7 @@ add_executable(trakr_tests
     app/ui/canvas.cpp
     app/ui/controls/primitives.cpp
     app/ui/screens/instrument_general.cpp
+    app/ui/screens/master_page1.cpp
 )
 target_include_directories(trakr_tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model
