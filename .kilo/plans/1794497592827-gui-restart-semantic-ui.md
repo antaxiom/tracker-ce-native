@@ -321,6 +321,20 @@ Otherwise it remains **"approximate, advisory only"**, and Classic-profile verif
 on calibrated hardware captures plus layout/visual invariants. This status never blocks the
 GUI restart and never becomes an app dependency.
 
+Phase 5 status: **complete for the restart scope**. The nine workspaces and
+every app-modeled sub-page render through one semantic compositor; legacy
+views remain only as dialog/state plumbing and a debug escape hatch. Studio
+expansion (resizable panes, zoom, extra track/column views, inspector panels,
+desktop themes) is split out as the Phase 7 feature program below; it is a new
+product surface, not a restart requirement, and needs its own design pass.
+
+### Phase 7 (backlog) — Studio expansion
+
+1. Resizable panes and workspace zoom in `LayoutProfile::Studio`.
+2. Extra track/column views and inspector panels.
+3. Desktop theme variants.
+Do not start without a design pass; Classic remains the reference profile.
+
 ### Phase 6 — Verification, retirement and handoff
 
 - Run the full gate matrix (unit, robot, smoke, fwref strict, refcal, glyph,
