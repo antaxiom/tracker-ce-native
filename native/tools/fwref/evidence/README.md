@@ -40,9 +40,27 @@ FW-1 strict mode is implemented (`native/tools/fwref/audit.{h,cpp}`):
 - Strict mode is enforced per screen in `renderSpec`; a failing screen returns
   false and prints the audit report.
 
+## Hardware structural results (2026-11-12)
+
+Harness: `native/tools/refcal` (rectify, per-channel black/white calibration,
+structural checks against fwref).
+
+- Frames: two Instrument Parameters 1/2 tiles, one Performance FX tile, one
+  Pattern tile (`video_perform_instrument_pattern.png`), and one Track Mixer
+  2/3 tile (`video_pattern_mute_selection_mixer.png`).
+- Result: **5/5 passed**. Header separator at firmware row 28; 8/8 bottom label
+  cells present; Instrument adds frame column/grid and 4/4 filter-list rows.
+- Caveat: the photo frame height reads ~361px vs 391px in fwref (the lower edge
+  is obscured/compressed in the capture), reported as an advisory delta.
+- Not pixel identity; values/states differ between the photo and the reference.
+
+Remaining: extend `refcal/specs.json` to Perform, Pattern, Master, Sample,
+Config, Song, Loader and File, and add multi-state captures.
+
 ## Hardware status
 
-Still **not validated against hardware**. fwref remains an approximate,
+Still **not fully validated against hardware**. fwref remains an approximate,
 advisory-only oracle (ADR-0003). The source-true gates
 (`check_reference.py`) prove provenance, determinism, the primitive contract
-and the negative control; they do not prove FT812 equivalence.
+and the negative control; they do not prove FT812 equivalence. Instrument
+General now has calibrated structural evidence; other screens do not.

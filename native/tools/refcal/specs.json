@@ -1,0 +1,65 @@
+{
+  "entries": [
+    {
+      "name": "instrument_hw_left",
+      "frame": "native/docs/reference/screens/video_perform_instrument_pattern.png",
+      "tile": [
+        0,
+        382,
+        632,
+        381
+      ],
+      "ref": "render/fwref/instrument_params.png"
+    },
+    {
+      "name": "instrument_hw_right",
+      "frame": "native/docs/reference/screens/video_perform_instrument_pattern.png",
+      "tile": [
+        640,
+        382,
+        632,
+        381
+      ],
+      "ref": "render/fwref/instrument_params.png"
+    },
+    {
+      "name": "perform_hw_left",
+      "frame": "native/docs/reference/screens/video_perform_instrument_pattern.png",
+      "tile": [
+        0,
+        10,
+        632,
+        381
+      ],
+      "ref": "render/fwref/perform.png",
+      "check_filter": false,
+      "check_frame": false
+    },
+    {
+      "name": "pattern_hw_right",
+      "frame": "native/docs/reference/screens/video_perform_instrument_pattern.png",
+      "tile": [
+        640,
+        10,
+        632,
+        381
+      ],
+      "ref": "render/fwref/pattern.png",
+      "check_filter": false,
+      "check_frame": false
+    },
+    {
+      "name": "mixer_hw_bottom_right",
+      "frame": "native/docs/reference/screens/video_pattern_mute_selection_mixer.png",
+      "tile": [
+        640,
+        754,
+        632,
+        362
+      ],
+      "ref": "render/fwref/master_page2.png",
+      "check_filter": false,
+      "check_frame": false
+    }
+  ]
+}

@@ -37,6 +37,10 @@ python3 native/tools/os_input/os_input_runner.py
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots
 
+# Calibrated hardware structural checks (needs ImageMagick, numpy, scipy)
+python3 native/tools/refcal/refcal.py --all --out /tmp/refcal
+python3 -m unittest discover native/tools/refcal
+
 # Check file line counts
 find native/app native/audio native/model native/engine native/io native/tests -name "*.cpp" -o -name "*.h" | xargs wc -l | sort -nr | head -n 15
 

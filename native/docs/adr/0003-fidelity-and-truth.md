@@ -30,7 +30,8 @@ fwref status is "approximate, advisory only" until:
 - strict mode passes on every used spec,
 - primitive known-answer tests pass,
 - multi-state specs exist for all screens,
-- calibrated hardware structural checks pass.
+- calibrated hardware structural checks pass (Instrument General currently passes
+  on two hardware tiles; the remaining screens are pending).
 
 ## Consequences
 
