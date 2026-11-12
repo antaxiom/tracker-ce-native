@@ -34,6 +34,7 @@ python3 native/tools/os_input/os_input_runner.py
 # New semantic UI path (Instrument General, Master 1/3)
 ./native/build/trakr_app --screen instrument --gui-next --lcd-shot --screenshot /tmp/instrument.png
 ./native/build/trakr_app --screen master --gui-next --lcd-shot --screenshot /tmp/master.png
+./native/build/trakr_app --screen pattern --gui-next --lcd-shot --screenshot /tmp/pattern.png
 
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots

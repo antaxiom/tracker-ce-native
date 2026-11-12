@@ -203,10 +203,14 @@ add_executable(trakr_app
     app/ui/layout.h
     app/ui/controls/primitives.cpp
     app/ui/controls/primitives.h
+    app/ui/controls/tracker.cpp
+    app/ui/controls/tracker.h
     app/ui/screens/instrument_general.cpp
     app/ui/screens/instrument_general.h
     app/ui/screens/master_page1.cpp
     app/ui/screens/master_page1.h
+    app/ui/screens/pattern.cpp
+    app/ui/screens/pattern.h
 )
 target_include_directories(trakr_app PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model
@@ -441,8 +445,10 @@ add_executable(trakr_tests
     app/hw/BitmapText.cpp
     app/ui/canvas.cpp
     app/ui/controls/primitives.cpp
+    app/ui/controls/tracker.cpp
     app/ui/screens/instrument_general.cpp
     app/ui/screens/master_page1.cpp
+    app/ui/screens/pattern.cpp
 )
 target_include_directories(trakr_tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model

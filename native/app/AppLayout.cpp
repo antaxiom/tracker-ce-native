@@ -95,7 +95,8 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextMaster =
         layoutState.guiNext && activeScreen == Screen::Master &&
         scrCtx.mixerView.subPage() == MixerView::SubPage::Master;
-    if (guiNextInstrument || guiNextMaster) {
+    const bool guiNextPattern = layoutState.guiNext && activeScreen == Screen::Pattern;
+    if (guiNextInstrument || guiNextMaster || guiNextPattern) {
         const ImRect workspace = display_.workspaceRect();
         ImGui::SetNextWindowPos(workspace.Min);
         ImGui::SetNextWindowSize(workspace.GetSize());
@@ -105,7 +106,9 @@ void AppLayout::render(ScreenContext& scrCtx,
         const ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
                                        ImGuiWindowFlags_NoSavedSettings |
                                        ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoBringToFrontOnFocus;
-        const char* windowName = guiNextInstrument ? "##gui_next_instrument" : "##gui_next_master";
+        const char* windowName = guiNextInstrument ? "##gui_next_instrument"
+                               : guiNextMaster     ? "##gui_next_master"
+                                                   : "##gui_next_pattern";
         if (ImGui::Begin(windowName, nullptr, flags)) {
             if (guiNextInstrument) {
                 guiInstrument_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
@@ -113,11 +116,19 @@ void AppLayout::render(ScreenContext& scrCtx,
                                       ui::LayoutProfile::Classic, layoutState.shiftHeld);
                 guiInstrument_.render(ImGui::GetWindowDrawList(), workspace,
                                       ui::LayoutProfile::Classic);
-            } else {
+            } else if (guiNextMaster) {
                 guiMaster_.update(scrCtx.song, scrCtx.engineHost, scrCtx.mixerView, workspace,
                                   ui::LayoutProfile::Classic, layoutState.shiftHeld);
                 guiMaster_.render(ImGui::GetWindowDrawList(), workspace,
                                   ui::LayoutProfile::Classic);
+            } else {
+                guiPattern_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                   scrCtx.currentOrderIdx, scrCtx.octave, scrCtx.editStep,
+                                   scrCtx.recordMode, scrCtx.selectedInstIdx,
+                                   scrCtx.patternView, workspace, ui::LayoutProfile::Classic,
+                                   layoutState.shiftHeld);
+                guiPattern_.render(ImGui::GetWindowDrawList(), workspace,
+                                   ui::LayoutProfile::Classic);
             }
         }
         ImGui::End();

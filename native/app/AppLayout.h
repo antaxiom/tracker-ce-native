@@ -13,6 +13,7 @@
 #include "RenderScheduler.h"
 #include "ui/screens/instrument_general.h"
 #include "ui/screens/master_page1.h"
+#include "ui/screens/pattern.h"
 #include <string>
 
 namespace trakr {
@@ -51,6 +52,7 @@ private:
     hw::MenuPopup menuPopup_;
     InstrumentGeneralScreen guiInstrument_;
     MasterPage1Screen guiMaster_;
+    PatternScreen guiPattern_;
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

@@ -33,6 +33,9 @@ public:
     void text(trakr::hw::FwFont font, int x, int yTop, ImU32 color, std::string_view s) const;
     void textCentered(trakr::hw::FwFont font, const RectI& r, ImU32 color,
                       std::string_view s) const;
+    // Draw text with its vertical centre on `centerY` (tracker rows/cells).
+    void textVCentered(trakr::hw::FwFont font, int x, int centerY, ImU32 color,
+                       std::string_view s) const;
     int textWidth(trakr::hw::FwFont font, std::string_view s) const;
     int textHeight(trakr::hw::FwFont font) const;
 

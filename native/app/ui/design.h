@@ -70,6 +70,13 @@ constexpr ImU32 kFrameColors[2] = {kOneTrueRed, kGrey3F};
 // themeDefault.blankSpaceCoverLabelColors
 constexpr ImU32 kBlankSpaceCoverColors[4] = {kWhite, kGrey0A, kRed, kBlack};
 
+// themeDefault.patternTrackerColors (21 entries), mirrored verbatim.
+constexpr uint32_t kTrackerColors[21] = {
+    0x000000, 0x080808, 0x00E8BE, 0xFEF749, 0xBB58F1, 0x57F1FF, 0x003933,
+    0x453B1B, 0x321F3A, 0x183744, 0xCD1818, 0x0E0E0E, 0x171717, 0x000000,
+    0xFFFFFF, 0x000000, 0x575757, 0x30CB3F, 0x444344, 0x575757, 0xFEF749,
+};
+
 // themeDefault.activeLabelsColors / inactiveLabelsColors
 constexpr ImU32 kActiveLabelsColors[4] = {kGrey77, kGrey32, kOneTrueRed, kWhite};
 constexpr ImU32 kInactiveLabelsColors[4] = {kGrey33, kGrey32, kOneTrueRed, kGrey57};

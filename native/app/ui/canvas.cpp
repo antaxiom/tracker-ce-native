@@ -103,6 +103,12 @@ void Canvas::textCentered(trakr::hw::FwFont font, const RectI& r, ImU32 color,
     text(font, x, y, color, s);
 }
 
+void Canvas::textVCentered(trakr::hw::FwFont font, int x, int centerY, ImU32 color,
+                           std::string_view s) const {
+    const int h = textHeight(font);
+    text(font, x, centerY - h / 2, color, s);
+}
+
 int Canvas::textWidth(trakr::hw::FwFont font, std::string_view s) const {
     const std::string tmp(s);
     return trakr::hw::fwTextWidth(font, tmp.c_str());

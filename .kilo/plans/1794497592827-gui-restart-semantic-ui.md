@@ -113,6 +113,8 @@ comparison after a primitive-level audit, never as the app's substrate.
 - Master 1/3 gate passed for the Classic workspace (0.02% vs fwref, input
   parity); hardware capture for Master is pending. See
   `native/docs/gates/phase4-master1.md`.
+- Pattern gate passed for the tracker workspace (0.35% vs fwref, input parity);
+  popups and chrome remain legacy. See `native/docs/gates/phase4-pattern.md`.
 - fwref FW-1 implemented: strict by default, per-screen audit in `renderSpec`,
   fails on unsupported or approximate calls; current result 0/0.
 - `Canvas` is ImGui-backed today; a recording/software backend is Phase 5 work.
