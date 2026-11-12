@@ -42,7 +42,7 @@ BarControl::BarControl(std::string id, int column, Mode mode)
     : Control(std::move(id)), column_(column), mode_(mode) {}
 
 void BarControl::draw(Canvas& canvas) const {
-    const ImU32* c = inactive_ ? kInactiveBarColors : kActiveBarColors;
+    const ImU32* c = colors_ ? colors_ : (inactive_ ? kInactiveBarColors : kActiveBarColors);
     const RectI& r = rect_;
 
     const int barWidth = r.w - 20;
@@ -52,9 +52,35 @@ void BarControl::draw(Canvas& canvas) const {
 
     canvas.fillRect(r, c[4]);
     drawBottomShadow(canvas, r, c[4]);
-    if (mode_ == Mode::LeftRight || value_ >= 0) {
+    if (mode_ == Mode::LeftRight || (mode_ == Mode::Fill && value_ >= 0) ||
+        (mode_ == Mode::Compare && value_ >= 0)) {
         canvas.fillRect(RectI{r.x + 10, r.y + 11, r.w - 20, r.h - 25}, c[3]);
         canvas.hGradient(RectI{r.x + 10, r.y + 11, 8, r.h - 25}, IM_COL32(0, 0, 0, 255), c[3]);
+    }
+
+    if (mode_ == Mode::Compare) {
+        if (value_ < 0 || value_ > 100 || compare_ < 0 || compare_ > 100) return;
+        // cBar controlStyleCompareTwoValues: current value filled solid, the
+        // delta to the compared value drawn in colours[1] (up) / colours[2] (down).
+        const int barFillY = barHeight - (barHeight * value_) / 100;
+        const int valueSub = compare_ - value_;
+        const int absSub = (valueSub >= 0) ? valueSub : -valueSub;
+        const int compareBarHeight = (barHeight * absSub) / 100;
+        canvas.fillRect(RectI{barX + 1,
+                              (valueSub < 0) ? barY + barFillY + compareBarHeight
+                                             : barY + barFillY,
+                              barWidth - 2, barHeight - ((valueSub < 0) ? barFillY + compareBarHeight
+                                                                        : barFillY)},
+                        c[0]);
+        if (valueSub > 0) {
+            canvas.fillRect(RectI{barX, barY + barFillY - compareBarHeight,
+                                  barWidth - 1, compareBarHeight},
+                            c[1]);
+        } else if (valueSub < 0) {
+            canvas.fillRect(RectI{barX + 1, barY + barFillY, barWidth - 2, compareBarHeight},
+                            c[2]);
+        }
+        return;
     }
 
     if (mode_ == Mode::LeftRight) {
@@ -97,9 +123,20 @@ void ListControl::setItems(std::vector<std::string> items) {
     setSelected(selected_);
 }
 
+int ListControl::firstRow() const {
+    const int count = static_cast<int>(items_.size());
+    if (count <= visibleLines_) return 0;
+    // cList anchor semantics: textListPos stays 0 until the anchor passes the
+    // second-to-last row, then the list scrolls to keep the last rows visible.
+    if (start_ >= 0)
+        return std::clamp(start_ - std::max(0, visibleLines_ - 2), 0, count - visibleLines_);
+    return std::clamp(selected_ - (visibleLines_ - 1), 0, count - visibleLines_);
+}
+
 void ListControl::draw(Canvas& canvas) const {
     const RectI& r = rect_;
-    const ImU32 bg = kActiveListColors[3];
+    const ImU32* c = colors_ ? colors_ : kActiveListColors;
+    const ImU32 bg = c[3];
     canvas.fillRect(r, bg);
     drawBottomShadow(canvas, r, bg);
 
@@ -108,21 +145,19 @@ void ListControl::draw(Canvas& canvas) const {
 
     const int top = r.y + kListTopInset;
     const int visible = std::min(visibleLines_, count);
-    const int first = (count > visibleLines_)
-                          ? std::clamp(selected_ - (visibleLines_ - 1), 0, count - visibleLines_)
-                          : 0;
+    const int first = firstRow();
     const int barPos = selected_ - first;
     const int wBar = (count > visibleLines_) ? r.w - 13 : r.w - 6;
 
     if (barPos >= 0 && barPos < visible) {
         canvas.strokeRectCentered(
             RectI{r.x + 3, top + barPos * kListRowHeight, wBar, kListRowHeight},
-            kActiveListColors[0], kFrameLineWidth / 16.0f);
+            c[0], kFrameLineWidth / 16.0f);
     }
 
     for (int i = 0; i < visible; ++i) {
         const int index = first + i;
-        const ImU32 color = kActiveListColors[index == selected_ ? 5 : 4];
+        const ImU32 color = c[index == selected_ ? 5 : 4];
         drawRowText(canvas, r.x + 13, top + kListRowHeight / 2 + i * kListRowHeight, color,
                     items_[static_cast<size_t>(index)]);
     }
@@ -131,8 +166,8 @@ void ListControl::draw(Canvas& canvas) const {
         const int innerH = r.h - 14;
         const int length = std::max(1, (innerH * visibleLines_) / count);
         const int thumbY = r.y + 6 + (first * (innerH - length)) / count;
-        canvas.fillRect(RectI{r.x + r.w - 6, r.y + 4, 3, innerH}, kActiveListColors[6]);
-        canvas.fillRect(RectI{r.x + r.w - 5, thumbY, 2, length}, kActiveListColors[2]);
+        canvas.fillRect(RectI{r.x + r.w - 6, r.y + 4, 3, innerH}, c[6]);
+        canvas.fillRect(RectI{r.x + r.w - 5, thumbY, 2, length}, c[2]);
     }
 }
 
@@ -141,9 +176,7 @@ bool ListControl::onPress(int deviceX, int deviceY) {
 
     const int count = static_cast<int>(items_.size());
     const int visible = std::min(visibleLines_, count);
-    const int first = (count > visibleLines_)
-                          ? std::clamp(selected_ - (visibleLines_ - 1), 0, count - visibleLines_)
-                          : 0;
+    const int first = firstRow();
     const int relativeY = deviceY - (rect_.y + kListTopInset);
     if (relativeY < 0) return false;
     const int row = relativeY / kListRowHeight;
@@ -152,6 +185,7 @@ bool ListControl::onPress(int deviceX, int deviceY) {
     if (deviceX < rect_.x + 3 || deviceX >= rect_.x + 3 + wBar) return false;
 
     setSelected(first + row);
+    if (start_ >= 0) start_ = selected_;
     if (onSelect_) onSelect_(selected_);
     return true;
 }

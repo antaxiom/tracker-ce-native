@@ -115,6 +115,20 @@ comparison after a primitive-level audit, never as the app's substrate.
   `native/docs/gates/phase4-master1.md`.
 - Pattern gate passed for the tracker workspace (0.35% vs fwref, input parity);
   popups and chrome remain legacy. See `native/docs/gates/phase4-pattern.md`.
+- Song gate passed: `SongPlayerControl` (cSongPlayer) + `SongScreen`; 1.09% vs
+  fwref (legacy 1.45%), scripted navigation parity; list animation frames and
+  selection highlight not ported. See `native/docs/gates/phase4-song.md`.
+- Sample gate passed: waveform controls (`SpectrumControl`, `PointsControl`,
+  `SlicePointsControl`, `ProgressCursorControl`, `LineIndicatorControl`,
+  `WtProgressControl`) + `SampleScreen`; 1.74% vs fwref (legacy 2.13%);
+  audition/marker editing delegated to `SampleView`. See
+  `native/docs/gates/phase4-sample.md`.
+- Loader gate passed: `SampleLoaderScreen` (lists, headers, memory/preview bars);
+  0.85% vs fwref (legacy 1.47%); importer crop page still legacy. See
+  `native/docs/gates/phase4-loader.md`.
+- `Display` now composites four control passes (layer -1 prepass, 0 normal, 1
+  post-marker, 2 cursor) to model NewDisplay's update/update2/update3; `cPoints`
+  additive range background is painted in the prepass as an approximation.
 - fwref FW-1 implemented: strict by default, per-screen audit in `renderSpec`,
   fails on unsupported or approximate calls; current result 0/0.
 - `Canvas` is ImGui-backed today; a recording/software backend is Phase 5 work.

@@ -398,4 +398,44 @@ void SampleLoaderView::update(Song& song, History& history, EngineHost& engineHo
     ImGui::End();
 }
 
+SampleLoaderView::Snapshot SampleLoaderView::snapshot(const Song& song) const {
+    Snapshot s;
+    s.files = fileLabels();
+    s.slots = slotLabels(song);
+    s.selectedFile =
+        std::clamp(selectedFileIdx_, 0, std::max(0, static_cast<int>(s.files.size()) - 1));
+    s.selectedSlot = std::clamp(selectedSlotIdx_, 0, 47);
+    s.filesActive = focusFiles_;
+    const auto mem = memoryUsage(song);
+    s.memoryUsed = mem.used;
+    s.memoryCompare = mem.compare;
+    s.memoryFull = mem.full;
+    s.previewVolume = kPreviewVolume;
+    return s;
+}
+
+void SampleLoaderView::moveFileSelection(int delta) {
+    const int count = static_cast<int>(dirEntries_.size());
+    selectedFileIdx_ = std::clamp(selectedFileIdx_ + delta, 0, std::max(0, count - 1));
+}
+
+void SampleLoaderView::moveSlotSelection(int delta, int& selectedInstIdx) {
+    selectedSlotIdx_ = std::clamp(selectedSlotIdx_ + delta, 0, 47);
+    selectedInstIdx = selectedSlotIdx_;
+}
+
+void SampleLoaderView::activateSelectedFile() { enterSelectedDirectory(); }
+
+void SampleLoaderView::selectFile(int index) {
+    const int count = static_cast<int>(dirEntries_.size());
+    selectedFileIdx_ = std::clamp(index, 0, std::max(0, count - 1));
+    focusFiles_ = true;
+}
+
+void SampleLoaderView::selectSlot(int index, int& selectedInstIdx) {
+    selectedSlotIdx_ = std::clamp(index, 0, 47);
+    selectedInstIdx = selectedSlotIdx_;
+    focusFiles_ = false;
+}
+
 } // namespace trakr

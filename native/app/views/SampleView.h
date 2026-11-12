@@ -47,6 +47,9 @@ public:
     void setActiveParam(Param p) { activeParam_ = p; }
     EditOp selectedEditOp() const { return selectedEditOp_; }
     void setSelectedEditOp(EditOp op) { selectedEditOp_ = op; }
+    // State read by the semantic UI port (SampleScreen).
+    float zoom() const { return zoomLevel_; }
+    double auditionStartTime() const { return auditionStartTime_; }
 private:
     bool shiftHeld_{false};
     SubPage subPage_{SubPage::Playback};

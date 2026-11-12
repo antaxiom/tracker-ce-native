@@ -1,6 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 
+#include "Song.h"
 #include "ui/controls/primitives.h"
+#include "ui/controls/song_player.h"
+#include "ui/controls/waveform.h"
 #include "ui/display.h"
 #include "ui/layout.h"
 
@@ -92,4 +95,65 @@ TEST_CASE("LayoutContext maps device pixels into the host workspace", "[ui][layo
         trakr::ui::LayoutContext::fromWorkspace(workspace, trakr::ui::LayoutProfile::Classic);
     CHECK(classic.scaleX == 1.0f);
     CHECK(classic.scaleY == 1.0f);
+}
+
+TEST_CASE("ListControl keeps the cList anchor window while scrolling", "[ui][list]") {
+    std::vector<std::string> items;
+    for (int i = 0; i < 20; ++i) items.push_back("row " + std::to_string(i));
+    trakr::ui::ListControl list("loader", items, 13);
+    list.setRect(trakr::ui::RectI{1, 61, 297, 362});
+
+    // showFilesTree() anchors at the selection; with 13 visible rows the text
+    // window stays at row 0 until the anchor passes the second-to-last row.
+    list.setSelected(1);
+    list.setStart(1);
+    CHECK(list.onPress(10, 61 + trakr::ui::kListTopInset + 2 * trakr::ui::kListRowHeight + 3));
+    CHECK(list.selected() == 2);
+
+    list.setSelected(19);
+    list.setStart(19);
+    CHECK(list.onPress(10, 61 + trakr::ui::kListTopInset + 2 * trakr::ui::kListRowHeight + 3));
+    CHECK(list.selected() == 9); // first visible row is anchor - (13 - 2) = 8, pressed row 1
+}
+
+TEST_CASE("SongPlayerControl clamps its list window to the selection", "[ui][song]") {
+    trakr::Song song;
+    song.order.assign(30, 0);
+    song.tracks.resize(16);
+
+    trakr::SongPlayerControl player("player");
+    player.setRect(trakr::ui::RectI{1, 29, 697, 394});
+    trakr::SongPlayerState state;
+    state.song = &song;
+    state.selectedSlot = 20;
+    state.trackCount = 16;
+    player.setState(state);
+    CHECK(player.listStart() == 9); // 12 visible rows: 20 - 12 + 1
+
+    state.selectedSlot = 0;
+    player.setState(state);
+    CHECK(player.listStart() == 0);
+
+    // Pressing the fifth list row selects slot 4 at the top of the list.
+    int chosen = -1;
+    player.setOnSelect([&chosen](int slot) { chosen = slot; });
+    const int rowY = 29 + 62 + trakr::ui::kListTopInset + 4 * 27 + 5;
+    CHECK(player.onPress(600, rowY));
+    CHECK(chosen == 4);
+}
+
+TEST_CASE("Waveform point mapping honours the zoom window", "[ui][waveform]") {
+    trakr::ui::WaveformState state;
+    state.length = 1001;
+    CHECK(trakr::ui::waveform_detail::pointX(state, 0) == 0);
+    CHECK(trakr::ui::waveform_detail::pointX(state, 500) == 299);
+    CHECK(trakr::ui::waveform_detail::pointX(state, 1000) == 599);
+
+    state.zoomStart = 32768;
+    state.zoomEnd = 49151;
+    CHECK(trakr::ui::waveform_detail::pointX(state, 0) == -1);
+    CHECK(trakr::ui::waveform_detail::pointX(state, 1000) == -1);
+    const int mid = trakr::ui::waveform_detail::pointX(state, 501);
+    CHECK(mid >= 0);
+    CHECK(mid <= 599);
 }

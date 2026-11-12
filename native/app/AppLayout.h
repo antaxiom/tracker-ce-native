@@ -14,6 +14,9 @@
 #include "ui/screens/instrument_general.h"
 #include "ui/screens/master_page1.h"
 #include "ui/screens/pattern.h"
+#include "ui/screens/song.h"
+#include "ui/screens/sample.h"
+#include "ui/screens/sample_loader.h"
 #include <string>
 
 namespace trakr {
@@ -53,6 +56,9 @@ private:
     InstrumentGeneralScreen guiInstrument_;
     MasterPage1Screen guiMaster_;
     PatternScreen guiPattern_;
+    SongScreen guiSong_;
+    SampleScreen guiSampleScreen_;
+    SampleLoaderScreen guiLoader_;
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

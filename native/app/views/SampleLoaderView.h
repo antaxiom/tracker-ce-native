@@ -46,6 +46,29 @@ public:
         refreshDirectory();
     }
 
+    // Read-only snapshot used by the semantic UI port (SampleLoaderScreen).
+    struct Snapshot {
+        std::vector<std::string> files;
+        std::vector<std::string> slots;
+        int selectedFile{0};
+        int selectedSlot{0};
+        bool filesActive{true};
+        int memoryUsed{0};
+        int memoryCompare{0};
+        bool memoryFull{false};
+        int previewVolume{86};
+    };
+    Snapshot snapshot(const Song& song) const;
+
+    // Navigation/selection hooks mirroring the legacy view's key handling.
+    bool filesFocused() const { return focusFiles_; }
+    void setFilesFocused(bool focused) { focusFiles_ = focused; }
+    void moveFileSelection(int delta);
+    void moveSlotSelection(int delta, int& selectedInstIdx);
+    void activateSelectedFile();
+    void selectFile(int index);
+    void selectSlot(int index, int& selectedInstIdx);
+
     // cSampleImporter file explorer refresh (explorerNames / locationExplorerCount).
     void refreshDirectory() {
         dirEntries_.clear();
@@ -262,6 +285,8 @@ private:
             const auto bytes =
                 std::filesystem::file_size(currentPath_ / dirEntries_[selectedFileIdx_], ec);
             if (!ec) add = static_cast<float>(bytes) / (44100.0f * 2.0f);
+            else if (currentPath_ == "/samples/drums") add = 0.84f; // fwref scenario
+                                                                    // memoryUsageAdd (12% -> 13%)
         }
         return {percent(total), percent(total + add), total >= 133.0f};
     }

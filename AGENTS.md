@@ -22,7 +22,7 @@ file dialogs).
 # Build application and tests
 cmake --build native/build -j8
 
-# Run unit tests (125 test cases)
+# Run unit tests (130 test cases)
 ./native/build/trakr_tests
 
 # Run UI robot audit (1,103 frames)
@@ -86,7 +86,8 @@ Two tiers of reference exist:
 1. **Source-true references** (`native/tools/fwref`): the unmodified firmware
    `NewDisplay` controls are compiled on the host and driven by hash-stamped specs,
    producing the authoritative frame. Currently covers **Instrument (General)**,
-   **Master (1/3)**, and **Pattern**.
+   **Master (1/3)**, **Pattern**, **Song**, **Sample Playback**, and **Sample
+   Loader**, plus specs for the remaining screens.
 2. **Hand-drawn emulator references** (`native/tools/display_emulator/FT812ScreensCore/Extra.cpp`):
    the remaining screens still measure against hand-drawn approximations while they
    are migrated to source-true fwref.
@@ -98,6 +99,14 @@ Current source-true scores (≥95.0% target):
 | Pattern | 98.36% | ✅ |
 | Master | 98.14% | ✅ |
 | Instrument | 97.75% | ✅ |
+| Song | 98.91% | ✅ |
+| Sample Playback | 98.26% | ✅ |
+| Sample Loader | 99.15% | ✅ |
+
+Song/Sample/Loader figures are full-frame comparisons against the fwref
+scenario (legacy path: 98.55% / 97.87% / 98.53%); the remaining difference is
+mostly app chrome and rotated/bitmap glyph rasterization. See
+`native/docs/gates/phase4-*.md` for per-screen scope and conditions.
 
 **Measurement note**: screenshots are rendered with `--lcd-shot`, an exact 800x480
 framebuffer with no DPI scaling, no menu bar, and no button deck. The PNG IS the LCD,

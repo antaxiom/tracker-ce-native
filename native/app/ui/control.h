@@ -24,6 +24,14 @@ public:
 
     virtual void draw(Canvas& canvas) const = 0;
 
+    // NewDisplay runs several update passes per control (update/update2/update3)
+    // and composites controls in reverse creation order *within each pass*.
+    // `layer` models that pass ordering; controls that must paint over another
+    // control (e.g. waveform markers over the spectrum) raise their layer.
+    virtual void drawLayer(Canvas& canvas, int layer) const {
+        if (layer == 0) draw(canvas);
+    }
+
     // True for controls that participate in hit-testing (bars, lists).
     virtual bool acceptsInput() const { return false; }
 

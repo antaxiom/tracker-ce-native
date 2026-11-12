@@ -27,10 +27,17 @@ public:
     size_t size() const { return controls_.size(); }
 
     void renderAll(Canvas& canvas) const {
-        for (auto it = controls_.rbegin(); it != controls_.rend(); ++it) {
-            if ((*it)->visible()) (*it)->draw(canvas);
+        // Layer -1 is the pre-pass (e.g. cPoints' additive range background,
+        // approximated by painting it underneath cSpectrum).
+        for (int layer = kFirstLayer; layer <= kLastLayer; ++layer) {
+            for (auto it = controls_.rbegin(); it != controls_.rend(); ++it) {
+                if ((*it)->visible()) (*it)->drawLayer(canvas, layer);
+            }
         }
     }
+
+    static constexpr int kFirstLayer = -1;
+    static constexpr int kLastLayer = 2;
 
     Control* hitTest(int deviceX, int deviceY) const {
         for (const auto& control : controls_) {

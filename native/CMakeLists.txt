@@ -205,12 +205,22 @@ add_executable(trakr_app
     app/ui/controls/primitives.h
     app/ui/controls/tracker.cpp
     app/ui/controls/tracker.h
+    app/ui/controls/song_player.cpp
+    app/ui/controls/song_player.h
+    app/ui/controls/waveform.cpp
+    app/ui/controls/waveform.h
     app/ui/screens/instrument_general.cpp
     app/ui/screens/instrument_general.h
     app/ui/screens/master_page1.cpp
     app/ui/screens/master_page1.h
     app/ui/screens/pattern.cpp
     app/ui/screens/pattern.h
+    app/ui/screens/song.cpp
+    app/ui/screens/song.h
+    app/ui/screens/sample.cpp
+    app/ui/screens/sample.h
+    app/ui/screens/sample_loader.cpp
+    app/ui/screens/sample_loader.h
 )
 target_include_directories(trakr_app PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model
@@ -446,9 +456,14 @@ add_executable(trakr_tests
     app/ui/canvas.cpp
     app/ui/controls/primitives.cpp
     app/ui/controls/tracker.cpp
+    app/ui/controls/song_player.cpp
+    app/ui/controls/waveform.cpp
     app/ui/screens/instrument_general.cpp
     app/ui/screens/master_page1.cpp
     app/ui/screens/pattern.cpp
+    app/ui/screens/song.cpp
+    app/ui/screens/sample.cpp
+    app/ui/screens/sample_loader.cpp
 )
 target_include_directories(trakr_tests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/model

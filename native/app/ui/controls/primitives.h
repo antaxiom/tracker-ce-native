@@ -26,14 +26,18 @@ private:
 
 // cBar: container + bottom shadow + fill. Value is 0..100 (Fill) or -100..100
 // (LeftRight). `inactive` swaps in inactiveBarColors, matching cBar's state.
+// Compare mirrors controlStyleCompareTwoValues (memory usage bar).
 class BarControl : public Control {
 public:
-    enum class Mode { Fill, LeftRight };
+    enum class Mode { Fill, LeftRight, Compare };
 
     BarControl(std::string id, int column, Mode mode = Mode::Fill);
     void setValue(int value) { value_ = value; }
     int value() const { return value_; }
+    void setCompareValue(int value) { compare_ = value; }
     void setInactive(bool inactive) { inactive_ = inactive; }
+    // Custom 5-entry palette (fill, compare-up, compare-down, container, background).
+    void setColors(const ImU32* colors) { colors_ = colors; }
     void setColumn(int column) { column_ = column; }
     int column() const { return column_; }
     void setOnPress(std::function<void(int)> cb) { onPress_ = std::move(cb); }
@@ -45,8 +49,10 @@ public:
 private:
     int column_{0};
     int value_{0};
+    int compare_{0};
     Mode mode_{Mode::Fill};
     bool inactive_{false};
+    const ImU32* colors_{nullptr};
     std::function<void(int)> onPress_;
 };
 
@@ -58,6 +64,12 @@ public:
     void setSelected(int index);
     int selected() const { return selected_; }
     void setItems(std::vector<std::string> items);
+    // Firmware list->start: first row drawn at the top. When unset (negative)
+    // the list scrolls to keep the selection visible.
+    void setStart(int start) { start_ = start; }
+    int start() const { return start_; }
+    // Custom 7-entry palette (activeListColors layout).
+    void setColors(const ImU32* colors) { colors_ = colors; }
     void setOnSelect(std::function<void(int)> cb) { onSelect_ = std::move(cb); }
 
     void draw(Canvas& canvas) const override;
@@ -65,9 +77,12 @@ public:
     bool onPress(int deviceX, int deviceY) override;
 
 private:
+    int firstRow() const;
     std::vector<std::string> items_;
     int visibleLines_{5};
     int selected_{0};
+    int start_{-1};
+    const ImU32* colors_{nullptr};
     std::function<void(int)> onSelect_;
 };
 

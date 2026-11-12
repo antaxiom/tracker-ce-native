@@ -84,4 +84,39 @@ constexpr ImU32 kInactiveLabelsColors[4] = {kGrey33, kGrey32, kOneTrueRed, kGrey
 // themeDefault.bottomButtonsBgColors: text, background, frame
 constexpr ImU32 kBottomButtonsBg[3] = {kGrey77, kGrey0A, kOneTrueRed};
 
+// themeDefault.songPlayerColors (10 entries), mirrored verbatim.
+constexpr ImU32 kSongPlayerColors[10] = {
+    kWhite, kWhite, kGrey57, kGrey0A, kGrey33, kOneTrueRed, kBlack, kGrey44, kGrey12, kOneTrueGreen,
+};
+
+// themeDefault.topBarLabelColors: text, background, frame, text2
+constexpr ImU32 kTopBarLabelColors[4] = {kWhite, kGrey08, kWhite, kWhite};
+
+// themeDefault.activeButtonLabelsColors / moreButtonColors
+constexpr ImU32 kActiveButtonLabelsColors[4] = {kGrey77, kGrey32, kOneTrueRed, kGrey77};
+constexpr ImU32 kMoreButtonColors[4] = {kGrey77, kGrey22, kGrey77, kGrey22};
+
+// themeDefault sample loader list colors (same layout as activeListColors:
+// frameNormal, frameSelect, scrollBar, listBg, fontNormal, fontSelection, scrollTrack).
+constexpr ImU32 kSampleLoaderActiveListColors[7] = {kOneTrueRed, kOneTrueRed, kGrey57, kGrey0A,
+                                                    kWhite, kWhite, kBlack};
+constexpr ImU32 kSampleLoaderInactiveListColors[7] = {kWhite, kWhite, kGrey57, kGrey0A,
+                                                      kWhite, kWhite, kBlack};
+
+// themeDefault.sampleLoadMemBar{Normal,Full}Colors: fill, compare-up, compare-down, container, background
+constexpr ImU32 kSampleLoadMemBarNormalColors[5] = {kWhite, kOneTrueRed, kOneTrueGreen, kGrey08,
+                                                    kGrey0A};
+constexpr ImU32 kSampleLoadMemBarFullColors[5] = {kOneTrueRed, kOneTrueRed, kOneTrueRed, kGrey08,
+                                                  kGrey0A};
+
+// themeDefault waveform colors.
+constexpr ImU32 kWaveformColors[2] = {kWhite, kGrey77};
+constexpr ImU32 kWaveformPointsColors[4] = {kWhite, kGrey0A, kOneTrueRed, kOneTrueGreen};
+constexpr ImU32 kWaveformProgressColors[2] = {kWhite, kOneTrueRed};
+constexpr ImU32 kGranularProgressColors[2] = {IM_COL32(0x00, 0xFF, 0xFF, 255), kGrey22};
+constexpr ImU32 kWaveTablePositionColors[2] = {kWhite, kWhite};
+constexpr ImU32 kSliceColors[3] = {IM_COL32(0xFE, 0xF7, 0x49, 255), kOneTrueRed, kOneTrueGreen};
+
+constexpr int kFwRedFrameWidth = 24;
+
 } // namespace trakr::ui

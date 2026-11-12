@@ -85,6 +85,14 @@ void Canvas::hGradient(const RectI& r, ImU32 left, ImU32 right) const {
     dl_->AddRectFilledMultiColor(a, b, left, right, right, left);
 }
 
+void Canvas::line(int x1, int y1, int x2, int y2, ImU32 color, float deviceThickness) const {
+    if (!dl_) return;
+    const float t = std::max(1.0f, std::round(deviceThickness * lc_.scaleY));
+    dl_->AddLine(ImVec2(lc_.screenX(static_cast<float>(x1)), lc_.screenY(static_cast<float>(y1))),
+                 ImVec2(lc_.screenX(static_cast<float>(x2)), lc_.screenY(static_cast<float>(y2))),
+                 color, t);
+}
+
 void Canvas::text(trakr::hw::FwFont font, int x, int yTop, ImU32 color,
                   std::string_view s) const {
     if (!dl_ || s.empty() || s.front() == '\0') return;
@@ -107,6 +115,34 @@ void Canvas::textVCentered(trakr::hw::FwFont font, int x, int centerY, ImU32 col
                            std::string_view s) const {
     const int h = textHeight(font);
     text(font, x, centerY - h / 2, color, s);
+}
+
+void Canvas::textVertical270(trakr::hw::FwFont font, int centerX, int bottomY, ImU32 color,
+                             std::string_view s) const {
+    if (!dl_ || s.empty()) return;
+    // Glyphs are rasterised at the device origin and then rotated into place,
+    // matching cLabel's LOADIDENTITY/ROTATE(270) matrix. CMD_NUMBER/TEXT advance
+    // by the per-character width reported by the bitmap font.
+    const float centerScreenX = lc_.screenX(static_cast<float>(centerX));
+    const float heightPx = static_cast<float>(trakr::hw::fwTextHeight(font));
+    const float xOffset = heightPx * 0.5f * lc_.scaleX + 0.5f;
+    float curY = lc_.screenY(static_cast<float>(bottomY));
+    for (char ch : s) {
+        if (ch != ' ') {
+            const char glyph[2] = {ch, '\0'};
+            const int v0 = dl_->VtxBuffer.Size;
+            trakr::hw::fwDrawText(dl_, font, lc_.screenX(0.0f), lc_.screenY(0.0f), glyph, color,
+                                  lc_.scaleX, lc_.scaleY);
+            for (int i = v0; i < dl_->VtxBuffer.Size; ++i) {
+                const float rx = dl_->VtxBuffer[i].pos.x - lc_.origin.x;
+                const float ry = dl_->VtxBuffer[i].pos.y - lc_.origin.y;
+                dl_->VtxBuffer[i].pos.x = (centerScreenX - xOffset) + ry;
+                dl_->VtxBuffer[i].pos.y = curY - rx;
+            }
+        }
+        const char chStr[2] = {ch, '\0'};
+        curY -= (static_cast<float>(trakr::hw::fwTextWidth(font, chStr)) + 1.0f) * lc_.scaleY;
+    }
 }
 
 int Canvas::textWidth(trakr::hw::FwFont font, std::string_view s) const {
