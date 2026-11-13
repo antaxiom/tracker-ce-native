@@ -149,7 +149,11 @@ void SongPlayerControl::drawList(Canvas& canvas) const {
 void SongPlayerControl::drawTrackNames(Canvas& canvas) const {
     const int tracks = trackCount();
     const int bw = blockWidth();
-    const int y = rect_.y + 42;
+    // songPlayer.cpp:645-652 rotates about the glyph centre
+    // (translate(+h/2), rotate, translate(-h/2)), which nets a (I - R) * h/2
+    // offset: +h/2 in y. Without it the names sit ~16px too high and their
+    // last glyphs disappear under the title bar.
+    const int y = rect_.y + 42 + trakr::hw::fwTextHeight(trakr::hw::FwFont::Regular12);
     for (int track = 0; track < tracks; ++track) {
         const ImU32 color = trackMuted(track) ? kSongPlayerColors[4] : kSongPlayerColors[0];
         const int centerX = rect_.x + kBlocksMargin + (bw + kBlockSpacing) * track + bw / 2;

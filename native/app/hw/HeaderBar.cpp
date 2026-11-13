@@ -96,7 +96,7 @@ void HeaderBar::render(const ImRect& rect,
                           IM_COL32(255, 255, 255, 255), "REC");
     }
 
-    bool isSongScreen = (pageTitle && std::string_view(pageTitle) == "Song");
+
     const bool hasOverride = (rightLabelOverride != nullptr && rightLabelOverride[0] != '\0');
     if (hasOverride) {
         // File page: title bar shows the current project name on the right
@@ -107,13 +107,13 @@ void HeaderBar::render(const ImRect& rect,
                          : rect.Min.x + 700.0f * scale - rightTextSize.x * 0.5f;
         drawList->AddText(font, fontH, ImVec2(rightX, centerY), textWhite, rightLabelOverride);
     } else {
-        // Center transport (songTimer.cpp: "0m:00s  ||  P1.001"). The firmware
-        // only composes this label on screens whose spec carries it (Pattern);
-        // other screens must not show it. Gate explicitly, not on firmwareChrome.
+        // Center transport (songTimer.cpp: "0m:00s  ||  P1.001").
+        // Interface::activateModule() shows songTimer on every module except the
+        // pattern editor (interface.cpp:417-421), the Song screen included.
         float centerX = 0.0f;
         float centerRight = 0.0f;
         bool drewTransport = false;
-        if (showTransport && !isSongScreen) {
+        if (showTransport) {
             drewTransport = true;
             // Song time comes from the audio clock (cSongTimer), never from
             // accumulated frame deltas, so any frame rate shows the same value.

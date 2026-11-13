@@ -13,7 +13,21 @@ void drawRowText(Canvas& canvas, int x, int centerY, ImU32 color, const std::str
 
 } // namespace
 
+namespace {
+bool gBottomShadowEnabled = true;
+bool gBarShadowEnabled = true;
+} // namespace
+
+void setChromeShadowFlags(bool bottomShadow, bool barShadow) {
+    gBottomShadowEnabled = bottomShadow;
+    gBarShadowEnabled = barShadow;
+}
+
+bool bottomShadowEnabled() { return gBottomShadowEnabled; }
+bool barShadowEnabled() { return gBarShadowEnabled; }
+
 void drawBottomShadow(Canvas& canvas, const RectI& rect, ImU32 background) {
+    if (!gBottomShadowEnabled) return;
     // cBar/cList use BLEND_FUNC(SRC_ALPHA, ZERO): the gradient overwrites the
     // destination and ends in black. One column wider than the control.
     const RectI shadow{rect.x, rect.bottom() - 10, rect.w + 1, 12};
@@ -55,7 +69,10 @@ void BarControl::draw(Canvas& canvas) const {
     if (mode_ == Mode::LeftRight || (mode_ == Mode::Fill && value_ >= 0) ||
         (mode_ == Mode::Compare && value_ >= 0)) {
         canvas.fillRect(RectI{r.x + 10, r.y + 11, r.w - 20, r.h - 25}, c[3]);
-        canvas.hGradient(RectI{r.x + 10, r.y + 11, 8, r.h - 25}, IM_COL32(0, 0, 0, 255), c[3]);
+        if (gBarShadowEnabled) {
+            canvas.hGradient(RectI{r.x + 10, r.y + 11, 8, r.h - 25}, IM_COL32(0, 0, 0, 255),
+                             c[3]);
+        }
     }
 
     if (mode_ == Mode::Compare) {

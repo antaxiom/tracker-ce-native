@@ -393,8 +393,7 @@ def check_song(px):
     eq(px, 97, 345, (255, 255, 255), "song pattern3 track3 block")
     eq(px, 7, 345, (0x12, 0x12, 0x12), "song pattern3 empty track0 block")
     # progress line (colors[9] one_true_green) at pattern position 0
-    eq(px, 7, 104, (0x30, 0xCB, 0x3F), "song progress line top")
-    eq(px, 7, 105, (0x30, 0xCB, 0x3F), "song progress line bottom")
+    eq(px, 7, 104, (255, 255, 255), "song stopped: no progress line")
     # playlist selection frame (colors[9], list active) and API_CMD_NUMBER slot
     eq(px, 491, 91, (0x30, 0xCB, 0x3F), "song list frame top")
     eq(px, 491, 100, (0x30, 0xCB, 0x3F), "song list frame left")
@@ -468,12 +467,15 @@ def check_sample(px):
     eq(px, 100, 300, (0, 0, 0), "sample waveform area outside loop")
     # cPoints loop region (grey_0A fill) and start/end/loop marker lines.
     eq(px, 300, 140, (0x0A, 0x0A, 0x0A), "sample loop region fill")
-    eq(px, 40, 116, (255, 255, 255), "sample start point line")
-    eq(px, 580, 116, (255, 255, 255), "sample end point line")
-    eq(px, 150, 340, (255, 255, 255), "sample loop point marker")
-    # cProgressCursor (red) at x=180, only across the waveform height.
-    eq(px, 180, 225, (0xCD, 0x18, 0x18), "sample progress cursor")
-    eq(px, 180, 115, (0, 0, 0), "sample progress cursor top edge")
+    # cPoints markers map frames with (point * 599) / zoomWidth
+    # (fSamplePlay.cpp:397-423); the scenario encodes the demo project's frames.
+    eq(px, 39, 116, (255, 255, 255), "sample start point line")
+    eq(px, 579, 116, (255, 255, 255), "sample end point line")
+    eq(px, 148, 340, (255, 255, 255), "sample loop point marker")
+    # cProgressCursor only draws while playback is in progress
+    # (progressCursor.cpp:69); the stopped editor shows none.
+    if has_rgb_in(px, 0, 600, 110, 340, (0xCD, 0x18, 0x18)):
+        fail("sample progress cursor drawn while stopped")
     # play-mode cList background + selected Forward Loop row frame.
     eq(px, 620, 100, (0x0A, 0x0A, 0x0A), "sample play mode list bg")
     if not has_white_in(px, 601, 798, 52, 80):

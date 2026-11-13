@@ -315,10 +315,15 @@ def main():
     all_screens = ["perform", "pattern", "song", "master", "instrument", "sample", "loader", "config", "file"]
     screens = [s for s in all_screens if s in only_screens] if only_screens else all_screens
 
-    need_emu = not skip_emu or any(not os.path.exists(f"/tmp/emu_{s}.png") for s in screens)
-    if need_emu:
-        print("[1:1 DISPLAY COMPARE] Generating authentic FT812 firmware reference frames...")
-        subprocess.run([test_bin, "[emulator]"], check=True)
+    # Verified captures are compared against the source-true fwref oracle
+    # (render/fwref). The hand-drawn FT812 emulator frames are retired.
+    repo_root = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+    fwref_names = {
+        "perform": "perform", "pattern": "pattern", "song": "song",
+        "master": "master_page1", "instrument": "instrument_general",
+        "sample": "sample", "loader": "loader", "config": "config", "file": "file",
+    }
+    need_emu = False
 
     if not only_screens:
         run_blackbox_os_session(app_bin)
@@ -326,7 +331,8 @@ def main():
     for screen in screens:
         full_png = os.path.join(art_dir, f"screen_{screen}_verified.png")
         lcd_png = f"/tmp/app_lcd_{screen}.png"
-        emu_png = f"/tmp/emu_{screen}.png"
+        emu_png = os.path.join(repo_root, "render", "fwref",
+                               fwref_names.get(screen, screen) + ".png")
         diff_png = f"/tmp/diff_{screen}.png"
         comp_png = os.path.join(art_dir, f"comparison_{screen}_1to1.png")
 

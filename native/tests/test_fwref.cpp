@@ -182,7 +182,9 @@ TEST_CASE("fwref Song reference pixels", "[fwref][song]")
     REQUIRE(px(127, 100) == 0x121212);  // pattern 1, empty track 4 block
     REQUIRE(px(7, 237) == 0xFFFFFF);    // pattern 2, track 0 block
     REQUIRE(px(7, 345) == 0x121212);    // pattern 3, empty track 0 block
-    REQUIRE(px(7, 104) == 0x30CB3F);    // progress line
+    // The canonical stopped state has no progress line (cSongPlayer only draws
+    // it while progress.isPlaying); the pixel stays the block background.
+    REQUIRE(px(7, 104) == 0xFFFFFF);
     REQUIRE(px(491, 91) == 0x30CB3F);   // active playlist selection frame
     REQUIRE(px(720, 100) == 0x080808);  // tempo bar container
     REQUIRE(px(720, 400) == 0xFFFFFF);  // tempo bar fill (value 16)
@@ -222,11 +224,15 @@ TEST_CASE("fwref Sample Playback reference pixels", "[fwref][sample]")
     REQUIRE(px(400, 10) == 0x080808);   // title bar background
     REQUIRE(px(100, 225) == 0xFFFFFF);  // cSpectrum waveform peak
     REQUIRE(px(300, 140) == 0x0A0A0A);  // cPoints loop region fill (additive)
-    REQUIRE(px(40, 116) == 0xFFFFFF);   // start point marker line
-    REQUIRE(px(580, 116) == 0xFFFFFF);  // end point marker line
-    REQUIRE(px(150, 340) == 0xFFFFFF);  // loop point marker triangle
-    REQUIRE(px(180, 225) == 0xCD1818);  // cProgressCursor
-    REQUIRE(px(180, 115) == 0x000000);  // cursor does not enter title bar
+    // Point markers map frames with (point * 599) / zoomWidth
+    // (fSamplePlay.cpp:397-423); the scenario encodes the demo project's frames.
+    REQUIRE(px(39, 116) == 0xFFFFFF);   // start point marker line
+    REQUIRE(px(579, 116) == 0xFFFFFF);  // end point marker line
+    REQUIRE(px(148, 340) == 0xFFFFFF);  // loop point marker triangle
+    // cProgressCursor only draws while playback is in progress
+    // (progressCursor.cpp:69); the stopped editor shows none.
+    REQUIRE(px(180, 225) == 0xFFFFFF);  // waveform column, no red cursor
+    REQUIRE(px(180, 115) == 0x000000);
     REQUIRE(px(620, 100) == 0x0A0A0A);  // play-mode cList background
     // selectedPlace defaults to 6 (samplePlayback.h:159): the frame is on the
     // play-mode list, not on a bottom label.

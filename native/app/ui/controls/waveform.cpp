@@ -54,9 +54,12 @@ void processSpectrum(const WaveformState& s, int channel, float* upper, float* l
     if (channel == 1 && s.sample->channels > 1 && !s.sample->ch[1].empty())
         src = &s.sample->ch[1];
     if (src->empty()) return;
-    const int first = static_cast<int>(static_cast<long>(s.zoomStart) * (s.length - 1) / 65535);
-    const int last = static_cast<int>(static_cast<long>(s.zoomEnd) * (s.length - 1) / 65535);
-    const int res = std::max(1, (last - first + 1) / kWaveformWidth);
+    // cGraphicProcessing::processSpectrum(): resolution = length / 600 for the
+    // unzoomed view (not (visibleFrames + 1) / 600), with max_resolution
+    // capped at 200 samples per column.
+    const int first = static_cast<int>(static_cast<long>(s.zoomStart) * s.length / 65535);
+    const int last = static_cast<int>(static_cast<long>(s.zoomEnd) * s.length / 65535);
+    const int res = std::max(1, (last - first) / kWaveformWidth);
     const int maxRes = std::min(res, 200);
     for (int i = 0; i < kWaveformWidth; ++i) {
         const long s0 = first + static_cast<long>(i) * res;
@@ -132,12 +135,16 @@ void SpectrumControl::draw(Canvas& canvas) const {
     } else {
         for (int i = 0; i < limit; ++i) {
             const int idx = static_cast<int>(static_cast<float>(i) * mult);
-            const float y0 = center - upper[idx] * h / 2.0f;
-            const float y1 = center - lower[idx] * h / 2.0f;
-            if (y1 > y0) {
-                canvas.fillRect(RectI{idx, static_cast<int>(y0), 1,
-                                      static_cast<int>(y1 - y0)},
-                                kWaveformColors[0]);
+            // cSpectrum draws a LINES pair with inclusive endpoints; round both
+            // ends so the column covers the same rows as EVE's line.
+            const int top = static_cast<int>(std::lround(center - upper[idx] * h / 2.0f));
+            const int bottom = static_cast<int>(std::lround(center - lower[idx] * h / 2.0f));
+            if (bottom > top) {
+                canvas.fillRect(RectI{idx, top, 1, bottom - top + 1}, kWaveformColors[0]);
+            } else if (bottom == top) {
+                // Zero-amplitude column: the firmware's LINES pair collapses to
+                // a single pixel on the centre line.
+                canvas.fillRect(RectI{idx, top, 1, 1}, kWaveformColors[0]);
             }
         }
     }

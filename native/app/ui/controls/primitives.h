@@ -122,7 +122,14 @@ private:
     bool alignLeft_{false};
 };
 
-// Shared cBar/cBgLabel bottom shadow: 12px vertical fade into transparent.
+// Shared cBar/cBgLabel bottom shadow: 12px vertical fade
+// (bar.cpp/list.cpp/songPlayer.cpp: grad_y = posY + height - 10, grad_h = 12).
+// The firmware only sets controlStyleBottomShadow when the theme's
+// bottomScreenShadow > 0 and controlStyleGradient when barShadow > 0
+// (gSongEdit.cpp:33-34, gInstrEdit.cpp), so the desktop honors the same flags.
+void setChromeShadowFlags(bool bottomShadow, bool barShadow);
+bool bottomShadowEnabled();
+bool barShadowEnabled();
 void drawBottomShadow(Canvas& canvas, const RectI& rect, ImU32 background);
 
 } // namespace trakr::ui

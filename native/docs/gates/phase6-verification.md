@@ -19,7 +19,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 | fwref strict oracle | `cd native/tools/fwref && python3 check_reference.py` | all gates pass, 0 unsupported / 0 approximations |
 | Hardware structural (calibrated) | `python3 native/tools/refcal/refcal.py --all` | 8/8 tiles (Instrument x2, Instrument Automation, Performance, Pattern, Track Mixer, Sample Playback, Master EQ) |
 | Glyph coverage | `python3 native/tools/check_glyphs.py` | 0 non-ASCII codepoints, all covered |
-| Classic visual regression | `python3 native/tools/visreg/visreg.py --all --deterministic` | 16/16 cases >= 95% (97.92-99.99%), deterministic |
+| Classic visual regression | `python3 native/tools/visreg/visreg.py --all --deterministic` | 17/17 cases >= 95% (97.93-100.00%), deterministic |
 | Canvas line raster | `./native/build/trakr_tests "[canvas]"` | hard-edged, no AA fringe, exact endpoint coverage |
 | Classic parity | per-screen gate docs | all nine workspaces >= 95%; best 99.9% |
 
@@ -128,6 +128,24 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   screen state. Fixed along the way: stop rewinds the transport row, Song delete
   returns the selection to the previous slot, and the Sample parameter selector
   wraps like the legacy screen.
+- Song reference corrected: `cSongPlayer`'s rotated track names were shifted one
+  column left (the emulator matrix ignored the `(I - R) * h/2` translation of the
+  rotate-about-centre idiom and the app measured glyph offsets from the wrong
+  raster origin), pushing the first track name off the left edge and hiding the
+  last glyphs under the title bar. Both the fwref matrix/shim and
+  `Canvas::textVertical270` now compose the rotation correctly, the names match
+  the hardware manual (full "Track 1".."Midi 16"), and the Song screen shows the
+  transport status like every non-Pattern module (interface.cpp:417-421).
+- Bottom shadows are 12 device px (`grad_y = bottom - 10`, `grad_h = 12`) and are
+  theme-gated like the firmware: `bottomScreenShadow` for cList/cBar/cSongPlayer,
+  `barShadow` for the bar gradient (themeDefault enables both). `ui::setChromeShadowFlags`
+  mirrors the theme, so themes with shadows off no longer inherit them.
+- Sample parity raised to 99.28% (slice/granular 98.62/98.60) by filling the LCD
+  background black (the desktop clear colour used to show through uncovered
+  pixels), matching cGraphicProcessing's 6-sample column resolution and int8 peak
+  scale in the demo sample, rounding EVE line endpoints, and aligning the fwref
+  scenario markers/region to the demo project's frames (the stopped editor has
+  no progress cursor).
 - Calibrated hardware tiles exist for seven views (including Master EQ), not every sub-page.
 - ~~Header song timer.~~ Resolved: `Interface::activateModule()` shows
   `songTimer` on every module except the pattern editor

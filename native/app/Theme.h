@@ -111,6 +111,7 @@ struct Theme {
         {0.000f, 0.000f, 0.000f, 1.0f}, // black
     };
     int bottomScreenShadow{1};
+    int barShadow{1};
 
     // Meter colors
     ImVec4 meterGreen{0.2f, 0.8f, 0.3f, 1.0f};

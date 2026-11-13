@@ -436,6 +436,26 @@ Do not start without a design pass; Classic remains the reference profile.
 - Desktop settings without an engine consumer remain session-level (documented
   residual); Pattern divider and Extra headroom publish to the model/engine.
 
+## Song/File reference revision and shadow audit
+
+- Fixed `Canvas::textVertical270`: glyph offsets were measured from `origin.y`
+  while glyphs rasterise at `screenY(0)` (`origin.y - deviceTop * scale`), which
+  shifted every Song track name one column left and pushed "Track 1" off the
+  left edge. Names now align with the blocks and show in full.
+- Fixed the fwref matrix composition: `translate()` now applies the current
+  linear part, so `translate(+h/2) / ROTATE(270) / translate(-h/2)` nets the
+  firmware's `(I - R) * h/2` offset. The reference now matches the Tracker+
+  Essentials Song page (full rotated names between the title bar and the grid).
+  The emulator also advances rotated glyphs by `width + 1` like the firmware.
+- Song shows the title-bar transport (the firmware hides the song timer only on
+  the Pattern screen); scenario progress is aligned to the stopped demo state.
+- Bottom shadow verified: 12 device px, `grad_y = bottom - 10`, `grad_h = 12`,
+  enabled by `themeDefault` (`bottomScreenShadow`, `barShadow`). Shadow drawing
+  is now theme-gated in the semantic controls.
+- `os_input_runner.py` compares verified captures against `render/fwref` (the
+  retired hand-drawn emulator frames are no longer used) and the compare folder
+  was regenerated for all nine screens.
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

@@ -103,7 +103,7 @@ Current source-true scores (≥95.0% target):
 | Screen / state | Similarity | Status |
 |----------------|-----------|--------|
 | Pattern | 99.50% | ✅ |
-| Song | 98.80% | ✅ |
+| Song | 98.84% | ✅ |
 | Instrument General | 99.56% | ✅ |
 | Instrument Effects | 99.99% | ✅ |
 | Instrument Automation | 99.98% | ✅ |
@@ -111,13 +111,13 @@ Current source-true scores (≥95.0% target):
 | Master 2/3 (Track Mixer) | 99.26% | ✅ |
 | Master 3/3 (Global Mixer) | 99.18% | ✅ |
 | Master EQ | 99.66% | ✅ |
-| Sample Playback | 98.32% | ✅ |
-| Sample Slice | 97.92% | ✅ |
-| Sample Granular | 97.92% | ✅ |
+| Sample Playback | 99.28% | ✅ |
+| Sample Slice | 98.62% | ✅ |
+| Sample Granular | 98.60% | ✅ |
 | Sample Loader | 99.36% | ✅ |
 | Config | 99.53% | ✅ |
-| Config item editor | 99.51% | ✅ |
-| Performance | 98.14% | ✅ |
+| Config item editor | 99.52% | ✅ |
+| Performance | 98.35% | ✅ |
 | File | 99.29% | ✅ |
 
 These are full-frame comparisons against the audited fwref scenario, measured by
@@ -143,6 +143,17 @@ and markers align within ~1px.
 - `cLabel` with `controlStyleCenterX` takes `prop.x` as the label **centre** and
   paints its background across `[x - w/2, x + w/2]`. When porting a centred
   label, subtract `w/2` from the firmware x.
+- Vertical rotated text (`Canvas::textVertical270`, cSongPlayer track names):
+  glyphs rasterise at `screenY(0)` (= `origin.y - deviceTop * scale`), so the
+  rotation reference must be that same y. Using `origin.y` shifted every glyph
+  left by `deviceTop` device px, which hid the first Song track name past the
+  left edge. The matrix idiom `translate(+h/2) / ROTATE(270) / translate(-h/2)`
+  nets a `(I - R) * h/2` offset (+h in y), so the name baseline is
+  `posY + 42 + fontHeight`.
+- Bottom shadows (`drawBottomShadow`, 12 px: `grad_y = bottom - 10`,
+  `grad_h = 12`) are theme-gated like the firmware: `theme.bottomScreenShadow`
+  enables cList/cBar/cSongPlayer shadows and `theme.barShadow` the bar
+  gradient. Classic enables both; other themes must not inherit them.
 - Animation: sample `ui::animationNowMs()` at draw time (never accumulate
   per-frame deltas), report animated controls through `Control::animatingAt`,
   and use `ui::Tween`/`ui::Blinker` (`native/app/ui/animation.h`). Captures

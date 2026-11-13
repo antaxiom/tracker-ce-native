@@ -156,15 +156,21 @@ void Canvas::textVertical270(trakr::hw::FwFont font, int centerX, int bottomY, I
     const float heightPx = static_cast<float>(trakr::hw::fwTextHeight(font));
     const float xOffset = heightPx * 0.5f * lc_.scaleX + 0.5f;
     float curY = lc_.screenY(static_cast<float>(bottomY));
+    // Glyphs rasterise at screenY(0) = origin.y - deviceTop * scale, so the
+    // rotation reference must be that same y; using origin.y shifted every
+    // glyph left by deviceTop device px (one Song track column), which pushed
+    // the first track name off the left edge.
+    const float rasterOriginY = lc_.screenY(0.0f);
+    const float rasterOriginX = lc_.screenX(0.0f);
     for (char ch : s) {
         if (ch != ' ') {
             const char glyph[2] = {ch, '\0'};
             const int v0 = dl_->VtxBuffer.Size;
-            trakr::hw::fwDrawText(dl_, font, lc_.screenX(0.0f), lc_.screenY(0.0f), glyph, color,
+            trakr::hw::fwDrawText(dl_, font, rasterOriginX, rasterOriginY, glyph, color,
                                   lc_.scaleX, lc_.scaleY);
             for (int i = v0; i < dl_->VtxBuffer.Size; ++i) {
-                const float rx = dl_->VtxBuffer[i].pos.x - lc_.origin.x;
-                const float ry = dl_->VtxBuffer[i].pos.y - lc_.origin.y;
+                const float rx = dl_->VtxBuffer[i].pos.x - rasterOriginX;
+                const float ry = dl_->VtxBuffer[i].pos.y - rasterOriginY;
                 dl_->VtxBuffer[i].pos.x = (centerScreenX - xOffset) + ry;
                 dl_->VtxBuffer[i].pos.y = curY - rx;
             }

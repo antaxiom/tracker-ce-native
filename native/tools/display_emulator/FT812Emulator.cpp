@@ -388,7 +388,8 @@ void FT812DisplayEmulator::drawTextVertical270(int centerX, int startY, const st
                 }
             }
         }
-        if (ch < 128) curY -= f.widths[ch];
+        // cSongPlayer/label.cpp advance by font->data[ch] + 1 (letter spacing).
+        if (ch < 128) curY -= f.widths[ch] + 1;
     }
 }
 

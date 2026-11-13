@@ -24,6 +24,10 @@ void AppLayout::render(ScreenContext& scrCtx,
     const ImGuiViewport* vp = ImGui::GetMainViewport();
     if (!vp) return;
 
+    // Theme-controlled cBar/cList shadows (Themes.cpp: bottomScreenShadow,
+    // barShadow; themeDefault enables both at 12px).
+    ui::setChromeShadowFlags(scrCtx.theme.bottomScreenShadow > 0, scrCtx.theme.barShadow > 0);
+
     // 1. Compute geometry for display canvas and button deck
     display_.computeLayout(vp->WorkPos, vp->WorkSize, layoutState.showButtonDeck, layoutState.wideMode);
     display_.renderBezel();
@@ -149,6 +153,10 @@ void AppLayout::render(ScreenContext& scrCtx,
                                : guiNextInstrumentPages ? "##gui_next_instrument_pages"
                                                    : "##gui_next_loader";
         if (ImGui::Begin(windowName, nullptr, flags)) {
+            // The firmware LCD background is black; without this the desktop
+            // clear colour shows through wherever a screen has no control.
+            ImGui::GetWindowDrawList()->AddRectFilled(workspace.Min, workspace.Max,
+                                                      IM_COL32(0, 0, 0, 255));
             if (guiNextInstrument) {
                 guiInstrument_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
                                       scrCtx.selectedInstIdx, scrCtx.instrumentView, workspace,

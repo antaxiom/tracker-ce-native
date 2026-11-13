@@ -92,6 +92,7 @@ Theme makeTrackerClassicTheme() {
     t.blankSpaceCoverLabelColors[2] = ImVec4{1.000f, 0.000f, 0.000f, 1.0f};      // red
     t.blankSpaceCoverLabelColors[3] = ImVec4{0.000f, 0.000f, 0.000f, 1.0f};      // black
     t.bottomScreenShadow = 1;
+    t.barShadow = 1;
     return t;
 }
 

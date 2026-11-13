@@ -280,7 +280,10 @@ int main(int argc, char** argv) {
             const int k = std::min(299, j / 12);
             const double env = std::exp(-0.004 * k);
             const double wv = std::sin(0.11 * k);
-            const double a = 100.0 * std::fabs(wv) * env / 127.0;
+            // Firmware sample units: int8 peak = int16 / 300
+            // (graphicProcessing.cpp:478), so the normalized demo sample uses
+            // 300/32767 per peak unit to keep the reference envelope identical.
+            const double a = 100.0 * std::fabs(wv) * env * 300.0 / 32767.0;
             sd->ch[0][static_cast<size_t>(j)] = static_cast<float>((j % 2) ? -a : a);
         }
         auto& inst = song.instruments[0];

@@ -29,10 +29,17 @@ struct FwrefMatrix
         active = false;
     }
 
+    // M = M * T: the translation is expressed in the matrix's current frame,
+    // so it must be transformed by the linear part. This matters for
+    // rotate-about-a-point idioms (translate(+c), rotate, translate(-c)),
+    // which net a (I - R) * c offset. cSongPlayer's rotated track names rely
+    // on it (songPlayer.cpp:643-647): without it the names sit ~16px too high
+    // and their last glyphs disappear under the title bar.
     void translate(int32_t x, int32_t y)
     {
-        tx += x;
-        ty += y;
+        const int64_t A = a, B = b, C = c, D = d;
+        tx += static_cast<int32_t>((A * x + C * y) >> 16);
+        ty += static_cast<int32_t>((B * x + D * y) >> 16);
     }
 
     void rotate(int32_t angleRaw)
