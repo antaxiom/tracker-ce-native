@@ -128,6 +128,12 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   screen state. Fixed along the way: stop rewinds the transport row, Song delete
   returns the selection to the previous slot, and the Sample parameter selector
   wraps like the legacy screen.
+- Chrome text is drawn with the firmware L4 bitmap fonts instead of ImGui
+  TTFs: `HeaderBar` (title, transport with the Bold17 `\x18\x19` stop icons,
+  right label) and the `ScreenButtons` deck labels (Regular14 name at y 442/452,
+  Light17 value at y 462). This lifted Pattern 99.70, Instrument 99.80,
+  Master 1/3 99.82, Master 2/3 99.53, Master EQ 99.78, Sample 99.46,
+  Loader 99.53, Config 99.66 and Perform 98.55.
 - Song reference corrected: `cSongPlayer`'s rotated track names were shifted one
   column left (the emulator matrix ignored the `(I - R) * h/2` translation of the
   rotate-about-centre idiom and the app measured glyph offsets from the wrong

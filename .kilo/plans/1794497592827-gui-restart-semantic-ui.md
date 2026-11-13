@@ -471,6 +471,20 @@ Do not start without a design pass; Classic remains the reference profile.
   (`drawLayer(-1)` / `0`).
 - Parity: slice 99.22%, granular 99.16% (was 98.62/98.60).
 
+## Chrome bitmap text port
+
+- HeaderBar draws the title, transport and right label with the Bold17 L4
+  bitmap font at the titleBar.cpp geometry (cell top row 2, title x 9, right
+  label right-aligned at 790) and composes the transport with the firmware
+  `"%3im:%02is %2s P%i.%03i%2s"` format and its stop/song/pattern icon glyphs.
+- ScreenButtons draws the deck names (Regular14, centre y 442 two-line / 452
+  single-line) and values (Light17, centre y 462) with the same bitmap fonts,
+  and the Pattern deck uses the bitmap path as well.
+- Parity after the port: Pattern 99.70, Song 98.98, Instrument 99.80,
+  Master 1/3 99.82, 2/3 99.53, 3/3 99.32, EQ 99.78, Sample 99.46, Slice 99.38,
+  Granular 99.35, Loader 99.53, Config 99.66, item editor 99.65,
+  Perform 98.55, File 99.36 (all >= 98.5).
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

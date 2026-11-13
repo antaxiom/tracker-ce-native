@@ -3,6 +3,7 @@
 #include "EngineHost.h"
 #include "Theme.h"
 #include "FontLoader.h"
+#include "BitmapText.h"
 #include "imgui_internal.h"
 #include <cstdio>
 #include <cmath>
@@ -82,14 +83,26 @@ void HeaderBar::render(const ImRect& rect,
     float fontH = font->LegacySize;
     float centerY = rect.Min.y + 2.5f * scale;
 
-    // 1. Left Label: Page Title (e.g. "Pattern 1", "Performance FX")
-    float leftX = rect.Min.x + 9.0f * scale;
+    // titleBar.cpp labels use controlStyleFont4 = the Bold17 L4 bitmap font at
+    // y centre 13; the bitmap cell top is device row 4 (ink 8..19).
+    constexpr float kTitleCellTop = 2.0f;
+    auto bWidth = [](const char* t) {
+        return static_cast<float>(trakr::hw::fwTextWidth(trakr::hw::FwFont::Bold17, t));
+    };
+    auto bText = [&](float devX, const char* t, ImU32 col) {
+        trakr::hw::fwDrawText(drawList, trakr::hw::FwFont::Bold17,
+                              rect.Min.x + devX * scale,
+                              rect.Min.y + kTitleCellTop * scale, t, col, scale, scale);
+    };
     ImU32 textWhite = IM_COL32(255, 255, 255, 255);
-    drawList->AddText(font, fontH, ImVec2(leftX, centerY), textWhite, pageTitle ? pageTitle : "Pattern 1");
+
+    // 1. Left Label: Page Title (e.g. "Pattern 1", "Performance FX")
+    const char* titleText = pageTitle ? pageTitle : "Pattern 1";
+    bText(9.0f, titleText, textWhite);
 
     if (recordMode) {
-        float titleW = font->CalcTextSizeA(fontH, FLT_MAX, 0.0f, pageTitle ? pageTitle : "Pattern 1").x;
-        ImVec2 recPos(leftX + titleW + 8.0f * scale, centerY + 1.0f);
+        float titleW = bWidth(titleText) * scale;
+        ImVec2 recPos(rect.Min.x + 9.0f * scale + titleW + 8.0f * scale, centerY + 1.0f);
         drawList->AddRectFilled(recPos, ImVec2(recPos.x + 28.0f * scale, recPos.y + fontH - 2.0f),
                                 IM_COL32(205, 24, 24, 255), 2.0f);
         drawList->AddText(font, fontH, ImVec2(recPos.x + 3.0f * scale, recPos.y - 1.0f),
@@ -101,11 +114,11 @@ void HeaderBar::render(const ImRect& rect,
     if (hasOverride) {
         // File page: title bar shows the current project name on the right
         // instead of transport/pattern info (firmware titleBar setRightLabel).
-        ImVec2 rightTextSize = font->CalcTextSizeA(fontH, FLT_MAX, 0.0f, rightLabelOverride);
+        float rightW = bWidth(rightLabelOverride) * scale;
         float rightX = firmwareChrome
-                         ? rect.Min.x + 790.0f * scale - rightTextSize.x
-                         : rect.Min.x + 700.0f * scale - rightTextSize.x * 0.5f;
-        drawList->AddText(font, fontH, ImVec2(rightX, centerY), textWhite, rightLabelOverride);
+                         ? 790.0f - bWidth(rightLabelOverride)
+                         : 700.0f - bWidth(rightLabelOverride) * 0.5f;
+        bText(rightX, rightLabelOverride, textWhite);
     } else {
         // Center transport (songTimer.cpp: "0m:00s  ||  P1.001").
         // Interface::activateModule() shows songTimer on every module except the
@@ -122,46 +135,26 @@ void HeaderBar::render(const ImRect& rect,
             uint32_t mins = totalSecs / 60;
             uint32_t secs = totalSecs % 60;
 
-            // Keep the transport slot as two spaces; the play/loop glyph is drawn
-            // as vector art (RobotoMono has no U+25B6/U+21BB -> tofu otherwise).
-            const char* transportGlyph = playhead.playing ? "  " : "||";
+            // songTimer.cpp: stopped state shows the Bold17 stop-icon pair
+            // ("\x18\x19"); playing uses "\x1A\x1B" (song) / "\x1C\x1D"
+            // (pattern). The icons exist only in the L4 Bold17 bitmap font.
+            const char* transportGlyph = playhead.playing ? "\x1C\x1D" : "\x18\x19";
             int curPat = (currentOrderIdx >= 0 && currentOrderIdx < static_cast<int>(song.order.size()))
                              ? song.order[currentOrderIdx]
                              : 0;
             int curStep = playhead.playing ? playhead.row : cursorRow;
 
-            std::snprintf(timerBuf_, sizeof(timerBuf_), "%3um:%02us %2s P%d.%03d ",
-                          mins, secs, transportGlyph, curPat + 1, curStep + 1);
+            // songTimer.cpp:144 timerFormat "%3im:%02is %2s P%i.%03i%2s".
+            std::snprintf(timerBuf_, sizeof(timerBuf_), "%3um:%02us %2s P%d.%03d%2s",
+                          mins, secs, transportGlyph, curPat + 1, curStep + 1, "");
 
             centerX = rect.Min.x + 280.0f * scale;
-            centerRight = centerX + font->CalcTextSizeA(fontH, FLT_MAX, 0.0f, timerBuf_).x;
+            centerRight = centerX + bWidth(timerBuf_) * scale;
             // songTimerLabelColors[0] (themeDefault) is white.
             ImU32 timerCol = textWhite;
-            drawList->AddText(font, fontH, ImVec2(centerX, centerY), timerCol, timerBuf_);
+            bText(280.0f, timerBuf_, timerCol);
 
-            if (playhead.playing) {
-                char prefix[24];
-                std::snprintf(prefix, sizeof(prefix), "%um:%02us  ", mins, secs);
-                const float slotX = centerX + font->CalcTextSizeA(fontH, FLT_MAX, 0.0f, prefix).x;
-                const float slotW = font->CalcTextSizeA(fontH, FLT_MAX, 0.0f, "  ").x;
-                const float cy = centerY + fontH * 0.5f;
-                const float h2 = fontH * 0.28f;
-                if (engineHost.isPatternLoop()) {
-                    const ImVec2 c(slotX + slotW * 0.5f, cy);
-                    const float r = h2 * 1.4f;
-                    drawList->PathArcTo(c, r, IM_PI * 0.35f, IM_PI * 1.95f, 20);
-                    drawList->PathStroke(timerCol, 0, 1.6f * scale);
-                    const float ax = c.x + r * std::cos(IM_PI * 1.95f);
-                    const float ay = c.y + r * std::sin(IM_PI * 1.95f);
-                    drawList->AddTriangleFilled(ImVec2(ax - 2.5f * scale, ay - 3.0f * scale),
-                                                ImVec2(ax + 3.0f * scale, ay - 0.5f * scale),
-                                                ImVec2(ax - 1.5f * scale, ay + 3.0f * scale), timerCol);
-                } else {
-                    drawList->AddTriangleFilled(ImVec2(slotX + slotW * 0.32f, cy - h2),
-                                                ImVec2(slotX + slotW * 0.32f, cy + h2),
-                                                ImVec2(slotX + slotW * 0.74f, cy), timerCol);
-                }
-            }
+
         }
 
         // Right label (titleBar.cpp showCurrentInstrumentOnRightLabel). Only the
@@ -176,8 +169,8 @@ void HeaderBar::render(const ImRect& rect,
                 std::snprintf(rightBuf_, sizeof(rightBuf_), "%d. Empty slot", selectedInstIdx + 1);
             }
 
-            ImVec2 rightTextSize = font->CalcTextSizeA(fontH, FLT_MAX, 0.0f, rightBuf_);
-            float rightX = rect.Min.x + 790.0f * scale - rightTextSize.x;
+            const float rightW = bWidth(rightBuf_) * scale;
+            float rightX = rect.Min.x + 790.0f * scale - rightW;
             if (!drewTransport || rightX > centerRight + 10.0f) {
                 ImRect instRect(ImVec2(rightX - 4.0f, rect.Min.y + 2.0f), ImVec2(rect.Max.x - 4.0f, rect.Max.y - 2.0f));
                 bool hov = instRect.Contains(ImGui::GetIO().MousePos);
@@ -191,7 +184,8 @@ void HeaderBar::render(const ImRect& rect,
                         selectedInstIdx = std::clamp(selectedInstIdx + d, 0, static_cast<int>(song.instruments.size()) - 1);
                     }
                 }
-                drawList->AddText(font, fontH, ImVec2(rightX, centerY), hov ? IM_COL32(254, 247, 73, 255) : textWhite, rightBuf_);
+                bText(790.0f - bWidth(rightBuf_), rightBuf_,
+                      hov ? IM_COL32(254, 247, 73, 255) : textWhite);
             }
         }
 

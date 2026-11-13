@@ -1,6 +1,7 @@
 #include "ScreenButtons.h"
 #include "FontLoader.h"
 #include "TextFit.h"
+#include "BitmapText.h"
 #include "imgui_internal.h"
 #include <algorithm>
 
@@ -73,12 +74,22 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
         ImU32 topCol = dimmed ? IM_COL32(0x33, 0x33, 0x33, 255) : IM_COL32(0x77, 0x77, 0x77, 255);
         ImU32 btmCol = dimmed ? IM_COL32(0x57, 0x57, 0x57, 255) : IM_COL32(255, 255, 255, 255);
 
-        const float pad = 2.0f * scale;
+        // cLabel (label.cpp:110-186): name text centre is y = 442 for two-line
+        // labels (posY 425 + height/2 - lines_step/2) and y = 452 for
+        // single-line labels; text2 sits one 20px step lower. x is the label
+        // centre (controlStyleCenterX): (800/8)*i + 800/16.
+        const float cxDev = static_cast<float>((800 / 8) * i + (800 / 16));
+        auto fwLabel = [&](trakr::hw::FwFont font, float cyDev, ImU32 col, const char* txt) {
+            if (txt == nullptr || txt[0] == '\0') return;
+            const int tw = trakr::hw::fwTextWidth(font, txt);
+            const int th = trakr::hw::fwTextHeight(font);
+            trakr::hw::fwDrawText(dl, font, rect.Min.x + (cxDev - tw / 2.0f) * scale,
+                                  rect.Min.y + (cyDev - th / 2.0f) * scale, txt, col, scale,
+                                  scale);
+        };
         if (!topStr.empty()) {
-            float centerTopY = rect.Min.y + (twoLine ? 16.0f : 26.0f) * scale;
-            ui::drawTextFit(dl, nameFont, bx + pad, bx + btnW - pad, centerTopY,
-                            topCol, topStr.c_str(), true, 8.0f * scale, 7.0f * scale,
-                            "ScreenButtons");
+            fwLabel(trakr::hw::FwFont::Regular14, twoLine ? 442.0f : 452.0f, topCol,
+                    topStr.c_str());
         }
 
         if (btn.label == "More" && btmStr == " ") {
@@ -91,13 +102,12 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
                               ImVec2(cx + 9.0f * scale, dotsY + 2.0f * scale),
                               IM_COL32(0x22, 0x22, 0x22, 255));
         } else if (twoLine) {
-            float centerBtmY = rect.Min.y + 36.0f * scale;
             // gInstrEdit.cpp:762-765: the Filter Type value uses Font3
-            // (Regular14) and activeButtonLabelsColors[3] = grey_77.
+            // (Regular14) and activeButtonLabelsColors[3] = grey_77; every other
+            // text2 uses Font2 (Light17) in colors[3] (white).
             const bool filterType = (btn.label == "Filter Type");
-            ui::drawTextFit(dl, filterType ? nameFont : valueFont, bx + pad, bx + btnW - pad,
-                            centerBtmY, filterType ? topCol : btmCol, btmStr.c_str(), true,
-                            10.0f * scale, 7.0f * scale, "ScreenButtons");
+            fwLabel(filterType ? trakr::hw::FwFont::Regular14 : trakr::hw::FwFont::Light17,
+                    462.0f, filterType ? topCol : btmCol, btmStr.c_str());
         }
     }
 
@@ -223,23 +233,21 @@ int ScreenButtons::render(const ImRect& rect, bool shiftHeld, float scale) {
 
         // 1. Top label: centered at y = 440 (two-line) or y = 452 (single-line)
         float xOffset = (isPerformMode && !isSolidOrange) ? 1.0f * scale : -0.5f * scale;
+        auto patternLabel = [&](trakr::hw::FwFont f, float cyDev, ImU32 col, const char* txt) {
+            if (txt == nullptr || txt[0] == '\0') return;
+            const int tw = trakr::hw::fwTextWidth(f, txt);
+            const int th = trakr::hw::fwTextHeight(f);
+            const float cxDev = static_cast<float>((800 / 8) * i + (800 / 16));
+            trakr::hw::fwDrawText(drawList, f, rect.Min.x + (cxDev - tw / 2.0f) * scale,
+                                  rect.Min.y + (cyDev - th / 2.0f) * scale, txt, col, scale,
+                                  scale);
+        };
         if (!topStr.empty() && patternChrome_) {
-            // gPatternEdit labels: Font3 (Regular14, ~7.1px advance) in
-            // activeLabelsColors[0] = grey_77 (grey_33 when disabled).
-            ImFont* lf = getMonoLightFont();
-            const float fs = 15.2f * scale;
-            const float adv = 7.1f * scale;
-            const float w = static_cast<float>(topStr.size()) * adv;
-            const float sx = cx - w * 0.5f;
-            const float cy = rect.Min.y + (twoLine ? 15.0f : 27.0f) * scale;
-            const ImVec2 sample = lf->CalcTextSizeA(fs, FLT_MAX, 0.0f, "Xg");
-            const float dy = cy - sample.y * 0.5f;
-            ImU32 tc = btn.enabled ? IM_COL32(0x77, 0x77, 0x77, 255) : IM_COL32(0x33, 0x33, 0x33, 255);
-            char ch[2] = {0, 0};
-            for (size_t k = 0; k < topStr.size(); ++k) {
-                ch[0] = topStr[k];
-                drawList->AddText(lf, fs, ImVec2(sx + static_cast<float>(k) * adv, dy), tc, ch);
-            }
+            // gPatternEdit labels: Font3 (Regular14) grey_77 / grey_33.
+            ImU32 tc = btn.enabled ? IM_COL32(0x77, 0x77, 0x77, 255)
+                                   : IM_COL32(0x33, 0x33, 0x33, 255);
+            patternLabel(trakr::hw::FwFont::Regular14, twoLine ? 442.0f : 452.0f, tc,
+                         topStr.c_str());
         } else if (!topStr.empty()) {
             float centerTopY = rect.Min.y + (isPerformMode ? 16.0f : (twoLine ? 15.0f : 27.0f)) * scale;
             ui::drawTextFit(drawList, font, textX0 + xOffset, textX1 + xOffset, centerTopY,
@@ -250,9 +258,13 @@ int ScreenButtons::render(const ImRect& rect, bool shiftHeld, float scale) {
         // 2. Bottom value: centered at y = 461
         float centerBtmY = rect.Min.y + (isPerformMode ? 38.0f : 36.0f) * scale;
         if (twoLine && !btmStr.empty()) {
-            ui::drawTextFit(drawList, font, textX0 + xOffset, textX1 + xOffset, centerBtmY,
-                            btmCol, btmStr.c_str(), true, 10.0f * scale, 7.0f * scale,
-                            "ScreenButtons");
+            if (patternChrome_) {
+                patternLabel(trakr::hw::FwFont::Light17, 462.0f, btmCol, btmStr.c_str());
+            } else {
+                ui::drawTextFit(drawList, font, textX0 + xOffset, textX1 + xOffset, centerBtmY,
+                                btmCol, btmStr.c_str(), true, 10.0f * scale, 7.0f * scale,
+                                "ScreenButtons");
+            }
         }
 
         // 3. Coloured 80px underline indicator at y = 474 (cx - 40 to cx + 40)
