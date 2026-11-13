@@ -9,12 +9,13 @@
 namespace fwref
 {
 
-bool renderSample(trakr::emulator::FT812DisplayEmulator& emu, const SampleScenario& scenario)
+bool renderSampleState(trakr::emulator::FT812DisplayEmulator& emu, const SampleScenario& scenario,
+                       const std::string& specName)
 {
     const std::string dir = specDirectory();
     ScreenSpec spec;
     std::string error;
-    if (!loadScreenSpecJson(dir + "/sample.json", spec, error))
+    if (!loadScreenSpecJson(dir + "/" + specName, spec, error))
         return false;
 
     std::vector<SpecEntry> chrome;
@@ -28,6 +29,11 @@ bool renderSample(trakr::emulator::FT812DisplayEmulator& emu, const SampleScenar
     // The spec only addresses sample.* keys, but chrome right-label resolution
     // reads the same scenario.
     return renderSpec(emu, spec, chrome, s);
+}
+
+bool renderSample(trakr::emulator::FT812DisplayEmulator& emu, const SampleScenario& scenario)
+{
+    return renderSampleState(emu, scenario, "sample.json");
 }
 
 } // namespace fwref

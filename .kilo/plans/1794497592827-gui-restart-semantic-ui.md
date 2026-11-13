@@ -456,6 +456,21 @@ Do not start without a design pass; Classic remains the reference profile.
   retired hand-drawn emulator frames are no longer used) and the compare folder
   was regenerated for all nine screens.
 
+## Sample slice/granular reference completion
+
+- `cPoints` stays visible in every play mode (the firmware selects the
+  start-end region for 1-Shot/Forward and the loop region plus markers for
+  loop/slice/granular through `pointsType`); the app no longer hides it in
+  Slice/BeatSlice/Granular.
+- Added `specs/sample_slice.json` (built by `build_sample_variant`) so the
+  Slice state shows `cSlicePoints`, and slice points in `scenario.json` now use
+  the demo project's frame-derived pixel positions.
+- `cLineIndicator` now follows `gSamplePlay.cpp:748-751` (grain window around
+  the playhead widened at the sample edges, additive fill under the waveform,
+  cyan playhead line above it) and is layered like the firmware
+  (`drawLayer(-1)` / `0`).
+- Parity: slice 99.22%, granular 99.16% (was 98.62/98.60).
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

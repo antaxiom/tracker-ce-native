@@ -1,0 +1,721 @@
+{
+ "screen": "sample_slice",
+ "scenario": "sample",
+ "theme": "default",
+ "chrome": {
+  "title": "Sample Playback",
+  "rightLabel": "@instrumentName"
+ },
+ "provenance": {
+  "extractor": "native/tools/fwref/extract_spec.py",
+  "theme": {
+   "file": "core/source/Themes.cpp",
+   "lines": [
+    43,
+    180
+   ],
+   "sha256": "4a237cac77e72ef6920f25d50d04b9b4f7ec217a4f05b2458cd9e778a3c25323"
+  },
+  "files": {
+   "core/interface/instrumentEditor/gInstrEdit.cpp": "c56a288331c1125398ff7b268930404a5a74a38c8d20d44bc24a7503b1e2295a",
+   "core/interface/masterParams/gMasterParams.cpp": "e9af5bbb755522f7a3b8da4bceb858537eb7ae96ce79e19b0559bf8274a7fdae",
+   "core/interface/patternEditor/gPatternEdit.cpp": "2c9874d349f42781a112f959fb3dda6cd4a8dcebe9068581abe04f7d2517aac8",
+   "core/interface/core/songTimer.cpp": "1c7c1de5e6d4b652fdc1b419cc68bcff4586443376e72207dce724d30619e8a0",
+   "core/source/Themes.cpp": "e3796f9dbe2d43bdfdfe43b1503797c332e236acf669fcd60c77d70cc34b7381",
+   "core/interface/core/titleBar.cpp": "545292d0ee18dd52fccaf5a42d0570f5c50c23a13ecdc457ada7385f489143d5",
+   "core/interface/configEditor/gConfigEdit.cpp": "c82fed6a79b77426b488b840507f003b238bb98d2e981fbd7ee6539b885e34ea",
+   "core/interface/configEditor/configMenu.cpp": "cb19e1c8f8fb68e5395b7391a569f33afa74a6dc6f30a6ed4c056dda43c47365",
+   "core/interface/performanceMode/gPerformance.cpp": "62255f708fa842b31069fc491125605aabb86d9a98edc78dd7952fca027840d8",
+   "core/interface/songEditor/gSongEdit.cpp": "ac95ac51b0ffb84d077cc5efc4791aea6121103a7931790013093891fa812b71",
+   "core/interface/sampleImporter/gSampleImport.cpp": "d51b18283d65e0cf1a439fe3f6aacee82de1ffcd5fad1f116ffa314b6dad60d7",
+   "core/interface/samplePlayback/gSamplePlay.cpp": "d816ea78e2e20d08996e1aa31d393a6ea39c6823f30c1570019f9dc7efb6a0a0",
+   "core/interface/projectEditor/gProjEdit.cpp": "4db246d6061f3bc31ce410c1151d48a24ee2d9b77fa5eadd638aee156519155a"
+  }
+ },
+ "entries": [
+  {
+   "order": 0,
+   "control": "cFrame",
+   "x": "0",
+   "y": "0",
+   "w": "0",
+   "h": "0",
+   "style": [
+    "controlStyleShow"
+   ],
+   "value": "@sample.selectedPlace",
+   "places": [
+    {
+     "x": "0 + 1",
+     "y": "424",
+     "w": "800 / 8 - 2",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 1 + 1",
+     "y": "424",
+     "w": "800 / 8 - 2",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 2 + 1",
+     "y": "424",
+     "w": "800 / 8 - 2",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 3 + 1",
+     "y": "424",
+     "w": "800 / 8 - 2",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 4 + 1",
+     "y": "424",
+     "w": "800 / 8 - 2",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 5 + 1",
+     "y": "424",
+     "w": "800 / 8 - 2",
+     "h": "55"
+    },
+    {
+     "x": "(800 / 8) * 6 + 1",
+     "y": "31",
+     "w": "800 / 4 - 3",
+     "h": "391"
+    }
+   ],
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     6,
+     32
+    ],
+    "sha256": "9dec51592021bc58f73426cc46a9ea22a5a2d5221b0bed3d06f77c936ac9b3b7"
+   }
+  },
+  {
+   "order": 1,
+   "control": "cLabel",
+   "x": "(800 / 8) * 0 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Preview",
+   "text2_format": "sample_preview",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     262,
+     300
+    ],
+    "sha256": "5a4beee972c77b658291160fa94e46409bd33ba510eb54b4c65d27c9fb8aeceb"
+   }
+  },
+  {
+   "order": 2,
+   "control": "cLabel",
+   "x": "(800 / 8) * 1 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Start",
+   "text2_format": "sample_start_time",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     262,
+     300
+    ],
+    "sha256": "5a4beee972c77b658291160fa94e46409bd33ba510eb54b4c65d27c9fb8aeceb"
+   }
+  },
+  {
+   "order": 3,
+   "control": "cLabel",
+   "x": "(800 / 8) * 2 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Loop Start",
+   "text2_format": "sample_loop1_time",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     601,
+     613
+    ],
+    "sha256": "19b5c656991e16b8458c426d4705bc3e9e5a6b284167df17c282cd8b02fc32ab"
+   }
+  },
+  {
+   "order": 4,
+   "control": "cLabel",
+   "x": "(800 / 8) * 3 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Loop End",
+   "text2_format": "sample_loop2_time",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     601,
+     613
+    ],
+    "sha256": "19b5c656991e16b8458c426d4705bc3e9e5a6b284167df17c282cd8b02fc32ab"
+   }
+  },
+  {
+   "order": 5,
+   "control": "cLabel",
+   "x": "(800 / 8) * 4 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "End",
+   "text2_format": "sample_end_time",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     262,
+     300
+    ],
+    "sha256": "5a4beee972c77b658291160fa94e46409bd33ba510eb54b4c65d27c9fb8aeceb"
+   }
+  },
+  {
+   "order": 6,
+   "control": "cLabel",
+   "x": "(800 / 8) * 5 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "Zoom",
+   "text2_format": "sample_zoom",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     262,
+     300
+    ],
+    "sha256": "5a4beee972c77b658291160fa94e46409bd33ba510eb54b4c65d27c9fb8aeceb"
+   }
+  },
+  {
+   "order": 7,
+   "control": "cLabel",
+   "x": "(800 / 8) * 6 + (800 / 8)",
+   "y": "424",
+   "w": "800 / 4 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow",
+    "controlStyleShowBitmap"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 0,
+   "text": "Play Mode",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     141,
+     154
+    ],
+    "sha256": "01f2bc7fc7e983c4bf9e670e2c8dc95d1d69944920a9c3aa2d1e53bd6c38e8fa"
+   }
+  },
+  {
+   "order": 8,
+   "control": "cLabel",
+   "x": "(800 / 8) * 7 + (800 / 16)",
+   "y": "424",
+   "w": "800 / 8 - 6",
+   "h": "55",
+   "style": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont3",
+    "controlStyleShow"
+   ],
+   "colors": [
+    7829367,
+    3289394,
+    13441048,
+    16777215
+   ],
+   "style2": [
+    "controlStyleCenterX",
+    "controlStyleCenterY",
+    "controlStyleFont2"
+   ],
+   "value": 1,
+   "text": "",
+   "hidden": true,
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     44,
+     63
+    ],
+    "sha256": "6b9b4e08985ff0b0eb5073a0841ec8993158b3007a6d364dea005e1b852445c5"
+   },
+   "text_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     141,
+     154
+    ],
+    "sha256": "01f2bc7fc7e983c4bf9e670e2c8dc95d1d69944920a9c3aa2d1e53bd6c38e8fa"
+   }
+  },
+  {
+   "order": 9,
+   "control": "cBgLabel",
+   "x": "0",
+   "y": "425",
+   "w": "800",
+   "h": "54",
+   "style": [
+    "controlStyleNoTransparency",
+    "controlStyleShow"
+   ],
+   "value": 127,
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     65,
+     73
+    ],
+    "sha256": "190a1b2897faf773edae38a597765bf9d328b2e7910ef27c2ac3fd78f8a9e4ab"
+   },
+   "override_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     333,
+     335
+    ],
+    "sha256": "18b1eea53f1838fe820e4c149196feae62b08fe34cc345224710604f3773d3de"
+   }
+  },
+  {
+   "order": 10,
+   "control": "cList",
+   "x": "(800 / 8) * 6 + 1",
+   "y": "29",
+   "w": "800 / 4 - 3",
+   "h": "394",
+   "style": [
+    "controlStyleBackground",
+    "controlStyleBottomShadow"
+   ],
+   "list": {
+    "from": "sample.playModes",
+    "start": "@sample.playMode",
+    "linesCount": 9,
+    "selectionActive": 0
+   },
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     75,
+     86
+    ],
+    "sha256": "1d5e54c14f6e8ad208e66e8998683d58a55baf5c5f8cbbb33a0c116d2258df46"
+   },
+   "override_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     449,
+     459
+    ],
+    "sha256": "683ac11d461d8bd8546e1fa8711100dc1a278a285da8e70bcbd15941091f9c7f"
+   }
+  },
+  {
+   "order": 11,
+   "control": "cProgressCursor",
+   "x": "0",
+   "y": "75 + ((300 - (MAX_16BIT / 300)) / 2)",
+   "w": "600",
+   "h": "MAX_16BIT / 300",
+   "style": [],
+   "value": "@sample.progress",
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     88,
+     94
+    ],
+    "sha256": "25e66849638c2e4e328974111d126025956f4fb190785badff0848217440afe6"
+   },
+   "override_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     170,
+     173
+    ],
+    "sha256": "9994ce1fcd475eec23c2351846a01784d3abb32729ba882fb3f0df8c46cef999"
+   }
+  },
+  {
+   "order": 12,
+   "control": "cLineIndicator",
+   "x": "0",
+   "y": "75 + ((300 - (MAX_16BIT / 300)) / 2)",
+   "w": "600",
+   "h": "MAX_16BIT / 300",
+   "style": [],
+   "hidden": true,
+   "value": "@sample.progress",
+   "line_indicator": {
+    "start": "@sample.regionStart",
+    "end": "@sample.regionEnd"
+   },
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     96,
+     100
+    ],
+    "sha256": "78a33d27fa87b9ff72b71456b411513021809880edf54435c730b20e96213136"
+   },
+   "override_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     88,
+     94
+    ],
+    "sha256": "25e66849638c2e4e328974111d126025956f4fb190785badff0848217440afe6"
+   }
+  },
+  {
+   "order": 13,
+   "control": "cPoints",
+   "x": "0",
+   "y": "75 + ((300 - (MAX_16BIT / 300)) / 2)",
+   "w": "600",
+   "h": "MAX_16BIT / 300",
+   "style": [],
+   "points": {
+    "type": "@sample.playMode",
+    "start": "@sample.startPoint",
+    "end": "@sample.endPoint",
+    "loop1": "@sample.loop1",
+    "loop2": "@sample.loop2",
+    "selected": "@sample.selected",
+    "zerocrossed": "@sample.zerocrossed"
+   },
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     102,
+     104
+    ],
+    "sha256": "4de2148414dbd8fb27d63ade1bb9fb9c0bd185e47edd211edc1cd2b692c61be9"
+   },
+   "override_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     88,
+     94
+    ],
+    "sha256": "25e66849638c2e4e328974111d126025956f4fb190785badff0848217440afe6"
+   }
+  },
+  {
+   "order": 14,
+   "control": "cSlicePoints",
+   "x": "0",
+   "y": "75 + ((300 - (MAX_16BIT / 300)) / 2)",
+   "w": "600",
+   "h": "MAX_16BIT / 300",
+   "style": [],
+   "hidden": false,
+   "slice_points": {
+    "from": "sample.slices",
+    "selected": "@sample.sliceSelected"
+   },
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     106,
+     107
+    ],
+    "sha256": "91c937d162036ff6b51679cb1633300c7d5ef802a43d247babd7333ebed1859a"
+   },
+   "override_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     88,
+     94
+    ],
+    "sha256": "25e66849638c2e4e328974111d126025956f4fb190785badff0848217440afe6"
+   },
+   "visibility_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     430,
+     450
+    ],
+    "sha256": "90701ca0bc9592f1347d9e0516e022f305493e0f2d7a58d5eefd6ef546625f85"
+   }
+  },
+  {
+   "order": 15,
+   "control": "cSpectrum",
+   "x": "0",
+   "y": "75 + ((300 - ((MAX_16BIT / 300))) / 2)",
+   "w": "600",
+   "h": "MAX_16BIT / 300",
+   "style": [],
+   "spectrum": {
+    "type": 0,
+    "pointsLimit": 300,
+    "from": "sample.waveform"
+   },
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     112,
+     117
+    ],
+    "sha256": "3b082560bafaca1744a370407a2cbf0967122bc29555c663c5877681ca8f6ade"
+   },
+   "override_source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     386,
+     390
+    ],
+    "sha256": "f45bc5dd38a578f43fb5161596b39002cf76532eb32b78e3905f8c089094a6ea"
+   }
+  },
+  {
+   "order": 16,
+   "control": "cSpectrum",
+   "x": "0",
+   "y": "75 + ((300 - ((MAX_16BIT / 300))) / 2) + (MAX_16BIT / 300) / 2",
+   "w": "600",
+   "h": "(MAX_16BIT / 300) / 2",
+   "style": [],
+   "hidden": true,
+   "spectrum": {
+    "type": 0,
+    "pointsLimit": 300,
+    "from": "sample.waveform"
+   },
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     119,
+     124
+    ],
+    "sha256": "f06f29c04a88723659fa836507bd334e6145de2263be434ab76cd9891ea1a670"
+   }
+  },
+  {
+   "order": 17,
+   "control": "cWtProgress",
+   "x": "0",
+   "y": "400",
+   "w": "600",
+   "h": "2",
+   "style": [],
+   "hidden": true,
+   "wt_progress": {
+    "position": "@sample.wtPosition",
+    "window": "@sample.wtWindow",
+    "positionMax": "@sample.wtPositionMax"
+   },
+   "source": {
+    "file": "core/interface/samplePlayback/gSamplePlay.cpp",
+    "lines": [
+     126,
+     131
+    ],
+    "sha256": "977f2fad226d26794185fc84f6ee50e88958207a3944d6038a4fd4bec032eeaf"
+   }
+  }
+ ]
+}

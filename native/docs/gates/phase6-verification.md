@@ -140,12 +140,17 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   theme-gated like the firmware: `bottomScreenShadow` for cList/cBar/cSongPlayer,
   `barShadow` for the bar gradient (themeDefault enables both). `ui::setChromeShadowFlags`
   mirrors the theme, so themes with shadows off no longer inherit them.
-- Sample parity raised to 99.28% (slice/granular 98.62/98.60) by filling the LCD
+- Sample parity raised to 99.28% (slice/granular 99.22/99.16) by filling the LCD
   background black (the desktop clear colour used to show through uncovered
   pixels), matching cGraphicProcessing's 6-sample column resolution and int8 peak
   scale in the demo sample, rounding EVE line endpoints, and aligning the fwref
   scenario markers/region to the demo project's frames (the stopped editor has
-  no progress cursor).
+  no progress cursor). Slice/granular states now unhide `cSlicePoints`
+  (`specs/sample_slice.json`) and keep cPoints' loop region visible in every
+  play mode (points.cpp `pointsType`), matching the firmware; the granular
+  cLineIndicator grain window is drawn by the desktop from the gSamplePlay
+  formula but is still absent from the fwref reference (emulator compositing
+  gap).
 - Calibrated hardware tiles exist for seven views (including Master EQ), not every sub-page.
 - ~~Header song timer.~~ Resolved: `Interface::activateModule()` shows
   `songTimer` on every module except the pattern editor

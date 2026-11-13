@@ -362,15 +362,15 @@
    "decay": 0.004
   },
   "region": {
-   "start": 460,
-   "end": 500
+   "start": 0,
+   "end": 44
   },
   "sliceSelected": 0,
   "slices": [
-   100,
-   250,
-   400,
-   550
+   99,
+   249,
+   399,
+   549
   ],
   "wavetable": {
    "position": 0,

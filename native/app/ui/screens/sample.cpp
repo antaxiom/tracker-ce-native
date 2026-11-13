@@ -173,7 +173,10 @@ void SampleScreen::syncFromModel(Song& song, EngineHost& engineHost, int selecte
         spectrum_[1]->setVisible(false);
     } else {
         granularCursor_->setVisible(granular);
-        points_->setVisible(!slices && !granular);
+        // cPoints stays visible in every play mode (pointsType selects the
+        // start-end region for 1-Shot/Forward and the loop region plus loop
+        // markers for loop/slice/granular modes; points.cpp:84-130).
+        points_->setVisible(true);
         slicePoints_->setVisible(slices);
         spectrum_[0]->setVisible(true);
         spectrum_[1]->setVisible(state.stereo);

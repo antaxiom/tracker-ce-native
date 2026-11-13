@@ -218,22 +218,30 @@ void ProgressCursorControl::draw(Canvas& canvas) const {
                     kWaveformProgressColors[1]);
 }
 
-void LineIndicatorControl::draw(Canvas& canvas) const {
+void LineIndicatorControl::drawSelection(Canvas& canvas) const {
     if (!state_.instrument || state_.length <= 0) return;
-    const float pos = std::clamp(state_.instrument->wavetablePos, 0.0f, 1.0f) *
-                      static_cast<float>(kWaveformWidth);
-    const float grain =
+    // gSamplePlay.cpp:748-751: the selection is the grain window around the
+    // granular playhead, widened when the window reaches a sample edge.
+    const int pos = static_cast<int>(std::clamp(state_.instrument->wavetablePos, 0.0f, 1.0f) *
+                                     static_cast<float>(kWaveformWidth));
+    const int grain = static_cast<int>(
         std::clamp(state_.instrument->granularLengthMs * state_.rate / 1000.0f *
                        static_cast<float>(kWaveformWidth) / static_cast<float>(state_.length),
-                   1.0f, static_cast<float>(kWaveformWidth));
-    const int a = static_cast<int>(std::clamp(pos - grain / 2.0f, 0.0f,
-                                              static_cast<float>(kWaveformWidth)));
-    const int b = static_cast<int>(std::clamp(pos + grain / 2.0f, 0.0f,
-                                              static_cast<float>(kWaveformWidth)));
-    canvas.fillRect(RectI{a, kWaveformY, std::max(1, b - a), kWaveformHeight - 2},
+                   1.0f, static_cast<float>(kWaveformWidth)));
+    const int half = grain / 2;
+    const int upper = half + (half - std::min(pos, half));
+    const int lower = half + (half - std::min(kWaveformWidth - pos, half));
+    const int start = std::clamp(pos - lower, 0, kWaveformWidth);
+    const int end = std::clamp(pos + upper, 0, kWaveformWidth);
+    canvas.fillRect(RectI{start, kWaveformY, std::max(1, end - start), kWaveformHeight - 2},
                     kGranularProgressColors[1]);
-    canvas.fillRect(RectI{static_cast<int>(pos), kWaveformY, 1, kWaveformHeight},
-                    kGranularProgressColors[0]);
+}
+
+void LineIndicatorControl::draw(Canvas& canvas) const {
+    if (!state_.instrument || state_.length <= 0) return;
+    const int pos = static_cast<int>(std::clamp(state_.instrument->wavetablePos, 0.0f, 1.0f) *
+                                     static_cast<float>(kWaveformWidth));
+    canvas.fillRect(RectI{pos, kWaveformY, 1, kWaveformHeight}, kGranularProgressColors[0]);
 }
 
 void WtProgressControl::draw(Canvas& canvas) const {

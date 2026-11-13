@@ -309,6 +309,11 @@ bool renderLoader(trakr::emulator::FT812DisplayEmulator& emu, const LoaderScenar
 // start/end/loop markers, cProgressCursor, play-mode cList and action labels).
 bool renderSample(trakr::emulator::FT812DisplayEmulator& emu, const SampleScenario& scenario);
 
+// Slice / granular sample editor states load sample_slice.json /
+// sample_granular.json (state-specific overlays visible).
+bool renderSampleState(trakr::emulator::FT812DisplayEmulator& emu, const SampleScenario& scenario,
+                       const std::string& specName);
+
 // Renders the File project browser (gProjEdit.cpp showProjectBrowser(): project
 // list + empty recent list + "SD Card"/"Recent" tabs + blankSpaceCover pane).
 bool renderFile(trakr::emulator::FT812DisplayEmulator& emu, const FileScenario& scenario);

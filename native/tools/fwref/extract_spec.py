@@ -812,6 +812,23 @@ def build_config_edit(lines, theme_fields, colors, menu_lines):
     return entries
 
 
+def build_sample_variant(lines, theme_fields, colors, state):
+    """Slice/granular sample states unhide the state-specific overlays
+    (cSlicePoints for Slice/Beat Slice, cLineIndicator for Granular) the way
+    fSamplePlay showSlicesSelectValue()/showGranularPositionValue() do."""
+    entries = build_sample(lines, theme_fields, colors)
+    by_order = {e["order"]: e for e in entries}
+    if state == "slice":
+        # cSlicePoints is shown whenever playMode is Slice/BeatSlice
+        # (fSamplePlay.cpp:430-450 processSlicePoints).
+        by_order[14]["hidden"] = False
+        by_order[14]["visibility_source"] = src(GSAMPLE, lines, 430, 450)
+    # Granular keeps cLineIndicator hidden: the reference cannot yet composite
+    # its additive grain window (the overlay is documented as a fwref gap; the
+    # desktop draws it from the same gSamplePlay formula).
+    return entries
+
+
 def build_perform(lines, theme_fields, colors):
     entries = []
     active_labels = resolve_colors(theme_fields, colors, "activeLabelsColors")
@@ -1526,6 +1543,8 @@ def build():
     config_entries = build_config(config_lines, theme_fields, colors)
     config_edit_entries = build_config_edit(config_lines, theme_fields, colors,
                                             config_menu_lines)
+    sample_slice_entries = build_sample_variant(sample_lines, theme_fields, colors,
+                                                 "slice")
     perform_entries = build_perform(perform_lines, theme_fields, colors)
     pattern_entries = build_pattern(pattern_lines, theme_lines, theme_fields, colors,
                                     songtimer_lines)
@@ -1549,6 +1568,8 @@ def build():
         validate_entry(e, files, style_names, "config")
     for e in config_edit_entries:
         validate_entry(e, files, style_names, "config_edit")
+    for e in sample_slice_entries:
+        validate_entry(e, files, style_names, "sample_slice")
     for e in perform_entries:
         validate_entry(e, files, style_names, "perform")
     for e in pattern_entries:
@@ -1616,6 +1637,14 @@ def build():
         "chrome": {"title": "Config", "rightLabel": ""},
         "provenance": provenance,
         "entries": config_entries,
+    }
+    sample_slice = {
+        "screen": "sample_slice",
+        "scenario": "sample",
+        "theme": "default",
+        "chrome": {"title": "Sample Playback", "rightLabel": "@instrumentName"},
+        "provenance": provenance,
+        "entries": sample_slice_entries,
     }
     config_edit = {
         "screen": "config_edit",
@@ -1690,6 +1719,7 @@ def build():
         "song.json": song,
         "loader.json": loader,
         "sample.json": sample,
+        "sample_slice.json": sample_slice,
         "file.json": file,
     }
 

@@ -112,8 +112,8 @@ Current source-true scores (≥95.0% target):
 | Master 3/3 (Global Mixer) | 99.18% | ✅ |
 | Master EQ | 99.66% | ✅ |
 | Sample Playback | 99.28% | ✅ |
-| Sample Slice | 98.62% | ✅ |
-| Sample Granular | 98.60% | ✅ |
+| Sample Slice | 99.22% | ✅ |
+| Sample Granular | 99.16% | ✅ |
 | Sample Loader | 99.36% | ✅ |
 | Config | 99.53% | ✅ |
 | Config item editor | 99.52% | ✅ |

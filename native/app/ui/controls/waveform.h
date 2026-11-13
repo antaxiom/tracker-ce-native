@@ -113,8 +113,15 @@ public:
     explicit LineIndicatorControl(std::string id) : Control(std::move(id)) {}
     void setState(const WaveformState& state) { state_ = state; }
     void draw(Canvas& canvas) const override;
+    // cLineIndicator draws the grain selection with additive blending before
+    // the waveform (layer -1) and the playhead line after it.
+    void drawLayer(Canvas& canvas, int layer) const override {
+        if (layer == -1) drawSelection(canvas);
+        else if (layer == 0) draw(canvas);
+    }
 
 private:
+    void drawSelection(Canvas& canvas) const;
     WaveformState state_{};
 };
 

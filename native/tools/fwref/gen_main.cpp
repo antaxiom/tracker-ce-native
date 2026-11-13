@@ -292,7 +292,9 @@ int main(int argc, char** argv)
 
     {
         trakr::emulator::FT812DisplayEmulator emu;
-        if (!fwref::renderSample(emu, scenario.sample))
+        const std::string specName =
+            sampleState == "slice" ? "sample_slice.json" : "sample.json";
+        if (!fwref::renderSampleState(emu, scenario.sample, specName))
         {
             std::fprintf(stderr, "fwref_gen: failed to render sample\n");
             return 1;
