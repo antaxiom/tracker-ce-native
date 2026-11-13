@@ -134,10 +134,6 @@ add_executable(trakr_app
     app/DemoSong.h
     app/kit/Widgets.cpp
     app/kit/Widgets.h
-    app/kit/CurveWidgets.cpp
-    app/kit/CurveWidgets.h
-    app/kit/SoftKeys.cpp
-    app/kit/SoftKeys.h
     app/kit/KitGallery.cpp
     app/kit/KitGallery.h
     app/views/View.h
@@ -195,6 +191,8 @@ add_executable(trakr_app
     app/hw/HwWidgets.h
     app/hw/TextFit.cpp
     app/hw/TextFit.h
+    app/ui/animation.cpp
+    app/ui/animation.h
     app/ui/canvas.cpp
     app/ui/canvas.h
     app/ui/control.h
@@ -420,6 +418,8 @@ add_executable(trakr_tests
     tests/test_audio_clock.cpp
     tests/test_text_fit.cpp
     tests/test_ui_core.cpp
+    tests/test_canvas_lines.cpp
+    tests/test_animation.cpp
     tests/test_fwref_audit.cpp
     tools/display_emulator/FT812Emulator.cpp
     tools/display_emulator/FT812ScreensCore.cpp
@@ -454,7 +454,6 @@ add_executable(trakr_tests
     app/UiRobot.cpp
     app/DemoSong.cpp
     app/kit/Widgets.cpp
-    app/kit/CurveWidgets.cpp
     app/Theme.cpp
     app/FontLoader.cpp
     app/ShortcutMap.cpp
@@ -469,6 +468,7 @@ add_executable(trakr_tests
     app/hw/HwWidgets.cpp
     app/hw/TextFit.cpp
     app/hw/BitmapText.cpp
+    app/ui/animation.cpp
     app/ui/canvas.cpp
     app/ui/controls/primitives.cpp
     app/ui/controls/tracker.cpp
