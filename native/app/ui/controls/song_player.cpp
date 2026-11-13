@@ -167,21 +167,42 @@ void SongPlayerControl::drawBlocks(Canvas& canvas) const {
     const int bw = blockWidth();
     const int visible = std::min(std::max(0, length - listStart_), kMaxPatternsVisible);
 
+    if (state_.song) {
+        const size_t patternCount = state_.song->patterns.size();
+        if (state_.song != cachedSong_ || cachedPatterns_.size() != patternCount) {
+            cachedSong_ = state_.song;
+            cachedPatterns_.assign(patternCount, nullptr);
+            cachedHasNotes_.assign(patternCount, {});
+        }
+    } else {
+        cachedSong_ = nullptr;
+        cachedPatterns_.clear();
+        cachedHasNotes_.clear();
+    }
+
     for (int p = 0; p < visible; ++p) {
-        const Pattern* pat = patternFor(patternAt(listStart_ + p));
+        const int patIndex = patternAt(listStart_ + p);
+        const Pattern* pat = patternFor(patIndex);
         if (!pat) continue;
-        const int rowY = rect_.y + p * (kBlockHeight + kBlockSpacing) + 64;
-        for (int track = 0; track < tracks; ++track) {
-            const int x = rect_.x + kBlocksMargin + track * (bw + kBlockSpacing);
-            bool hasNotes = false;
-            if (track < static_cast<int>(pat->tracks.size())) {
-                for (const Cell& cell : pat->tracks[static_cast<size_t>(track)]) {
+        auto& cachedPattern = cachedPatterns_[static_cast<size_t>(patIndex)];
+        auto& cachedNotes = cachedHasNotes_[static_cast<size_t>(patIndex)];
+        if (cachedPattern != pat || cachedNotes.size() != pat->tracks.size()) {
+            cachedPattern = pat;
+            cachedNotes.assign(pat->tracks.size(), 0);
+            for (size_t t = 0; t < pat->tracks.size(); ++t) {
+                for (const Cell& cell : pat->tracks[t]) {
                     if (cell.note >= 0 && cell.note < 120) {
-                        hasNotes = true;
+                        cachedNotes[t] = 1;
                         break;
                     }
                 }
             }
+        }
+        const int rowY = rect_.y + p * (kBlockHeight + kBlockSpacing) + 64;
+        for (int track = 0; track < tracks; ++track) {
+            const int x = rect_.x + kBlocksMargin + track * (bw + kBlockSpacing);
+            const bool hasNotes =
+                track < static_cast<int>(cachedNotes.size()) && cachedNotes[static_cast<size_t>(track)] != 0;
             if (!hasNotes) {
                 canvas.fillRect(RectI{x, rowY, bw, kBlockHeight}, kSongPlayerColors[8]);
             } else {

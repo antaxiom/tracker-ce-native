@@ -122,6 +122,13 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
         trackMeters_[t].peakR.store(std::max(trackPeakR, prevR * 0.95f), std::memory_order_relaxed);
     }
 
+    const float masterGain = std::pow(10.0f, masterGainDb / 20.0f);
+    const float mPanL = ((masterPan <= 0.0f) ? 1.0f : (1.0f - masterPan)) * masterGain;
+    const float mPanR = ((masterPan >= 0.0f) ? 1.0f : (1.0f + masterPan)) * masterGain;
+    const bool bitCrush = (bitCrushBits_ < 16 && bitCrushBits_ >= 2);
+    const float bitCrushSteps =
+        bitCrush ? std::pow(2.0f, static_cast<float>(bitCrushBits_)) : 0.0f;
+
     // Process send effects and add return to master bus
     for (int i = 0; i < frames; ++i) {
         float delOutL = 0.0f, delOutR = 0.0f;
@@ -129,10 +136,6 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
 
         float revOutL = 0.0f, revOutR = 0.0f;
         reverb_.process(sendReverbBufL_[i], sendReverbBufR_[i], revOutL, revOutR);
-
-        const float masterGain = std::pow(10.0f, masterGainDb / 20.0f);
-        const float mPanL = ((masterPan <= 0.0f) ? 1.0f : (1.0f - masterPan)) * masterGain;
-        const float mPanR = ((masterPan >= 0.0f) ? 1.0f : (1.0f + masterPan)) * masterGain;
 
         float l = (masterOutStereo[i * 2] + delOutL + revOutL) * mPanL;
         float r = (masterOutStereo[i * 2 + 1] + delOutR + revOutR) * mPanR;
@@ -161,10 +164,9 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
             r = mid - side;
         }
 
-        if (bitCrushBits_ < 16 && bitCrushBits_ >= 2) {
-            const float steps = std::pow(2.0f, static_cast<float>(bitCrushBits_));
-            l = std::round(l * steps) / steps;
-            r = std::round(r * steps) / steps;
+        if (bitCrush) {
+            l = std::round(l * bitCrushSteps) / bitCrushSteps;
+            r = std::round(r * bitCrushSteps) / bitCrushSteps;
         }
 
         l = softLimit(l);

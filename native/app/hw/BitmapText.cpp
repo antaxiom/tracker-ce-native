@@ -73,15 +73,29 @@ void fwDrawText(ImDrawList* dl, FwFont font, float screenX, float screenYTop,
         if (ch >= f.firstChar && ch < 128 && f.widths[ch] > 0) {
             const uint8_t* glyph = f.data.data() + 148 + (ch - f.firstChar) * glyphBytes;
             for (int r = 0; r < f.height; ++r) {
-                for (int c = 0; c < f.width; ++c) {
-                    const uint8_t bv = glyph[r * f.linestride + (c / 2)];
-                    const uint8_t nib = (c % 2 == 0) ? ((bv >> 4) & 0x0F) : (bv & 0x0F);
-                    if (nib == 0) continue;
+                const uint8_t* row = glyph + r * f.linestride;
+                auto nibbleAt = [row](int c) {
+                    const uint8_t bv = row[c / 2];
+                    return static_cast<uint8_t>((c % 2 == 0) ? ((bv >> 4) & 0x0F) : (bv & 0x0F));
+                };
+                int c = 0;
+                while (c < f.width) {
+                    const uint8_t nib = nibbleAt(c);
                     const int a = (nib * 17 * baseA) / 255;
-                    if (a <= 0) continue;
+                    if (nib == 0 || a <= 0) {
+                        ++c;
+                        continue;
+                    }
+                    int runEnd = c + 1;
+                    while (runEnd < f.width) {
+                        const uint8_t next = nibbleAt(runEnd);
+                        if (next == 0 || (next * 17 * baseA) / 255 != a) break;
+                        ++runEnd;
+                    }
                     const ImU32 col = (color & ~IM_COL32_A_MASK) | (static_cast<ImU32>(a) << IM_COL32_A_SHIFT);
                     dl->AddRectFilled(ImVec2(dx + c * sx, screenYTop + r * sy),
-                                      ImVec2(dx + (c + 1) * sx, screenYTop + (r + 1) * sy), col);
+                                      ImVec2(dx + runEnd * sx, screenYTop + (r + 1) * sy), col);
+                    c = runEnd;
                 }
             }
         }

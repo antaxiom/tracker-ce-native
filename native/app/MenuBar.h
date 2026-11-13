@@ -22,12 +22,6 @@ struct MenuBarContext {
     RenderScheduler& scheduler;
     Theme& theme;
     bool& running;
-    bool& showTransport;
-    bool& showPattern;
-    bool& showInstruments;
-    bool& showSample;
-    bool& showMixer;
-    bool& showOrderList;
     bool& showKitGallery;
     bool& showFillModal;
     bool& showShortcutsModal;

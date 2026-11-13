@@ -1,9 +1,13 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_gpu.h>
 #include <fcntl.h>
+#include <spawn.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <cmath>
 #include <memory>
+
+extern char** environ;
 
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -192,7 +196,7 @@ int main(int argc, char** argv) {
     trakr::MixerView mixerView; trakr::OrderListView orderListView;
     trakr::FillModal fillModal; trakr::ExportDeck exportDeck; trakr::PerformView performView; trakr::SampleLoaderView sampleLoaderView; trakr::ConfigView configView; trakr::FileView fileView;
     int currentOrderIdx = 0, octave = 3, editStep = 1, selectedInstIdx = 0;
-    bool recordMode = false, showTransport = true, showPattern = true, showInstruments = true, showSample = true, showMixer = true, showOrderList = true;
+    bool recordMode = false;
     bool showFillModal = false, showKitGallery = false, resetLayoutRequested = false, showShortcutsModal = false, showExportDeck = false;
     trakr::Screen activeScreen = (init_screen == "song") ? trakr::Screen::Song :
         (init_screen == "sample") ? trakr::Screen::Sample : (init_screen == "instrument") ? trakr::Screen::Instrument :
@@ -328,7 +332,9 @@ int main(int argc, char** argv) {
             if (!currentFilePath.empty()) trakr::saveSongJson(song, currentFilePath);
             else trakr::dialogs::showSaveSong(window, &dlgSave, &scheduler);
         },
-        [&]() { trakr::dialogs::showSaveSong(window, &dlgSave, &scheduler); });
+        [&]() { trakr::dialogs::showSaveSong(window, &dlgSave, &scheduler); },
+        // New Project: drop the open path so the next Save asks for a file.
+        [&]() { currentFilePath.clear(); patternView.setCursor(0, 0, 0); engineHost.setPosition(0, 0); });
 
     auto handleImport = [&](const std::string& p) {
         std::string ext = std::filesystem::path(p).extension().string();
@@ -347,7 +353,7 @@ int main(int argc, char** argv) {
             ImGui::DockSpaceOverViewport(dock_id, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
             static bool dInit = false;
             if (!dInit) { dInit = true; trakr::buildDefaultDockLayout(dock_id, ImVec2(1280, 800)); }
-            transportView.update(song, history, engineHost, octave, editStep, recordMode, &showPattern, &showInstruments, &showSample, &showMixer, &showOrderList);
+            transportView.update(song, history, engineHost, octave, editStep, recordMode);
             orderListView.update(song, history, engineHost, currentOrderIdx);
             patternView.update(song, history, engineHost, currentOrderIdx, octave, editStep, recordMode, selectedInstIdx, &theme);
             instrumentView.update(song, history, engineHost, selectedInstIdx);
@@ -457,8 +463,10 @@ int main(int argc, char** argv) {
         if (!scheduler.shouldRedraw() && !smoke_test_mode && screenshot_path.empty() && remote_fd < 0) continue;
         if (SDL_GetWindowFlags(window) & SDL_WINDOW_MINIMIZED) { SDL_Delay(10); continue; }
 
-        // Global shortcuts
-        if (shortcuts.isTriggered(trakr::ActionId::PlayStop)) {
+        // Global shortcuts. Skip them while an InputText has focus (the in-app
+        // save/open dialogs) so typing never toggles transport or undoes.
+        const bool textInputFocused = ImGui::GetIO().WantTextInput;
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::PlayStop)) {
             if (activeScreen == trakr::Screen::Sample) {
                 if (isPlaying) engineHost.stopPlayback();
                 else if (selectedInstIdx >= 0 && selectedInstIdx < static_cast<int>(song.instruments.size())) {
@@ -476,23 +484,23 @@ int main(int argc, char** argv) {
                 scheduler.requestRedraw();
             }
         }
-        if (shortcuts.isTriggered(trakr::ActionId::Stop)) {
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::Stop)) {
             engineHost.allNotesOff();
             sampleView.stopAudition(engineHost);
             scheduler.requestRedraw();
         }
         if (sampleView.isAuditioning()) { scheduler.requestRedraw(2); }
-        if (shortcuts.isTriggered(trakr::ActionId::RecordToggle)) { recordMode = !recordMode; scheduler.requestRedraw(); }
-        if (shortcuts.isTriggered(trakr::ActionId::NewProject)) {
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::RecordToggle)) { recordMode = !recordMode; scheduler.requestRedraw(); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::NewProject)) {
             song = trakr::makeDefaultSong(); history.clear(); currentFilePath.clear(); patternView.setCursor(0, 0, 0); engineHost.publish(song); scheduler.requestRedraw();
         }
-        if (shortcuts.isTriggered(trakr::ActionId::OpenProject)) { trakr::dialogs::showOpenSong(window, &dlgOpen, &scheduler); }
-        if (shortcuts.isTriggered(trakr::ActionId::Fill)) { showFillModal = true; scheduler.requestRedraw(); }
-        if (shortcuts.isTriggered(trakr::ActionId::ExportDeck)) { showExportDeck = !showExportDeck; scheduler.requestRedraw(); }
-        if (shortcuts.isTriggered(trakr::ActionId::Undo) && history.canUndo()) { history.undo(song); engineHost.publish(song); scheduler.requestRedraw(); }
-        if (shortcuts.isTriggered(trakr::ActionId::Redo) && history.canRedo()) { history.redo(song); engineHost.publish(song); scheduler.requestRedraw(); }
-        if (shortcuts.isTriggered(trakr::ActionId::Save)) { if (!currentFilePath.empty()) trakr::saveSongJson(song, currentFilePath); else trakr::dialogs::showSaveSong(window, &dlgSave, &scheduler); }
-        if (shortcuts.isTriggered(trakr::ActionId::SaveAs)) { trakr::dialogs::showSaveSong(window, &dlgSave, &scheduler); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::OpenProject)) { trakr::dialogs::showOpenSong(window, &dlgOpen, &scheduler); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::Fill)) { showFillModal = true; scheduler.requestRedraw(); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::ExportDeck)) { showExportDeck = !showExportDeck; scheduler.requestRedraw(); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::Undo) && history.canUndo()) { history.undo(song); engineHost.publish(song); scheduler.requestRedraw(); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::Redo) && history.canRedo()) { history.redo(song); engineHost.publish(song); scheduler.requestRedraw(); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::Save)) { if (!currentFilePath.empty()) trakr::saveSongJson(song, currentFilePath); else trakr::dialogs::showSaveSong(window, &dlgSave, &scheduler); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::SaveAs)) { trakr::dialogs::showSaveSong(window, &dlgSave, &scheduler); }
 
         // MIDI Event Processing
         trakr::MidiEvent mEv;
@@ -520,10 +528,10 @@ int main(int argc, char** argv) {
                 engineHost.previewNoteOff(patternView.cursorTrack());
             }
         }
-        if (shortcuts.isTriggered(trakr::ActionId::OctaveUp) && octave < 8) octave++;
-        if (shortcuts.isTriggered(trakr::ActionId::OctaveDown) && octave > 0) octave--;
-        if (shortcuts.isTriggered(trakr::ActionId::ToggleKitGallery)) { showKitGallery = !showKitGallery; scheduler.requestRedraw(); }
-        if (shortcuts.isTriggered(trakr::ActionId::ResetLayout)) { resetLayoutRequested = true; scheduler.requestRedraw(); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::OctaveUp) && octave < 8) octave++;
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::OctaveDown) && octave > 0) octave--;
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::ToggleKitGallery)) { showKitGallery = !showKitGallery; scheduler.requestRedraw(); }
+        if (!textInputFocused && shortcuts.isTriggered(trakr::ActionId::ResetLayout)) { resetLayoutRequested = true; scheduler.requestRedraw(); }
         script_frame++;
         if (remote_fd >= 0) {
             char rbuf[512];
@@ -615,7 +623,6 @@ int main(int argc, char** argv) {
         };
         int menuPatIdx = (currentOrderIdx >= 0 && currentOrderIdx < static_cast<int>(song.order.size())) ? song.order[currentOrderIdx] : -1;
         trakr::MenuBarContext menuCtx{window, song, history, engineHost, shortcuts, scheduler, theme, running,
-                                      showTransport, showPattern, showInstruments, showSample, showMixer, showOrderList,
                                       showKitGallery, showFillModal, showShortcutsModal, showExportDeck, resetLayoutRequested,
                                       layoutState.showButtonDeck, layoutState.wideMode, recordMode,
                                       !patternView.getClipboard().empty(),
@@ -653,6 +660,13 @@ int main(int argc, char** argv) {
         if (activeScreen == trakr::Screen::File && !currentFilePath.empty()) {
             fileView.setProjectName(std::filesystem::path(currentFilePath).stem().string());
         }
+        // Capture runs freeze the semantic animation clock so lcd shots,
+        // screenshots and scripted captures stay deterministic.
+        const bool freezeAnimation =
+            lcd_shot_mode || !screenshot_path.empty() || smoke_test_mode || auto_test_mode;
+        appLayout.setAnimationClock(freezeAnimation ? 0.0 : ImGui::GetTime() * 1000.0,
+                                    freezeAnimation);
+
         trakr::ScreenContext scrCtx{song, history, engineHost, currentOrderIdx, octave, editStep,
                                    recordMode, selectedInstIdx, theme, patternView, orderListView,
                                    sampleView, instrumentView, mixerView, performView, sampleLoaderView, configView, fileView};
@@ -746,8 +760,21 @@ int main(int argc, char** argv) {
                 if (SDL_Surface* s = SDL_CreateSurfaceFrom(swapchain_w, swapchain_h, SDL_PIXELFORMAT_BGRA32, px, swapchain_w * 4)) {
                     std::string bmp = out_png + ".bmp";
                     if (SDL_SaveBMP(s, bmp.c_str())) {
-                        std::string c = "sips -s format png \"" + bmp + "\" --out \"" + out_png + "\" >/dev/null 2>&1 && rm -f \"" + bmp + "\"";
-                        std::system(c.c_str());
+                        // Convert without a shell: the path may come from the
+                        // remote FIFO and must not be interpolated into a command.
+                        char* argv[] = {const_cast<char*>("sips"), const_cast<char*>("-s"),
+                                        const_cast<char*>("format"), const_cast<char*>("png"),
+                                        bmp.data(), const_cast<char*>("--out"),
+                                        out_png.data(), nullptr};
+                        posix_spawn_file_actions_t actions;
+                        posix_spawn_file_actions_init(&actions);
+                        posix_spawn_file_actions_addopen(&actions, 1, "/dev/null", O_WRONLY, 0);
+                        posix_spawn_file_actions_addopen(&actions, 2, "/dev/null", O_WRONLY, 0);
+                        pid_t pid = -1;
+                        if (posix_spawn(&pid, "/usr/bin/sips", &actions, nullptr, argv, environ) == 0)
+                            waitpid(pid, nullptr, 0);
+                        posix_spawn_file_actions_destroy(&actions);
+                        ::unlink(bmp.c_str());
                     }
                     SDL_DestroySurface(s);
                 }

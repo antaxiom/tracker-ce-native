@@ -17,6 +17,13 @@ void PatternView::handleKeyboardInput(Pattern& pat, int patIdx, Song& song, Hist
     const int numTracks = static_cast<int>(pat.tracks.size()), numRows = pat.rows;
     const bool isCtrl = io.KeyCtrl || io.KeySuper;
 
+    // The cursor survives slot and pattern-length changes (shrinking halves the
+    // rows); clamp it before any cell access like the firmware does.
+    if (numRows > 0)
+        cursorRow_ = std::clamp(cursorRow_, 0, numRows - 1);
+    if (numTracks > 0)
+        cursorTrack_ = std::clamp(cursorTrack_, 0, numTracks - 1);
+
     const bool isShift = io.KeyShift || shiftHeld_;
     if (handleSelectionShortcuts(pat, patIdx, song, history, engineHost, octave, editStep,
                                 recordMode, selectedInstIdx, cursorTrack_, cursorRow_,

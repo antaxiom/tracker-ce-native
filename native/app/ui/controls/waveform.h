@@ -94,6 +94,11 @@ public:
     explicit ProgressCursorControl(std::string id) : Control(std::move(id)) {}
     void setState(const WaveformState& state) { state_ = state; }
     void draw(Canvas& canvas) const override;
+    // The audition cursor advances with the sample clock.
+    bool animatingAt(double nowMs) const override {
+        (void)nowMs;
+        return state_.auditioning;
+    }
     // The audition cursor is drawn after the marker pass (update3 ordering).
     void drawLayer(Canvas& canvas, int layer) const override {
         if (layer == 2) draw(canvas);

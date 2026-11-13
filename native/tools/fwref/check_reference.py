@@ -19,9 +19,10 @@ import tempfile
 import zlib
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-SPEC_DIR = os.path.join(ROOT, "native", "tools", "fwref", "specs")
 sys.path.insert(0, os.path.dirname(__file__))
 import extract_spec  # noqa: E402
+import refs  # noqa: E402
+SPEC_DIR = refs.SPEC_DIR
 
 FAILS = []
 
@@ -450,7 +451,9 @@ def check_sample(px):
     if not has_white_in(px, 601, 798, 52, 80):
         fail("sample play mode selection frame missing")
     # bottom action labels: Preview/Start/Loop Start/Loop End/End/Zoom/Play Mode.
-    eq(px, 1, 424, (0xCD, 0x18, 0x18), "sample action frame")
+    # selectedPlace defaults to 6 (samplePlayback.h:159): the frame is on the list.
+    eq(px, 601, 100, (0xCD, 0x18, 0x18), "sample action frame")
+    eq(px, 1, 424, (0, 0, 0), "sample unselected action cell")
     for x0, x1 in ((5, 95), (105, 195), (205, 295), (305, 395), (405, 495),
                    (505, 595), (605, 795)):
         if not has_rgb_in(px, x0, x1, 430, 455, (0x77, 0x77, 0x77)):
@@ -521,15 +524,18 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         a = os.path.join(td, "a")
         b = os.path.join(td, "b")
-        run([bin_path, "--out", a, "--strict"])
-        run([bin_path, "--out", b, "--strict"])
+        sample_states = [None] + list(refs.SAMPLE_STATE_PNGS)
+        for state in sample_states:
+            extra = ["--sample-state", state] if state else []
+            run([bin_path, "--out", a, "--strict"] + extra)
+            run([bin_path, "--out", b, "--strict"] + extra)
 
-        for name in ("instrument_params.png", "master_page1.png", "master_page2.png",
-                     "master_page3.png", "master_eq.png", "config.png", "perform.png",
-                     "pattern.png",
-                     "song.png", "loader.png", "sample.png"):
+        for name in refs.all_pngs():
             pa = os.path.join(a, name)
             pb = os.path.join(b, name)
+            if not os.path.exists(pa) or not os.path.exists(pb):
+                fail(f"{name}: render missing")
+                continue
             if open(pa, "rb").read() != open(pb, "rb").read():
                 fail(f"{name}: renders are not byte-identical")
             else:

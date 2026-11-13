@@ -41,6 +41,10 @@ public:
                 const ImRect& workspace,
                 ui::LayoutProfile profile = ui::LayoutProfile::Classic) const;
 
+    // True while a control on this screen samples the animation clock
+    // (ui/animation.h); AppLayout then keeps the 60 Hz loop running.
+    bool animatingAt(double nowMs) const { return display_.animatingAt(nowMs); }
+
 private:
     void build();
     void syncFromModel(Song& song, EngineHost& engineHost, int selectedInstIdx, SampleView& view);
@@ -61,6 +65,7 @@ private:
     int selectedInst_{0};
     int dragTarget_{-1};
     bool built_{false};
+
 };
 
 } // namespace trakr

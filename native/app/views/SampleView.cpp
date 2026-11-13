@@ -88,7 +88,7 @@ void SampleView::applyEditOp(Song& song, History& history, EngineHost& engineHos
     std::shared_ptr<SampleData> newSample;
     std::string opLabel = "Edit Sample";
     switch (selectedEditOp_) {
-        case EditOp::Crop: newSample = SampleOps::crop(*inst.sample, s, e); opLabel = "Crop Sample"; inst.startFrame = 0; inst.endFrame = static_cast<int>(newSample->ch[0].size()); break;
+        case EditOp::Crop: newSample = SampleOps::crop(*inst.sample, s, e); opLabel = "Crop Sample"; break;
         case EditOp::Reverse: newSample = SampleOps::reverse(*inst.sample, s, e); opLabel = "Reverse Sample"; break;
         case EditOp::Normalize: newSample = SampleOps::normalize(*inst.sample, s, e); opLabel = "Normalize Sample"; break;
         case EditOp::Amplify: newSample = SampleOps::amplify(*inst.sample, s, e, 1.5f); opLabel = "Amplify Sample"; break;
@@ -97,7 +97,23 @@ void SampleView::applyEditOp(Song& song, History& history, EngineHost& engineHos
         case EditOp::Silence: newSample = SampleOps::silence(*inst.sample, s, e); opLabel = "Silence Sample"; break;
     }
     if (newSample) {
-        history.execute(std::make_unique<SetSampleDataCommand>(selectedInstIdx, newSample, inst.sample, opLabel), song);
+        if (selectedEditOp_ == EditOp::Crop) {
+            // Crop changes the sample length; move the playback window and loop
+            // points in the same undo step and clamp them to the new length.
+            const int newLen = static_cast<int>(newSample->ch[0].size());
+            const SampleWindow oldWindow{inst.startFrame, inst.endFrame, inst.loopStart, inst.loopEnd};
+            SampleWindow newWindow{0, newLen, std::clamp(inst.loopStart, 0, std::max(0, newLen - 1)),
+                                   std::min(inst.loopEnd, newLen)};
+            if (newWindow.loopEnd <= newWindow.loopStart) {
+                newWindow.loopStart = 0;
+                newWindow.loopEnd = newLen;
+            }
+            history.execute(std::make_unique<SetSampleDataCommand>(
+                                selectedInstIdx, newSample, inst.sample, opLabel, oldWindow, newWindow),
+                            song);
+        } else {
+            history.execute(std::make_unique<SetSampleDataCommand>(selectedInstIdx, newSample, inst.sample, opLabel), song);
+        }
         inst.sample = newSample;
         engineHost.publish(song);
     }

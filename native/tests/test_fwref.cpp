@@ -228,5 +228,8 @@ TEST_CASE("fwref Sample Playback reference pixels", "[fwref][sample]")
     REQUIRE(px(180, 225) == 0xCD1818);  // cProgressCursor
     REQUIRE(px(180, 115) == 0x000000);  // cursor does not enter title bar
     REQUIRE(px(620, 100) == 0x0A0A0A);  // play-mode cList background
-    REQUIRE(px(1, 424) == 0xCD1818);    // action-button frame place 0
+    // selectedPlace defaults to 6 (samplePlayback.h:159): the frame is on the
+    // play-mode list, not on a bottom label.
+    REQUIRE(px(601, 100) == 0xCD1818);
+    REQUIRE(px(1, 424) == 0x000000);
 }

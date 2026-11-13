@@ -18,20 +18,10 @@ import os
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-SPEC_DIR = os.path.join(ROOT, "native", "tools", "fwref", "specs")
-SCREENS = [
-    ("instrument_general", "instrument_params.png"),
-    ("master_page1", "master_page1.png"),
-    ("master_page2", "master_page2.png"),
-    ("master_page3", "master_page3.png"),
-    ("master_eq", "master_eq.png"),
-    ("config", "config.png"),
-    ("perform", "perform.png"),
-    ("pattern", "pattern.png"),
-    ("song", "song.png"),
-    ("loader", "loader.png"),
-    ("sample", "sample.png"),
-]
+sys.path.insert(0, os.path.dirname(__file__))
+import refs  # noqa: E402
+SPEC_DIR = refs.SPEC_DIR
+SCREENS = refs.RENDERED
 
 def sha_file(path):
     h = hashlib.sha256()
@@ -45,10 +35,7 @@ def build(out_dir):
     scenario = os.path.join(os.path.dirname(SPEC_DIR), "scenario.json")
     manifest["scenario"]["sha256"] = sha_file(scenario)
 
-    for name in ("chrome.json", "instrument_general.json", "master_page1.json",
-                 "master_page2.json", "master_page3.json", "master_eq.json", "config.json",
-                 "perform.json", "pattern.json", "song.json", "loader.json",
-                 "sample.json"):
+    for name in refs.spec_names():
         manifest["specs"][name] = sha_file(os.path.join(SPEC_DIR, name))
 
     with open(os.path.join(SPEC_DIR, "instrument_general.json")) as f:
@@ -57,7 +44,7 @@ def build(out_dir):
         manifest["sources"][rel] = digest
     manifest["sources"]["core/source/Themes.cpp@theme"] = spec["provenance"]["theme"]["sha256"]
 
-    for name, png in SCREENS:
+    for png in refs.all_pngs():
         path = os.path.join(out_dir, png)
         if not os.path.exists(path):
             raise SystemExit(f"make_manifest: missing {path}; run fwref_gen first")

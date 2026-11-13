@@ -58,6 +58,7 @@ private:
     int selectedPlace_{0};
     bool configListShown_{false}; // cConfigEditor::configListShown
     bool hexDisplay_{true};
+    int middleC_{4}; // octave reported as "C-4" in the General list
 };
 
 } // namespace trakr

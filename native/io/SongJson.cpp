@@ -1,6 +1,9 @@
 #include "SongJson.h"
 #include <nlohmann/json.hpp>
+#include <algorithm>
+#include <exception>
 #include <fstream>
+#include <utility>
 #include <vector>
 
 namespace trakr {
@@ -99,25 +102,56 @@ bool saveSongJson(const Song& song, const std::string& filepath) {
         j["instruments"].push_back(i);
     }
 
+    // 5. Master section (Master 1/3, EQ page and the project headroom flag)
+    {
+        json m;
+        m["gainDb"] = song.masterGainDb;
+        m["pan"] = song.masterPan;
+        m["delayTimeMs"] = song.delayTimeMs;
+        m["delayFeedback"] = song.delayFeedback;
+        m["reverbSize"] = song.reverbSize;
+        m["reverbDamping"] = song.reverbDamping;
+        m["bassBoost"] = song.masterBassBoost;
+        m["saturationDrive"] = song.masterSaturationDrive;
+        m["saturationType"] = song.masterSaturationType;
+        m["space"] = song.masterSpace;
+        m["eq"] = json::array();
+        for (float band : song.masterEq) m["eq"].push_back(band);
+        m["headroom"] = song.headroom;
+        j["master"] = m;
+    }
+
     std::ofstream out(filepath);
     if (!out.is_open()) return false;
     out << j.dump(2);
     return true;
 }
 
-bool loadSongJson(Song& outSong, const std::string& filepath) {
-    std::ifstream in(filepath);
-    if (!in.is_open()) return false;
-
-    json j;
-    try {
-        in >> j;
-    } catch (...) {
-        return false;
-    }
-
+static bool loadSongJsonFile(Song& outSong, const json& j) {
     if (j.contains("bpm")) outSong.bpm = j["bpm"].get<float>();
     if (j.contains("lpb")) outSong.lpb = j["lpb"].get<int>();
+
+    if (j.contains("master") && j["master"].is_object()) {
+        const json& m = j["master"];
+        outSong.masterGainDb = m.value("gainDb", outSong.masterGainDb);
+        outSong.masterPan = m.value("pan", outSong.masterPan);
+        outSong.delayTimeMs = m.value("delayTimeMs", outSong.delayTimeMs);
+        outSong.delayFeedback = m.value("delayFeedback", outSong.delayFeedback);
+        outSong.reverbSize = m.value("reverbSize", outSong.reverbSize);
+        outSong.reverbDamping = m.value("reverbDamping", outSong.reverbDamping);
+        outSong.masterBassBoost = m.value("bassBoost", outSong.masterBassBoost);
+        outSong.masterSaturationDrive = m.value("saturationDrive", outSong.masterSaturationDrive);
+        outSong.masterSaturationType = m.value("saturationType", outSong.masterSaturationType);
+        outSong.masterSpace = m.value("space", outSong.masterSpace);
+        outSong.headroom = m.value("headroom", outSong.headroom);
+        if (m.contains("eq") && m["eq"].is_array()) {
+            size_t idx = 0;
+            for (const auto& band : m["eq"]) {
+                if (idx >= 5) break;
+                outSong.masterEq[idx++] = band.get<float>();
+            }
+        }
+    }
 
     // 1. Tracks
     if (j.contains("tracks") && j["tracks"].is_array()) {
@@ -217,6 +251,47 @@ bool loadSongJson(Song& outSong, const std::string& filepath) {
     }
 
     return true;
+}
+
+// Validate the parts every screen indexes without re-checking: at least one
+// pattern/slot, a legal row count, one cell vector per track and legal slots.
+static void normalizeLoadedSong(Song& song) {
+    if (song.tracks.empty()) {
+        TrackInfo t;
+        t.name = "Track 1";
+        song.tracks.push_back(t);
+    }
+    if (song.patterns.empty()) song.patterns.push_back(Pattern{});
+
+    for (Pattern& pat : song.patterns) {
+        pat.rows = std::clamp(pat.rows, 1, 1024);
+        pat.tracks.resize(song.tracks.size());
+        for (std::vector<Cell>& trk : pat.tracks) trk.resize(pat.rows);
+    }
+
+    const int patternCount = static_cast<int>(song.patterns.size());
+    for (int& slot : song.order) slot = std::clamp(slot, 0, patternCount - 1);
+    if (song.order.empty()) song.order.push_back(0);
+}
+
+bool loadSongJson(Song& outSong, const std::string& filepath) {
+    std::ifstream in(filepath);
+    if (!in.is_open()) return false;
+
+    try {
+        json j;
+        in >> j;
+        if (!j.is_object()) return false;
+
+        Song song;
+        if (!loadSongJsonFile(song, j)) return false;
+        normalizeLoadedSong(song);
+        outSong = std::move(song);
+        return true;
+    } catch (const std::exception&) {
+        // Type mismatches and malformed documents are rejected, never fatal.
+        return false;
+    }
 }
 
 } // namespace trakr

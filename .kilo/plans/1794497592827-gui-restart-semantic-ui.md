@@ -386,6 +386,23 @@ Do not start without a design pass; Classic remains the reference profile.
 - Do we need L4 bitmap text in Studio, or is matched-metric TTF sufficient?
 - Which existing view helpers are worth adapting versus rewriting (audit in Phase 0)?
 
+## Review remediation + renderer findings (2026-11-13)
+
+- All 22 local-review findings fixed: project-save path after New Project, the
+  malformed "Add Empty" pattern, cursor/selection clamps, `posix_spawn` instead
+  of `system`, bounded `.pti`/project-JSON parsing, Config row mapping and a
+  real `Song::headroom` (3 dB sample path, persisted with the master section),
+  firmware fader curve (`native/model/FaderCurve.h`), reset publish, shortcut
+  guard while typing, per-screen deck routing, atomic sample crop, history-backed
+  Song order edits, `mkstemp` in os_input, mixer/voice invariant hoisting,
+  song-player note cache, bitmap-text run merging, dead View toggles and dead UI
+  files removed, unified fwref reference lists.
+- Dark pages: no alpha defect - centred `cLabel` backgrounds (`x` is the centre)
+  and the File cover geometry were wrong. File 99.41%, Loader 99.48%, Sample
+  98.44%; Canvas `line` now hard-edged with no AA fringe; `ui/animation.h` plus
+  `Control::animatingAt`/`RenderScheduler::requestAnimation` implement the
+  hardware-timed animation contract (see `phase6-verification.md`).
+
 ## Next fidelity increment (from the Master EQ hardware tile)
 
 - The firmware shows the title-bar song timer on every module except the

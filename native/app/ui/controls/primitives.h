@@ -93,13 +93,6 @@ public:
     void draw(Canvas& canvas) const override;
 };
 
-// cBgLabel: bottom button-bar background.
-class BgLabelControl : public Control {
-public:
-    explicit BgLabelControl(std::string id) : Control(std::move(id)) {}
-    void draw(Canvas& canvas) const override;
-};
-
 // cLabel with centered text, used for the firmware bottom button labels.
 class LabelControl : public Control {
 public:

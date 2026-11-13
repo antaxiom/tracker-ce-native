@@ -263,6 +263,9 @@ void Engine::process(float* outStereo, int frames) {
 
     const size_t numTracks = std::min(snap->tracks.size(), voices_.size());
     const double framesPerRow = (sampleRate_ * 60.0) / (snap->bpm * snap->lpb);
+    // Project "Extra headroom" (play_memory.cpp lowerVolume3dB).
+    const float headroomGain = snap->headroom ? 0.7079458f : 1.0f;
+    if (previewVoice_) previewVoice_->setHeadroomGain(headroomGain);
 
     int framesRendered = 0;
     while (framesRendered < frames) {
@@ -278,6 +281,7 @@ void Engine::process(float* outStereo, int frames) {
         for (size_t t = 0; t < numTracks; ++t) {
             std::memset(trackBufferL_[t].data(), 0, subFrames * sizeof(float));
             std::memset(trackBufferR_[t].data(), 0, subFrames * sizeof(float));
+            voices_[t]->setHeadroomGain(headroomGain);
             if (voices_[t]->isActive()) {
                 voices_[t]->process(trackBufferL_[t].data(), trackBufferR_[t].data(), subFrames);
             }

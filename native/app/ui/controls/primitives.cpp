@@ -196,12 +196,6 @@ void BlankCoverControl::draw(Canvas& canvas) const {
     drawBottomShadow(canvas, rect_, bg);
 }
 
-void BgLabelControl::draw(Canvas& canvas) const {
-    const ImU32 bg = kBottomButtonsBg[1];
-    canvas.fillRect(rect_, bg);
-    drawBottomShadow(canvas, rect_, bg);
-}
-
 LabelControl::LabelControl(std::string id, std::string text, trakr::hw::FwFont font)
     : Control(std::move(id)), text_(std::move(text)), font_(font) {}
 

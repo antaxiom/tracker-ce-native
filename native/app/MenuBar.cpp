@@ -107,13 +107,6 @@ void renderMainMenuBar(MenuBarContext& ctx) {
         ImGui::MenuItem("Button Deck", "F9", &ctx.showButtonDeck);
         ImGui::MenuItem("Desktop Wide Mode", "F10", &ctx.wideMode);
         ImGui::Separator();
-        ImGui::MenuItem("Transport Bar", nullptr, &ctx.showTransport);
-        ImGui::MenuItem("Pattern Editor", nullptr, &ctx.showPattern);
-        ImGui::MenuItem("Instruments", nullptr, &ctx.showInstruments);
-        ImGui::MenuItem("Sample View", nullptr, &ctx.showSample);
-        ImGui::MenuItem("Mixer", nullptr, &ctx.showMixer);
-        ImGui::MenuItem("Order List", nullptr, &ctx.showOrderList);
-        ImGui::Separator();
         ImGui::MenuItem("Kit Gallery", "F11", &ctx.showKitGallery);
         ImGui::Separator();
         if (ImGui::BeginMenu("Theme")) {

@@ -11,6 +11,8 @@
 #include "views/MixerView.h"
 #include "imgui_internal.h"
 #include <cmath>
+#include <memory>
+#include <vector>
 #include <algorithm>
 
 namespace trakr::hw {
@@ -157,7 +159,7 @@ void ButtonDeck::render(const ImRect& rect, trakr::Song& song, trakr::EngineHost
     float colCenterX = (rX + 6 * (btnW + gap) + rect.Max.x) * 0.5f;
     float dpadSize = std::min({availH * 0.30f, 62.0f * scale, rightColW * 0.88f});
     ImVec2 dpadCenter(colCenterX, rect.Min.y + availH * 0.28f);
-    renderDpad(dl, dpadCenter, dpadSize, patternView, song, engineHost, patIdx, isShift,
+    renderDpad(dl, dpadCenter, dpadSize, patternView, song, engineHost, history, patIdx, isShift,
                selectedInstIdx, activeScreen, editStep, iv, sv, mixerView, currentOrderIdx);
 
     float jogRadius = std::min({availH * 0.23f, 48.0f * scale, rightColW * 0.46f});
@@ -171,8 +173,8 @@ void ButtonDeck::render(const ImRect& rect, trakr::Song& song, trakr::EngineHost
 
 void ButtonDeck::renderDpad(ImDrawList* dl, const ImVec2& center, float size,
                             trakr::PatternView& pv, trakr::Song& song,
-                            trakr::EngineHost& engineHost, int patIdx, bool isShift,
-                            int& selectedInstIdx, trakr::Screen activeScreen, int editStep,
+                            trakr::EngineHost& engineHost, trakr::History& history, int patIdx,
+                            bool isShift, int& selectedInstIdx, trakr::Screen activeScreen, int editStep,
                             trakr::InstrumentView* iv, trakr::SampleView* sv,
                             trakr::MixerView* mv, int& currentOrderIdx) {
     float armW = size * 0.32f, armL = size * 0.48f;
@@ -216,30 +218,41 @@ void ButtonDeck::renderDpad(ImDrawList* dl, const ImVec2& center, float size,
         else if (activeScreen == Screen::Sample && sv) sv->adjustParam(song, engineHost, selectedInstIdx, 1, isShift);
         else if (activeScreen == Screen::Master && mv) mv->adjustSelectedParam(song, engineHost, 1, isShift);
         else if (activeScreen == Screen::Song) currentOrderIdx = std::max(0, currentOrderIdx - 1);
-        else pv.navigate(0, -1, 0, isShift, numTracks, numRows, pat, song, selectedInstIdx);
+        else if (activeScreen == Screen::Pattern) pv.navigate(0, -1, 0, isShift, numTracks, numRows, pat, song, selectedInstIdx);
     });
     dpadBtn("DpadDown", 1, ImRect(ImVec2(center.x - armW * 0.5f, center.y + armW * 0.5f), ImVec2(center.x + armW * 0.5f, center.y + armL)), [&]() {
         if (activeScreen == Screen::Instrument && iv) iv->adjustSelectedParam(song, engineHost, selectedInstIdx, -1, isShift);
         else if (activeScreen == Screen::Sample && sv) sv->adjustParam(song, engineHost, selectedInstIdx, -1, isShift);
         else if (activeScreen == Screen::Master && mv) mv->adjustSelectedParam(song, engineHost, -1, isShift);
         else if (activeScreen == Screen::Song) currentOrderIdx = std::min(static_cast<int>(song.order.size()) - 1, currentOrderIdx + 1);
-        else pv.navigate(0, 1, 0, isShift, numTracks, numRows, pat, song, selectedInstIdx);
+        else if (activeScreen == Screen::Pattern) pv.navigate(0, 1, 0, isShift, numTracks, numRows, pat, song, selectedInstIdx);
     });
     dpadBtn("DpadLeft", 2, ImRect(ImVec2(center.x - armL, center.y - armW * 0.5f), ImVec2(center.x - armW * 0.5f, center.y + armW * 0.5f)), [&]() {
         if (activeScreen == Screen::Instrument && iv) iv->setSelectedColumn(std::max(0, iv->selectedColumn() - 1));
         else if (activeScreen == Screen::Sample && sv) sv->selectNextParam(-1);
         else if (activeScreen == Screen::Master && mv) mv->selectNextTrack(-1);
         else if (activeScreen == Screen::Song && !song.order.empty()) {
-            int& p = song.order[currentOrderIdx]; p = (p > 0) ? p - 1 : static_cast<int>(song.patterns.size()) - 1; engineHost.publish(song);
-        } else pv.navigate(-1, 0, isShift ? 0 : -1, isShift, numTracks, numRows, pat, song, selectedInstIdx);
+            const int last = static_cast<int>(song.patterns.size()) - 1;
+            std::vector<int> next = song.order;
+            next[currentOrderIdx] = next[currentOrderIdx] > 0 ? next[currentOrderIdx] - 1 : last;
+            history.execute(std::make_unique<SetOrderCommand>(std::move(next), song.order), song);
+            engineHost.publish(song);
+        } else if (activeScreen == Screen::Pattern) {
+            pv.navigate(-1, 0, isShift ? 0 : -1, isShift, numTracks, numRows, pat, song, selectedInstIdx);
+        }
     });
     dpadBtn("DpadRight", 3, ImRect(ImVec2(center.x + armW * 0.5f, center.y - armW * 0.5f), ImVec2(center.x + armL, center.y + armW * 0.5f)), [&]() {
         if (activeScreen == Screen::Instrument && iv) iv->setSelectedColumn(std::min(7, iv->selectedColumn() + 1));
         else if (activeScreen == Screen::Sample && sv) sv->selectNextParam(1);
         else if (activeScreen == Screen::Master && mv) mv->selectNextTrack(1);
         else if (activeScreen == Screen::Song && !song.order.empty()) {
-            int& p = song.order[currentOrderIdx]; p = (p + 1) % song.patterns.size(); engineHost.publish(song);
-        } else pv.navigate(1, 0, isShift ? 0 : 1, isShift, numTracks, numRows, pat, song, selectedInstIdx);
+            std::vector<int> next = song.order;
+            next[currentOrderIdx] = (next[currentOrderIdx] + 1) % static_cast<int>(song.patterns.size());
+            history.execute(std::make_unique<SetOrderCommand>(std::move(next), song.order), song);
+            engineHost.publish(song);
+        } else if (activeScreen == Screen::Pattern) {
+            pv.navigate(1, 0, isShift ? 0 : 1, isShift, numTracks, numRows, pat, song, selectedInstIdx);
+        }
     });
     dpadBtn("DpadCenter", 4, ImRect(ImVec2(center.x - armW * 0.5f, center.y - armW * 0.5f), ImVec2(center.x + armW * 0.5f, center.y + armW * 0.5f)), [&]() {
         if (activeScreen == Screen::Pattern) {

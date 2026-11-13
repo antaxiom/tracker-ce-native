@@ -18,11 +18,18 @@ void RenderScheduler::setPlaying(bool playing) {
     playing_.store(playing, std::memory_order_release);
 }
 
+void RenderScheduler::requestAnimation(bool animating) {
+    animating_.store(animating, std::memory_order_release);
+    if (animating) requestRedraw(0);
+}
+
 bool RenderScheduler::waitEvent(SDL_Event* event) {
     const uint64_t now = SDL_GetTicks();
     const bool isPlaying = playing_.load(std::memory_order_relaxed);
     const int burst = burstFrames_.load(std::memory_order_relaxed);
-    const bool needsRedraw = isPlaying || burst > 0 || redrawRequested_.load(std::memory_order_relaxed);
+    const bool animating = animating_.load(std::memory_order_relaxed);
+    const bool needsRedraw =
+        isPlaying || animating || burst > 0 || redrawRequested_.load(std::memory_order_relaxed);
 
     int timeoutMs = 16; // Up to 60 FPS responsiveness when idle
     if (needsRedraw) {
@@ -52,7 +59,7 @@ void RenderScheduler::onFrameRendered() {
 bool RenderScheduler::shouldRedraw() const {
     if (burstFrames_.load(std::memory_order_relaxed) > 0) return true;
     if (redrawRequested_.load(std::memory_order_relaxed)) return true;
-    if (playing_.load(std::memory_order_relaxed)) {
+    if (playing_.load(std::memory_order_relaxed) || animating_.load(std::memory_order_relaxed)) {
         const uint64_t now = SDL_GetTicks();
         return (now - lastRenderTimeMs_) >= targetFrameIntervalMs_;
     }

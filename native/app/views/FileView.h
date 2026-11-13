@@ -37,7 +37,7 @@ public:
 
     void setParityState();
     void setActions(std::function<void()> onOpen, std::function<void()> onSave,
-                    std::function<void()> onSaveAs);
+                    std::function<void()> onSaveAs, std::function<void()> onNew = {});
     const std::string& projectName() const { return projectName_; }
     void setProjectName(const std::string& name) { projectName_ = name; }
     int selectedProject() const { return selectedProject_; }
@@ -58,6 +58,7 @@ private:
     std::function<void()> onOpen_;
     std::function<void()> onSave_;
     std::function<void()> onSaveAs_;
+    std::function<void()> onNew_;
 };
 
 } // namespace trakr

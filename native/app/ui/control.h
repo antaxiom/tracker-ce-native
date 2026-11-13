@@ -32,6 +32,13 @@ public:
         if (layer == 0) draw(canvas);
     }
 
+    // True while the control's drawn state depends on the animation clock.
+    // AppLayout uses this to keep redrawing at 60 Hz (see ui/animation.h).
+    virtual bool animatingAt(double nowMs) const {
+        (void)nowMs;
+        return false;
+    }
+
     // True for controls that participate in hit-testing (bars, lists).
     virtual bool acceptsInput() const { return false; }
 

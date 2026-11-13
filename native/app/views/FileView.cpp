@@ -275,10 +275,11 @@ void FileView::selectProject(int index) {
 }
 
 void FileView::setActions(std::function<void()> onOpen, std::function<void()> onSave,
-                          std::function<void()> onSaveAs) {
+                          std::function<void()> onSaveAs, std::function<void()> onNew) {
     onOpen_ = std::move(onOpen);
     onSave_ = std::move(onSave);
     onSaveAs_ = std::move(onSaveAs);
+    onNew_ = std::move(onNew);
 }
 
 std::vector<hw::ScreenButton> FileView::getScreenButtons(Song& song, History& history,
@@ -299,6 +300,7 @@ std::vector<hw::ScreenButton> FileView::getScreenButtons(Song& song, History& hi
         projectName_ = "New Project";
         selectedProject_ = 0;
         listStart_ = 0;
+        if (onNew_) onNew_();
     }};
     btns[1] = {"Open", "", "", "", hw::UnderlineColor::Green, true, false, [this]() {
         if (onOpen_) onOpen_();

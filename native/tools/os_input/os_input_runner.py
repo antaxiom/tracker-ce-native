@@ -12,6 +12,7 @@ import time
 import struct
 import zlib
 import subprocess
+import tempfile
 import ctypes
 import numpy as np
 from typing import Tuple
@@ -73,12 +74,16 @@ class OSInputDriver:
 
 def read_image_rgb(path: str) -> Tuple[int, int, bytes]:
     """Reads any PNG/BMP via sips conversion to uncompressed 24-bit/32-bit BMP."""
-    tmp_bmp = f"/tmp/os_input_tmp_{os.getpid()}.bmp"
-    subprocess.run(["sips", "-s", "format", "bmp", path, "--out", tmp_bmp],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-    with open(tmp_bmp, "rb") as f:
-        bmp = f.read()
-    os.remove(tmp_bmp)
+    fd, tmp_bmp = tempfile.mkstemp(prefix="os_input_", suffix=".bmp")
+    os.close(fd)
+    try:
+        subprocess.run(["sips", "-s", "format", "bmp", path, "--out", tmp_bmp],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        with open(tmp_bmp, "rb") as f:
+            bmp = f.read()
+    finally:
+        if os.path.exists(tmp_bmp):
+            os.remove(tmp_bmp)
 
     pixel_offset = struct.unpack_from("<I", bmp, 10)[0]
     w, h = struct.unpack_from("<ii", bmp, 18)

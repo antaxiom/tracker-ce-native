@@ -36,6 +36,11 @@ public:
     explicit TrackerControl(std::string id);
     void setState(const TrackerState& state) { state_ = state; }
     void draw(ui::Canvas& canvas) const override;
+    // The playhead row advances while the transport runs.
+    bool animatingAt(double nowMs) const override {
+        (void)nowMs;
+        return state_.playing;
+    }
 
 private:
     int rowNumber(int visibleRow) const;

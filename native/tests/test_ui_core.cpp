@@ -190,8 +190,12 @@ TEST_CASE("MultiLabelControl routes top and preset row presses", "[ui][multilabe
 }
 
 TEST_CASE("Mixer gain fader mapping matches the firmware curve", "[ui][mixer]") {
-    CHECK(trakr::MixerView::gainBarValue(0.0f) == 75);
+    // mixAmpLogValues: 0 = silence, 1 = -36 dB, 86 = 0 dB, 100 = +6 dB.
+    CHECK(trakr::MixerView::gainBarValue(0.0f) == 86);
     CHECK(trakr::MixerView::gainBarValue(6.0f) == 100);
-    CHECK(trakr::MixerView::gainBarValue(-48.0f) == 0);
-    CHECK(trakr::MixerView::gainBarValue(-3.0f) < 75);
+    CHECK(trakr::MixerView::gainBarValue(-36.0f) <= 2);
+    CHECK(trakr::MixerView::gainBarValue(-48.0f) == 1);
+    CHECK(trakr::MixerView::gainBarValue(-3.0f) < 86);
+    CHECK(std::abs(trakr::gainDbForFaderValue(86)) < 0.001f);
+    CHECK(std::abs(trakr::gainDbForFaderValue(100) - 6.0f) < 0.001f);
 }

@@ -74,7 +74,7 @@ private:
 
     void renderDpad(ImDrawList* dl, const ImVec2& center, float size,
                     trakr::PatternView& patternView, trakr::Song& song,
-                    trakr::EngineHost& engineHost, int patIdx, bool isShift,
+                    trakr::EngineHost& engineHost, trakr::History& history, int patIdx, bool isShift,
                     int& selectedInstIdx, trakr::Screen activeScreen, int editStep,
                     trakr::InstrumentView* instrumentView,
                     trakr::SampleView* sampleView,

@@ -106,15 +106,15 @@
    ],
    [
     "Anti-aliasing",
-    "Enabled"
+    "On"
    ],
    [
     "Limiter mode",
-    "Clean (-0.4 dBFS)"
+    "Subtle"
    ],
    [
     "Extra headroom",
-    "Disabled (0.0 dB)"
+    "Off"
    ],
    [
     "Snap to zero",
@@ -335,7 +335,7 @@
  "sample": {
   "rightLabel": "1. 909 Kick",
   "playMode": 1,
-  "selectedPlace": 0,
+  "selectedPlace": 6,
   "progress": 180,
   "startPoint": 40,
   "endPoint": 580,

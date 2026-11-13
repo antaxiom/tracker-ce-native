@@ -95,7 +95,7 @@ bool loadPtiInstrument(const std::string& path, Instrument& outInst) {
         dataOffset = std::min<size_t>(392, buf.size());
         if (buf.size() > 16) {
             const char* nPtr = reinterpret_cast<const char*>(buf.data() + 16);
-            size_t nLen = strnlen(nPtr, 32);
+            size_t nLen = strnlen(nPtr, std::min<size_t>(32, buf.size() - 16));
             if (nLen > 0) name.assign(nPtr, nLen);
         }
     }

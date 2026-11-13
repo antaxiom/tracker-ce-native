@@ -185,9 +185,21 @@ void SampleScreen::syncFromModel(Song& song, EngineHost& engineHost, int selecte
     playModeList_->setVisible(!editor);
     editList_->setSelected(static_cast<int>(view.selectedEditOp()));
     editList_->setVisible(editor);
-    const bool showFrame = !editor && view.activeParam() == SampleView::Param::PlayMode;
-    frame_->setSelected(6);
-    frame_->setVisible(showFrame);
+    // framesPlaces[0..5] are the bottom labels (Preview/Start/Loop Start/Loop
+    // End/End/Zoom) and place 6 is the play-mode list; the firmware always
+    // frames the selected place (samplePlayback.h selectedPlace default 6).
+    int place = 6;
+    switch (view.activeParam()) {
+        case SampleView::Param::Start: place = 1; break;
+        case SampleView::Param::LoopStart: place = 2; break;
+        case SampleView::Param::LoopEnd: place = 3; break;
+        case SampleView::Param::End: place = 4; break;
+        case SampleView::Param::Zoom: place = 5; break;
+        case SampleView::Param::PlayMode: place = 6; break;
+        default: place = 0; break;
+    }
+    frame_->setSelected(place);
+    frame_->setVisible(!editor && hasWave);
 }
 
 void SampleScreen::update(Song& song,

@@ -47,14 +47,16 @@ void SampleLoaderScreen::build() {
     for (const auto& p : kFramePlaces) places.push_back(RectI{p[0], p[1], p[2], p[3]});
     frame_ = &display_.add<FrameControl>("frame", std::move(places), 0);
 
+    // gSampleImport.cpp:56-69: controlStyleCenterX, so the firmware x is the
+    // label centre and the background spans [x - w/2, x + w/2].
     explorerTitle_ = &display_.add<LabelControl>("explorerTitle", "SD Card",
                                                  trakr::hw::FwFont::Bold17);
-    explorerTitle_->setRect(RectI{kFileLabelX, kLabelY, kLabelW, kLabelH});
+    explorerTitle_->setRect(RectI{kFileLabelX - kLabelW / 2, kLabelY, kLabelW, kLabelH});
     explorerTitle_->setColors(kTopBarLabelColors[0], kTopBarLabelColors[1],
                               kTopBarLabelColors[2]);
     instrumentTitle_ = &display_.add<LabelControl>("instrumentTitle", "Instruments",
                                                    trakr::hw::FwFont::Bold17);
-    instrumentTitle_->setRect(RectI{kSlotLabelX, kLabelY, kLabelW, kLabelH});
+    instrumentTitle_->setRect(RectI{kSlotLabelX - kLabelW / 2, kLabelY, kLabelW, kLabelH});
     instrumentTitle_->setColors(kTopBarLabelColors[0], kTopBarLabelColors[1],
                                 kTopBarLabelColors[2]);
 

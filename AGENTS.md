@@ -22,7 +22,7 @@ file dialogs).
 # Build application and tests
 cmake --build native/build -j8
 
-# Run unit tests (134 test cases)
+# Run unit tests (139 test cases)
 ./native/build/trakr_tests
 
 # Run UI robot audit (1,103 frames)
@@ -131,6 +131,19 @@ Remaining source-true mismatch is sub-pixel glyph rasterization: the reference u
 embedded RobotoMonoBold17 L4 bitmaps, while the app renders RobotoMono TTFs with
 `PixelSnapH` (10px bold / 8px regular advance). Layout, header band, screen buttons,
 and markers align within ~1px.
+
+## Semantic UI Renderer Rules
+- `Canvas::line` draws hard-edged EVE-style segments (orthogonal segments as
+  exact device-pixel rects, diagonals with AA disabled). Do not switch back to
+  `ImDrawList::AddLine` without disabling `ImDrawFlags_AALines`: its texture
+  fringe overdraws the control's box.
+- `cLabel` with `controlStyleCenterX` takes `prop.x` as the label **centre** and
+  paints its background across `[x - w/2, x + w/2]`. When porting a centred
+  label, subtract `w/2` from the firmware x.
+- Animation: sample `ui::animationNowMs()` at draw time (never accumulate
+  per-frame deltas), report animated controls through `Control::animatingAt`,
+  and use `ui::Tween`/`ui::Blinker` (`native/app/ui/animation.h`). Captures
+  freeze the clock.
 
 ## Agent Rules
 1. Never edit files in `core/`, `platforms/`, `synth/`, or `util/` directories

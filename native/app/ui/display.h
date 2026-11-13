@@ -39,6 +39,14 @@ public:
     static constexpr int kFirstLayer = -1;
     static constexpr int kLastLayer = 2;
 
+    // True when any visible control is animating at `nowMs`.
+    bool animatingAt(double nowMs) const {
+        for (const auto& control : controls_) {
+            if (control->visible() && control->animatingAt(nowMs)) return true;
+        }
+        return false;
+    }
+
     Control* hitTest(int deviceX, int deviceY) const {
         for (const auto& control : controls_) {
             if (control->acceptsInput() && control->contains(deviceX, deviceY)) return control.get();

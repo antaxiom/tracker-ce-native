@@ -49,6 +49,13 @@ public:
                 const std::string& currentFilePath,
                 RenderScheduler& scheduler);
 
+    // Capture modes freeze the semantic animation clock so screenshots and
+    // reference captures stay deterministic.
+    void setAnimationClock(double nowMs, bool frozen) {
+        animationNowMs_ = nowMs;
+        animationFrozen_ = frozen;
+    }
+
     hw::Display& display() { return display_; }
     hw::ScreenButtons& screenButtons() { return screenButtons_; }
     hw::ButtonDeck& buttonDeck() { return buttonDeck_; }
@@ -71,6 +78,9 @@ private:
     TrackMixerScreen guiTrackMixer_;
     MasterEqScreen guiMasterEq_;
     InstrumentPagesScreen guiInstrumentPages_;
+
+    double animationNowMs_{0.0};
+    bool animationFrozen_{true};
 
     void updateScreenButtons(Screen activeScreen,
                              ScreenContext& scrCtx,

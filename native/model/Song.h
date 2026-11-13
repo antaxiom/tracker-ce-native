@@ -127,6 +127,9 @@ struct Song {
     int masterSaturationType{0};
     float masterSpace{0.0f};
     float masterEq[5]{0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    // Project "Extra headroom": firmware lowers sample playback by 3 dB
+    // (play_memory.cpp lowerVolume3dB) without touching the master fader.
+    bool headroom{false};
 };
 
 struct SongSnapshot {
@@ -147,6 +150,7 @@ struct SongSnapshot {
     int masterSaturationType{0};
     float masterSpace{0.0f};
     float masterEq[5]{0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    bool headroom{false};
 };
 
 Song makeDefaultSong();

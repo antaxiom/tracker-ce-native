@@ -38,6 +38,8 @@ public:
     virtual float getReverbSend() const { return 0.0f; }
     virtual void setNudgeDelay(int frames) { (void)frames; }
     virtual void setSlice(int sliceIndex) { (void)sliceIndex; }
+    // Extra headroom lowers sample playback by 3 dB (play_memory.cpp).
+    virtual void setHeadroomGain(float gain) { (void)gain; }
     virtual void resetFx() {}
 };
 
@@ -71,6 +73,7 @@ public:
     float getDelaySend() const override { return delaySend_; }
     float getReverbSend() const override { return reverbSend_; }
     void setSlice(int) override {}
+    void setHeadroomGain(float gain) override { headroomGain_ = std::clamp(gain, 0.0f, 1.0f); }
     void resetFx() override {
         glideTargetRatio_ = -1.0f;
         retriggerInterval_ = 0;
@@ -96,7 +99,11 @@ private:
     float currentPitchRatio_{1.0f};
 
     float volume_{1.0f};
+    float headroomGain_{1.0f};
     float pan_{0.0f}; // -1.0 (L) to +1.0 (R)
+    float panForTrig_{-2.0f};
+    float cachedPanL_{1.0f};
+    float cachedPanR_{1.0f};
     Instrument::Loop loopMode_{Instrument::Loop::None};
     int loopStart_{0};
     int loopEnd_{0};

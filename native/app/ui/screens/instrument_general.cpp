@@ -13,7 +13,6 @@ namespace trakr {
 using namespace ::trakr::ui;
 using ui::BarControl;
 using ui::BlankCoverControl;
-using ui::BgLabelControl;
 using ui::Canvas;
 using ui::FrameControl;
 using ui::LabelControl;

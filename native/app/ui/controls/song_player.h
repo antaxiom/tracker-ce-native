@@ -13,6 +13,7 @@
 #include "ui/control.h"
 #include "EngineHost.h"
 #include <functional>
+#include <vector>
 
 namespace trakr {
 
@@ -59,6 +60,9 @@ private:
 
     SongPlayerState state_{};
     mutable int listStart_{0};
+    mutable const Song* cachedSong_{nullptr};
+    mutable std::vector<const Pattern*> cachedPatterns_;
+    mutable std::vector<std::vector<char>> cachedHasNotes_;
     std::function<void(int)> onSelect_;
 };
 

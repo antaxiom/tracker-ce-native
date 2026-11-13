@@ -1,9 +1,12 @@
 #include "AppLayout.h"
+#include "ui/animation.h"
 #include "views/PatternEditHelper.h"
 #include "Command.h"
 #include <algorithm>
 #include <cmath>
+#include <memory>
 #include <string>
+#include <vector>
 
 namespace trakr {
 
@@ -210,6 +213,24 @@ void AppLayout::render(ScreenContext& scrCtx,
         }
         ImGui::End();
         ImGui::PopStyleVar(3);
+
+        // Animation clock: controls sample this value at draw time; while any
+        // of them animates the 60 Hz loop stays alive (frozen in captures).
+        ui::setAnimationNowMs(animationNowMs_);
+        bool animating = false;
+        if (guiNextInstrument) animating = guiInstrument_.animatingAt(animationNowMs_);
+        else if (guiNextMaster) animating = guiMaster_.animatingAt(animationNowMs_);
+        else if (guiNextSong) animating = guiSong_.animatingAt(animationNowMs_);
+        else if (guiNextSample) animating = guiSampleScreen_.animatingAt(animationNowMs_);
+        else if (guiNextLoader) animating = guiLoader_.animatingAt(animationNowMs_);
+        else if (guiNextConfig) animating = guiConfig_.animatingAt(animationNowMs_);
+        else if (guiNextPerform) animating = guiPerform_.animatingAt(animationNowMs_);
+        else if (guiNextFile) animating = guiFile_.animatingAt(animationNowMs_);
+        else if (guiNextTrackMixer) animating = guiTrackMixer_.animatingAt(animationNowMs_);
+        else if (guiNextMasterEq) animating = guiMasterEq_.animatingAt(animationNowMs_);
+        else if (guiNextInstrumentPages) animating = guiInstrumentPages_.animatingAt(animationNowMs_);
+        else animating = guiPattern_.animatingAt(animationNowMs_);
+        scheduler.requestAnimation(animating && !animationFrozen_);
     }
 
     // 5. Update and render 8 Contextual Screen Buttons (y=424..480 logical)
@@ -383,26 +404,47 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
                        scrCtx.history.canUndo(), false, [&]() {
                 scrCtx.history.undo(scrCtx.song); scrCtx.engineHost.publish(scrCtx.song); scheduler.requestRedraw();
             }};
+            // fSongEdit.cpp functAddSlot/functDeleteSlot/functIncPattern: order
+            // edits go through history and keep the firmware selection rules
+            // (add selects the new slot, delete selects the previous slot,
+            // Pattern advances the slot's pattern by one).
+            auto commitOrder = [&](std::vector<int> next, int newOrderIdx) {
+                if (next == scrCtx.song.order) return;
+                scrCtx.history.execute(
+                    std::make_unique<SetOrderCommand>(std::move(next), scrCtx.song.order),
+                    scrCtx.song);
+                scrCtx.currentOrderIdx =
+                    std::clamp(newOrderIdx, 0, static_cast<int>(scrCtx.song.order.size()) - 1);
+                scrCtx.engineHost.publish(scrCtx.song);
+                scheduler.requestRedraw();
+            };
             btns[3] = {shiftHeld ? "Add Empty" : "Add", "Slot", "", "", hw::UnderlineColor::Red, true, false, [&]() {
-                int newPat = shiftHeld ? static_cast<int>(scrCtx.song.patterns.size()) : curSlotPat;
-                if (shiftHeld) { Pattern np; np.rows = 64; np.tracks.resize(8); scrCtx.song.patterns.push_back(np); }
-                scrCtx.song.order.insert(scrCtx.song.order.begin() + scrCtx.currentOrderIdx + 1, newPat);
-                scrCtx.currentOrderIdx++; scrCtx.engineHost.publish(scrCtx.song); scheduler.requestRedraw();
+                int newPat = curSlotPat;
+                if (shiftHeld) {
+                    Pattern np;
+                    np.rows = 64;
+                    np.tracks.assign(scrCtx.song.tracks.size(), std::vector<Cell>(np.rows));
+                    newPat = static_cast<int>(scrCtx.song.patterns.size());
+                    scrCtx.song.patterns.push_back(np);
+                }
+                std::vector<int> next = scrCtx.song.order;
+                next.insert(next.begin() + scrCtx.currentOrderIdx + 1, newPat);
+                commitOrder(std::move(next), scrCtx.currentOrderIdx + 1);
             }};
             btns[4] = {"Delete", "Slot", "", "", (scrCtx.song.order.size() > 1) ? hw::UnderlineColor::Red : hw::UnderlineColor::Dimmed,
                        scrCtx.song.order.size() > 1, false, [&]() {
                 if (scrCtx.song.order.size() > 1) {
-                    scrCtx.song.order.erase(scrCtx.song.order.begin() + scrCtx.currentOrderIdx);
-                    if (scrCtx.currentOrderIdx >= static_cast<int>(scrCtx.song.order.size()))
-                        scrCtx.currentOrderIdx = static_cast<int>(scrCtx.song.order.size()) - 1;
-                    scrCtx.engineHost.publish(scrCtx.song); scheduler.requestRedraw();
+                    std::vector<int> next = scrCtx.song.order;
+                    next.erase(next.begin() + scrCtx.currentOrderIdx);
+                    commitOrder(std::move(next), scrCtx.currentOrderIdx - 1);
                 }
             }};
             btns[5] = {"Pattern", "", "", "", hw::UnderlineColor::Dimmed, true, false, [&]() {
-                if (!scrCtx.song.patterns.empty()) {
-                    scrCtx.song.order[scrCtx.currentOrderIdx] = (curSlotPat + 1) % scrCtx.song.patterns.size();
-                    scrCtx.engineHost.publish(scrCtx.song); scheduler.requestRedraw();
-                }
+                if (scrCtx.song.patterns.empty()) return;
+                const int maxPat = static_cast<int>(scrCtx.song.patterns.size()) - 1;
+                std::vector<int> next = scrCtx.song.order;
+                next[scrCtx.currentOrderIdx] = std::clamp(curSlotPat + 1, 0, maxPat);
+                commitOrder(std::move(next), scrCtx.currentOrderIdx);
             }};
             btns[6] = {"", "", "", "", hw::UnderlineColor::None, false, false, nullptr};
             {

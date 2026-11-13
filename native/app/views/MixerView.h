@@ -6,6 +6,7 @@
 
 #include "View.h"
 #include "Song.h"
+#include "FaderCurve.h"
 #include "History.h"
 #include "EngineHost.h"
 
@@ -28,12 +29,9 @@ public:
                  : (subPage_ == SubPage::TrackMixer) ? SubPage::MasterFx
                  : SubPage::Master;
     }
-    // Firmware gain fader mapping used by the Track Mixer page.
-    static int gainBarValue(float gainDb) {
-        const float n = gainDb <= 0.0f ? 0.75f * (gainDb + 48.0f) / 48.0f
-                                       : 0.75f + 0.25f * (gainDb / 6.0f);
-        return std::clamp(static_cast<int>(std::lround(n * 100.0f)), 0, 100);
-    }
+    // Firmware gain fader mapping used by the Track Mixer page
+    // (mixAmpLogValues: 0 = silence, 86 = 0 dB, 100 = +6 dB).
+    static int gainBarValue(float gainDb) { return faderValueForGainDb(gainDb); }
     int selectedTrack() const { return selectedTrack_; }
     void setSelectedTrack(int t) { selectedTrack_ = t; }
     void selectNextTrack(int delta) { selectedTrack_ = std::clamp(selectedTrack_ + delta, 0, 7); }
@@ -41,7 +39,8 @@ public:
     void adjustSelectedParam(Song& song, EngineHost& engineHost, int delta, bool fine) {
         if (subPage_ == SubPage::TrackMixer && selectedTrack_ >= 0 && selectedTrack_ < static_cast<int>(song.tracks.size())) {
             float step = fine ? 0.1f : 1.0f;
-            song.tracks[selectedTrack_].gainDb = std::clamp(song.tracks[selectedTrack_].gainDb + delta * step, -48.0f, 6.0f);
+            song.tracks[selectedTrack_].gainDb =
+                std::clamp(song.tracks[selectedTrack_].gainDb + delta * step, -36.0f, 6.0f);
             engineHost.publish(song);
         } else if (subPage_ == SubPage::Master) {
             float step = fine ? 0.1f : 1.0f;

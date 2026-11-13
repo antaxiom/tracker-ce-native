@@ -61,6 +61,7 @@ void SampleVoice::noteOn(int note, float velocity, const Instrument* inst) {
 
     // Panning & FX (Manual 6.3 Panning -50..+50, 6.4 Overdrive & Bit depth)
     pan_ = std::clamp(inst->panning / 50.0f, -1.0f, 1.0f);
+    panForTrig_ = -2.0f;
     overdrive_ = static_cast<float>(inst->overdrive);
     bitDepth_ = inst->bitDepth;
 
@@ -140,6 +141,7 @@ void SampleVoice::setVolume(float v) {
 
 void SampleVoice::setPanning(float p) {
     pan_ = std::clamp(p, -1.0f, 1.0f);
+    panForTrig_ = -2.0f;
 }
 
 void SampleVoice::setPitchRatio(float ratio) {
@@ -206,6 +208,9 @@ void SampleVoice::process(float* outL, float* outR, int frames) {
     const float* dataL = leftCh.data();
     const float* dataR = isStereo ? sample_->ch[1].data() : leftCh.data();
     const size_t totalFrames = leftCh.size();
+    const bool applyBitDepth = (bitDepth_ < 16 && bitDepth_ >= 4);
+    const float bitDepthSteps =
+        applyBitDepth ? std::pow(2.0f, static_cast<float>(bitDepth_ - 1)) : 0.0f;
 
     for (int i = 0; i < frames; ++i) {
         if (!active_) break;
@@ -239,8 +244,8 @@ void SampleVoice::process(float* outL, float* outR, int frames) {
             break;
         }
 
-        const float sampL = interpolateCubic(dataL, totalFrames, pos_);
-        const float sampR = interpolateCubic(dataR, totalFrames, pos_);
+        const float sampL = interpolateCubic(dataL, totalFrames, pos_) * headroomGain_;
+        const float sampR = interpolateCubic(dataR, totalFrames, pos_) * headroomGain_;
 
         float gain = volume_ * envVal;
         float currentPan = pan_;
@@ -271,18 +276,20 @@ void SampleVoice::process(float* outL, float* outR, int frames) {
             voiceR = std::tanh(voiceR * drive);
         }
 
-        if (bitDepth_ < 16 && bitDepth_ >= 4) {
-            const float steps = std::pow(2.0f, static_cast<float>(bitDepth_ - 1));
-            voiceL = std::round(voiceL * steps) / steps;
-            voiceR = std::round(voiceR * steps) / steps;
+        if (applyBitDepth) {
+            voiceL = std::round(voiceL * bitDepthSteps) / bitDepthSteps;
+            voiceR = std::round(voiceR * bitDepthSteps) / bitDepthSteps;
         }
 
-        const float panAngle = (currentPan + 1.0f) * (static_cast<float>(M_PI) / 4.0f);
-        const float panL = std::cos(panAngle);
-        const float panR = std::sin(panAngle);
+        if (currentPan != panForTrig_) {
+            panForTrig_ = currentPan;
+            const float panAngle = (currentPan + 1.0f) * (static_cast<float>(M_PI) / 4.0f);
+            cachedPanL_ = std::cos(panAngle);
+            cachedPanR_ = std::sin(panAngle);
+        }
 
-        outL[i] += voiceL * panL;
-        outR[i] += voiceR * panR;
+        outL[i] += voiceL * cachedPanL_;
+        outR[i] += voiceR * cachedPanR_;
 
         // Position advance & looping
         if (reverse_) {

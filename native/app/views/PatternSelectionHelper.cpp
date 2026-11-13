@@ -9,8 +9,14 @@ namespace trakr {
 template <typename F>
 static void applyToSelection(Pattern& pat, int patIdx, const SelectionRange& sel, History& history, Song& song, EngineHost& engineHost, F&& fn) {
     int minT = sel.minTrack(), maxT = sel.maxTrack(), minR = sel.minRow(), maxR = sel.maxRow();
+    // A selection can outlive a pattern-length change; clamp it to the pattern.
+    const int selMaxR = maxR;
+    minR = std::clamp(minR, 0, std::max(0, selMaxR));
     for (int t = minT; t <= maxT && t < static_cast<int>(pat.tracks.size()); ++t) {
-        int count = maxR - minR + 1;
+        const int trackRows = std::min({selMaxR, pat.rows - 1,
+                                        static_cast<int>(pat.tracks[t].size()) - 1});
+        if (trackRows < minR) continue;
+        int count = trackRows - minR + 1;
         std::vector<Cell> oldCells(count), newCells(count);
         for (int i = 0; i < count; ++i) {
             oldCells[i] = pat.tracks[t][minR + i];

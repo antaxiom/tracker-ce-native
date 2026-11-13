@@ -199,17 +199,17 @@ std::vector<ConfigView::ConfigRow> ConfigView::currentRows(const Song& song) con
                 {"Notes scale", "Chromatic"},
                 {"Root note", "C"},
                 {"Notes layout", "Standard 4-Row"},
-                {"Anti-aliasing", "Enabled"},
-                {"Limiter mode", "Clean (-0.4 dBFS)"},
-                {"Extra headroom", (song.masterGainDb < 0.0f) ? "Enabled (-3.5 dB)"
-                                                              : "Disabled (0.0 dB)"},
-                {"Snap to zero", "Enabled"}};
+                // configMenuDefs.h onOffStateTexts / limiterModeTexts.
+                {"Anti-aliasing", "On"},
+                {"Limiter mode", "Subtle"},
+                {"Extra headroom", song.headroom ? "On" : "Off"},
+                {"Snap to zero", "On"}};
         case Group::General:
             return {
                 {"Pattern top info", "Tracks Only"},
                 {"Recording options", "All"},
                 {"Numbering mode", hexDisplay_ ? "Hexadecimal" : "Decimal"},
-                {"Middle C", "C-4"},
+                {"Middle C", std::string("C-") + std::to_string(middleC_)},
                 {"Clock sync correction", "0"}};
         case Group::Midi: {
             auto ports = MidiManager::instance().getPortNames();
@@ -276,12 +276,14 @@ void ConfigView::adjustSelectedValue(Song& song, EngineHost& engineHost, Theme& 
     switch (activeGroup_) {
         case Group::ProjectSettings:
             if (selectedItem_ == 1) song.lpb = std::clamp(song.lpb + delta, 1, 16);
-            else if (selectedItem_ == 7) song.masterGainDb = (delta > 0) ? -3.5f : 0.0f;
+            else if (selectedItem_ == 7) song.headroom = (delta > 0);
             engineHost.publish(song);
             break;
         case Group::General:
-            if (selectedItem_ == 0 || selectedItem_ == 2) theme = makeTrackerClassicTheme();
-            else if (selectedItem_ == 3) hexDisplay_ = !hexDisplay_;
+            // Rows: 0 Pattern top info, 1 Recording options, 2 Numbering mode,
+            // 3 Middle C, 4 Clock sync correction.
+            if (selectedItem_ == 2) hexDisplay_ = !hexDisplay_;
+            else if (selectedItem_ == 3) middleC_ = (delta > 0) ? 3 : 4;
             break;
         case Group::Midi:
             if (selectedItem_ == 0) {

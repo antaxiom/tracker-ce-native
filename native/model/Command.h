@@ -257,6 +257,15 @@ private:
     std::vector<Cell> oldTrack_;
 };
 
+// Sample playback window + loop points, moved together with the sample data so
+// length-changing ops (crop) undo atomically.
+struct SampleWindow {
+    int startFrame{0};
+    int endFrame{-1};
+    int loopStart{0};
+    int loopEnd{-1};
+};
+
 class SetSampleDataCommand : public Command {
 public:
     SetSampleDataCommand(int instIdx, std::shared_ptr<const SampleData> newSample,
@@ -264,23 +273,44 @@ public:
         : instIdx_(instIdx), newSample_(std::move(newSample)),
           oldSample_(std::move(oldSample)), label_(std::move(label)) {}
 
+    SetSampleDataCommand(int instIdx, std::shared_ptr<const SampleData> newSample,
+                         std::shared_ptr<const SampleData> oldSample, std::string label,
+                         SampleWindow oldWindow, SampleWindow newWindow)
+        : instIdx_(instIdx), newSample_(std::move(newSample)),
+          oldSample_(std::move(oldSample)), label_(std::move(label)),
+          oldWindow_(oldWindow), newWindow_(newWindow), hasWindow_(true) {}
+
     void apply(Song& song) override {
         if (instIdx_ >= 0 && instIdx_ < static_cast<int>(song.instruments.size())) {
-            song.instruments[instIdx_].sample = newSample_;
+            auto& inst = song.instruments[instIdx_];
+            inst.sample = newSample_;
+            if (hasWindow_) applyWindow(inst, newWindow_);
         }
     }
     void revert(Song& song) override {
         if (instIdx_ >= 0 && instIdx_ < static_cast<int>(song.instruments.size())) {
-            song.instruments[instIdx_].sample = oldSample_;
+            auto& inst = song.instruments[instIdx_];
+            inst.sample = oldSample_;
+            if (hasWindow_) applyWindow(inst, oldWindow_);
         }
     }
     std::string label() const override { return label_; }
 
 private:
+    static void applyWindow(Instrument& inst, const SampleWindow& w) {
+        inst.startFrame = w.startFrame;
+        inst.endFrame = w.endFrame;
+        inst.loopStart = w.loopStart;
+        inst.loopEnd = w.loopEnd;
+    }
+
     int instIdx_;
     std::shared_ptr<const SampleData> newSample_;
     std::shared_ptr<const SampleData> oldSample_;
     std::string label_;
+    SampleWindow oldWindow_{};
+    SampleWindow newWindow_{};
+    bool hasWindow_{false};
 };
 
 class AddTrackCommand : public Command {

@@ -107,7 +107,6 @@ void InstrumentView::resetSelectedParam(Song& song, EngineHost& engineHost, int 
 
 std::vector<hw::ScreenButton> InstrumentView::getScreenButtons(Song& song, EngineHost& engineHost,
                                                                int selectedInstIdx) {
-    (void)engineHost;
     std::vector<hw::ScreenButton> btns(8);
     if (selectedInstIdx < 0 || selectedInstIdx >= static_cast<int>(song.instruments.size())) return btns;
     auto& inst = song.instruments[selectedInstIdx];
@@ -145,9 +144,10 @@ std::vector<hw::ScreenButton> InstrumentView::getScreenButtons(Song& song, Engin
         std::snprintf(buf, sizeof(buf), (inst.delaySend == 0) ? "-inf dB" : "%d%%", inst.delaySend);
         btns[3] = {"Delay send", buf, "", "", hw::UnderlineColor::Green, true, (selectedCol_ == 3), [this]() { selectedCol_ = 3; }};
         btns[4] = {"Automation", "Page", "", "", hw::UnderlineColor::Orange, true, false, [this]() { subPage_ = SubPage::Automation; selectedCol_ = 0; }};
-        btns[5] = {"Reset", "Param", "", "", hw::UnderlineColor::Dimmed, true, false, [&inst, this]() {
+        btns[5] = {"Reset", "Param", "", "", hw::UnderlineColor::Dimmed, true, false, [&inst, &song, &engineHost, this]() {
             if (selectedCol_ == 0) inst.overdrive = 0; else if (selectedCol_ == 1) inst.bitDepth = 16;
             else if (selectedCol_ == 2) inst.reverbSend = 0; else if (selectedCol_ == 3) inst.delaySend = 0;
+            engineHost.publish(song);
         }};
         btns[6] = {"General", "Page", "", "", hw::UnderlineColor::Green, true, false, [this]() { subPage_ = SubPage::General; selectedCol_ = 0; }};
         btns[7] = {"Back", "", "", "", hw::UnderlineColor::Dimmed, true, false, [this]() { subPage_ = SubPage::General; selectedCol_ = 0; }};

@@ -87,10 +87,39 @@ void Canvas::hGradient(const RectI& r, ImU32 left, ImU32 right) const {
 
 void Canvas::line(int x1, int y1, int x2, int y2, ImU32 color, float deviceThickness) const {
     if (!dl_) return;
-    const float t = std::max(1.0f, std::round(deviceThickness * lc_.scaleY));
-    dl_->AddLine(ImVec2(lc_.screenX(static_cast<float>(x1)), lc_.screenY(static_cast<float>(y1))),
-                 ImVec2(lc_.screenX(static_cast<float>(x2)), lc_.screenY(static_cast<float>(y2))),
-                 color, t);
+    // EVE LINE_WIDTH rasterises hard-edged segments (the emulator fills
+    // [min(x), y - t/2, |dx| + 1, t] for orthogonal lines), while ImGui's
+    // anti-aliased stroke path adds a texture fringe that spills up to a pixel
+    // outside the segment and past the edges of the control it belongs to.
+    // Draw orthogonal segments as exact device-pixel rects and disable the AA
+    // fringe for diagonal ones so lines never overdraw their boxes.
+    const int t = std::max(1, static_cast<int>(std::lround(deviceThickness * lc_.scaleY)));
+    const ImVec2 a(lc_.screenX(static_cast<float>(x1)), lc_.screenY(static_cast<float>(y1)));
+    const ImVec2 b(lc_.screenX(static_cast<float>(x2)), lc_.screenY(static_cast<float>(y2)));
+    const int minX = static_cast<int>(std::lround(std::min(a.x, b.x)));
+    const int maxX = static_cast<int>(std::lround(std::max(a.x, b.x)));
+    const int minY = static_cast<int>(std::lround(std::min(a.y, b.y)));
+    const int maxY = static_cast<int>(std::lround(std::max(a.y, b.y)));
+
+    if (y1 == y2 && minY == maxY) {
+        // Endpoints are inclusive along the segment, like the emulator.
+        dl_->AddRectFilled(ImVec2(static_cast<float>(minX), static_cast<float>(minY - t / 2)),
+                           ImVec2(static_cast<float>(maxX + 1),
+                                  static_cast<float>(minY - t / 2 + t)),
+                           color);
+        return;
+    }
+    if (x1 == x2 && minX == maxX) {
+        dl_->AddRectFilled(ImVec2(static_cast<float>(minX - t / 2), static_cast<float>(minY)),
+                           ImVec2(static_cast<float>(minX - t / 2 + t),
+                                  static_cast<float>(maxY + 1)),
+                           color);
+        return;
+    }
+
+    dl_->PushDrawFlag(ImDrawFlags_AALines, false);
+    dl_->AddLine(a, b, color, static_cast<float>(t));
+    dl_->PopDrawFlag();
 }
 
 void Canvas::text(trakr::hw::FwFont font, int x, int yTop, ImU32 color,

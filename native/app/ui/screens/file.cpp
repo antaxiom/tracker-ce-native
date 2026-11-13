@@ -38,14 +38,17 @@ void FileScreen::build() {
     for (const auto& p : kFramePlaces) places.push_back(RectI{p[0], p[1], p[2], p[3]});
     frame_ = &display_.add<FrameControl>("frame", std::move(places), 0);
 
+    // gProjEdit.cpp:55-65 creates these with controlStyleCenterX, so the
+    // firmware x is the label centre; the firmware background spans
+    // [x - w/2, x + w/2].
     browserLabel_ =
         &display_.add<LabelControl>("browserLabel", "SD Card", trakr::hw::FwFont::Bold17);
-    browserLabel_->setRect(RectI{(800 / 16) * 3, kLabelY, kLabelW, kLabelH});
+    browserLabel_->setRect(RectI{(800 / 16) * 3 - kLabelW / 2, kLabelY, kLabelW, kLabelH});
     browserLabel_->setColors(kTopBarLabelColors[0], kTopBarLabelColors[1],
                              kTopBarLabelColors[2]);
     recentLabel_ =
         &display_.add<LabelControl>("recentLabel", "Recent", trakr::hw::FwFont::Bold17);
-    recentLabel_->setRect(RectI{(800 / 16) * 9, kLabelY, kLabelW, kLabelH});
+    recentLabel_->setRect(RectI{(800 / 16) * 9 - kLabelW / 2, kLabelY, kLabelW, kLabelH});
     recentLabel_->setColors(kTopBarLabelColors[0], kTopBarLabelColors[1], kTopBarLabelColors[2]);
 
     fileList_ = &display_.add<ListControl>("fileList", std::vector<std::string>{}, 13);
@@ -58,8 +61,9 @@ void FileScreen::build() {
     recentList_->setColors(kProjectInactiveListColors);
 
     // blankSpaceCover is created last, so the reverse composite paints it first.
+    // gProjEdit.cpp:253-254 (kOpenProject): position (800/8)*6 + 1, size 200.
     blankCover_ = &display_.add<BlankCoverControl>("blankSpaceCover");
-    blankCover_->setRect(RectI{(800 / 8) * 7 + 1, 29, 800 / 8 - 2, 394});
+    blankCover_->setRect(RectI{(800 / 8) * 6 + 1, 29, 200, 394});
 
     fileList_->setOnSelect([this](int index) {
         if (view_) view_->selectProject(index);

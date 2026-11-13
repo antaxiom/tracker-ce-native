@@ -50,6 +50,7 @@ std::shared_ptr<const SongSnapshot> makeSnapshot(const Song& song) {
     snapshot->masterSaturationType = song.masterSaturationType;
     snapshot->masterSpace = song.masterSpace;
     for (int i = 0; i < 5; ++i) snapshot->masterEq[i] = song.masterEq[i];
+    snapshot->headroom = song.headroom;
     return snapshot;
 }
 
