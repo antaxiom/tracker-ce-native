@@ -115,14 +115,10 @@ void HeaderBar::render(const ImRect& rect,
         bool drewTransport = false;
         if (showTransport && !isSongScreen) {
             drewTransport = true;
-            static double s_playTimeSeconds = 0.0;
+            // Song time comes from the audio clock (cSongTimer), never from
+            // accumulated frame deltas, so any frame rate shows the same value.
             const auto& playhead = engineHost.getPlayhead();
-            if (playhead.playing) {
-                s_playTimeSeconds += ImGui::GetIO().DeltaTime;
-            } else {
-                s_playTimeSeconds = 0.0;
-            }
-            uint32_t totalSecs = static_cast<uint32_t>(s_playTimeSeconds);
+            const uint32_t totalSecs = static_cast<uint32_t>(playhead.songSeconds);
             uint32_t mins = totalSecs / 60;
             uint32_t secs = totalSecs % 60;
 
@@ -139,7 +135,8 @@ void HeaderBar::render(const ImRect& rect,
 
             centerX = rect.Min.x + 280.0f * scale;
             centerRight = centerX + font->CalcTextSizeA(fontH, FLT_MAX, 0.0f, timerBuf_).x;
-            ImU32 timerCol = playhead.playing ? IM_COL32(0, 232, 190, 255) : textWhite;
+            // songTimerLabelColors[0] (themeDefault) is white.
+            ImU32 timerCol = textWhite;
             drawList->AddText(font, fontH, ImVec2(centerX, centerY), timerCol, timerBuf_);
 
             if (playhead.playing) {

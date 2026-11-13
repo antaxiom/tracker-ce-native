@@ -133,6 +133,7 @@ void Engine::play(int startOrderIndex, int startRow) {
     currentOrderIndex_ = startOrderIndex;
     currentRow_ = startRow;
     rowProgressFrames_ = 0.0;
+    songSeconds_ = 0.0;
     playing_ = true;
     publishedPlaying_.store(true, std::memory_order_release);
 
@@ -147,6 +148,8 @@ void Engine::play(int startOrderIndex, int startRow) {
 
 void Engine::stop() {
     playing_ = false;
+    songSeconds_ = 0.0;
+    publishedSongSeconds_.store(0.0, std::memory_order_relaxed);
     publishedPlaying_.store(false, std::memory_order_release);
     allNotesOff();
 }
@@ -165,6 +168,7 @@ bool Engine::isPlaying() const {
 void Engine::publishPosition(int orderIndex, int row) {
     publishedOrder_.store(orderIndex, std::memory_order_relaxed);
     publishedRow_.store(row, std::memory_order_relaxed);
+    publishedSongSeconds_.store(songSeconds_, std::memory_order_relaxed);
 }
 
 PlayheadPosition Engine::getPlayhead() const {
@@ -172,6 +176,7 @@ PlayheadPosition Engine::getPlayhead() const {
     pos.orderIndex = publishedOrder_.load(std::memory_order_relaxed);
     pos.row = publishedRow_.load(std::memory_order_relaxed);
     pos.playing = publishedPlaying_.load(std::memory_order_relaxed);
+    pos.songSeconds = publishedSongSeconds_.load(std::memory_order_relaxed);
     return pos;
 }
 
@@ -314,6 +319,8 @@ void Engine::process(float* outStereo, int frames) {
         }
 
         framesRendered += subFrames;
+
+        if (playing_) songSeconds_ += static_cast<double>(subFrames) / sampleRate_;
 
         if (playing_ && !snap->order.empty()) {
             rowProgressFrames_ += subFrames;

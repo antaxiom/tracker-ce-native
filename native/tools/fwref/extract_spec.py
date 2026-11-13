@@ -165,8 +165,9 @@ MASTER_LABELS = [
     ("Space", 1, "stereo_boost"),
 ]
 
-def build_chrome(lines, theme_fields, colors):
+def build_chrome(lines, songtimer_lines, theme_fields, colors):
     tl_top = resolve_colors(theme_fields, colors, "topBarLabelColors")
+    timer_colors = resolve_colors(theme_fields, colors, "songTimerLabelColors")
     entries = []
 
     require(lines, 31, 37, "prop.x = 9;", TITLEBAR)
@@ -196,6 +197,20 @@ def build_chrome(lines, theme_fields, colors):
               colors=tl_top, value=0, text="",
               line={"x1": 0, "y1": 28, "x2": 800, "y2": 28, "color": tl_top[2]})
     e["source"] = src(TITLEBAR, lines, 69, 83)
+    entries.append(e)
+
+    # Title-bar song timer. Interface::activateModule() shows it on every module
+    # except the pattern editor (interface.cpp:418-443), and fPatternEdit toggles
+    # it there; the chrome carries it for every screen.
+    require(songtimer_lines, 15, 23, "prop1.x = 280;", SONGTIMER)
+    require(songtimer_lines, 15, 23, "prop1.style = controlStyleFont4 | controlStyleCenterY;",
+            SONGTIMER)
+    require(songtimer_lines, 113, 135, '"%3im:%02is %2s P%i.%03i%2s"', SONGTIMER)
+    e = entry(899, "cLabel", "280", "0", "0", "26",
+              ["controlStyleFont4", "controlStyleCenterY"],
+              colors=timer_colors, value=0, text_format="song_timer")
+    e["source"] = src(SONGTIMER, songtimer_lines, 15, 23)
+    e["text_source"] = src(SONGTIMER, songtimer_lines, 113, 135)
     entries.append(e)
 
     return entries
@@ -1025,18 +1040,6 @@ def build_pattern(lines, theme_lines, theme_fields, colors, songtimer_lines):
     e["source"] = src(PATTERN, lines, 213, 230)
     entries.append(e)
 
-    # title-bar song timer (songTimer.cpp:11-17 control, 113-135 format)
-    require(songtimer_lines, 15, 23, "prop1.x = 280;", SONGTIMER)
-    require(songtimer_lines, 15, 23, "prop1.style = controlStyleFont4 | controlStyleCenterY;",
-            SONGTIMER)
-    require(songtimer_lines, 113, 135, '"%3im:%02is %2s P%i.%03i%2s"', SONGTIMER)
-    e = entry(899, "cLabel", "280", "0", "0", "26",
-              ["controlStyleFont4", "controlStyleCenterY"],
-              colors=timer_colors, value=0, text_format="song_timer")
-    e["source"] = src(SONGTIMER, songtimer_lines, 15, 23)
-    e["text_source"] = src(SONGTIMER, songtimer_lines, 113, 135)
-    entries.append(e)
-
     return entries
 
 
@@ -1454,7 +1457,7 @@ def build():
              SONGTIMER: songtimer_lines, THEMES: theme_lines, TITLEBAR: title_lines,
              GCONFIG: config_lines, PERFORM: perform_lines, GSONG: song_lines,
              GLOADER: loader_lines, GSAMPLE: sample_lines, GPROJ: gproj_lines}
-    chrome_entries = build_chrome(title_lines, theme_fields, colors)
+    chrome_entries = build_chrome(title_lines, songtimer_lines, theme_fields, colors)
     instr_entries = build_instrument(instr_lines, theme_fields, colors)
     master_entries = build_master(master_lines, theme_fields, colors)
     master2_entries = build_master2(master_lines, theme_fields, colors)

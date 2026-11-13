@@ -88,8 +88,10 @@ void AppLayout::render(ScreenContext& scrCtx,
                       (activeScreen == Screen::Instrument || activeScreen == Screen::Pattern ||
                        activeScreen == Screen::Sample),
                       activeScreen != Screen::Pattern,
-                      // Transport (songTimer) is only composed on the Pattern screen.
-                      activeScreen == Screen::Pattern);
+                      // Interface::activateModule() shows the song timer on every
+                      // module except the pattern editor; HeaderBar hides it on
+                      // the Song screen exactly like the firmware.
+                      true);
 
     // 4. Render Central Workspace
     const bool guiNextInstrument =

@@ -30,7 +30,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 | Pattern | default | 98.4% | popups via app fill modal |
 | Song | default | 98.9% | — |
 | Instrument | default | General 99.98% | Effects/Automation legacy-equivalent (no fwref) |
-| Master | default | 1/3 99.8%; 2/3 99.4% | Master EQ 99.8% (source-true fwref + hardware tile); Global Mixer 3/3 not modeled |
+| Master | default | 1/3 99.7%; 2/3 99.3% | Master EQ 99.7% (source-true fwref + hardware tile); Global Mixer 3/3 not modeled |
 | Sample | default | Playback 98.3% | Editor app-defined (structural) |
 | Sample Loader | default | 99.1% | importer crop page not modeled |
 | Config | default | 99.6% | item editor/grid page not modeled |
@@ -128,16 +128,12 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   returns the selection to the previous slot, and the Sample parameter selector
   wraps like the legacy screen.
 - Calibrated hardware tiles exist for seven views (including Master EQ), not every sub-page.
-- **Header song timer (found while adding the Master EQ hardware tile).**
-  `Interface::activateModule()` shows `songTimer` on every module except the
-  pattern editor (`core/interface/core/interface.cpp:418-443`), and the
-  `video_master_eq_perform.png` Master EQ photo confirms it (`1s:40s .. P1.000`
-  in the title bar). Both the app (`AppLayout.cpp` passes
-  `showTransport = activeScreen == Screen::Pattern`) and every non-Pattern
-  fwref chrome currently omit it, so the >= 95% parity figures for those
-  screens do not include this control. Fixing it requires adding the timer
-  entry to the non-Pattern chrome specs, regenerating the references and
-  re-measuring parity; tracked as the next fidelity increment.
+- ~~Header song timer.~~ Resolved: `Interface::activateModule()` shows
+  `songTimer` on every module except the pattern editor
+  (`interface.cpp:418-443`), and the Master EQ hardware photo confirms it. The
+  timer entry now lives in the shared chrome spec, every non-Pattern screen
+  draws it, and its value comes from the audio clock
+  (`PlayheadPosition::songSeconds`) instead of accumulated frame deltas.
 
 ## Handoff
 

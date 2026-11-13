@@ -403,14 +403,12 @@ Do not start without a design pass; Classic remains the reference profile.
   `Control::animatingAt`/`RenderScheduler::requestAnimation` implement the
   hardware-timed animation contract (see `phase6-verification.md`).
 
-## Next fidelity increment (from the Master EQ hardware tile)
+## Header song timer (done)
 
-- The firmware shows the title-bar song timer on every module except the
-  pattern editor (`interface.cpp:418-443`); the Master EQ hardware photo
-  confirms it. The app and all non-Pattern fwref chrome omit it, so those
-  parity numbers do not cover the control. Add the timer to the non-Pattern
-  chrome specs, regenerate references, re-measure, and enable it in
-  `AppLayout` for every screen.
+- The timer moved into the shared chrome spec, so every non-Pattern reference
+  now includes it, `AppLayout` enables it on every screen, and its value is
+  derived from the audio clock (`PlayheadPosition::songSeconds`) rather than
+  accumulated frame deltas (animation-ready).
 
 ## Immediate next steps
 

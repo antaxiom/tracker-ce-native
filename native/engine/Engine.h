@@ -18,6 +18,8 @@ struct PlayheadPosition {
     int patternIndex{0};
     int row{0};
     bool playing{false};
+    // Song time since transport start, sample-clock derived (cSongTimer).
+    double songSeconds{0.0};
 };
 
 struct PerformanceState {
@@ -115,6 +117,8 @@ private:
     std::atomic<int> publishedOrder_{0};
     std::atomic<int> publishedRow_{0};
     std::atomic<bool> publishedPlaying_{false};
+    std::atomic<double> publishedSongSeconds_{0.0};
+    double songSeconds_{0.0};
 
     // Live event ring buffer (lock-free single producer / single consumer)
     static constexpr size_t kEventQueueSize = 64;

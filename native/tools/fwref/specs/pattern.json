@@ -662,42 +662,6 @@
     ],
     "sha256": "b2eacb2c8e0e94f777554dc27705445797a1e913feaf52468295c84faa8b9478"
    }
-  },
-  {
-   "order": 899,
-   "control": "cLabel",
-   "x": "280",
-   "y": "0",
-   "w": "0",
-   "h": "26",
-   "style": [
-    "controlStyleFont4",
-    "controlStyleCenterY"
-   ],
-   "colors": [
-    16777215,
-    526344,
-    13441048,
-    16777215
-   ],
-   "value": 0,
-   "text_format": "song_timer",
-   "source": {
-    "file": "core/interface/core/songTimer.cpp",
-    "lines": [
-     15,
-     23
-    ],
-    "sha256": "7c90bc2ba32bd6471134dc68e6419da4d5984920d8b6efa3845c6a2f50161f33"
-   },
-   "text_source": {
-    "file": "core/interface/core/songTimer.cpp",
-    "lines": [
-     113,
-     135
-    ],
-    "sha256": "f5124f4bdca330d458b1271c208e3b2baafe89462760242172f1d4bc12b44594"
-   }
   }
  ]
 }
