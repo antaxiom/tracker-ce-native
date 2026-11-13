@@ -127,6 +127,12 @@ struct Song {
     int masterSaturationType{0};
     float masterSpace{0.0f};
     float masterEq[5]{0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    // Global Mixer (Master 3/3) aux fader positions and mutes, in firmware
+    // order: Delay, Reverb, Dry Mix, Line In.
+    // Firmware defaults (mtStructs.h DEFAULT_*_VOLUME = 86 = 0 dB); Line In
+    // starts muted.
+    int auxVolume[4]{86, 86, 86, 86};
+    bool auxMute[4]{false, false, false, true};
     // Project "Extra headroom": firmware lowers sample playback by 3 dB
     // (play_memory.cpp lowerVolume3dB) without touching the master fader.
     bool headroom{false};
@@ -151,6 +157,8 @@ struct SongSnapshot {
     float masterSpace{0.0f};
     float masterEq[5]{0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
     bool headroom{false};
+    int auxVolume[4]{86, 86, 86, 86};
+    bool auxMute[4]{false, false, false, true};
 };
 
 Song makeDefaultSong();

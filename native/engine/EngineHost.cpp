@@ -113,6 +113,10 @@ MeterLevels EngineHost::getTrackMeters(size_t trackIndex) const {
     return engine_.getTrackMeters(trackIndex);
 }
 
+MeterLevels EngineHost::getAuxMeters(int aux) const {
+    return engine_.getAuxMeters(aux);
+}
+
 MeterLevels EngineHost::getMasterMeters() const {
     return engine_.getMasterMeters();
 }

@@ -29,6 +29,7 @@ Page switching: Tab is handled by all three Master screens
 | Unit tests | 134/134 pass (538,204 assertions); gain curve and EQ frame covered |
 | Track Mixer vs fwref page 2 | 0.63% pixels differ (legacy path 4.24% on old master data) |
 | Master EQ vs fwref `master_eq.png` | 0.23% pixels differ (99.77% similarity) |
+| Global Mixer vs fwref page 3 | 0.82% pixels differ (99.18% similarity) |
 | Master EQ vs hardware photo | `refcal` tile `master_eq_hw_left` passes 8 structural checks (frame on the selected band, band fills, labels) |
 | Master 1/3 sanity | 0.22% vs fwref page 1 |
 | Robot audit | 114 frames pass on the default semantic path |
@@ -38,11 +39,12 @@ Parity data: `--screen master` now seeds the fwref scenario track names and
 
 ## Conditions
 
-1. Firmware page 3 is *Global Mixer* (Delay/Reverb/Dry Mix/Line In); the EQ
-   page is a separate firmware page reached from the EQ label on Master 1/3.
-   The desktop engine has no muteable FX buses or global aux/line-in volumes,
-   so the app's third Master tab is the Master EQ page. Global Mixer remains
-   unmodeled and has no app path.
+1. Page 3 (Global Mixer) is ported as `GlobalMixerScreen` with model, engine
+   and UI in place: `Song::auxVolume/auxMute` (firmware defaults 86 = 0 dB,
+   line-in muted), `Mixer::setAuxGains` applying delay/reverb return and dry
+   levels with mute, aux bus meters, and the four-column page with name
+   labels, faders, level bars, frame and bottom dB/mute labels. Line In is a
+   silent bus in the desktop build (no input monitoring), so its meter reads 0.
 2. The bottom track mute/level labels are app chrome (ScreenButtons).
 3. Live level meters render empty at idle; the reference frame is idle too.
 

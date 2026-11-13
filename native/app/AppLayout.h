@@ -22,6 +22,7 @@
 #include "ui/screens/file.h"
 #include "ui/screens/track_mixer.h"
 #include "ui/screens/mix_eq.h"
+#include "ui/screens/global_mixer.h"
 #include "ui/screens/instrument_pages.h"
 #include <string>
 
@@ -77,6 +78,7 @@ private:
     FileScreen guiFile_;
     TrackMixerScreen guiTrackMixer_;
     MasterEqScreen guiMasterEq_;
+    GlobalMixerScreen guiGlobalMixer_;
     InstrumentPagesScreen guiInstrumentPages_;
 
     double animationNowMs_{0.0};

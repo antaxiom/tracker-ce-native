@@ -47,8 +47,12 @@ void AppLayout::render(ScreenContext& scrCtx,
             break;
         }
         case Screen::Master:
-            pageTitle = (scrCtx.mixerView.subPage() == MixerView::SubPage::TrackMixer) ? "Track Mixer 2/3"
-                      : (scrCtx.mixerView.subPage() == MixerView::SubPage::Master) ? "Master 1/3" : "Master EQ";
+            switch (scrCtx.mixerView.subPage()) {
+                case MixerView::SubPage::TrackMixer: pageTitle = "Track Mixer 2/3"; break;
+                case MixerView::SubPage::GlobalMixer: pageTitle = "Global Mixer 3/3"; break;
+                case MixerView::SubPage::MasterFx: pageTitle = "Master EQ"; break;
+                default: pageTitle = "Master 1/3"; break;
+            }
             break;
         case Screen::Perform:    pageTitle = "Performance FX"; break;
         case Screen::SampleLoader: pageTitle = "Sample Loader"; break;
@@ -109,6 +113,9 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextMasterEq =
         activeScreen == Screen::Master &&
         scrCtx.mixerView.subPage() == MixerView::SubPage::MasterFx;
+    const bool guiNextGlobalMixer =
+        activeScreen == Screen::Master &&
+        scrCtx.mixerView.subPage() == MixerView::SubPage::GlobalMixer;
     const bool guiNextPattern = activeScreen == Screen::Pattern;
     const bool guiNextSong = activeScreen == Screen::Song;
     const bool guiNextSample = activeScreen == Screen::Sample;
@@ -118,7 +125,7 @@ void AppLayout::render(ScreenContext& scrCtx,
     const bool guiNextFile = activeScreen == Screen::File;
     if (guiNextInstrument || guiNextMaster || guiNextPattern || guiNextSong || guiNextSample ||
         guiNextLoader || guiNextConfig || guiNextPerform || guiNextFile ||
-        guiNextTrackMixer || guiNextMasterEq || guiNextInstrumentPages) {
+        guiNextTrackMixer || guiNextMasterEq || guiNextGlobalMixer || guiNextInstrumentPages) {
         const ImRect workspace = display_.workspaceRect();
         ImGui::SetNextWindowPos(workspace.Min);
         ImGui::SetNextWindowSize(workspace.GetSize());
@@ -138,6 +145,7 @@ void AppLayout::render(ScreenContext& scrCtx,
                                : guiNextFile       ? "##gui_next_file"
                                : guiNextTrackMixer ? "##gui_next_track_mixer"
                                : guiNextMasterEq   ? "##gui_next_master_eq"
+                               : guiNextGlobalMixer ? "##gui_next_global_mixer"
                                : guiNextInstrumentPages ? "##gui_next_instrument_pages"
                                                    : "##gui_next_loader";
         if (ImGui::Begin(windowName, nullptr, flags)) {
@@ -196,6 +204,12 @@ void AppLayout::render(ScreenContext& scrCtx,
                                     layoutState.shiftHeld);
                 guiMasterEq_.render(ImGui::GetWindowDrawList(), workspace,
                                     ui::LayoutProfile::Classic);
+            } else if (guiNextGlobalMixer) {
+                guiGlobalMixer_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
+                                       scrCtx.mixerView, workspace, ui::LayoutProfile::Classic,
+                                       layoutState.shiftHeld);
+                guiGlobalMixer_.render(ImGui::GetWindowDrawList(), workspace,
+                                       ui::LayoutProfile::Classic);
             } else if (guiNextInstrumentPages) {
                 guiInstrumentPages_.update(scrCtx.song, scrCtx.history, scrCtx.engineHost,
                                            scrCtx.selectedInstIdx, scrCtx.instrumentView,
@@ -230,6 +244,7 @@ void AppLayout::render(ScreenContext& scrCtx,
         else if (guiNextFile) animating = guiFile_.animatingAt(animationNowMs_);
         else if (guiNextTrackMixer) animating = guiTrackMixer_.animatingAt(animationNowMs_);
         else if (guiNextMasterEq) animating = guiMasterEq_.animatingAt(animationNowMs_);
+        else if (guiNextGlobalMixer) animating = guiGlobalMixer_.animatingAt(animationNowMs_);
         else if (guiNextInstrumentPages) animating = guiInstrumentPages_.animatingAt(animationNowMs_);
         else animating = guiPattern_.animatingAt(animationNowMs_);
         scheduler.requestAnimation(animating && !animationFrozen_);
@@ -506,6 +521,33 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
                 btns[6] = {"Bass Boost", vbuf, "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(6); }};
                 snprintf(vbuf, sizeof(vbuf), "%d", std::clamp(static_cast<int>(std::lround(scrCtx.song.masterSpace * 8.0f)), 0, 8));
                 btns[7] = {"Space", vbuf, "", "", hw::UnderlineColor::None, true, false, [&scrCtx]() { scrCtx.mixerView.setSelectedTrack(7); }};
+            } else if (scrCtx.mixerView.subPage() == MixerView::SubPage::GlobalMixer) {
+                // gMasterParams.cpp showGlobalMixer(): four bottom labels with
+                // the aux level ("%.2f dB", "-inf dB" at silence) above the mute
+                // state, three blanks and "Back".
+                for (int i = 0; i < 4; ++i) {
+                    char dbBuf[24];
+                    if (scrCtx.song.auxVolume[i] <= 0) {
+                        snprintf(dbBuf, sizeof(dbBuf), "-inf dB");
+                    } else {
+                        snprintf(dbBuf, sizeof(dbBuf), "%.2f dB",
+                                 MixerView::auxGainDb(scrCtx.song.auxVolume[i]));
+                    }
+                    const bool muted = scrCtx.song.auxMute[i];
+                    btns[i] = {dbBuf, muted ? "Unmute" : "Mute", "", "",
+                               hw::UnderlineColor::None, true, false,
+                               [&scrCtx, &scheduler, i]() {
+                                   scrCtx.mixerView.setSelectedTrack(i);
+                                   scrCtx.mixerView.toggleAuxMute(scrCtx.song, scrCtx.engineHost, i);
+                                   scheduler.requestRedraw();
+                               }};
+                }
+                btns[4] = {" ", " ", "", "", hw::UnderlineColor::None, false, false, nullptr};
+                btns[5] = {" ", " ", "", "", hw::UnderlineColor::None, false, false, nullptr};
+                btns[6] = {" ", " ", "", "", hw::UnderlineColor::None, false, false, nullptr};
+                btns[7] = {"Back", " ", "", "", hw::UnderlineColor::None, true, false, [&scrCtx, &scheduler]() {
+                    scrCtx.mixerView.setSubPage(MixerView::SubPage::Master); scheduler.requestRedraw();
+                }};
             } else {
                 // gMasterParams.cpp showEqualizerScreen(): five band labels with
                 // the per-band gain ("%.2f dB"), two blanks and "Back".

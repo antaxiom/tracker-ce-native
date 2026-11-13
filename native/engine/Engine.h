@@ -82,6 +82,7 @@ public:
     void publishPosition(int orderIndex, int row);
     MeterLevels getTrackMeters(size_t trackIndex) const;
     MeterLevels getMasterMeters() const;
+    MeterLevels getAuxMeters(int aux) const;
     bool isPreviewVoiceActive() const { return previewVoice_ && previewVoice_->isActive(); }
 
 private:

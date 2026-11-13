@@ -51,6 +51,10 @@ std::shared_ptr<const SongSnapshot> makeSnapshot(const Song& song) {
     snapshot->masterSpace = song.masterSpace;
     for (int i = 0; i < 5; ++i) snapshot->masterEq[i] = song.masterEq[i];
     snapshot->headroom = song.headroom;
+    for (int i = 0; i < 4; ++i) {
+        snapshot->auxVolume[i] = song.auxVolume[i];
+        snapshot->auxMute[i] = song.auxMute[i];
+    }
     return snapshot;
 }
 

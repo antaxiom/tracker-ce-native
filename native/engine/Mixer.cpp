@@ -1,5 +1,6 @@
 #include "Mixer.h"
 #include <algorithm>
+#include <cmath>
 #include <cstring>
 
 namespace trakr {
@@ -130,6 +131,9 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
         bitCrush ? std::pow(2.0f, static_cast<float>(bitCrushBits_)) : 0.0f;
 
     // Process send effects and add return to master bus
+    float delayPkL = 0.0f, delayPkR = 0.0f;
+    float reverbPkL = 0.0f, reverbPkR = 0.0f;
+    float dryPkL = 0.0f, dryPkR = 0.0f;
     for (int i = 0; i < frames; ++i) {
         float delOutL = 0.0f, delOutR = 0.0f;
         delay_.process(sendDelayBufL_[i], sendDelayBufR_[i], delOutL, delOutR);
@@ -137,8 +141,22 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
         float revOutL = 0.0f, revOutR = 0.0f;
         reverb_.process(sendReverbBufL_[i], sendReverbBufR_[i], revOutL, revOutR);
 
-        float l = (masterOutStereo[i * 2] + delOutL + revOutL) * mPanL;
-        float r = (masterOutStereo[i * 2 + 1] + delOutR + revOutR) * mPanR;
+        const float dryL = masterOutStereo[i * 2] * auxDryGain_;
+        const float dryR = masterOutStereo[i * 2 + 1] * auxDryGain_;
+        const float sendL = delOutL * auxDelayGain_;
+        const float sendR = delOutR * auxDelayGain_;
+        const float retL = revOutL * auxReverbGain_;
+        const float retR = revOutR * auxReverbGain_;
+
+        float l = (dryL + sendL + retL) * mPanL;
+        float r = (dryR + sendR + retR) * mPanR;
+
+        delayPkL = std::max(delayPkL, std::fabs(sendL));
+        delayPkR = std::max(delayPkR, std::fabs(sendR));
+        reverbPkL = std::max(reverbPkL, std::fabs(retL));
+        reverbPkR = std::max(reverbPkR, std::fabs(retR));
+        dryPkL = std::max(dryPkL, std::fabs(dryL));
+        dryPkR = std::max(dryPkR, std::fabs(dryR));
 
         // Master 5-Band Graphic EQ
         masterEq_.process(l, r);
@@ -183,6 +201,24 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
     float prevMasterR = masterPeakR_.load(std::memory_order_relaxed);
     masterPeakL_.store(std::max(blockMasterPeakL, prevMasterL * 0.95f), std::memory_order_relaxed);
     masterPeakR_.store(std::max(blockMasterPeakR, prevMasterR * 0.95f), std::memory_order_relaxed);
+
+    const float decay = 0.95f;
+    auto storeAux = [&](int aux, float pkL, float pkR) {
+        const float prevL = auxPeakL_[aux].load(std::memory_order_relaxed);
+        const float prevR = auxPeakR_[aux].load(std::memory_order_relaxed);
+        auxPeakL_[aux].store(std::max(pkL, prevL * decay), std::memory_order_relaxed);
+        auxPeakR_[aux].store(std::max(pkR, prevR * decay), std::memory_order_relaxed);
+    };
+    storeAux(0, delayPkL, delayPkR);
+    storeAux(1, reverbPkL, reverbPkR);
+    storeAux(2, dryPkL, dryPkR);
+    storeAux(3, 0.0f, 0.0f); // Line In bus is silent in the desktop build
+}
+
+MeterLevels Mixer::getAuxMeters(int aux) const {
+    if (aux < 0 || aux >= 4) return {};
+    return {auxPeakL_[aux].load(std::memory_order_relaxed),
+            auxPeakR_[aux].load(std::memory_order_relaxed)};
 }
 
 MeterLevels Mixer::getTrackMeters(size_t trackIndex) const {

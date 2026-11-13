@@ -403,6 +403,15 @@ Do not start without a design pass; Classic remains the reference profile.
   `Control::animatingAt`/`RenderScheduler::requestAnimation` implement the
   hardware-timed animation contract (see `phase6-verification.md`).
 
+## Global Mixer (Master 3/3) ported
+
+- `Song::auxVolume/auxMute` (defaults 86 = 0 dB, line-in muted), persisted in
+  the master JSON section; `Mixer::setAuxGains` applies delay/reverb return and
+  dry levels with mute and publishes aux meters; `GlobalMixerScreen` mirrors
+  `showGlobalMixer()` (names, faders, level bars, frame, dB/mute labels). Master
+  EQ remains reachable from the EQ label. Gap closed: Master 3/3 99.18% vs
+  `master_page3.png`, visreg now 16/16.
+
 ## Header song timer (done)
 
 - The timer moved into the shared chrome spec, so every non-Pattern reference

@@ -232,6 +232,7 @@ add_executable(trakr_app
     app/ui/screens/track_mixer.cpp
     app/ui/screens/track_mixer.h
     app/ui/screens/mix_eq.cpp
+    app/ui/screens/global_mixer.cpp
     app/ui/screens/mix_eq.h
     app/ui/screens/instrument_pages.cpp
     app/ui/screens/instrument_pages.h
@@ -487,6 +488,7 @@ add_executable(trakr_tests
     app/ui/screens/file.cpp
     app/ui/screens/track_mixer.cpp
     app/ui/screens/mix_eq.cpp
+    app/ui/screens/global_mixer.cpp
     app/ui/screens/instrument_pages.cpp
 )
 target_include_directories(trakr_tests PRIVATE

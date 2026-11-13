@@ -14,7 +14,9 @@ namespace trakr {
 
 class MixerView : public View {
 public:
-    enum class SubPage { Master = 0, TrackMixer = 1, MasterFx = 2 };
+    // Master 1/3, Track Mixer 2/3, Global Mixer 3/3 and the Master EQ page
+    // (reachable from the EQ label on Master 1/3, like gMasterParams).
+    enum class SubPage { Master = 0, TrackMixer = 1, GlobalMixer = 2, MasterFx = 3 };
 
     MixerView();
     const char* name() const override { return "Master / Mixer"; }
@@ -26,7 +28,7 @@ public:
     void setSubPage(SubPage sp) { subPage_ = sp; }
     void togglePage() {
         subPage_ = (subPage_ == SubPage::Master) ? SubPage::TrackMixer
-                 : (subPage_ == SubPage::TrackMixer) ? SubPage::MasterFx
+                 : (subPage_ == SubPage::TrackMixer) ? SubPage::GlobalMixer
                  : SubPage::Master;
     }
     // Firmware gain fader mapping used by the Track Mixer page
@@ -52,11 +54,31 @@ public:
                 default: break;
             }
             engineHost.publish(song);
+        } else if (subPage_ == SubPage::GlobalMixer) {
+            // gMasterParams.cpp showGlobalMixer(): aux faders are 0..100.
+            const int aux = std::clamp(selectedTrack_, 0, 3);
+            song.auxVolume[aux] = std::clamp(song.auxVolume[aux] + delta, 0, 100);
+            engineHost.publish(song);
         } else if (subPage_ == SubPage::MasterFx) {
             int idx = std::clamp(selectedTrack_, 0, 4);
             song.masterEq[idx] = std::clamp(song.masterEq[idx] + delta * (fine ? 0.2f : 1.0f), -12.0f, 12.0f);
             engineHost.publish(song);
         }
+    }
+
+    // Aux (Delay/Reverb/Dry Mix/Line In) helpers used by the Global Mixer page.
+    static const char* auxName(int aux) {
+        static const char* const kNames[4] = {"Delay", "Reverb", "Dry Mix", "Line In"};
+        return (aux >= 0 && aux < 4) ? kNames[aux] : "";
+    }
+    static float auxGainDb(int volume) {
+        const float db = gainDbForFaderValue(std::clamp(volume, 0, 100));
+        return db <= kFaderSilenceDb ? -99.0f : db;
+    }
+    void toggleAuxMute(Song& song, EngineHost& engineHost, int aux) {
+        if (aux < 0 || aux >= 4) return;
+        song.auxMute[aux] = !song.auxMute[aux];
+        engineHost.publish(song);
     }
 
     void resetSelected(Song& song, EngineHost& engineHost) {

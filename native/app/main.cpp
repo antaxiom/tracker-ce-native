@@ -306,6 +306,8 @@ int main(int argc, char** argv) {
     if (!master_page.empty()) {
         if (master_page == "eq")
             mixerView.setSubPage(trakr::MixerView::SubPage::MasterFx);
+        else if (master_page == "global")
+            mixerView.setSubPage(trakr::MixerView::SubPage::GlobalMixer);
         else if (master_page == "mixer")
             mixerView.setSubPage(trakr::MixerView::SubPage::TrackMixer);
         else if (master_page == "master")

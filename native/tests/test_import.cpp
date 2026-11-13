@@ -129,6 +129,12 @@ TEST_CASE("Song JSON serialization round-trip", "[io][json]") {
     orig.patterns[0].tracks[0][0].volume = 64;
     orig.patterns[0].tracks[0][0].fx[0] = {19, 50};
 
+    orig.masterGainDb = -3.0f;
+    orig.masterEq[2] = 2.5f;
+    orig.headroom = true;
+    orig.auxVolume[0] = 88;
+    orig.auxMute[1] = true;
+
     orig.instruments[0].name = "AcidBass";
     orig.instruments[0].attackMs = 15.0f;
     orig.instruments[0].decayMs = 80.0f;
@@ -157,6 +163,11 @@ TEST_CASE("Song JSON serialization round-trip", "[io][json]") {
     REQUIRE(loaded.tracks[0].gainDb == -2.5f);
     REQUIRE(loaded.tracks[0].delaySend == 0.45f);
     REQUIRE(loaded.tracks[0].reverbSend == 0.30f);
+    REQUIRE(loaded.masterGainDb == -3.0f);
+    REQUIRE(loaded.masterEq[2] == 2.5f);
+    REQUIRE(loaded.headroom);
+    REQUIRE(loaded.auxVolume[0] == 88);
+    REQUIRE(loaded.auxMute[1]);
 
     REQUIRE(loaded.patterns.size() == orig.patterns.size());
     REQUIRE(loaded.patterns[0].tracks[0][0].note == 72);

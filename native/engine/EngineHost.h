@@ -35,6 +35,7 @@ public:
     PlayheadPosition getPlayhead() const;
     MeterLevels getTrackMeters(size_t trackIndex) const;
     MeterLevels getMasterMeters() const;
+    MeterLevels getAuxMeters(int aux) const;
 
     Engine& getEngine();
 

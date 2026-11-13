@@ -19,7 +19,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 | fwref strict oracle | `cd native/tools/fwref && python3 check_reference.py` | all gates pass, 0 unsupported / 0 approximations |
 | Hardware structural (calibrated) | `python3 native/tools/refcal/refcal.py --all` | 8/8 tiles (Instrument x2, Instrument Automation, Performance, Pattern, Track Mixer, Sample Playback, Master EQ) |
 | Glyph coverage | `python3 native/tools/check_glyphs.py` | 0 non-ASCII codepoints, all covered |
-| Classic visual regression | `python3 native/tools/visreg/visreg.py --all --deterministic` | 15/15 cases >= 95% (97.85-99.99%), deterministic |
+| Classic visual regression | `python3 native/tools/visreg/visreg.py --all --deterministic` | 16/16 cases >= 95% (97.92-99.99%), deterministic |
 | Canvas line raster | `./native/build/trakr_tests "[canvas]"` | hard-edged, no AA fringe, exact endpoint coverage |
 | Classic parity | per-screen gate docs | all nine workspaces >= 95%; best 99.9% |
 
@@ -30,7 +30,7 @@ legacy code is retained only as dialog/state plumbing and a debug escape hatch.
 | Pattern | default | 98.4% | popups via app fill modal |
 | Song | default | 98.9% | — |
 | Instrument | default | General 99.98% | Effects/Automation legacy-equivalent (no fwref) |
-| Master | default | 1/3 99.7%; 2/3 99.3% | Master EQ 99.7% (source-true fwref + hardware tile); Global Mixer 3/3 not modeled |
+| Master | default | 1/3 99.7%; 2/3 99.3%; 3/3 99.2% | Global Mixer ported (model + engine aux gains and meters); Master EQ 99.7% (source-true fwref + hardware tile) |
 | Sample | default | Playback 98.3% | Editor app-defined (structural) |
 | Sample Loader | default | 99.1% | importer crop page not modeled |
 | Config | default | 99.6% | item editor/grid page not modeled |
@@ -114,11 +114,10 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   Config item-editor popup remains app-defined and has no reference.
 - The Perform page has no additional firmware grid page (the earlier residual
   was incorrect); the app models every firmware Performance control.
-- Firmware Global Mixer (Master 3/3) is not modeled by the desktop engine
-  (no global aux volume/mute/line-in in the desktop mixer), so the app's third
-  Master tab is the firmware Master EQ page (`showEqualizerScreen()`, reached in
-  the firmware from the EQ label on Master 1/3). Both pages now have a
-  source-true fwref reference; Master EQ also has a calibrated hardware tile.
+- Global Mixer (Master 3/3) is ported: aux volume/mute persist with the project
+  and drive the mixer's delay/reverb return and dry levels; Line In remains a
+  silent bus because the desktop build has no input monitoring. The Master EQ
+  page is reachable from the EQ label on Master 1/3, exactly like the firmware.
 - Sample Loader import progress and the Config item-editor popup are desktop
   workflow divergences (direct file open and direct value editing) rather than
   missing screen controls.

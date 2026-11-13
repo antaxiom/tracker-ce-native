@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "FaderCurve.h"
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -188,6 +189,10 @@ MeterLevels Engine::getMasterMeters() const {
     return mixer_.getMasterMeters();
 }
 
+MeterLevels Engine::getAuxMeters(int aux) const {
+    return mixer_.getAuxMeters(aux);
+}
+
 void Engine::triggerRow(const SongSnapshot& snapshot, const Pattern& pattern, int row) {
     if (row < 0 || row >= pattern.rows) return;
 
@@ -268,6 +273,15 @@ void Engine::process(float* outStereo, int frames) {
 
     const size_t numTracks = std::min(snap->tracks.size(), voices_.size());
     const double framesPerRow = (sampleRate_ * 60.0) / (snap->bpm * snap->lpb);
+    // Global Mixer (Master 3/3): aux fader positions -> linear gains. Muted
+    // buses are silent (gMasterParams.cpp showGlobalMixer).
+    auto auxGain = [&](int idx) {
+        if (snap->auxMute[idx]) return 0.0f;
+        const float db = gainDbForFaderValue(std::clamp(snap->auxVolume[idx], 0, 100));
+        return db <= kFaderSilenceDb ? 0.0f : std::pow(10.0f, db / 20.0f);
+    };
+    mixer_.setAuxGains(auxGain(0), auxGain(1), auxGain(2), auxGain(3));
+
     // Project "Extra headroom" (play_memory.cpp lowerVolume3dB).
     const float headroomGain = snap->headroom ? 0.7079458f : 1.0f;
     if (previewVoice_) previewVoice_->setHeadroomGain(headroomGain);

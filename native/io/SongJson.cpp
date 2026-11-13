@@ -118,6 +118,12 @@ bool saveSongJson(const Song& song, const std::string& filepath) {
         m["eq"] = json::array();
         for (float band : song.masterEq) m["eq"].push_back(band);
         m["headroom"] = song.headroom;
+        m["aux"] = json::array();
+        m["auxMute"] = json::array();
+        for (int i = 0; i < 4; ++i) {
+            m["aux"].push_back(song.auxVolume[i]);
+            m["auxMute"].push_back(song.auxMute[i]);
+        }
         j["master"] = m;
     }
 
@@ -144,6 +150,20 @@ static bool loadSongJsonFile(Song& outSong, const json& j) {
         outSong.masterSaturationType = m.value("saturationType", outSong.masterSaturationType);
         outSong.masterSpace = m.value("space", outSong.masterSpace);
         outSong.headroom = m.value("headroom", outSong.headroom);
+        if (m.contains("aux") && m["aux"].is_array()) {
+            size_t idx = 0;
+            for (const auto& v : m["aux"]) {
+                if (idx >= 4) break;
+                outSong.auxVolume[idx++] = std::clamp(v.get<int>(), 0, 100);
+            }
+        }
+        if (m.contains("auxMute") && m["auxMute"].is_array()) {
+            size_t idx = 0;
+            for (const auto& v : m["auxMute"]) {
+                if (idx >= 4) break;
+                outSong.auxMute[idx++] = v.get<bool>();
+            }
+        }
         if (m.contains("eq") && m["eq"].is_array()) {
             size_t idx = 0;
             for (const auto& band : m["eq"]) {
