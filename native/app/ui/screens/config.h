@@ -11,6 +11,7 @@
 
 #include "ui/controls/param_value_list.h"
 #include "ui/controls/primitives.h"
+#include "ui/controls/text_box.h"
 #include "ui/display.h"
 #include "ui/layout.h"
 #include "imgui.h"
@@ -49,6 +50,10 @@ private:
     ui::FrameControl* frame_{nullptr};
     ui::ListControl* baseList_{nullptr};
     ui::ParamValueListControl* submenuList_{nullptr};
+    // Item editor (gConfigEdit.cpp showConfigList4/showConfigItemLabel).
+    ui::ListControl* editList_{nullptr};
+    ui::LabelControl* editorTitle_{nullptr};
+    ui::TextBoxControl* editorDescription_{nullptr};
     ui::BlankCoverControl* blankCoverA_{nullptr};
     ui::BlankCoverControl* blankCoverB_{nullptr};
     ConfigView* view_{nullptr};

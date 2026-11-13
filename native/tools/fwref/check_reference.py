@@ -328,6 +328,34 @@ def check_config(px):
     no_green(px, "config")
 
 
+def check_config_edit(px):
+    # Item editor state (gConfigEdit.cpp showConfigList4/showConfigItemLabel):
+    # the submenu is hidden, the list moves to x=401 w=197, and the title /
+    # description occupy the blank space cover behind it.
+    eq(px, 400, 10, (0x08, 0x08, 0x08), "config_edit title bar bg")
+    eq(px, 50, 200, (0x0A, 0x0A, 0x0A), "config_edit basemenu list bg")
+    eq(px, 300, 200, (0x0A, 0x0A, 0x0A), "config_edit blank space cover")
+    eq(px, 470, 300, (0x0A, 0x0A, 0x0A), "config_edit option list bg")
+    eq(px, 700, 200, (0x0A, 0x0A, 0x0A), "config_edit right blank space cover")
+    eq(px, 201, 200, (0xCD, 0x18, 0x18), "config_edit frame left")
+    eq(px, 100, 450, (0x0A, 0x0A, 0x0A), "config_edit bottom bar bg")
+    if not any_pixel(px, 215, 395, 30, 56, lambda r, g, b: r == g == b and r > 150):
+        fail("config_edit item title text missing")
+    if not any_pixel(px, 210, 395, 60, 200, lambda r, g, b: r == g == b and r > 150):
+        fail("config_edit item description text missing")
+    if not any_pixel(px, 414, 590, 30, 64, lambda r, g, b: r == g == b and r > 100):
+        fail("config_edit first option text missing")
+    if not any_pixel(px, 402, 597, 58, 97, lambda r, g, b: r == g == b and r > 200):
+        fail("config_edit selected option frame/text missing")
+    if not has_rgb_in(px, 620, 700, 435, 470, (0x77, 0x77, 0x77)):
+        fail("config_edit Cancel label text missing")
+    if not has_rgb_in(px, 720, 790, 435, 470, (0x77, 0x77, 0x77)):
+        fail("config_edit Apply label text missing")
+    if not has_white_in(px, 6, 90, 5, 23):
+        fail("config_edit title text missing")
+    no_green(px, "config_edit")
+
+
 def check_perform(px):
     eq(px, 400, 10, (0x08, 0x08, 0x08), "perform title bar bg")
     eq(px, 20, 50, (0x0A, 0x0A, 0x0A), "perform top value cell bg")
@@ -497,6 +525,8 @@ def main():
             check_master3(px)
         elif screen == "config":
             check_config(px)
+        elif screen == "config_edit":
+            check_config_edit(px)
         elif screen == "perform":
             check_perform(px)
         elif screen == "song":
@@ -547,6 +577,7 @@ def main():
         _, _, m3px = read_png(os.path.join(a, "master_page3.png"))
         _, _, meqpx = read_png(os.path.join(a, "master_eq.png"))
         _, _, cfpx = read_png(os.path.join(a, "config.png"))
+        _, _, cepx = read_png(os.path.join(a, "config_edit.png"))
         _, _, pfpx = read_png(os.path.join(a, "perform.png"))
         _, _, ppx = read_png(os.path.join(a, "pattern.png"))
         _, _, spx = read_png(os.path.join(a, "song.png"))
@@ -558,6 +589,7 @@ def main():
         check_master3(m3px)
         check_master_eq(meqpx)
         check_config(cfpx)
+        check_config_edit(cepx)
         check_perform(pfpx)
         check_pattern(ppx)
         check_song(spx)

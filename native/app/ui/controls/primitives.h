@@ -105,6 +105,9 @@ public:
     }
     void setShowBackground(bool show) { showBackground_ = show; }
     void setShowFrame(bool show) { showFrame_ = show; }
+    // cLabel without controlStyleCenterX: text at posX /
+    // posY + (18 - fontHeight / 2) instead of centred in the rect.
+    void setAlignLeft(bool alignLeft) { alignLeft_ = alignLeft; }
 
     void draw(Canvas& canvas) const override;
 
@@ -116,6 +119,7 @@ private:
     ImU32 frameColor_{kOneTrueRed};
     bool showBackground_{true};
     bool showFrame_{false};
+    bool alignLeft_{false};
 };
 
 // Shared cBar/cBgLabel bottom shadow: 12px vertical fade into transparent.

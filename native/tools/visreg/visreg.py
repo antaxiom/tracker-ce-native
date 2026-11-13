@@ -59,6 +59,8 @@ CASES = [
     Case("sample_granular", "sample", "sample_granular.png", "Up,Up,Up,Up,Up,Up"),
     Case("loader", "loader", "loader.png"),
     Case("config", "config", "config.png"),
+    Case("config_edit", "config", "config_edit.png",
+         args=("--config-edit", "Anti-aliasing")),
     Case("perform", "perform", "perform.png"),
     Case("file", "file", "file.png"),
 ]

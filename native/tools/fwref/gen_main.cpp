@@ -212,6 +212,22 @@ int main(int argc, char** argv)
 
     {
         trakr::emulator::FT812DisplayEmulator emu;
+        if (!fwref::renderConfigEdit(emu, scenario.config))
+        {
+            std::fprintf(stderr, "fwref_gen: failed to render config edit\n");
+            return 1;
+        }
+        const std::string path = outDir + "/config_edit.png";
+        if (!emu.savePng(path))
+        {
+            std::fprintf(stderr, "fwref_gen: cannot write %s\n", path.c_str());
+            return 1;
+        }
+        std::printf("wrote %s\n", path.c_str());
+    }
+
+    {
+        trakr::emulator::FT812DisplayEmulator emu;
         if (!fwref::renderPerform(emu, scenario.perform))
         {
             std::fprintf(stderr, "fwref_gen: failed to render perform\n");

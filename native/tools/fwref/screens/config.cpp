@@ -8,12 +8,13 @@
 namespace fwref
 {
 
-bool renderConfig(trakr::emulator::FT812DisplayEmulator& emu, const ConfigScenario& scenario)
+static bool renderConfigSpec(trakr::emulator::FT812DisplayEmulator& emu,
+                             const ConfigScenario& scenario, const char* specName)
 {
     const std::string dir = specDirectory();
     ScreenSpec spec;
     std::string error;
-    if (!loadScreenSpecJson(dir + "/config.json", spec, error))
+    if (!loadScreenSpecJson(dir + "/" + specName, spec, error))
         return false;
 
     std::vector<SpecEntry> chrome;
@@ -23,6 +24,16 @@ bool renderConfig(trakr::emulator::FT812DisplayEmulator& emu, const ConfigScenar
     Scenario s;
     s.config = scenario;
     return renderSpec(emu, spec, chrome, s);
+}
+
+bool renderConfig(trakr::emulator::FT812DisplayEmulator& emu, const ConfigScenario& scenario)
+{
+    return renderConfigSpec(emu, scenario, "config.json");
+}
+
+bool renderConfigEdit(trakr::emulator::FT812DisplayEmulator& emu, const ConfigScenario& scenario)
+{
+    return renderConfigSpec(emu, scenario, "config_edit.json");
 }
 
 } // namespace fwref

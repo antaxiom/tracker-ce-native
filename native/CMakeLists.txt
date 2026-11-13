@@ -211,6 +211,8 @@ add_executable(trakr_app
     app/ui/controls/param_value_list.h
     app/ui/controls/multi_label.cpp
     app/ui/controls/multi_label.h
+    app/ui/controls/text_box.cpp
+    app/ui/controls/text_box.h
     app/ui/screens/instrument_general.cpp
     app/ui/screens/instrument_general.h
     app/ui/screens/master_page1.cpp
@@ -421,6 +423,7 @@ add_executable(trakr_tests
     tests/test_ui_core.cpp
     tests/test_canvas_lines.cpp
     tests/test_animation.cpp
+    tests/test_config_editor.cpp
     tests/test_fwref_audit.cpp
     tools/display_emulator/FT812Emulator.cpp
     tools/display_emulator/FT812ScreensCore.cpp
@@ -477,6 +480,7 @@ add_executable(trakr_tests
     app/ui/controls/waveform.cpp
     app/ui/controls/param_value_list.cpp
     app/ui/controls/multi_label.cpp
+    app/ui/controls/text_box.cpp
     app/ui/screens/instrument_general.cpp
     app/ui/screens/master_page1.cpp
     app/ui/screens/pattern.cpp

@@ -419,6 +419,23 @@ Do not start without a design pass; Classic remains the reference profile.
   derived from the audio clock (`PlayheadPosition::songSeconds`) rather than
   accumulated frame deltas (animation-ready).
 
+## Config item editor (done)
+
+- Ported the firmware item editor (`configMenu.cpp` itemEditorOpen ->
+  `gConfigEdit.cpp` hideSubmenu/showConfigItemLabel/showConfigItemDesctription/
+  showConfigList4): the submenu hides, the option list moves to
+  `(800/8)*4+1` width `(800/8)*2-3`, the item name and description render in
+  `configLabel`/`descriptionTextBox`, and the bottom labels become Cancel (6) /
+  Apply (7). Enter opens; Up/Down move; Enter applies; Left/Esc cancels.
+- Option tables and descriptions are copied verbatim from `configMenuDefs.h`
+  (performance source, scales, roots, pad layout, on/off, limiter, recording,
+  numbering, middle C, clock in/out, channels, clock compensation, metronome).
+- New fwref state `specs/config_edit.json` + scenario edit fields
+  (`editTitle`/`editDescription`/`editItems`/`editSelected`) and
+  `renderConfigEdit`; visreg case `config_edit` = 99.51%.
+- Desktop settings without an engine consumer remain session-level (documented
+  residual); Pattern divider and Extra headroom publish to the model/engine.
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

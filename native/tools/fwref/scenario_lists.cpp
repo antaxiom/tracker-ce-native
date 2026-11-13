@@ -48,6 +48,11 @@ bool resolveStringList(const std::string& key, const Scenario& scenario,
         out = scenario.config.baseMenu;
         return true;
     }
+    if (key == "config.editItems")
+    {
+        out = scenario.config.editItems;
+        return true;
+    }
     return resolveLoaderSampleList(key, scenario, out);
 }
 

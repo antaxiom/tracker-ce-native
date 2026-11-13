@@ -130,6 +130,9 @@ bool loadScenarioJson(const std::string& path, Scenario& out, std::string& error
         s.selectedItem = c.value("selectedItem", s.selectedItem);
         s.selectedPlace = c.value("selectedPlace", s.selectedPlace);
         s.gridSelected = c.value("gridSelected", s.gridSelected);
+        s.editTitle = c.value("editTitle", s.editTitle);
+        s.editDescription = c.value("editDescription", s.editDescription);
+        s.editSelected = c.value("editSelected", s.editSelected);
         s.credits = c.value("credits", s.credits);
         s.description = c.value("description", s.description);
         if (c.contains("baseMenu") && c["baseMenu"].is_array())
@@ -139,6 +142,9 @@ bool loadScenarioJson(const std::string& path, Scenario& out, std::string& error
             for (const auto& row : c["items"])
                 if (row.is_array() && row.size() == 2)
                     s.items.emplace_back(row[0].get<std::string>(), row[1].get<std::string>());
+        if (c.contains("editItems") && c["editItems"].is_array())
+            for (const auto& n : c["editItems"])
+                s.editItems.push_back(n.get<std::string>());
     }
 
     if (j.contains("perform"))

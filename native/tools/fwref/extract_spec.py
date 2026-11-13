@@ -28,6 +28,7 @@ THEMES = "core/source/Themes.cpp"
 STYLE_DEFS = "core/libs/NewDisplay/displayStructs.h"
 TITLEBAR = "core/interface/core/titleBar.cpp"
 GCONFIG = "core/interface/configEditor/gConfigEdit.cpp"
+GCONFIGMENU = "core/interface/configEditor/configMenu.cpp"
 PERFORM = "core/interface/performanceMode/gPerformance.cpp"
 GSONG = "core/interface/songEditor/gSongEdit.cpp"
 GLOADER = "core/interface/sampleImporter/gSampleImport.cpp"
@@ -755,6 +756,62 @@ def build_config(lines, theme_fields, colors):
     return entries
 
 
+def build_config_edit(lines, theme_fields, colors, menu_lines):
+    """Config item editor state: itemEditorOpen() -> hideSubmenu(),
+    showConfigItemLabel(), showConfigItemDesctription(), showConfigList4()
+    (gConfigEdit.cpp) with Apply/Cancel labels set by configMenu.cpp."""
+    entries = build_config(lines, theme_fields, colors)
+    by_order = {e["order"]: e for e in entries}
+
+    # activateLabelsBorder(): the frame stays on the submenu place (1) while
+    # the item editor is open.
+    by_order[1]["value"] = "1"
+
+    # hideSubmenu(): the param/value list is hidden while the editor is open.
+    submenu = by_order[12]
+    submenu["hidden"] = True
+    submenu["override_source"] = src(GCONFIG, lines, 517, 528)
+
+    # showConfigList4(list_width=2): list at (800/8)*4+1, width (800/8)*2-3.
+    lst = by_order[13]
+    lst["x"] = "(800 / 8) * 4 + 1"
+    lst["w"] = "((800 / 8) * 2) - 3"
+    lst["hidden"] = False
+    lst["list"] = {
+        "from": "config.editItems",
+        "start": "@config.editSelected",
+        "length": 0,
+        "linesCount": 14,
+    }
+    lst["value"] = "@config.editSelected"
+    lst["override_source"] = src(GCONFIG, lines, 360, 393)
+
+    # showConfigItemLabel(title) + the blank space cover behind it.
+    label = by_order[14]
+    label["hidden"] = False
+    label["text"] = "@config.editTitle"
+    label["override_source"] = src(GCONFIG, lines, 454, 462)
+    by_order[21]["hidden"] = False
+    by_order[21]["override_source"] = src(GCONFIG, lines, 454, 462)
+
+    # showConfigItemDesctription(description).
+    desc = by_order[16]
+    desc["hidden"] = False
+    desc["text"] = "@config.editDescription"
+    desc["override_source"] = src(GCONFIG, lines, 471, 484)
+
+    # loadConfigTextList()/loadConfigValuesList(): label[6] "Cancel",
+    # label[7] "Apply" through changeLabelText().
+    cancel = by_order[8]
+    cancel["text"] = "Cancel"
+    cancel["override_source"] = src(GCONFIGMENU, menu_lines, 470, 475)
+    apply_label = by_order[9]
+    apply_label["text"] = "Apply"
+    apply_label["override_source"] = src(GCONFIGMENU, menu_lines, 470, 475)
+
+    return entries
+
+
 def build_perform(lines, theme_fields, colors):
     entries = []
     active_labels = resolve_colors(theme_fields, colors, "activeLabelsColors")
@@ -1426,6 +1483,7 @@ def build():
     songtimer_lines = read(SONGTIMER)
     title_lines = read(TITLEBAR)
     config_lines = read(GCONFIG)
+    config_menu_lines = read(GCONFIGMENU)
     perform_lines = read(PERFORM)
     song_lines = read(GSONG)
     loader_lines = read(GLOADER)
@@ -1443,6 +1501,7 @@ def build():
             THEMES: sha_range(theme_lines, 1, len(theme_lines) - 1),
             TITLEBAR: sha_range(title_lines, 1, len(title_lines) - 1),
             GCONFIG: sha_range(config_lines, 1, len(config_lines) - 1),
+            GCONFIGMENU: sha_range(config_menu_lines, 1, len(config_menu_lines) - 1),
             PERFORM: sha_range(perform_lines, 1, len(perform_lines) - 1),
             GSONG: sha_range(song_lines, 1, len(song_lines) - 1),
             GLOADER: sha_range(loader_lines, 1, len(loader_lines) - 1),
@@ -1455,7 +1514,8 @@ def build():
     style_names = set(re.findall(r"\b(controlStyle\w+)\s*=", "\n".join(style_lines)))
     files = {INSTR: instr_lines, MASTER: master_lines, PATTERN: pattern_lines,
              SONGTIMER: songtimer_lines, THEMES: theme_lines, TITLEBAR: title_lines,
-             GCONFIG: config_lines, PERFORM: perform_lines, GSONG: song_lines,
+             GCONFIG: config_lines, GCONFIGMENU: config_menu_lines,
+             PERFORM: perform_lines, GSONG: song_lines,
              GLOADER: loader_lines, GSAMPLE: sample_lines, GPROJ: gproj_lines}
     chrome_entries = build_chrome(title_lines, songtimer_lines, theme_fields, colors)
     instr_entries = build_instrument(instr_lines, theme_fields, colors)
@@ -1464,6 +1524,8 @@ def build():
     master3_entries = build_master3(master_lines, theme_fields, colors)
     master_eq_entries = build_master_eq(master_lines, theme_fields, colors)
     config_entries = build_config(config_lines, theme_fields, colors)
+    config_edit_entries = build_config_edit(config_lines, theme_fields, colors,
+                                            config_menu_lines)
     perform_entries = build_perform(perform_lines, theme_fields, colors)
     pattern_entries = build_pattern(pattern_lines, theme_lines, theme_fields, colors,
                                     songtimer_lines)
@@ -1485,6 +1547,8 @@ def build():
         validate_entry(e, files, style_names, "master_eq")
     for e in config_entries:
         validate_entry(e, files, style_names, "config")
+    for e in config_edit_entries:
+        validate_entry(e, files, style_names, "config_edit")
     for e in perform_entries:
         validate_entry(e, files, style_names, "perform")
     for e in pattern_entries:
@@ -1553,6 +1617,14 @@ def build():
         "provenance": provenance,
         "entries": config_entries,
     }
+    config_edit = {
+        "screen": "config_edit",
+        "scenario": "config",
+        "theme": "default",
+        "chrome": {"title": "Config", "rightLabel": ""},
+        "provenance": provenance,
+        "entries": config_edit_entries,
+    }
     perform = {
         "screen": "perform",
         "scenario": "perform",
@@ -1612,6 +1684,7 @@ def build():
         "master_page3.json": master_page3,
         "master_eq.json": master_eq,
         "config.json": config,
+        "config_edit.json": config_edit,
         "perform.json": perform,
         "pattern.json": pattern,
         "song.json": song,

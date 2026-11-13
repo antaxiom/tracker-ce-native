@@ -166,6 +166,8 @@ int resolveInt(const std::string& exprOrKey, const Scenario& scenario, bool& ok)
             return scenario.config.selectedPlace;
         if (key == "config.gridSelected")
             return scenario.config.gridSelected;
+        if (key == "config.editSelected")
+            return scenario.config.editSelected;
         if (key == "song.selectedSlot")
             return scenario.song.selectedSlot;
         if (key == "song.length")
@@ -223,6 +225,10 @@ std::string resolveText(const std::string& literalOrKey, const Scenario& scenari
     if (parseSuffix(key, "master.auxMute.", idx) && idx >= 0 && idx < 4)
         return auxMuteAt(scenario, idx) ? "Unmute" : "Mute";
 
+    if (key == "config.editTitle")
+        return scenario.config.editTitle;
+    if (key == "config.editDescription")
+        return scenario.config.editDescription;
     if (key == "config.credits")
         return scenario.config.credits;
     if (key == "config.description")

@@ -98,11 +98,11 @@
    ],
    [
     "Root note",
-    "C"
+    "C1"
    ],
    [
     "Notes layout",
-    "Standard 4-Row"
+    "1"
    ],
    [
     "Anti-aliasing",
@@ -118,8 +118,15 @@
    ],
    [
     "Snap to zero",
-    "Enabled"
+    "On"
    ]
+  ],
+  "editTitle": "Anti-aliasing",
+  "editDescription": "Disabling anti-aliasing gives the vintage feeling. The samples are harsher when detuned heavily. ",
+  "editSelected": 1,
+  "editItems": [
+   "Off",
+   "On"
   ],
   "credits": "Trakr Native",
   "description": "Project Settings"

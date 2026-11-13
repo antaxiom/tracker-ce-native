@@ -110,17 +110,19 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
 
 ## Known residuals
 
-- fwref multi-state coverage now includes Instrument Effects/Automation; the
-  Config item-editor popup remains app-defined and has no reference.
+- fwref multi-state coverage now includes Instrument Effects/Automation and the
+  Config item editor (`config_edit.json`, 99.51%).
 - The Perform page has no additional firmware grid page (the earlier residual
   was incorrect); the app models every firmware Performance control.
 - Global Mixer (Master 3/3) is ported: aux volume/mute persist with the project
   and drive the mixer's delay/reverb return and dry levels; Line In remains a
   silent bus because the desktop build has no input monitoring. The Master EQ
   page is reachable from the EQ label on Master 1/3, exactly like the firmware.
-- Sample Loader import progress and the Config item-editor popup are desktop
-  workflow divergences (direct file open and direct value editing) rather than
-  missing screen controls.
+- Sample Loader import progress remains a desktop workflow divergence (direct
+  file open). The Config item editor is ported (below); settings the desktop
+  engine does not consume (anti-aliasing, limiter mode, snap-to-zero, notes
+  scale/root/layout, metronome, clock routing) update the config state but do
+  not yet drive audio/MIDI behavior.
 - Functional smoke is fully green; its comparisons now crop to the workspace so
   chrome-only changes (Undo availability, transport timer) are not mistaken for
   screen state. Fixed along the way: stop rewinds the transport row, Song delete

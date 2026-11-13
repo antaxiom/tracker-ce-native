@@ -49,6 +49,23 @@ void ConfigScreen::build() {
     submenuList_ = &display_.add<ParamValueListControl>("configSubmenuList", 14);
     submenuList_->setRect(RectI{kSubmenuX, kListY, kSubmenuW, kListH});
 
+    // Item editor controls (gConfigEdit.cpp: configListControl at
+    // (800/8)*4+1 width (800/8)*2-3, configLabel at (800/8)*2+15,27, and
+    // descriptionTextBox at (800/8)*2+10,60 width 800/4-15 height 365).
+    // Created before the blank covers so they paint on top of them.
+    editList_ = &display_.add<ListControl>("configListControl", std::vector<std::string>{}, 14);
+    editList_->setRect(RectI{(800 / 8) * 4 + 1, kListY, (800 / 8) * 2 - 3, kListH});
+    editList_->setVisible(false);
+    editorTitle_ = &display_.add<LabelControl>("configLabel", "", trakr::hw::FwFont::Regular14);
+    editorTitle_->setRect(RectI{(800 / 8) * 2 + 15, 27, 800 / 4 - 18, 55});
+    editorTitle_->setShowBackground(false);
+    editorTitle_->setAlignLeft(true);
+    editorTitle_->setVisible(false);
+    editorDescription_ =
+        &display_.add<TextBoxControl>("descriptionTextBox", trakr::hw::FwFont::Regular12, 3);
+    editorDescription_->setRect(RectI{(800 / 8) * 2 + 10, 60, 800 / 4 - 15, 365});
+    editorDescription_->setVisible(false);
+
     // blankSpaceCover[0] ({601,29,198,394}) and [1] ({201,29,198,394}) are
     // created last so the reverse composite paints them first (under the lists).
     blankCoverA_ = &display_.add<BlankCoverControl>("blankSpaceCover0");
@@ -57,10 +74,15 @@ void ConfigScreen::build() {
     blankCoverB_->setRect(RectI{(800 / 8) * 2 + 1, kListY, 800 / 4 - 2, kListH});
 
     baseList_->setOnSelect([this](int index) {
-        if (view_) view_->selectGroup(index);
+        if (!view_) return;
+        if (view_->editing()) view_->cancelEditor();
+        view_->selectGroup(index);
     });
     submenuList_->setOnSelect([this](int index) {
         if (view_) view_->selectItem(index);
+    });
+    editList_->setOnSelect([this](int index) {
+        if (view_) view_->setEditorSelection(index);
     });
 
     built_ = true;
@@ -69,6 +91,28 @@ void ConfigScreen::build() {
 void ConfigScreen::syncFromModel(const Song& song, const ConfigView& view) {
     baseList_->setSelected(static_cast<int>(view.activeGroup()));
     std::vector<ParamValueListControl::Row> rows;
+    if (view.editing()) {
+        // gConfigEdit.cpp itemEditorOpen(): hideSubmenu() + showConfigItemLabel()
+        // + showConfigItemDesctription() + showConfigList4().
+        const auto& editor = view.editor();
+        submenuList_->setVisible(false);
+        baseList_->setSelected(static_cast<int>(view.activeGroup()));
+        editList_->setVisible(true);
+        editList_->setItems(editor.options);
+        editList_->setStart(editor.selected);
+        editList_->setSelected(editor.selected);
+        editorTitle_->setVisible(true);
+        editorTitle_->setText(editor.title);
+        editorDescription_->setVisible(!editor.description.empty());
+        editorDescription_->setText(editor.description);
+        frame_->setSelected(1); // frameData.startPlace stays on the submenu place
+        return;
+    }
+
+    submenuList_->setVisible(true);
+    editList_->setVisible(false);
+    editorTitle_->setVisible(false);
+    editorDescription_->setVisible(false);
     for (const auto& row : view.currentRows(song)) rows.emplace_back(row.name, row.value);
     submenuList_->setRows(std::move(rows));
     submenuList_->setSelected(view.selectedItem());
@@ -86,6 +130,13 @@ void ConfigScreen::update(Song& song,
     build();
     view_ = &view;
 
+    // --config-edit <item>: the CLI requests an editor state for captures.
+    if (!view.pendingEditor().empty()) {
+        const std::string name = view.pendingEditor();
+        view.clearPendingEditor();
+        view.openEditorForName(name, song, engineHost);
+    }
+
     ImGui::SetCursorScreenPos(workspace.Min);
     ImGui::InvisibleButton("##gui_next_config_workspace", workspace.GetSize());
     const bool hovered = ImGui::IsItemHovered();
@@ -93,21 +144,33 @@ void ConfigScreen::update(Song& song,
         ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) || !ImGui::IsAnyItemActive();
 
     if (keyTarget && !ImGui::GetIO().WantTextInput) {
-        if (ImGui::IsKeyPressed(ImGuiKey_UpArrow)) view.moveSelection(-1);
-        if (ImGui::IsKeyPressed(ImGuiKey_DownArrow)) view.moveSelection(+1);
-        if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow)) view.switchGroup(-1);
-        if (ImGui::IsKeyPressed(ImGuiKey_RightArrow)) view.switchGroup(+1);
-        if (ImGui::IsKeyPressed(ImGuiKey_Minus) || ImGui::IsKeyPressed(ImGuiKey_KeypadSubtract)) {
-            view.setSelectedPlace(1);
-            view.adjustSelectedValue(song, engineHost, theme, -1);
-        }
-        if (ImGui::IsKeyPressed(ImGuiKey_Equal) || ImGui::IsKeyPressed(ImGuiKey_KeypadAdd)) {
-            view.setSelectedPlace(1);
-            view.adjustSelectedValue(song, engineHost, theme, +1);
+        if (view.editing()) {
+            if (ImGui::IsKeyPressed(ImGuiKey_UpArrow)) view.moveEditorSelection(-1);
+            if (ImGui::IsKeyPressed(ImGuiKey_DownArrow)) view.moveEditorSelection(+1);
+            if (ImGui::IsKeyPressed(ImGuiKey_Enter) || ImGui::IsKeyPressed(ImGuiKey_KeypadEnter))
+                view.applyEditor(song, engineHost);
+            // functLeft(): a left press closes the item editor (Cancel).
+            if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_LeftArrow))
+                view.cancelEditor();
+        } else {
+            if (ImGui::IsKeyPressed(ImGuiKey_UpArrow)) view.moveSelection(-1);
+            if (ImGui::IsKeyPressed(ImGuiKey_DownArrow)) view.moveSelection(+1);
+            if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow)) view.switchGroup(-1);
+            if (ImGui::IsKeyPressed(ImGuiKey_RightArrow)) view.switchGroup(+1);
+            if (ImGui::IsKeyPressed(ImGuiKey_Enter) || ImGui::IsKeyPressed(ImGuiKey_KeypadEnter))
+                view.openEditor(song, engineHost);
+            if (ImGui::IsKeyPressed(ImGuiKey_Minus) || ImGui::IsKeyPressed(ImGuiKey_KeypadSubtract)) {
+                view.setSelectedPlace(1);
+                view.adjustSelectedValue(song, engineHost, theme, -1);
+            }
+            if (ImGui::IsKeyPressed(ImGuiKey_Equal) || ImGui::IsKeyPressed(ImGuiKey_KeypadAdd)) {
+                view.setSelectedPlace(1);
+                view.adjustSelectedValue(song, engineHost, theme, +1);
+            }
         }
     }
 
-    if (hovered) {
+    if (hovered && !view.editing()) {
         const float wheel = ImGui::GetIO().MouseWheel;
         if (std::abs(wheel) > 0.01f) view.moveSelection((wheel > 0.0f) ? -1 : +1);
     }
@@ -121,6 +184,10 @@ void ConfigScreen::update(Song& song,
     }
 
     syncFromModel(song, view);
+    // cLabel/cTextBox colors: configItemEditorTextLabelColors[0].
+    const ImU32 editorText = ImGui::ColorConvertFloat4ToU32(theme.configItemEditorTextLabelColors[0]);
+    editorTitle_->setColors(editorText, editorText, editorText);
+    editorDescription_->setColor(editorText);
 }
 
 void ConfigScreen::render(ImDrawList* drawList,

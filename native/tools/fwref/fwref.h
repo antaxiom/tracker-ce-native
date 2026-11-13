@@ -100,6 +100,11 @@ struct ConfigScenario
     int gridSelected = 0;
     std::vector<std::string> baseMenu;
     std::vector<std::pair<std::string, std::string>> items;
+    // Item editor state (showConfigList4 + showConfigItemLabel).
+    std::string editTitle;
+    std::string editDescription;
+    std::vector<std::string> editItems;
+    int editSelected = 0;
     std::string credits;
     std::string description;
 };
@@ -281,6 +286,10 @@ bool renderMasterEq(trakr::emulator::FT812DisplayEmulator& emu,
 // Renders the Config editor default screen (cList/cParamValueList/cTextBox/
 // cGridEditorPopup created from gConfigEdit.cpp).
 bool renderConfig(trakr::emulator::FT812DisplayEmulator& emu, const ConfigScenario& scenario);
+
+// Renders the Config item editor state (showConfigList4/showConfigItemLabel/
+// showConfigItemDesctription over the hidden submenu).
+bool renderConfigEdit(trakr::emulator::FT812DisplayEmulator& emu, const ConfigScenario& scenario);
 
 // Renders the Performance FX screen (cMultiLabel + vertical cLabel text).
 bool renderPerform(trakr::emulator::FT812DisplayEmulator& emu, const PerformScenario& scenario);

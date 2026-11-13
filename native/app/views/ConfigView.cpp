@@ -49,6 +49,101 @@ constexpr int kFramePlaces[4][4] = {
 
 ImU32 rgb(const ImVec4& c) { return ImGui::ColorConvertFloat4ToU32(c); }
 
+// Option tables copied verbatim from core/interface/configEditor/configMenuDefs.h
+// (menu item setups in configMenu.cpp) and core/source/scales.h.
+constexpr const char* kOnOff[] = {"Off", "On"};
+constexpr const char* kLimiterMode[] = {"Subtle", "Extreme"};
+constexpr const char* kPerformanceSource[] = {"Global", "Per Project"};
+constexpr const char* kPadsLayout[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9",
+                                       "10", "11", "12"};
+constexpr const char* kNumberingMode[] = {"Decimal, Steps from 0", "Decimal, Steps from 1",
+                                          "Hexadecimal"};
+constexpr const char* kPatternInfo[] = {"Additional info", "Track names", "Off"};
+constexpr const char* kRecOptions[] = {"Only notes", "Microtiming", "Velocity",
+                                       "Microtiming + Velocity"};
+constexpr const char* kClockIn[] = {"Internal", "USB", "MIDI In jack"};
+constexpr const char* kMidiOut[] = {"Off", "USB", "MIDI Out jack", "USB + MIDI Out jack"};
+constexpr const char* kMiddleC[] = {"C-3", "C-4", "C-5", "C-6"};
+constexpr const char* kNotesChannel[] = {"ALL",  "CH1",  "CH2",  "CH3",  "CH4",  "CH5",
+                                         "CH6",  "CH7",  "CH8",  "CH9",  "CH10", "CH11",
+                                         "CH12", "CH13", "CH14", "CH15", "CH16"};
+constexpr const char* kClockComp[] = {"-6", "-5", "-4", "-3", "-2", "-1", "0",
+                                      "1",  "2",  "3",  "4",  "5",  "6"};
+constexpr const char* kMetroTimeSig[] = {"1", "2", "3", "4", "5", "6",
+                                         "7", "8", "9", "10", "11", "12"};
+// core/source/scales.h scaleNames[39]; the trailing space in "Phrygian " is
+// firmware data and is kept verbatim.
+constexpr const char* kScaleNames[] = {
+    "Chromatic", "Minor",     "Major",     "Dorian",    "Lyd Maj",   "Lyd Min",   "Locrian",
+    "Phrygian ", "PhrygDom",  "Mixlydian", "Melo Min",  "Harm Min",  "BeBopMaj",  "BeBopDor",
+    "BeBopMix",  "Blues Min", "Blues Maj", "Penta Min", "Penta Maj", "Hung Min",  "Ukrainian",
+    "Marva",     "Todi",      "Wholetone", "Dim",       "SLocrian",  "Hirajoshi", "In Sen",
+    "Yo",        "Iwato",     "WholeHalf", "Kumoi",     "Overtone",  "DoubHarm",  "Indian",
+    "GypsyMin",  "NeapoMaj",  "NeapoMin",  "Enigmatic",
+};
+// allNotes[12..48] (C1..B3): setupPadsRootNote uses &allNotes[12], count 37.
+constexpr const char* kRootNotes[] = {
+    "C1",  "C#1", "D1",  "D#1", "E1",  "F1",  "F#1", "G1",  "G#1", "A1",  "A#1", "B1",
+    "C2",  "C#2", "D2",  "D#2", "E2",  "F2",  "F#2", "G2",  "G#2", "A2",  "A#2", "B2",
+    "C3",  "C#3", "D3",  "D#3", "E3",  "F3",  "F#3", "G3",  "G#3", "A3",  "A#3", "B3",
+    "C4",
+};
+
+// Item descriptions from configMenuDefs.h (shown in the cTextBox while the
+// item editor is open; nullptr items show no description, like the firmware).
+constexpr const char* kPerfPresDesc =
+    "You can store your Perform presets globally (the same settings for all projects) or "
+    "locally (each project has its own presets).";
+constexpr const char* kPattDivDesc =
+    "Highlights each chosen step, to give you better visual feedback in the pattern. ";
+constexpr const char* kScaleDesc =
+    "All scales use equal temperament tuning. Use the chromatic scale if you want the pad board "
+    "to use all twelve semitones. This gives you four full octaves with the base note in the "
+    "first column of each line. ";
+constexpr const char* kRootNoteDesc =
+    "Defines the note at the bottom-left of the Note popup.";
+constexpr const char* kPadLayDesc =
+    "For the first (leftmost) column in the Note popup, this value sets how many semitones "
+    "higher should each note in the row above be compared to the row below. For example, a "
+    "value of 3 will make the note above the Root the 4th note of the scale (1 + 3), the note "
+    "two rows above the Root the 7th note (1 + 3 + 3), and so on. Use this setting to customise "
+    "your Note popup for more convenient note selection. ";
+constexpr const char* kAntialDesc =
+    "Disabling anti-aliasing gives the vintage feeling. The samples are harsher when detuned "
+    "heavily. ";
+constexpr const char* kLimiterDesc =
+    "Determines how attack and release of the limiter are treated. Subtle limiting gives a more "
+    "transparent sound but will not be able to catch very sudden changes in amplitude. Extreme "
+    "limiting reacts much faster which colors the sound. ";
+constexpr const char* kHeadroomDesc =
+    "Enables more headroom in the audio signal path by reducing the input gain of sample "
+    "playback at the source to avoid clipping and improve overall dynamic range.";
+constexpr const char* kSnapToZeroDesc =
+    "When setting Start/End markers in Sample Playback editor, sudden sample amplitude changes "
+    "can cause pops and clicks. To avoid this, activate this mode to automatically snap the "
+    "markers when they are set close to the zero amplitude points which are indicated with the "
+    "green marker color.";
+constexpr const char* kHexModeDesc =
+    "Enable the throwback hex goodness: pattern step numbers start with 00 and use sixteen "
+    "digits (A means 10, B means 11, and so on all the way to F which means 15). This allows "
+    "for easy alignment with music: your music bars will always start with pattern steps 00, "
+    "10, 20, 30, ... Each bar's quarternote beat steps end with the digits ..0, ..4, ..8, and "
+    "..C. ";
+constexpr const char* kPatternInfoDesc = "Pattern info";
+constexpr const char* kRecNotesDesc =
+    "Sets what information is stored when recording: quantized notes only, notes with "
+    "microtiming, quantized notes with velocity, or notes with microtiming and velocity. You "
+    "need to record with an external MIDI device to record velocity. ";
+constexpr const char* kClockCompDesc =
+    "Allows compensating latency of incoming clock signal by number of clock pulses, where 1 "
+    "pulse = 1/6 of step. Use this with \"Clock in\" set to MIDI IN jack or USB. ";
+
+template <size_t N>
+std::vector<std::string> names(const char* const (&table)[N]) {
+    return std::vector<std::string>(std::begin(table), std::end(table));
+}
+
+
 // One pass of the firmware config controls. Coordinates stay in firmware device
 // pixels; px()/py() only map them into the app workspace.
 struct ConfigControls {
@@ -191,26 +286,30 @@ const char* ConfigView::groupName(int index) {
 }
 
 std::vector<ConfigView::ConfigRow> ConfigView::currentRows(const Song& song) const {
-    switch (activeGroup_) {
+    return rowsForGroup(static_cast<int>(activeGroup_), song);
+}
+
+std::vector<ConfigView::ConfigRow> ConfigView::rowsForGroup(int group, const Song& song) const {
+    switch (static_cast<Group>(group)) {
         case Group::ProjectSettings:
             return {
-                {"Performance presets", "Global"},
+                {"Performance presets", kPerformanceSource[perfSource_]},
                 {"Pattern divider", std::to_string(song.lpb)},
-                {"Notes scale", "Chromatic"},
-                {"Root note", "C"},
-                {"Notes layout", "Standard 4-Row"},
+                {"Notes scale", kScaleNames[notesScale_]},
+                {"Root note", kRootNotes[rootNote_]},
+                {"Notes layout", kPadsLayout[notesLayout_]},
                 // configMenuDefs.h onOffStateTexts / limiterModeTexts.
-                {"Anti-aliasing", "On"},
-                {"Limiter mode", "Subtle"},
+                {"Anti-aliasing", kOnOff[antialiasing_]},
+                {"Limiter mode", kLimiterMode[limiterMode_]},
                 {"Extra headroom", song.headroom ? "On" : "Off"},
-                {"Snap to zero", "On"}};
+                {"Snap to zero", kOnOff[snapToZero_]}};
         case Group::General:
             return {
-                {"Pattern top info", "Tracks Only"},
-                {"Recording options", "All"},
-                {"Numbering mode", hexDisplay_ ? "Hexadecimal" : "Decimal"},
-                {"Middle C", std::string("C-") + std::to_string(middleC_)},
-                {"Clock sync correction", "0"}};
+                {"Pattern top info", kPatternInfo[patternTopInfo_]},
+                {"Recording options", kRecOptions[recOptions_]},
+                {"Numbering mode", kNumberingMode[numberingMode_]},
+                {"Middle C", kMiddleC[std::clamp(middleC_, 3, 6) - 3]},
+                {"Clock sync correction", kClockComp[clockComp_]}};
         case Group::Midi: {
             auto ports = MidiManager::instance().getPortNames();
             int cur = MidiManager::instance().getCurrentPort();
@@ -219,19 +318,19 @@ std::vector<ConfigView::ConfigRow> ConfigView::currentRows(const Song& song) con
                                                                    : "None / Disconnected";
             return {
                 {"MIDI in device", portName},
-                {"Clock in", "Internal"},
-                {"Clock out", "Enabled"},
-                {"Transport in", "Enabled"},
-                {"Transport out", "Enabled"},
-                {"Notes in channel", "ALL"},
-                {"Clock sync correction", "0"}};
+                {"Clock in", kClockIn[clockIn_]},
+                {"Clock out", kMidiOut[clockOut_]},
+                {"Transport in", kClockIn[transportIn_]},
+                {"Transport out", kMidiOut[transportOut_]},
+                {"Notes in channel", kNotesChannel[notesChannel_]},
+                {"Clock sync correction", kClockComp[clockComp_]}};
         }
         case Group::Metronome:
-            return {{"State", "Off"},
-                    {"Volume", "50"},
-                    {"Pre roll", "Off"},
-                    {"Time signature num", "4"},
-                    {"Time signature denum", "4"}};
+            return {{"State", kOnOff[metroState_]},
+                    {"Volume", std::to_string(metroVolume_)},
+                    {"Pre roll", kOnOff[metroPreRoll_]},
+                    {"Time signature num", kMetroTimeSig[metroNum_]},
+                    {"Time signature denum", kMetroTimeSig[metroDenum_]}};
         case Group::About:
             return {{"Product name", "Trakr Native"},
                     {"Architecture", "Desktop Tracker"},
@@ -273,49 +372,230 @@ void ConfigView::selectItem(int index) {
 }
 
 void ConfigView::adjustSelectedValue(Song& song, EngineHost& engineHost, Theme& theme, int delta) {
-    switch (activeGroup_) {
+    (void)theme;
+    const int group = static_cast<int>(activeGroup_);
+    const ItemOptions opts = optionsFor(group, selectedItem_, song);
+    if (!opts.editable) return;
+    const int next = std::clamp(opts.value + delta, 0, static_cast<int>(opts.options.size()) - 1);
+    if (next == opts.value) return;
+    setItemValue(group, selectedItem_, next, song, engineHost);
+}
+
+ConfigView::ItemOptions ConfigView::optionsFor(int group, int item, const Song& song) const {
+    ItemOptions out;
+    auto use = [&out](std::vector<std::string> options, int value, const char* description) {
+        out.options = std::move(options);
+        out.value = std::clamp(value, 0, std::max(0, static_cast<int>(out.options.size()) - 1));
+        out.description = description ? description : "";
+        out.editable = true;
+        return out;
+    };
+    switch (static_cast<Group>(group)) {
         case Group::ProjectSettings:
-            if (selectedItem_ == 1) song.lpb = std::clamp(song.lpb + delta, 1, 16);
-            else if (selectedItem_ == 7) song.headroom = (delta > 0);
-            engineHost.publish(song);
+            switch (item) {
+                case 0: return use(names(kPerformanceSource), perfSource_, kPerfPresDesc);
+                case 1: {
+                    std::vector<std::string> v;
+                    for (int i = 1; i <= 16; ++i) v.push_back(std::to_string(i));
+                    return use(std::move(v), song.lpb - 1, kPattDivDesc);
+                }
+                case 2: return use(names(kScaleNames), notesScale_, kScaleDesc);
+                case 3: return use(names(kRootNotes), rootNote_, kRootNoteDesc);
+                case 4: return use(names(kPadsLayout), notesLayout_, kPadLayDesc);
+                case 5: return use(names(kOnOff), antialiasing_, kAntialDesc);
+                case 6: return use(names(kLimiterMode), limiterMode_, kLimiterDesc);
+                case 7: return use(names(kOnOff), song.headroom ? 1 : 0, kHeadroomDesc);
+                case 8: return use(names(kOnOff), snapToZero_, kSnapToZeroDesc);
+                default: break;
+            }
             break;
         case Group::General:
-            // Rows: 0 Pattern top info, 1 Recording options, 2 Numbering mode,
-            // 3 Middle C, 4 Clock sync correction.
-            if (selectedItem_ == 2) hexDisplay_ = !hexDisplay_;
-            else if (selectedItem_ == 3) middleC_ = (delta > 0) ? 3 : 4;
+            switch (item) {
+                case 0: return use(names(kPatternInfo), patternTopInfo_, kPatternInfoDesc);
+                case 1: return use(names(kRecOptions), recOptions_, kRecNotesDesc);
+                case 2: return use(names(kNumberingMode), numberingMode_, kHexModeDesc);
+                case 3: return use(names(kMiddleC), middleC_ - 3, nullptr);
+                case 4: return use(names(kClockComp), clockComp_, kClockCompDesc);
+                default: break;
+            }
             break;
         case Group::Midi:
-            if (selectedItem_ == 0) {
-                auto ports = MidiManager::instance().getPortNames();
-                if (!ports.empty()) {
-                    int cur = MidiManager::instance().getCurrentPort();
-                    int total = static_cast<int>(ports.size()) + 1;
-                    int next = ((cur + 1 + delta) % total + total) % total - 1;
-                    if (next < 0) MidiManager::instance().closePort();
-                    else MidiManager::instance().openPort(next);
+            switch (item) {
+                case 0: {
+                    std::vector<std::string> ports = MidiManager::instance().getPortNames();
+                    ports.push_back("None / Disconnected");
+                    const int cur = MidiManager::instance().getCurrentPort();
+                    const int value =
+                        (cur >= 0 && cur < static_cast<int>(ports.size()) - 1) ? cur + 1 : 0;
+                    return use(std::move(ports), value, nullptr);
                 }
+                case 1: return use(names(kClockIn), clockIn_, nullptr);
+                case 2: return use(names(kMidiOut), clockOut_, nullptr);
+                case 3: return use(names(kClockIn), transportIn_, nullptr);
+                case 4: return use(names(kMidiOut), transportOut_, nullptr);
+                case 5: return use(names(kNotesChannel), notesChannel_, nullptr);
+                case 6: return use(names(kClockComp), clockComp_, kClockCompDesc);
+                default: break;
             }
             break;
         case Group::Metronome:
+            switch (item) {
+                case 0: return use(names(kOnOff), metroState_, nullptr);
+                case 1: {
+                    std::vector<std::string> v;
+                    for (int i = 0; i <= 100; ++i) v.push_back(std::to_string(i));
+                    return use(std::move(v), metroVolume_, nullptr);
+                }
+                case 2: return use(names(kOnOff), metroPreRoll_, nullptr);
+                case 3: return use(names(kMetroTimeSig), metroNum_, nullptr);
+                case 4: return use(names(kMetroTimeSig), metroDenum_, nullptr);
+                default: break;
+            }
+            break;
         case Group::About:
             break;
     }
+    return out; // label-only row (firmware menuTypeItemLabel)
+}
+
+void ConfigView::setItemValue(int group, int item, int value, Song& song,
+                              EngineHost& engineHost) {
+    switch (static_cast<Group>(group)) {
+        case Group::ProjectSettings:
+            switch (item) {
+                case 0: perfSource_ = value; break;
+                case 1: song.lpb = std::clamp(value + 1, 1, 16); engineHost.publish(song); break;
+                case 2: notesScale_ = value; break;
+                case 3: rootNote_ = value; break;
+                case 4: notesLayout_ = value; break;
+                case 5: antialiasing_ = value; break;
+                case 6: limiterMode_ = value; break;
+                case 7: song.headroom = (value == 1); engineHost.publish(song); break;
+                case 8: snapToZero_ = value; break;
+                default: break;
+            }
+            break;
+        case Group::General:
+            switch (item) {
+                case 0: patternTopInfo_ = value; break;
+                case 1: recOptions_ = value; break;
+                case 2: numberingMode_ = value; break;
+                case 3: middleC_ = std::clamp(value + 3, 3, 6); break;
+                case 4: clockComp_ = value; break;
+                default: break;
+            }
+            break;
+        case Group::Midi:
+            switch (item) {
+                case 0: {
+                    auto ports = MidiManager::instance().getPortNames();
+                    const int port = value - 1;
+                    if (port < 0 || port >= static_cast<int>(ports.size()))
+                        MidiManager::instance().closePort();
+                    else
+                        MidiManager::instance().openPort(port);
+                    break;
+                }
+                case 1: clockIn_ = value; break;
+                case 2: clockOut_ = value; break;
+                case 3: transportIn_ = value; break;
+                case 4: transportOut_ = value; break;
+                case 5: notesChannel_ = value; break;
+                case 6: clockComp_ = value; break;
+                default: break;
+            }
+            break;
+        case Group::Metronome:
+            switch (item) {
+                case 0: metroState_ = value; break;
+                case 1: metroVolume_ = value; break;
+                case 2: metroPreRoll_ = value; break;
+                case 3: metroNum_ = value; break;
+                case 4: metroDenum_ = value; break;
+                default: break;
+            }
+            break;
+        case Group::About:
+            break;
+    }
+}
+
+bool ConfigView::openEditor(Song& song, EngineHost& engineHost) {
+    (void)engineHost;
+    const int group = static_cast<int>(activeGroup_);
+    const std::vector<ConfigRow> rows = currentRows(song);
+    const int item = std::clamp(selectedItem_, 0, std::max(0, static_cast<int>(rows.size()) - 1));
+    selectedItem_ = item;
+    ItemOptions opts = optionsFor(group, item, song);
+    if (!opts.editable) return false;
+    editor_.open = true;
+    editor_.item = item;
+    editor_.title = rows[static_cast<size_t>(item)].name;
+    editor_.description = std::move(opts.description);
+    editor_.options = std::move(opts.options);
+    editor_.selected = opts.value;
+    selectedPlace_ = 1; // firmware keeps the middle-column frame while editing
+    configListShown_ = true;
+    return true;
+}
+
+bool ConfigView::openEditorForName(const std::string& name, Song& song,
+                                   EngineHost& engineHost) {
+    for (int g = 0; g < kGroupCount; ++g) {
+        const std::vector<ConfigRow> rows = rowsForGroup(g, song);
+        for (int i = 0; i < static_cast<int>(rows.size()); ++i) {
+            if (rows[i].name != name) continue;
+            if (!optionsFor(g, i, song).editable) return false;
+            activeGroup_ = static_cast<Group>(g);
+            selectedItem_ = i;
+            return openEditor(song, engineHost);
+        }
+    }
+    return false;
+}
+
+void ConfigView::moveEditorSelection(int delta) {
+    if (!editor_.open) return;
+    setEditorSelection(editor_.selected + delta);
+}
+
+void ConfigView::setEditorSelection(int index) {
+    if (!editor_.open) return;
+    editor_.selected =
+        std::clamp(index, 0, std::max(0, static_cast<int>(editor_.options.size()) - 1));
+}
+
+void ConfigView::applyEditor(Song& song, EngineHost& engineHost) {
+    if (!editor_.open) return;
+    setItemValue(static_cast<int>(activeGroup_), editor_.item, editor_.selected, song, engineHost);
+    cancelEditor();
+}
+
+void ConfigView::cancelEditor() {
+    editor_ = ConfigEditor{};
+    configListShown_ = false;
+    selectedPlace_ = 1;
 }
 
 std::vector<hw::ScreenButton> ConfigView::getScreenButtons(Song& song, EngineHost& engineHost,
                                                            Theme& theme, Screen& activeScreen,
                                                            bool firmwareParity) {
     if (firmwareParity) {
-        // gConfigEdit.cpp bottom cLabels (specs/config.json): idle state shows
-        // every cell blank except slot 7 "Enter". Editing stays available via
-        // the keyboard (arrow keys adjust, PageUp/PageDown switch group).
+        // gConfigEdit.cpp bottom cLabels: the idle state shows every cell blank
+        // except slot 7 "Enter" (showDefaultConfigScreen). While the item
+        // editor is open the firmware shows "Cancel" (6) and "Apply" (7)
+        // (loadConfigTextList/loadConfigValuesList via changeLabelText).
         std::vector<hw::ScreenButton> btns(8);
         for (auto& b : btns) b = {"", "", "", "", hw::UnderlineColor::None, false, false, nullptr};
-        btns[7] = {"Enter", "", "", "", hw::UnderlineColor::Green, true, false, [&]() {
-            selectedPlace_ = 1;
-            engineHost.publish(song);
-        }};
+        if (editor_.open) {
+            btns[6] = {"Cancel", "", "", "", hw::UnderlineColor::Green, true, false,
+                       [this]() { cancelEditor(); }};
+            btns[7] = {"Apply", "", "", "", hw::UnderlineColor::Green, true, false,
+                       [this, &song, &engineHost]() { applyEditor(song, engineHost); }};
+        } else {
+            btns[7] = {"Enter", "", "", "", hw::UnderlineColor::Green, true, false,
+                       [this, &song, &engineHost]() { openEditor(song, engineHost); }};
+        }
         return btns;
     }
     std::vector<hw::ScreenButton> btns(8);
@@ -323,7 +603,7 @@ std::vector<hw::ScreenButton> ConfigView::getScreenButtons(Song& song, EngineHos
     btns[1] = {"Value +", "", "", "", hw::UnderlineColor::Green, true, false, [&]() { selectedPlace_ = 1; adjustSelectedValue(song, engineHost, theme, 1); }};
     btns[2] = {"Reset", "Default", "", "", hw::UnderlineColor::Dimmed, true, false, [&]() { song.masterGainDb = -3.5f; song.lpb = 4; engineHost.publish(song); }};
     btns[3] = {"Theme", "Classic", "", "", hw::UnderlineColor::Green, true, false, [&]() { theme = makeTrackerClassicTheme(); }};
-    btns[4] = {"Format", hexDisplay_ ? "Hex" : "Dec", "", "", hw::UnderlineColor::Green, true, hexDisplay_, [&]() { hexDisplay_ = !hexDisplay_; }};
+    btns[4] = {"Format", numberingMode_ == 2 ? "Hex" : "Dec", "", "", hw::UnderlineColor::Green, true, numberingMode_ == 2, [&]() { numberingMode_ = (numberingMode_ == 2) ? 0 : 2; }};
     btns[5] = {"Prev", "Group", "", "", hw::UnderlineColor::Dimmed, true, false, [this]() {
         activeGroup_ = static_cast<Group>((static_cast<int>(activeGroup_) + 4) % 5);
         selectedItem_ = 0; selectedPlace_ = 0;

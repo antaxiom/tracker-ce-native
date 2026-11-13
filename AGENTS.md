@@ -35,6 +35,7 @@ python3 native/tools/os_input/os_input_runner.py
 ./native/build/trakr_app --screen instrument --gui-next --lcd-shot --screenshot /tmp/instrument.png
 ./native/build/trakr_app --screen master --gui-next --lcd-shot --screenshot /tmp/master.png
 ./native/build/trakr_app --screen pattern --gui-next --lcd-shot --screenshot /tmp/pattern.png
+./native/build/trakr_app --screen config --config-edit "Anti-aliasing" --lcd-shot --screenshot /tmp/config_edit.png
 
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots
@@ -114,7 +115,8 @@ Current source-true scores (≥95.0% target):
 | Sample Slice | 97.92% | ✅ |
 | Sample Granular | 97.92% | ✅ |
 | Sample Loader | 99.36% | ✅ |
-| Config | 99.50% | ✅ |
+| Config | 99.53% | ✅ |
+| Config item editor | 99.51% | ✅ |
 | Performance | 98.14% | ✅ |
 | File | 99.29% | ✅ |
 
