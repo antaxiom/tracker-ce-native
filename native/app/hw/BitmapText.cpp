@@ -103,4 +103,53 @@ void fwDrawText(ImDrawList* dl, FwFont font, float screenX, float screenYTop,
     }
 }
 
+void fwDrawTextOn(ImDrawList* dl, FwFont font, float screenX, float screenYTop,
+                  const char* text, ImU32 color, ImU32 bg, float sx, float sy) {
+    if (!dl || !text) return;
+    const GlyphFont& f = glyphFont(font);
+    const int glyphBytes = f.linestride * f.height;
+    const int baseA = static_cast<int>((color >> IM_COL32_A_SHIFT) & 0xFF);
+    const int baseR = static_cast<int>((color >> IM_COL32_R_SHIFT) & 0xFF);
+    const int baseG = static_cast<int>((color >> IM_COL32_G_SHIFT) & 0xFF);
+    const int baseB = static_cast<int>((color >> IM_COL32_B_SHIFT) & 0xFF);
+    const int bgR = static_cast<int>((bg >> IM_COL32_R_SHIFT) & 0xFF);
+    const int bgG = static_cast<int>((bg >> IM_COL32_G_SHIFT) & 0xFF);
+    const int bgB = static_cast<int>((bg >> IM_COL32_B_SHIFT) & 0xFF);
+    auto mix = [](int fg, int b, int a) { return (fg * a + b * (255 - a)) / 255; };
+    float dx = screenX;
+    for (const unsigned char* p = reinterpret_cast<const unsigned char*>(text); *p; ++p) {
+        const unsigned char ch = *p;
+        if (ch >= f.firstChar && ch < 128 && f.widths[ch] > 0) {
+            const uint8_t* glyph = f.data.data() + 148 + (ch - f.firstChar) * glyphBytes;
+            for (int r = 0; r < f.height; ++r) {
+                const uint8_t* row = glyph + r * f.linestride;
+                auto nibbleAt = [row](int c) {
+                    const uint8_t bv = row[c / 2];
+                    return static_cast<uint8_t>((c % 2 == 0) ? ((bv >> 4) & 0x0F) : (bv & 0x0F));
+                };
+                int c = 0;
+                while (c < f.width) {
+                    const int a = (nibbleAt(c) * 17 * baseA) / 255;
+                    if (a == 0) {
+                        ++c;
+                        continue;
+                    }
+                    const ImU32 col = IM_COL32(mix(baseR, bgR, a), mix(baseG, bgG, a),
+                                               mix(baseB, bgB, a), 255);
+                    int runEnd = c + 1;
+                    while (runEnd < f.width) {
+                        const int na = (nibbleAt(runEnd) * 17 * baseA) / 255;
+                        if (na != a) break;
+                        ++runEnd;
+                    }
+                    dl->AddRectFilled(ImVec2(dx + c * sx, screenYTop + r * sy),
+                                      ImVec2(dx + runEnd * sx, screenYTop + (r + 1) * sy), col);
+                    c = runEnd;
+                }
+            }
+        }
+        if (ch < 128) dx += f.widths[ch] * sx;
+    }
+}
+
 } // namespace trakr::hw

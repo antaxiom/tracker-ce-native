@@ -103,7 +103,7 @@ Current source-true scores (≥95.0% target):
 | Screen / state | Similarity | Status |
 |----------------|-----------|--------|
 | Pattern | 99.73% | ✅ |
-| Song | 98.96% | ✅ |
+| Song | 98.97% | ✅ |
 | Instrument General | 99.87% | ✅ |
 | Instrument Effects | 99.99% | ✅ |
 | Instrument Automation | 99.98% | ✅ |
@@ -118,7 +118,7 @@ Current source-true scores (≥95.0% target):
 | Config | 99.67% | ✅ |
 | Config item editor | 99.66% | ✅ |
 | Performance | 98.35% | ✅ |
-| File | 99.28% | ✅ |
+| File | 99.29% | ✅ |
 
 These are full-frame comparisons against the audited fwref scenario, measured by
 `native/tools/visreg/visreg.py`. The remaining difference is mostly app chrome
@@ -154,6 +154,10 @@ and markers align within ~1px.
   `grad_h = 12`) are theme-gated like the firmware: `theme.bottomScreenShadow`
   enables cList/cBar/cSongPlayer shadows and `theme.barShadow` the bar
   gradient. Classic enables both; other themes must not inherit them.
+- Bitmap text on a flat background must go through `fwDrawTextOn` (pre-blended
+  with the emulator's integer blend); GPU alpha blending rounds differently and
+  leaves a 1-value fringe on every antialiased edge. The title bar is pixel
+  identical with this. Workspace controls still use plain `fwDrawText`.
 - Animation: sample `ui::animationNowMs()` at draw time (never accumulate
   per-frame deltas), report animated controls through `Control::animatingAt`,
   and use `ui::Tween`/`ui::Blinker` (`native/app/ui/animation.h`). Captures

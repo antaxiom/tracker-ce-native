@@ -90,9 +90,10 @@ void HeaderBar::render(const ImRect& rect,
         return static_cast<float>(trakr::hw::fwTextWidth(trakr::hw::FwFont::Bold17, t));
     };
     auto bText = [&](float devX, const char* t, ImU32 col) {
-        trakr::hw::fwDrawText(drawList, trakr::hw::FwFont::Bold17,
-                              rect.Min.x + devX * scale,
-                              rect.Min.y + kTitleCellTop * scale, t, col, scale, scale);
+        trakr::hw::fwDrawTextOn(drawList, trakr::hw::FwFont::Bold17,
+                                rect.Min.x + devX * scale,
+                                rect.Min.y + kTitleCellTop * scale, t, col,
+                                IM_COL32(8, 8, 8, 255), scale, scale);
     };
     ImU32 textWhite = IM_COL32(255, 255, 255, 255);
 

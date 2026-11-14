@@ -83,9 +83,9 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
             if (txt == nullptr || txt[0] == '\0') return;
             const int tw = trakr::hw::fwTextWidth(font, txt);
             const int th = trakr::hw::fwTextHeight(font);
-            trakr::hw::fwDrawText(dl, font, rect.Min.x + (cxDev - tw / 2.0f) * scale,
-                                  rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col, scale,
-                                  scale);
+            trakr::hw::fwDrawTextOn(dl, font, rect.Min.x + (cxDev - tw / 2.0f) * scale,
+                                    rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col,
+                                    IM_COL32(10, 10, 10, 255), scale, scale);
         };
         if (!topStr.empty()) {
             fwLabel(trakr::hw::FwFont::Regular14, twoLine ? 17.0f : 27.0f, topCol,
@@ -238,9 +238,9 @@ int ScreenButtons::render(const ImRect& rect, bool shiftHeld, float scale) {
             const int tw = trakr::hw::fwTextWidth(f, txt);
             const int th = trakr::hw::fwTextHeight(f);
             const float cxDev = static_cast<float>((800 / 8) * i + (800 / 16));
-            trakr::hw::fwDrawText(drawList, f, rect.Min.x + (cxDev - tw / 2.0f) * scale,
-                                  rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col, scale,
-                                  scale);
+            trakr::hw::fwDrawTextOn(drawList, f, rect.Min.x + (cxDev - tw / 2.0f) * scale,
+                                    rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col,
+                                    IM_COL32(10, 10, 10, 255), scale, scale);
         };
         if (!topStr.empty() && patternChrome_) {
             // gPatternEdit labels: Font3 (Regular14) grey_77 / grey_33.

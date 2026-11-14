@@ -512,6 +512,16 @@ Do not start without a design pass; Classic remains the reference profile.
 - Tests: `Mixer line-in bus monitoring` and `Engine drains capture frames into
   the line-in bus` (146 cases total).
 
+## Pre-blended chrome text
+
+- Added `hw::fwDrawTextOn`, which composites each L4 nibble against a known flat
+  background using the emulator's integer blend ((src*a + dst*(1-a)) / 255) and
+  draws the result opaque. GPU alpha blending rounded edges differently, which
+  was the entire title-bar residual.
+- HeaderBar (title/transport/right label) and the ScreenButtons deck labels use
+  it; the title bar now matches the reference pixel-for-pixel and the Pattern
+  deck diff dropped from 500 to 339 px.
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

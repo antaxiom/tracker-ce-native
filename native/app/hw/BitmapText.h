@@ -29,4 +29,12 @@ int fwTextHeight(FwFont font);
 void fwDrawText(ImDrawList* dl, FwFont font, float screenX, float screenYTop,
                 const char* text, ImU32 color, float sx, float sy);
 
+// Same, but pre-blends every glyph pixel against an opaque background with the
+// emulator's integer blend ((src*a + dst*(255-a)) / 255) and draws the result
+// opaque. GPU alpha blending rounds differently, which shows up as a 1-value
+// fringe on every antialiased glyph edge in the visual-regression diff. Use
+// only where the background is known to be flat `bg`.
+void fwDrawTextOn(ImDrawList* dl, FwFont font, float screenX, float screenYTop,
+                  const char* text, ImU32 color, ImU32 bg, float sx, float sy);
+
 } // namespace trakr::hw

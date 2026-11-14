@@ -135,6 +135,9 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   entirely (the bitmap offsets were absolute and pushed them below the frame);
   Master 2/3 deck labels now carry the gMasterParams content ("%.2f dB" name,
   Unmute/Mute value) instead of Track N/dB.
+- Chrome text is pre-blended against the flat title-bar (#080808) and deck
+  (#0A0A0A) backgrounds with `fwDrawTextOn`, reproducing the emulator's integer
+  blend; the title bar now matches the reference exactly (0 differing pixels).
 - Chrome text is drawn with the firmware L4 bitmap fonts instead of ImGui
   TTFs: `HeaderBar` (title, transport with the Bold17 `\x18\x19` stop icons,
   right label) and the `ScreenButtons` deck labels (Regular14 name at y 442/452,
