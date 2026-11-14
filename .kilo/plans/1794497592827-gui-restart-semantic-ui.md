@@ -559,14 +559,68 @@ Do not start without a design pass; Classic remains the reference profile.
   2/3 99.63, 3/3 99.84, EQ 99.84, Sample 99.80, Slice 99.71, Granular 99.68,
   Loader 99.84, Config 99.97, item editor 99.97, Perform 98.84, File 99.60.
 
+## Pixel-exact Perform, Track Mixer, and tracker text (2026-11-14)
+
+Commit `1d0ebf2`:
+
+- `Canvas::textVertical270`: dropped the +0.5 x rounding and shifted glyphs one
+  device row lower (quad-vs-pixel convention). Perform FX names and Song track
+  names are pixel-exact.
+- `VerticalLabelControl` adds the firmware rotate-matrix's +font-height y
+  offset (label.cpp nets `+h`); Perform FX names were ~22px high.
+- `ScreenButtons` bottom labels: posY is 424 (cBgLabel starts at 425) and text
+  centring uses C integer `th/2`. The `2.0f` divisor blurred the 19px name line
+  and dropped the 22px value line a row. `patternChrome` labels share the fix.
+- `MultiLabelControl` values/top pre-blend against the grey_0A cell fill
+  (removes the +1 GPU-blend fringe).
+- Perform bar no longer shrinks a row; inactive track buttons show an empty
+  label like `showTracksState`.
+- `TrackMixerScreen`: level bar is the full-column backdrop (x=2+100i, y=29,
+  w=97, h=394), gain fader drawn on top; creation order follows gMasterParams
+  (fader before level) because `renderAll` composites in reverse creation order.
+- `Canvas::hGradient` emits device-pixel columns with EVE's `t=(x-x0)/(x1-x0)`
+  steps (every 8px cBar shadow).
+- `TrackerControl`: row numbers follow `Number2Bitmaps` (6px compressed gap);
+  note/instrument/fx text uses `fonts[1]` (Light17, `text_font=1` in
+  tracker.cpp), pre-blended against `cellBackground()`; track headers pre-blend.
+
+Visreg after batch: 17/17 pass; Perform and Master 2/3 are pixel-exact.
+`trakr_tests` 147 cases / 538,818 assertions pass.
+
+**Metric caveat.** `compare -metric AE` here is a normalised error sum, not a
+pixel count. Exact per-pixel parity is lower (pattern 98.17%, song 98.65%,
+sample_slice 98.65%, granular 98.34%, loader 98.43%, file 98.10%, config
+99.36, config_edit 99.56, instrument 99.58, master1 99.28, master3 99.75,
+sample 99.30). Decide whether to add exact-count gating (see Phase A).
+
+## Phase A gate runs (2026-11-14)
+
+- A2 gates: `functional_smoke.py` 17/17; `gui_audit.py core.json` clean
+  (4 scenarios); `refcal.py --all` 8/8 hardware references pass.
+- A1: visreg gained `--exact` (exact per-pixel gate, additive; default AE path
+  unchanged). Committed `95da8ba`.
+- A3: repo hygiene left minimal this pass — untracked `.agents/`,
+  `.github/workflows/native-ci.yml`, `TEST_INFRA.md`, `TEST_READY.md`,
+  `kilo-handoff.md`, `imgui.ini`, `render/`, three `screen_*_phase5.png`.
+  Protected: keep `render/` and the three phase5 PNGs; modified README.md is
+  not ours and is left unstaged. Nothing was deleted.
+- A4: this log updated with commit `1d0ebf2` (performed above).
+
 ## Immediate next steps
 
-1. Commit and tag `native/` as `pre-gui-restart`; record baselines.
-2. Write ADR-1..4 and merge them into `PROJECT.md`.
-3. Add the `native/app/ui/` skeleton and the Classic/Studio layout contexts.
-4. Port Instrument General and run the Phase 2 gate.
-5. Start the fwref workstream with FW-1 (strict mode) and FW-3/5/6 assertions; publish the
-   call inventory and confidence status.
-6. Build the FW-8 calibration harness from the existing reference videos and record
-   per-region structural results.
-7. On gate pass, proceed with Phase 3 control library and Phase 4 screen order.
+Phase A — verification and housekeeping (now):
+  1. Decide the parity metric (AE 95% vs exact counts; prefer additive exact gate).
+  2. Run the remaining gates: functional_smoke.py, gui_audit.py core.json, refcal.py (all pass this session).
+  3. Triage untracked repo artifacts; keep `screen_*_phase5.png`, `render/`.
+  4. Log each phase's gate results into this file and phase6-verification.md.
+
+Phase B — Phase 6 parity residuals, by exact-pixel impact:
+  5. Pattern dash 11px-vs-10px advance (largest pattern residual).
+  6. Generalise pre-blended workspace text to Song/Sample/Loader.
+  7. File and Loader exact-parity residuals (lowest scores).
+  8. Sample Granular residual / cLineIndicator emulator gap.
+  9. Config/Instrument/Master 1 residuals.
+
+Phase C — unported screens: Instrument/Patch (after Phase B exits), then the
+Sample Loader import-progress workflow (design decision + new fwref states).
+Phase D — Studio/Demo feature expansion (only after Phase C).
