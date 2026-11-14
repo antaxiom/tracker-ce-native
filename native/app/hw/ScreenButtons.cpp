@@ -70,7 +70,7 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
         const std::string& btmStr = (shiftHeld && !btn.shiftValue.empty()) ? btn.shiftValue : btn.value;
         const bool twoLine = !btmStr.empty();
 
-        const bool dimmed = (btn.underline == UnderlineColor::Dimmed);
+        const bool dimmed = (btn.underline == UnderlineColor::Dimmed) || btn.dimText;
         ImU32 topCol = dimmed ? IM_COL32(0x33, 0x33, 0x33, 255) : IM_COL32(0x77, 0x77, 0x77, 255);
         ImU32 btmCol = dimmed ? IM_COL32(0x57, 0x57, 0x57, 255) : IM_COL32(255, 255, 255, 255);
 
@@ -79,16 +79,16 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
         // single-line labels; text2 sits one 20px step lower. x is the label
         // centre (controlStyleCenterX): (800/8)*i + 800/16.
         const float cxDev = static_cast<float>((800 / 8) * i + (800 / 16));
-        auto fwLabel = [&](trakr::hw::FwFont font, float cyDev, ImU32 col, const char* txt) {
+        auto fwLabel = [&](trakr::hw::FwFont font, float cyRel, ImU32 col, const char* txt) {
             if (txt == nullptr || txt[0] == '\0') return;
             const int tw = trakr::hw::fwTextWidth(font, txt);
             const int th = trakr::hw::fwTextHeight(font);
             trakr::hw::fwDrawText(dl, font, rect.Min.x + (cxDev - tw / 2.0f) * scale,
-                                  rect.Min.y + (cyDev - th / 2.0f) * scale, txt, col, scale,
+                                  rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col, scale,
                                   scale);
         };
         if (!topStr.empty()) {
-            fwLabel(trakr::hw::FwFont::Regular14, twoLine ? 442.0f : 452.0f, topCol,
+            fwLabel(trakr::hw::FwFont::Regular14, twoLine ? 17.0f : 27.0f, topCol,
                     topStr.c_str());
         }
 
@@ -107,7 +107,7 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
             // text2 uses Font2 (Light17) in colors[3] (white).
             const bool filterType = (btn.label == "Filter Type");
             fwLabel(filterType ? trakr::hw::FwFont::Regular14 : trakr::hw::FwFont::Light17,
-                    462.0f, filterType ? topCol : btmCol, btmStr.c_str());
+                    37.0f, filterType ? topCol : btmCol, btmStr.c_str());
         }
     }
 
@@ -233,20 +233,20 @@ int ScreenButtons::render(const ImRect& rect, bool shiftHeld, float scale) {
 
         // 1. Top label: centered at y = 440 (two-line) or y = 452 (single-line)
         float xOffset = (isPerformMode && !isSolidOrange) ? 1.0f * scale : -0.5f * scale;
-        auto patternLabel = [&](trakr::hw::FwFont f, float cyDev, ImU32 col, const char* txt) {
+        auto patternLabel = [&](trakr::hw::FwFont f, float cyRel, ImU32 col, const char* txt) {
             if (txt == nullptr || txt[0] == '\0') return;
             const int tw = trakr::hw::fwTextWidth(f, txt);
             const int th = trakr::hw::fwTextHeight(f);
             const float cxDev = static_cast<float>((800 / 8) * i + (800 / 16));
             trakr::hw::fwDrawText(drawList, f, rect.Min.x + (cxDev - tw / 2.0f) * scale,
-                                  rect.Min.y + (cyDev - th / 2.0f) * scale, txt, col, scale,
+                                  rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col, scale,
                                   scale);
         };
         if (!topStr.empty() && patternChrome_) {
             // gPatternEdit labels: Font3 (Regular14) grey_77 / grey_33.
             ImU32 tc = btn.enabled ? IM_COL32(0x77, 0x77, 0x77, 255)
                                    : IM_COL32(0x33, 0x33, 0x33, 255);
-            patternLabel(trakr::hw::FwFont::Regular14, twoLine ? 442.0f : 452.0f, tc,
+            patternLabel(trakr::hw::FwFont::Regular14, twoLine ? 17.0f : 27.0f, tc,
                          topStr.c_str());
         } else if (!topStr.empty()) {
             float centerTopY = rect.Min.y + (isPerformMode ? 16.0f : (twoLine ? 15.0f : 27.0f)) * scale;
@@ -259,7 +259,7 @@ int ScreenButtons::render(const ImRect& rect, bool shiftHeld, float scale) {
         float centerBtmY = rect.Min.y + (isPerformMode ? 38.0f : 36.0f) * scale;
         if (twoLine && !btmStr.empty()) {
             if (patternChrome_) {
-                patternLabel(trakr::hw::FwFont::Light17, 462.0f, btmCol, btmStr.c_str());
+                patternLabel(trakr::hw::FwFont::Light17, 37.0f, btmCol, btmStr.c_str());
             } else {
                 ui::drawTextFit(drawList, font, textX0 + xOffset, textX1 + xOffset, centerBtmY,
                                 btmCol, btmStr.c_str(), true, 10.0f * scale, 7.0f * scale,

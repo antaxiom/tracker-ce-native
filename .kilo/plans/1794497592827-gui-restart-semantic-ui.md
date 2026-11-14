@@ -485,6 +485,19 @@ Do not start without a design pass; Classic remains the reference profile.
   Granular 99.35, Loader 99.53, Config 99.66, item editor 99.65,
   Perform 98.55, File 99.36 (all >= 98.5).
 
+## Deck labels correction
+
+- ScreenButtons bitmap labels were being placed with absolute device y values
+  added to the window origin, pushing every deck label off-screen; the offsets
+  are now relative (17/27/37) and the Song deck shows Play Pattern / Play Song /
+  Undo / Add Slot / Delete Slot / Pattern / Tempo again.
+- Added `ScreenButton::dimText` for firmware grey_33 names with an active
+  underline (Song Add/Delete); Master 2/3 labels now match gMasterParams
+  (".2f dB" name + Unmute/Mute value).
+- Parity: Pattern 99.73, Instrument 99.87, Master 1/3 99.85, 2/3 99.63,
+  3/3 99.37, EQ 99.84, Sample 99.49, Slice 99.40, Granular 99.37, Loader 99.53,
+  Config 99.67, item editor 99.66, Song 98.96, Perform 98.52, File 99.28.
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

@@ -471,6 +471,8 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
                 next[scrCtx.currentOrderIdx] = std::clamp(curSlotPat + 1, 0, maxPat);
                 commitOrder(std::move(next), scrCtx.currentOrderIdx);
             }};
+            btns[3].dimText = true; // inactive label text, red underline
+            btns[4].dimText = true;
             btns[6] = {"", "", "", "", hw::UnderlineColor::None, false, false, nullptr};
             {
                 char tempoBuf[24];
@@ -493,13 +495,15 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
                 for (int i = 0; i < 8; ++i) {
                     if (i < static_cast<int>(scrCtx.song.tracks.size())) {
                         auto& trk = scrCtx.song.tracks[i];
+                        // gMasterParams.cpp:1376-1394: label = levelDbString()
+                        // ("%.2f dB"), text2 = Unmute/Mute (mixerLabel), frame
+                        // coloured per mute/solo state.
                         char dbStr[16];
-                        if (std::abs(trk.gainDb) < 0.005f) snprintf(dbStr, sizeof(dbStr), "0.00dB");
-                        else snprintf(dbStr, sizeof(dbStr), "%.2fdB", trk.gainDb);
-                        std::string line2 = trk.mute ? "Muted" : (trk.solo ? "Solo" : dbStr);
+                        snprintf(dbStr, sizeof(dbStr), "%.2f dB", trk.gainDb);
+                        const char* line2 = trk.mute ? "Unmute" : "Mute";
                         hw::UnderlineColor uCol = trk.mute ? hw::UnderlineColor::Red : (trk.solo ? hw::UnderlineColor::Orange : hw::UnderlineColor::Green);
                         bool isSel = (i == selTrack);
-                        btns[i] = {"Track " + std::to_string(i + 1), line2, "", "", uCol, true, isSel, [&scrCtx, &trk, shiftHeld, &scheduler]() {
+                        btns[i] = {dbStr, line2, "", "", uCol, true, isSel, [&scrCtx, &trk, shiftHeld, &scheduler]() {
                             if (shiftHeld) trk.solo = !trk.solo; else trk.mute = !trk.mute;
                             scrCtx.engineHost.publish(scrCtx.song); scheduler.requestRedraw();
                         }};

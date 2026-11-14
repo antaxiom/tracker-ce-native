@@ -102,23 +102,23 @@ Current source-true scores (≥95.0% target):
 
 | Screen / state | Similarity | Status |
 |----------------|-----------|--------|
-| Pattern | 99.70% | ✅ |
-| Song | 98.98% | ✅ |
-| Instrument General | 99.56% | ✅ |
+| Pattern | 99.73% | ✅ |
+| Song | 98.96% | ✅ |
+| Instrument General | 99.87% | ✅ |
 | Instrument Effects | 99.99% | ✅ |
 | Instrument Automation | 99.98% | ✅ |
 | Master 1/3 | 99.66% | ✅ |
-| Master 2/3 (Track Mixer) | 99.53% | ✅ |
-| Master 3/3 (Global Mixer) | 99.32% | ✅ |
-| Master EQ | 99.78% | ✅ |
-| Sample Playback | 99.46% | ✅ |
-| Sample Slice | 99.38% | ✅ |
-| Sample Granular | 99.35% | ✅ |
+| Master 2/3 (Track Mixer) | 99.63% | ✅ |
+| Master 3/3 (Global Mixer) | 99.37% | ✅ |
+| Master EQ | 99.84% | ✅ |
+| Sample Playback | 99.49% | ✅ |
+| Sample Slice | 99.40% | ✅ |
+| Sample Granular | 99.37% | ✅ |
 | Sample Loader | 99.53% | ✅ |
-| Config | 99.66% | ✅ |
-| Config item editor | 99.65% | ✅ |
+| Config | 99.67% | ✅ |
+| Config item editor | 99.66% | ✅ |
 | Performance | 98.35% | ✅ |
-| File | 99.36% | ✅ |
+| File | 99.28% | ✅ |
 
 These are full-frame comparisons against the audited fwref scenario, measured by
 `native/tools/visreg/visreg.py`. The remaining difference is mostly app chrome

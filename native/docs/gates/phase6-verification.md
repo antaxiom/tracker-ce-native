@@ -128,6 +128,13 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   screen state. Fixed along the way: stop rewinds the transport row, Song delete
   returns the selection to the previous slot, and the Sample parameter selector
   wraps like the legacy screen.
+- `ScreenButtons` deck labels sit at the firmware device centres (name 442
+  two-line / 452 single, value 462) and honor `ScreenButton::dimText`
+  (grey_33 name with the red underline still drawn, as in gSongEdit's
+  Add/Delete labels). The Song screen's deck labels were previously missing
+  entirely (the bitmap offsets were absolute and pushed them below the frame);
+  Master 2/3 deck labels now carry the gMasterParams content ("%.2f dB" name,
+  Unmute/Mute value) instead of Track N/dB.
 - Chrome text is drawn with the firmware L4 bitmap fonts instead of ImGui
   TTFs: `HeaderBar` (title, transport with the Bold17 `\x18\x19` stop icons,
   right label) and the `ScreenButtons` deck labels (Regular14 name at y 442/452,

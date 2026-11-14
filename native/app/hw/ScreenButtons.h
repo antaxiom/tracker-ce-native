@@ -29,6 +29,9 @@ struct ScreenButton {
     bool enabled{true};
     bool active{false};      // Selected / latched state
     std::function<void()> onClick;
+    // Firmware label colours: grey_33 text while the underline is still drawn
+    // (e.g. gSongEdit Add/Delete labels for the current slot).
+    bool dimText{false};
 };
 
 class ScreenButtons {
