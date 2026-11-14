@@ -93,7 +93,38 @@ def mismatch(a: str, b: str) -> float:
     return min(1.0, diff / total)
 
 
-def run_case(case: Case, app: str, refs: str, out_dir: str) -> tuple[str, float | None, float, str]:
+def exact_mismatch(a: str, b: str) -> float:
+    """Exact differing-pixel fraction.
+
+    ImageMagick's `-metric AE` in this build returns a normalised error sum, not
+    a pixel count, so it hides small residuals. This decodes both images to raw
+    8-bit RGB and counts pixels where any channel differs.
+    """
+    def channel_sizes(p: str) -> tuple[int, int, int]:
+        dims = image_info(p)
+        return dims[0], dims[1], dims[0] * dims[1] * 3
+
+    wa, ha, na = channel_sizes(a)
+    wb, hb, nb = channel_sizes(b)
+    if (wa, ha) != (wb, hb):
+        return 1.0
+    ra = subprocess.run(["magick", a, "-depth", "8", "rgb:-"],
+                        capture_output=True, check=True).stdout
+    rb = subprocess.run(["magick", b, "-depth", "8", "rgb:-"],
+                        capture_output=True, check=True).stdout
+    if len(ra) != na or len(rb) != nb:
+        return 1.0
+    differing = 0
+    step = 3
+    for i in range(0, na, step):
+        if ra[i] != rb[i] or ra[i + 1] != rb[i + 1] or ra[i + 2] != rb[i + 2]:
+            differing += 1
+    total = wa * ha
+    return differing / total if total > 0 else 1.0
+
+
+def run_case(case: Case, app: str, refs: str, out_dir: str,
+             want_exact: bool = False) -> tuple[str, float | None, float, str, float | None]:
     shot = os.path.join(out_dir, case.name + ".png")
     cmd = [app, "--screen", case.screen, "--lcd-shot"]
     if case.script:
@@ -110,19 +141,19 @@ def run_case(case: Case, app: str, refs: str, out_dir: str) -> tuple[str, float 
             key=lambda p: int(p.rsplit("_step", 1)[1].split(".")[0]),
         )
         if not steps:
-            return case.name, None, 0.0, "no script capture"
+            return case.name, None, 0.0, "no script capture", None
         produced = os.path.join(out_dir, steps[-1])
 
     width, height = image_info(produced)
     if (width, height) != (WIDTH, HEIGHT):
-        return case.name, None, 0.0, f"bad size {width}x{height}"
+        return case.name, None, 0.0, f"bad size {width}x{height}", None
 
     if not case.ref:
-        return case.name, None, 0.0, "rendered (no reference)"
+        return case.name, None, 0.0, "rendered (no reference)", None
 
     ref_path = os.path.join(refs, case.ref)
     if not os.path.exists(ref_path):
-        return case.name, None, 0.0, f"missing reference {case.ref}"
+        return case.name, None, 0.0, f"missing reference {case.ref}", None
 
     if case.crop:
         x, y, w, h = case.crop
@@ -132,7 +163,10 @@ def run_case(case: Case, app: str, refs: str, out_dir: str) -> tuple[str, float 
         produced, ref_path = produced + ".crop.png", ref_path + ".crop.png"
 
     diff = mismatch(produced, ref_path)
-    return case.name, diff, 1.0 - diff, ""
+    exact = None
+    if want_exact:
+        exact = 1.0 - exact_mismatch(produced, ref_path)
+    return case.name, diff, 1.0 - diff, "", exact
 
 
 def sha256(path: str) -> str:
@@ -147,6 +181,11 @@ def main() -> int:
     parser.add_argument("--out", default="")
     parser.add_argument("--threshold", type=float, default=0.95,
                         help="minimum pixel similarity (default 0.95)")
+    parser.add_argument("--exact", action="store_true",
+                        help="also require exact per-pixel similarity (no GPU/AA "
+                             "fringe tolerated) above --exact-threshold")
+    parser.add_argument("--exact-threshold", type=float, default=0.99,
+                        help="minimum exact per-pixel similarity (default 0.99)")
     parser.add_argument("--only", default="", help="comma separated case names")
     parser.add_argument("--all", action="store_true", help="run every case (default)")
     parser.add_argument("--deterministic", action="store_true",
@@ -177,7 +216,8 @@ def main() -> int:
     failures = 0
     print(f"{'case':16} {'similarity':>10}  status")
     for case in selected:
-        name, diff, similarity, note = run_case(case, args.app, args.refs, out_dir)
+        name, diff, similarity, note, exact = run_case(
+            case, args.app, args.refs, out_dir, want_exact=args.exact)
         if diff is None:
             status = note or "no reference"
             ok = note.startswith("rendered")
@@ -186,7 +226,12 @@ def main() -> int:
                 failures += 1
             continue
         ok = similarity >= args.threshold
-        print(f"{name:16} {similarity * 100:9.2f}%  {'OK' if ok else 'FAIL'} ({diff * 100:.2f}% differ)")
+        if args.exact and exact is not None and exact < args.exact_threshold:
+            ok = False
+        label = f"{similarity * 100:9.2f}%"
+        if exact is not None:
+            label += f"  exact {exact * 100:6.2f}%"
+        print(f"{name:16} {label}  {'OK' if ok else 'FAIL'} ({diff * 100:.2f}% differ)")
         if not ok:
             failures += 1
 

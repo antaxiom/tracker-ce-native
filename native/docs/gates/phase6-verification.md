@@ -255,6 +255,19 @@ decoded font header, so the extra px is not explained by the font metrics yet;
 it is the largest remaining pattern residual together with the bottom-bar
 text AA.
 
+## Metric: exact-pixel gate added to visreg (2026-11-14)
+
+`native/tools/visreg/visreg.py` keeps the AE comparison as the default gate but
+gains `--exact / --exact-threshold` (default 0.99): when set, it additionally
+decodes both frames to raw 8-bit RGB (`magick <p> rgb:-`) and counts pixels
+where any channel differs, full-frame (crops applied first). This makes small
+AA-blend residuals visible that AE absorbs.
+
+`visreg.py --all --exact` on the current tree flags five cases below 99% exact:
+pattern 98.17, song 98.65, sample_granular 98.34, loader 98.43, file 98.10.
+These are the Phase B targets. The default command remains
+`visreg.py --all --deterministic` (AE only, 17/17 at 95%).
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
