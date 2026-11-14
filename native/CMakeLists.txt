@@ -422,6 +422,7 @@ add_executable(trakr_tests
     tests/test_text_fit.cpp
     tests/test_ui_core.cpp
     tests/test_canvas_lines.cpp
+    tests/test_control_library.cpp
     tests/test_animation.cpp
     tests/test_config_editor.cpp
     tests/test_fwref_audit.cpp

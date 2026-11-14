@@ -254,6 +254,15 @@ gridEditor.
 Each control: semantic unit tests (measure, hit-test, navigation) plus a Classic visual
 golden and a Studio reflow test.
 
+**Status: complete (2026-11-14).** See `native/docs/gates/phase3-control-library.md`.
+All Phase 4/5 screens render through this library. The per-control matrix is satisfied via
+`test_ui_core.cpp` (bar/list/paramList/multiLabel/songPlayer/waveform), the screen parity
+tests (tracker/instrument/gridEditor), and the new `test_control_library.cpp` which adds:
+Classic + Studio render/reflow invariants for the self-contained controls, a TextBox
+word-wrap measure, and measure/hit-test accessors. Studio reflow is rendered at the fit-scale
+profile now (deferred full reflow stays in Phase 5/7 per ADR-0002). Suite: 151 cases /
+538,982 assertions, all pass.
+
 ### Phase 4 — Screen migration (1-3 days each)
 
 Order: Pattern -> Song -> Instrument -> Master (3 pages) -> Sample -> Loader -> Config ->
