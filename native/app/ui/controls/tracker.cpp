@@ -108,6 +108,15 @@ void TrackerControl::drawNumbers(ui::Canvas& canvas, int x, int centerY, int num
     }
 }
 
+void TrackerControl::drawCellText(ui::Canvas& canvas, int x, int centerY, const char* text,
+                                  ImU32 col, ImU32 bg) const {
+    for (const char* p = text; p && *p; ++p) {
+        const char ch[2] = {*p, '\0'};
+        canvas.textVCentered(trakr::hw::FwFont::Light17, x, centerY, col, ch, &bg);
+        x += trakr::hw::fwTextWidth(trakr::hw::FwFont::Light17, ch) + 1;
+    }
+}
+
 void TrackerControl::drawRowNumbers(ui::Canvas& canvas) const {
     for (int i = 0; i < kRowsVisible; ++i) {
         const int centerY = 28 + i * kRowHeight + 12;
@@ -165,7 +174,7 @@ void TrackerControl::drawNotes(ui::Canvas& canvas) const {
             const int centerY = 28 + 12 + kRowHeight * j;
             const ImU32 c = cellColor(0, track, j, cell.note < 0, color(2), color(6));
             const ImU32 bg = cellBackground(0, track, j);
-            canvas.textVCentered(trakr::hw::FwFont::Light17, x, centerY, c, buffer, &bg);
+            drawCellText(canvas, x, centerY, buffer, c, bg);
         }
     }
 }
@@ -185,7 +194,7 @@ void TrackerControl::drawInstruments(ui::Canvas& canvas) const {
             const int centerY = 28 + 12 + kRowHeight * j;
             const ImU32 c = cellColor(1, track, j, cell.instrument < 0, color(3), color(7));
             const ImU32 bg = cellBackground(1, track, j);
-            canvas.textVCentered(trakr::hw::FwFont::Light17, x, centerY, c, buffer, &bg);
+            drawCellText(canvas, x, centerY, buffer, c, bg);
         }
     }
 }
@@ -205,7 +214,7 @@ void TrackerControl::drawFx(ui::Canvas& canvas, int param, int offset, int slot,
             const int centerY = 28 + 12 + kRowHeight * j;
             const ImU32 c = cellColor(param, track, j, fx.type == 0, base, dim);
             const ImU32 bg = cellBackground(param, track, j);
-            canvas.textVCentered(trakr::hw::FwFont::Light17, x, centerY, c, buffer, &bg);
+            drawCellText(canvas, x, centerY, buffer, c, bg);
         }
     }
 }

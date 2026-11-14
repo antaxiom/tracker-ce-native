@@ -55,6 +55,10 @@ private:
     // Number2Bitmaps: digits advance by the 7px cell with a compressed gap.
     void drawNumbers(ui::Canvas& canvas, int x, int centerY, int number, ImU32 col,
                      ImU32 bg) const;
+    // String2Bitmaps: per-char advance is font->width (uniform for Light17),
+    // one cell per glyph. Draws a cell string that may outlive param_length.
+    void drawCellText(ui::Canvas& canvas, int x, int centerY, const char* text, ImU32 col,
+                      ImU32 bg) const;
     void drawSelection(ui::Canvas& canvas) const;
     void drawNotes(ui::Canvas& canvas) const;
     void drawInstruments(ui::Canvas& canvas) const;
