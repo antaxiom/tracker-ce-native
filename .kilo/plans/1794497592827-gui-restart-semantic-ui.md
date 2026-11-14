@@ -626,19 +626,24 @@ Commits 4652a94 (tracker dash +1 advance), 38c3aec (pattern bar row 479),
 
 ## Immediate next steps
 
-Phase A — verification and housekeeping (now):
-  1. Decide the parity metric (AE 95% vs exact counts; prefer additive exact gate).
-  2. Run the remaining gates: functional_smoke.py, gui_audit.py core.json, refcal.py (all pass this session).
-  3. Triage untracked repo artifacts; keep `screen_*_phase5.png`, `render/`.
-  4. Log each phase's gate results into this file and phase6-verification.md.
+Phase A — COMPLETE (2026-11-14). Added `--exact` parity gate (additive AE
+default unchanged, 17/17 at 95%); ran functional_smoke/gui_audit/refcal
+(all pass); logged gates; repo hygiene documented (nothing deleted).
 
-Phase B — Phase 6 parity residuals, by exact-pixel impact:
-  5. Pattern dash 11px-vs-10px advance (largest pattern residual).
-  6. Generalise pre-blended workspace text to Song/Sample/Loader.
-  7. File and Loader exact-parity residuals (lowest scores).
-  8. Sample Granular residual / cLineIndicator emulator gap.
-  9. Config/Instrument/Master 1 residuals.
+Phase B — COMPLETE (2026-11-14). Tracked residuals closed:
+- Tracker cell text +1 cell advance; pattern bar row 479; Song block height;
+  File header timer/name; Loader compare bar; list scrollbar anchor.
+- Exact parity now: pattern 99.15, song 98.97, loader 98.54, file 98.59,
+  granular 98.34, all others >= 99.03; Perform/Master2/EQ/effects exact 100%.
+Remaining residuals are documented, not app defects: (1) the fwref bottom-bar
+`value=1` reference artifact (app is value=0, source-true), (2) L4-vs-TTF glyph
+AA fringe, (3) granular cLineIndicator emulator gap, (4) EVE LINE_STRIP corners.
 
-Phase C — unported screens: Instrument/Patch (after Phase B exits), then the
-Sample Loader import-progress workflow (design decision + new fwref states).
+Phase C — unported screens / reference regeneration:
+  1. Regenerate the fwref references with bottom-bar value=0 (fixes the
+     reference artifact; lifts most exact diffs on sub-99% screens). Verify the
+     gate baseline shift in isolation before adopting.
+  2. Instrument/Patch screens (after the reference fix), firmware-mirrored.
+  3. Sample Loader import-progress workflow (design decision + new fwref states).
+
 Phase D — Studio/Demo feature expansion (only after Phase C).
