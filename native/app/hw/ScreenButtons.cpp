@@ -74,17 +74,19 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
         ImU32 topCol = dimmed ? IM_COL32(0x33, 0x33, 0x33, 255) : IM_COL32(0x77, 0x77, 0x77, 255);
         ImU32 btmCol = dimmed ? IM_COL32(0x57, 0x57, 0x57, 255) : IM_COL32(255, 255, 255, 255);
 
-        // cLabel (label.cpp:110-186): name text centre is y = 442 for two-line
-        // labels (posY 425 + height/2 - lines_step/2) and y = 452 for
-        // single-line labels; text2 sits one 20px step lower. x is the label
-        // centre (controlStyleCenterX): (800/8)*i + 800/16.
+        // cLabel (label.cpp:110-186): the eight bottom labels sit at posY=424
+        // (the cBgLabel background starts one row lower at 425). Text centring
+        // uses C integer division, so th/2 truncates: 9 for the 19px regular
+        // font, 11 for the 22px light font. A 2.0f divisor left the name text
+        // at a half-pixel offset (blurred over 12 rows).
         const float cxDev = static_cast<float>((800 / 8) * i + (800 / 16));
+        const float labelY = rect.Min.y - 1.0f * scale;
         auto fwLabel = [&](trakr::hw::FwFont font, float cyRel, ImU32 col, const char* txt) {
             if (txt == nullptr || txt[0] == '\0') return;
             const int tw = trakr::hw::fwTextWidth(font, txt);
             const int th = trakr::hw::fwTextHeight(font);
             trakr::hw::fwDrawTextOn(dl, font, rect.Min.x + (cxDev - tw / 2.0f) * scale,
-                                    rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col,
+                                    labelY + (cyRel - th / 2) * scale, txt, col,
                                     IM_COL32(10, 10, 10, 255), scale, scale);
         };
         if (!topStr.empty()) {
@@ -238,9 +240,11 @@ int ScreenButtons::render(const ImRect& rect, bool shiftHeld, float scale) {
             const int tw = trakr::hw::fwTextWidth(f, txt);
             const int th = trakr::hw::fwTextHeight(f);
             const float cxDev = static_cast<float>((800 / 8) * i + (800 / 16));
+            // Same cLabel geometry as the firmware-mode labels: posY=424 with
+            // C integer text centring (no half-pixel offsets).
             trakr::hw::fwDrawTextOn(drawList, f, rect.Min.x + (cxDev - tw / 2.0f) * scale,
-                                    rect.Min.y + (cyRel - th / 2.0f) * scale, txt, col,
-                                    IM_COL32(10, 10, 10, 255), scale, scale);
+                                    rect.Min.y - 1.0f * scale + (cyRel - th / 2) * scale, txt,
+                                    col, IM_COL32(10, 10, 10, 255), scale, scale);
         };
         if (!topStr.empty() && patternChrome_) {
             // gPatternEdit labels: Font3 (Regular14) grey_77 / grey_33.

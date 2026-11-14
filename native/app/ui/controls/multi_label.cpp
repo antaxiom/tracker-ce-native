@@ -16,10 +16,14 @@ constexpr int kMultiTextStep = 30;
 const ImU32 kValueNormalColors[3] = {kWhite, kGrey0A, kOneTrueGreen};
 const ImU32 kValueEditColors[3] = {kWhite, kGrey0A, kOneTrueRed};
 
-void drawCentered(Canvas& canvas, int centerX, int yTop, ImU32 color, const std::string& s) {
+void drawCentered(Canvas& canvas, int centerX, int yTop, ImU32 color, const std::string& s,
+                  ImU32 bg) {
     if (s.empty()) return;
     const int w = canvas.textWidth(trakr::hw::FwFont::Light17, s);
-    canvas.text(trakr::hw::FwFont::Light17, centerX - w / 2, yTop, color, s);
+    // Pre-blend against the cell fill: the emulator's integer blend and the
+    // GPU's alpha blend round differently, which leaves a +1 fringe on every
+    // antialiased edge.
+    canvas.text(trakr::hw::FwFont::Light17, centerX - w / 2, yTop, color, s, &bg);
 }
 
 } // namespace
@@ -38,12 +42,13 @@ void MultiLabelControl::draw(Canvas& canvas) const {
     const RectI shadow{r.x, r.y + r.h - 10, r.w + 1, 12};
     canvas.vGradient(shadow, colors[1], IM_COL32(0, 0, 0, 255));
 
-    drawCentered(canvas, r.x + r.w / 2, r.y + kMultiTextOffset / 2, colors[0], state_.topText);
+    drawCentered(canvas, r.x + r.w / 2, r.y + kMultiTextOffset / 2, colors[0], state_.topText,
+                 colors[1]);
     const int lineY = r.y + ccHeight + kMultiFxHole + kMultiTextOffset / 2;
     for (int i = 0; i < 4; ++i) {
         const ImU32 color = (i == state_.activeRow) ? colors[2] : colors[0];
         drawCentered(canvas, r.x + r.w / 2, lineY + i * kMultiTextStep, color,
-                     state_.labels[static_cast<size_t>(i)]);
+                     state_.labels[static_cast<size_t>(i)], colors[1]);
     }
 }
 
@@ -64,7 +69,11 @@ bool MultiLabelControl::onPress(int deviceX, int deviceY) {
 }
 
 void VerticalLabelControl::draw(Canvas& canvas) const {
-    canvas.textVertical270(trakr::hw::FwFont::Light17, rect_.x, bottomY_, color_, text_);
+    // cLabel's rotate-about-centre matrix (label.cpp:207-212) nets a +font
+    // height offset in y, so the firmware posY is one font height above the
+    // first glyph's baseline. Without it the FX names sit ~22px too high.
+    const int y = bottomY_ + trakr::hw::fwTextHeight(trakr::hw::FwFont::Light17);
+    canvas.textVertical270(trakr::hw::FwFont::Light17, rect_.x, y, color_, text_);
 }
 
 } // namespace trakr::ui

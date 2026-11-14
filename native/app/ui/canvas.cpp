@@ -82,7 +82,24 @@ void Canvas::hGradient(const RectI& r, ImU32 left, ImU32 right) const {
     const ImVec2 a = minScreen(lc_, r);
     const ImVec2 b = maxScreen(lc_, r);
     if (b.x <= a.x || b.y <= a.y) return;
-    dl_->AddRectFilledMultiColor(a, b, left, right, right, left);
+    // EVE CMD_GRADIENT interpolates at integer device pixels with
+    // t = (x - x0) / (x1 - x0); a GPU multi-colour rect samples at pixel
+    // centres, which advances every step by one. Emit the device-pixel columns
+    // explicitly so the 8px cBar gradient matches the reference exactly.
+    const int lr = (left >> IM_COL32_R_SHIFT) & 0xFF;
+    const int lg = (left >> IM_COL32_G_SHIFT) & 0xFF;
+    const int lb = (left >> IM_COL32_B_SHIFT) & 0xFF;
+    const int rr = (right >> IM_COL32_R_SHIFT) & 0xFF;
+    const int rg = (right >> IM_COL32_G_SHIFT) & 0xFF;
+    const int rb = (right >> IM_COL32_B_SHIFT) & 0xFF;
+    for (int i = 0; i < r.w; ++i) {
+        const float t = static_cast<float>(i) / static_cast<float>(r.w);
+        const ImU32 col = IM_COL32(static_cast<int>(lr + (rr - lr) * t),
+                                   static_cast<int>(lg + (rg - lg) * t),
+                                   static_cast<int>(lb + (rb - lb) * t), 255);
+        dl_->AddRectFilled(ImVec2(lc_.edgeX(static_cast<float>(r.x + i)), a.y),
+                           ImVec2(lc_.edgeX(static_cast<float>(r.x + i + 1)), b.y), col);
+    }
 }
 
 void Canvas::line(int x1, int y1, int x2, int y2, ImU32 color, float deviceThickness) const {
@@ -147,9 +164,9 @@ void Canvas::textCentered(trakr::hw::FwFont font, const RectI& r, ImU32 color,
 }
 
 void Canvas::textVCentered(trakr::hw::FwFont font, int x, int centerY, ImU32 color,
-                           std::string_view s) const {
+                           std::string_view s, const ImU32* bg) const {
     const int h = textHeight(font);
-    text(font, x, centerY - h / 2, color, s);
+    text(font, x, centerY - h / 2, color, s, bg);
 }
 
 void Canvas::textVertical270(trakr::hw::FwFont font, int centerX, int bottomY, ImU32 color,
@@ -160,7 +177,7 @@ void Canvas::textVertical270(trakr::hw::FwFont font, int centerX, int bottomY, I
     // by the per-character width reported by the bitmap font.
     const float centerScreenX = lc_.screenX(static_cast<float>(centerX));
     const float heightPx = static_cast<float>(trakr::hw::fwTextHeight(font));
-    const float xOffset = heightPx * 0.5f * lc_.scaleX + 0.5f;
+    const float xOffset = heightPx * 0.5f * lc_.scaleX;
     float curY = lc_.screenY(static_cast<float>(bottomY));
     // Glyphs rasterise at screenY(0) = origin.y - deviceTop * scale, so the
     // rotation reference must be that same y; using origin.y shifted every
@@ -178,7 +195,7 @@ void Canvas::textVertical270(trakr::hw::FwFont font, int centerX, int bottomY, I
                 const float rx = dl_->VtxBuffer[i].pos.x - rasterOriginX;
                 const float ry = dl_->VtxBuffer[i].pos.y - rasterOriginY;
                 dl_->VtxBuffer[i].pos.x = (centerScreenX - xOffset) + ry;
-                dl_->VtxBuffer[i].pos.y = curY - rx;
+                dl_->VtxBuffer[i].pos.y = curY + 1.0f * lc_.scaleY - rx;
             }
         }
         const char chStr[2] = {ch, '\0'};

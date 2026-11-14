@@ -102,22 +102,22 @@ Current source-true scores (≥95.0% target):
 
 | Screen / state | Similarity | Status |
 |----------------|-----------|--------|
-| Pattern | 99.73% | ✅ |
-| Song | 99.27% | ✅ |
-| Instrument General | 99.87% | ✅ |
-| Instrument Effects | 99.99% | ✅ |
-| Instrument Automation | 99.98% | ✅ |
-| Master 1/3 | 99.66% | ✅ |
-| Master 2/3 (Track Mixer) | 99.63% | ✅ |
-| Master 3/3 (Global Mixer) | 99.84% | ✅ |
-| Master EQ | 99.84% | ✅ |
-| Sample Playback | 99.80% | ✅ |
-| Sample Slice | 99.71% | ✅ |
-| Sample Granular | 99.68% | ✅ |
-| Sample Loader | 99.84% | ✅ |
-| Config | 99.97% | ✅ |
-| Config item editor | 99.97% | ✅ |
-| Performance | 98.35% | ✅ |
+| Pattern | 99.81% | ✅ |
+| Song | 99.71% | ✅ |
+| Instrument General | 99.97% | ✅ |
+| Instrument Effects | 100.00% | ✅ |
+| Instrument Automation | 99.99% | ✅ |
+| Master 1/3 | 99.95% | ✅ |
+| Master 2/3 (Track Mixer) | 100.00% | ✅ |
+| Master 3/3 (Global Mixer) | 99.93% | ✅ |
+| Master EQ | 100.00% | ✅ |
+| Sample Playback | 99.93% | ✅ |
+| Sample Slice | 99.84% | ✅ |
+| Sample Granular | 99.81% | ✅ |
+| Sample Loader | 99.90% | ✅ |
+| Config | 99.98% | ✅ |
+| Config item editor | 99.98% | ✅ |
+| Performance | 100.00% | ✅ |
 | File | 99.60% | ✅ |
 
 These are full-frame comparisons against the audited fwref scenario, measured by

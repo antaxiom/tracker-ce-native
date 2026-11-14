@@ -32,21 +32,23 @@ void TrackMixerScreen::build() {
         name_[i]->setColors(kTopBarLabelColors[0], kTopBarLabelColors[1],
                             kTopBarLabelColors[2]);
 
-        // showLevelBar(): level meter sits right of the gain fader.
-        level_[i] = &display_.add<BarControl>("trackLevel" + std::to_string(i), i,
-                                              BarControl::Mode::Fill);
-        level_[i]->setRect(RectI{kColumnWidth * i + 2 + 800 / 16, kMixerBarY, kMixerBarW,
-                                 kMixerBarH});
-        level_[i]->setValue(0);
-        level_[i]->setOnPress([this](int column) {
-            if (view_) view_->setSelectedTrack(column);
-        });
-
-        // showTrackVolumeBar(): gain fader, mute uses inactiveBarColors.
+        // gMasterParams.cpp: level bar is the full-column backdrop (x=2+100i,
+        // y=29, w=97, h=394) and the gain fader (x=2+100i, y=64, w=47, h=359)
+        // is painted on top of it. Creation order matters: cDisplay::step3
+        // composites in reverse creation order, so the fader is created after
+        // the level bar to end up in front.
         volume_[i] = &display_.add<BarControl>("trackVolume" + std::to_string(i), i,
                                                BarControl::Mode::Fill);
         volume_[i]->setRect(RectI{kColumnWidth * i + 2, kMixerBarY, kMixerBarW, kMixerBarH});
         volume_[i]->setOnPress([this](int column) {
+            if (view_) view_->setSelectedTrack(column);
+        });
+
+        level_[i] = &display_.add<BarControl>("trackLevel" + std::to_string(i), i,
+                                              BarControl::Mode::Fill);
+        level_[i]->setRect(RectI{kColumnWidth * i + 2, 29, kColumnWidth - 3, 394});
+        level_[i]->setValue(0);
+        level_[i]->setOnPress([this](int column) {
             if (view_) view_->setSelectedTrack(column);
         });
     }

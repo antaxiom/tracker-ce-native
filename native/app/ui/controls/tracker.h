@@ -52,12 +52,17 @@ private:
     void drawBackground(ui::Canvas& canvas) const;
     void drawLines(ui::Canvas& canvas) const;
     void drawRowNumbers(ui::Canvas& canvas) const;
+    // Number2Bitmaps: digits advance by the 7px cell with a compressed gap.
+    void drawNumbers(ui::Canvas& canvas, int x, int centerY, int number, ImU32 col,
+                     ImU32 bg) const;
     void drawSelection(ui::Canvas& canvas) const;
     void drawNotes(ui::Canvas& canvas) const;
     void drawInstruments(ui::Canvas& canvas) const;
     void drawFx(ui::Canvas& canvas, int param, int offset, int slot,
                 ImU32 base, ImU32 dim) const;
     void drawTrackNames(ui::Canvas& canvas) const;
+    // Flat fill behind a cell: selection/cursor colour or the row's background.
+    ImU32 cellBackground(int param, int track, int visibleRow) const;
     ImU32 cellColor(int param, int track, int visibleRow, bool dash, ImU32 base,
                     ImU32 dim) const;
 

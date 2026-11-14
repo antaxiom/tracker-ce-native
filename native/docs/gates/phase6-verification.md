@@ -191,6 +191,70 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   draws it, and its value comes from the audio clock
   (`PlayheadPosition::songSeconds`) instead of accumulated frame deltas.
 
+## Session: Perform, pixel-exact fixes (current)
+
+Visreg (AE) after this batch, 17/17 pass: pattern 99.81, song 99.71,
+instrument 99.97, instrument_effects 100.00, instrument_automation 99.99,
+master1 99.95, master2 100.00, master3 99.93, master_eq 100.00, sample 99.93,
+sample_slice 99.84, sample_granular 99.81, loader 99.90, config 99.98,
+config_edit 99.98, perform 100.00, file 99.60.
+
+**Metric caveat.** `compare -metric AE` in this ImageMagick build returns a
+normalised absolute-error sum (one differing channel of 255 on one pixel of a
+4-pixel image gives 0.333), not a pixel count. The AE score therefore hides
+small pixel residuals. Exact per-pixel parity (any channel differs) for the
+same captures:
+
+| Case | Exact | Diff px |
+|---|---|---|
+| perform, master2, master_eq*, instrument_effects* | 100.00% | 0 (*8) |
+| pattern | 98.17% | 7017 |
+| song | 98.65% | 5196 |
+| sample_slice | 98.65% | 5175 |
+| sample_granular | 98.34% | 6378 |
+| loader | 98.43% | 6022 |
+| file | 98.10% | 7300 |
+| config / config_edit | 99.36 / 99.56% | 2468 / 1685 |
+| instrument / master1 / master3 | 99.58 / 99.28 / 99.75% | 1630 / 2762 / 950 |
+
+The visreg gate was not changed to exact counting in this session; switching
+the metric is a separate decision because it moves every documented number.
+
+Fixes landed in this batch (all verified against `render/fwref`):
+
+- `Canvas::textVertical270`: glyph x offset drops the +0.5 rounding and y
+  lands one device row lower (quad-vs-pixel convention). Perform FX names and
+  Song track names are pixel-exact.
+- `VerticalLabelControl` adds the firmware matrix's +font-height y offset
+  (label.cpp rotate-about-centre nets `+h`): Perform FX names move 22px down.
+- `ScreenButtons` bottom labels: posY is 424 (cBgLabel starts at 425), and
+  text centring uses C integer `th/2`. The old `2.0f` divisor put the 19px
+  name line at a half-pixel offset; the 22px value line was one row low.
+  `patternChrome` labels use the same geometry.
+- `MultiLabelControl` values/top text are pre-blended against the grey_0A cell
+  fill (`fwDrawTextOn` integer blend): removes the +1 GPU-blend fringe.
+- `Perform` bar no longer shrinks by one row (row 479 separators survive);
+  inactive track buttons show an empty label like `showTracksState`.
+- `TrackMixerScreen`: level bar is the full-column backdrop (x=2+100i, y=29,
+  w=97, h=394); gain fader is painted on top at y=64, w=47. Creation order
+  follows gMasterParams (fader before level) because `renderAll` composites
+  in reverse creation order like `cDisplay::step3`.
+- `Canvas::hGradient` emits device-pixel columns with EVE's
+  `t=(x-x0)/(x1-x0)` steps instead of a GPU multi-colour rect (which samples
+  at pixel centres and was one step too bright). Affects every 8px cBar shadow.
+- `TrackerControl`: row numbers follow `Number2Bitmaps` (second digit 6px
+  after the first, 7px cell); note/instrument/fx text uses `fonts[1]`
+  (`text_font = 1` in tracker.cpp = Light17, not Light14) and is pre-blended
+  against `cellBackground()` (selection/cursor colour or the beat/normal row
+  fill); track headers pre-blend against their coloured rect.
+
+Open, not fixed: in the pattern reference, the empty-note dash cells advance
+11px per dash where the app advances 10px (dash ink positions 35/46/57 vs
+35/45/55). `String2Bitmaps` advances by `font->width` = 10 for Light17 per the
+decoded font header, so the extra px is not explained by the font metrics yet;
+it is the largest remaining pattern residual together with the bottom-bar
+text AA.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and

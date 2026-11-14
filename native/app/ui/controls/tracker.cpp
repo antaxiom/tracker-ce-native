@@ -96,19 +96,44 @@ void TrackerControl::drawLines(ui::Canvas& canvas) const {
     }
 }
 
-void TrackerControl::drawRowNumbers(ui::Canvas& canvas) const {
+void TrackerControl::drawNumbers(ui::Canvas& canvas, int x, int centerY, int number, ImU32 col,
+                                 ImU32 bg) const {
     char buffer[8];
+    const int len = std::snprintf(buffer, sizeof(buffer), "%d", number);
+    int dx = x;
+    for (int k = 0; k < len; ++k) {
+        const char one[2] = {buffer[k], '\0'};
+        canvas.textVCentered(trakr::hw::FwFont::Light14, dx, centerY, col, one, &bg);
+        dx += (k + 1 < len) ? 6 : 7;
+    }
+}
+
+void TrackerControl::drawRowNumbers(ui::Canvas& canvas) const {
     for (int i = 0; i < kRowsVisible; ++i) {
-        std::snprintf(buffer, sizeof(buffer), "%d", rowNumber(i));
         const int centerY = 28 + i * kRowHeight + 12;
-        canvas.textVCentered(trakr::hw::FwFont::Light14, 3, centerY, color(16), buffer);
-        canvas.textVCentered(trakr::hw::FwFont::Light14, 776, centerY, color(16), buffer);
+        const ImU32 bg = ((rowNumber(i) - 1) % state_.stepDev == 0) ? color(11) : color(1);
+        drawNumbers(canvas, 3, centerY, rowNumber(i), color(16), bg);
+        drawNumbers(canvas, 776, centerY, rowNumber(i), color(16), bg);
     }
     for (int i = 1; i < kRowsVisible; ++i) {
         if (rowNumber(i) == 1) {
             canvas.fillRect(ui::RectI{0, 28 + i * kRowHeight, 800, 1}, color(20));
         }
     }
+}
+
+ImU32 TrackerControl::cellBackground(int param, int track, int visibleRow) const {
+    const int row = rowIndex(visibleRow);
+    const bool inSelection =
+        state_.hasSelection && param == state_.cursorSubCol &&
+        track >= std::min(state_.selStartTrack, state_.selEndTrack) &&
+        track <= std::max(state_.selStartTrack, state_.selEndTrack) &&
+        row >= std::min(state_.selStartRow, state_.selEndRow) &&
+        row <= std::max(state_.selStartRow, state_.selEndRow);
+    const bool cursorCell = param == state_.cursorSubCol && track == state_.cursorTrack &&
+                            visibleRow == kCursorVisibleRow;
+    if (inSelection || cursorCell) return color(state_.recording ? 10 : 17);
+    return ((rowNumber(visibleRow) - 1) % state_.stepDev == 0) ? color(11) : color(1);
 }
 
 ImU32 TrackerControl::cellColor(int param, int track, int visibleRow, bool dash, ImU32 base,
@@ -139,7 +164,8 @@ void TrackerControl::drawNotes(ui::Canvas& canvas) const {
             const int x = kGutter + kOffset[0] + kTrackWidth * i;
             const int centerY = 28 + 12 + kRowHeight * j;
             const ImU32 c = cellColor(0, track, j, cell.note < 0, color(2), color(6));
-            canvas.textVCentered(trakr::hw::FwFont::Light14, x, centerY, c, buffer);
+            const ImU32 bg = cellBackground(0, track, j);
+            canvas.textVCentered(trakr::hw::FwFont::Light17, x, centerY, c, buffer, &bg);
         }
     }
 }
@@ -158,7 +184,8 @@ void TrackerControl::drawInstruments(ui::Canvas& canvas) const {
             const int x = kGutter + kOffset[1] + kTrackWidth * i;
             const int centerY = 28 + 12 + kRowHeight * j;
             const ImU32 c = cellColor(1, track, j, cell.instrument < 0, color(3), color(7));
-            canvas.textVCentered(trakr::hw::FwFont::Light14, x, centerY, c, buffer);
+            const ImU32 bg = cellBackground(1, track, j);
+            canvas.textVCentered(trakr::hw::FwFont::Light17, x, centerY, c, buffer, &bg);
         }
     }
 }
@@ -177,7 +204,8 @@ void TrackerControl::drawFx(ui::Canvas& canvas, int param, int offset, int slot,
             const int x = kGutter + offset + kTrackWidth * i;
             const int centerY = 28 + 12 + kRowHeight * j;
             const ImU32 c = cellColor(param, track, j, fx.type == 0, base, dim);
-            canvas.textVCentered(trakr::hw::FwFont::Light14, x, centerY, c, buffer);
+            const ImU32 bg = cellBackground(param, track, j);
+            canvas.textVCentered(trakr::hw::FwFont::Light17, x, centerY, c, buffer, &bg);
         }
     }
 }
@@ -193,10 +221,10 @@ void TrackerControl::drawTrackNames(ui::Canvas& canvas) const {
                                                                   : std::string();
         int width = canvas.textWidth(trakr::hw::FwFont::Bold17, name.c_str());
         width = std::min(width, 184);
-        canvas.fillRect(ui::RectI{kGutter + kTrackWidth * i + 1, 28, width + 2, 27},
-                       muted(track) ? color(12) : color(19));
+        const ImU32 headerBg = muted(track) ? color(12) : color(19);
+        canvas.fillRect(ui::RectI{kGutter + kTrackWidth * i + 1, 28, width + 2, 27}, headerBg);
         canvas.textVCentered(trakr::hw::FwFont::Bold17, kGutter + kTrackWidth * i + 4, 40,
-                             color(0), name.c_str());
+                             color(0), name.c_str(), &headerBg);
     }
 }
 

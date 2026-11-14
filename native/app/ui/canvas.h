@@ -42,7 +42,7 @@ public:
                       const ImU32* bg = nullptr) const;
     // Draw text with its vertical centre on `centerY` (tracker rows/cells).
     void textVCentered(trakr::hw::FwFont font, int x, int centerY, ImU32 color,
-                       std::string_view s) const;
+                       std::string_view s, const ImU32* bg = nullptr) const;
     // cLabel controlStyleVerticalText: glyphs rotated 270 degrees, reading
     // upwards from `bottomY`, centred on `centerX`.
     void textVertical270(trakr::hw::FwFont font, int centerX, int bottomY, ImU32 color,

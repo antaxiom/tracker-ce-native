@@ -261,10 +261,6 @@ void AppLayout::render(ScreenContext& scrCtx,
     // 5. Update and render 8 Contextual Screen Buttons (y=424..480 logical)
     updateScreenButtons(activeScreen, scrCtx, effectiveShift, showFillModal, showExportDeck, scheduler);
     ImRect btnRect = display_.buttonsRect();
-    if (activeScreen == Screen::Perform) {
-        // Firmware performance bar background ends at y=478 (row 479 stays black)
-        btnRect.Max.y -= 1.0f * display_.scale();
-    }
     screenButtons_.setPatternChrome(activeScreen == Screen::Pattern);
     screenButtons_.render(btnRect, effectiveShift, display_.scale());
     screenButtons_.handleKeyShortcuts(effectiveShift);
@@ -578,14 +574,13 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
             break;
         }
         case Screen::Perform: {
-            // gPerformance.cpp: the eight bottom cLabels show the track name in
-            // colors[0] (grey) and the assigned pattern in colors[3], only for
-            // tracks that have a pattern. Render all names uniformly (no dim /
-            // fill); tracks without a pattern keep a blank second line so the
-            // names stay on the two-line baseline.
+            // gPerformance.cpp:217-249 showTracksState/showTracksPatterns set
+            // the track name and "Patt:" text only when the button maps to an
+            // active track; inactive buttons get an empty label.
             for (int i = 0; i < 8; ++i) {
-                bool en = scrCtx.performView.isTrackEnabled(i);
-                btns[i] = {"Track " + std::to_string(i + 1), (i < 3 ? "Patt: 1" : " "), "", "",
+                const bool en = scrCtx.performView.isTrackEnabled(i);
+                btns[i] = {en ? "Track " + std::to_string(i + 1) : std::string(),
+                           en ? "Patt: 1" : std::string(), "", "",
                            hw::UnderlineColor::None,
                            true, en, [&scrCtx, i, &scheduler]() {
                                scrCtx.performView.toggleTrack(i);
