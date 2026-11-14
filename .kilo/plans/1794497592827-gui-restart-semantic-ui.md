@@ -498,6 +498,20 @@ Do not start without a design pass; Classic remains the reference profile.
   3/3 99.37, EQ 99.84, Sample 99.49, Slice 99.40, Granular 99.37, Loader 99.53,
   Config 99.67, item editor 99.66, Song 98.96, Perform 98.52, File 99.28.
 
+## Global Mixer line-in monitoring
+
+- `Mixer::setLineIn` + aux-3 gain/meter sums interleaved stereo input into the
+  master bus (gMasterParams.cpp showGlobalMixer).
+- `Engine::pushInput` accepts capture frames through a lock-free SPSC ring and
+  drains them per sub-block; `EngineHost::pushInputFrames` /
+  `setAudioInputEnabled` expose it, and `publish()` enables capture only when
+  `song.auxMute[3]` is false.
+- `MiniaudioBackend` opens a f32 stereo capture device lazily and forwards
+  frames through the new `AudioBackend::InputCallback`; headless backends stay
+  silent.
+- Tests: `Mixer line-in bus monitoring` and `Engine drains capture frames into
+  the line-in bus` (146 cases total).
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

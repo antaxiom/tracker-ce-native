@@ -39,6 +39,11 @@ void Engine::init(int sampleRate) {
     previewBufL_.resize(kMaxFrames, 0.0f);
     previewBufR_.resize(kMaxFrames, 0.0f);
 
+    // Interleaved stereo input ring (~1.5 s).
+    inputRing_.assign(static_cast<size_t>(sampleRate_) * 3, 0.0f);
+    inputWrite_.store(0);
+    inputRead_.store(0);
+
     mixer_.init(static_cast<float>(sampleRate_));
     mixer_.resizeTracks(kMaxTracks);
 }
@@ -252,6 +257,41 @@ void Engine::triggerRow(const SongSnapshot& snapshot, const Pattern& pattern, in
     }
 }
 
+void Engine::pushInput(const float* interleavedStereo, int frames) {
+    if (interleavedStereo == nullptr || frames <= 0) return;
+    if (inputRing_.empty()) return;
+    const size_t capacity = inputRing_.size();
+    size_t write = inputWrite_.load(std::memory_order_relaxed);
+    size_t read = inputRead_.load(std::memory_order_acquire);
+    size_t samples = static_cast<size_t>(frames) * 2;
+    const size_t available = (write >= read) ? (capacity - (write - read)) : (read - write);
+    if (samples > available) {
+        // Drop the oldest frames so monitoring stays live instead of lagging.
+        const size_t keep = samples - available;
+        read = (read + keep) % capacity;
+        inputRead_.store(read, std::memory_order_release);
+    }
+    for (size_t i = 0; i < samples; ++i) {
+        inputRing_[(write + i) % capacity] = interleavedStereo[i];
+    }
+    inputWrite_.store((write + samples) % capacity, std::memory_order_release);
+}
+
+int Engine::drainInput(int frames) {
+    if (inputRing_.empty() || frames <= 0) return 0;
+    const size_t capacity = inputRing_.size();
+    const size_t write = inputWrite_.load(std::memory_order_acquire);
+    const size_t read = inputRead_.load(std::memory_order_relaxed);
+    const size_t queued = (write >= read) ? (write - read) : (capacity - (read - write));
+    const size_t want = std::min<size_t>(static_cast<size_t>(frames) * 2, queued);
+    if (want == 0) return 0;
+    inputBlock_.resize(want);
+    for (size_t i = 0; i < want; ++i)
+        inputBlock_[i] = inputRing_[(read + i) % capacity];
+    inputRead_.store((read + want) % capacity, std::memory_order_release);
+    return static_cast<int>(want / 2);
+}
+
 void Engine::process(float* outStereo, int frames) {
     if (!outStereo || frames <= 0) return;
 
@@ -307,6 +347,8 @@ void Engine::process(float* outStereo, int frames) {
         }
 
         // Run mixer on subFrames into target buffer offset
+        const int inputFrames = drainInput(subFrames);
+        mixer_.setLineIn(inputFrames > 0 ? inputBlock_.data() : nullptr, inputFrames);
         mixer_.process(snap->tracks,
                        trackPtrL_.data(),
                        trackPtrR_.data(),
@@ -320,6 +362,7 @@ void Engine::process(float* outStereo, int frames) {
                        snap->masterSaturationDrive,
                        snap->masterBassBoost,
                        snap->masterSpace);
+        mixer_.setLineIn(nullptr, 0);
 
         // Mix isolated preview voice into master output if active
         if (previewVoice_ && previewVoice_->isActive()) {

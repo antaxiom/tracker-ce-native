@@ -18,6 +18,9 @@ public:
     void stop() override;
     bool isRunning() const override;
 
+    void setInputCallback(InputCallback callback) override;
+    bool setInputEnabled(bool enabled) override;
+
 private:
     struct Impl;
     std::unique_ptr<Impl> impl_;

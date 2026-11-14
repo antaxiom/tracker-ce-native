@@ -134,6 +134,7 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
     float delayPkL = 0.0f, delayPkR = 0.0f;
     float reverbPkL = 0.0f, reverbPkR = 0.0f;
     float dryPkL = 0.0f, dryPkR = 0.0f;
+    float linePkL = 0.0f, linePkR = 0.0f;
     for (int i = 0; i < frames; ++i) {
         float delOutL = 0.0f, delOutR = 0.0f;
         delay_.process(sendDelayBufL_[i], sendDelayBufR_[i], delOutL, delOutR);
@@ -157,6 +158,16 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
         reverbPkR = std::max(reverbPkR, std::fabs(retR));
         dryPkL = std::max(dryPkL, std::fabs(dryL));
         dryPkR = std::max(dryPkR, std::fabs(dryR));
+
+        // Global Mixer line-in bus (aux 3): input monitoring into the master.
+        if (auxLineGain_ > 0.0f && lineIn_ != nullptr && i < lineInFrames_) {
+            const float lineL = lineIn_[i * 2] * auxLineGain_;
+            const float lineR = lineIn_[i * 2 + 1] * auxLineGain_;
+            l += lineL;
+            r += lineR;
+            linePkL = std::max(linePkL, std::fabs(lineL));
+            linePkR = std::max(linePkR, std::fabs(lineR));
+        }
 
         // Master 5-Band Graphic EQ
         masterEq_.process(l, r);
@@ -212,7 +223,7 @@ void Mixer::process(const std::vector<TrackInfo>& trackInfos,
     storeAux(0, delayPkL, delayPkR);
     storeAux(1, reverbPkL, reverbPkR);
     storeAux(2, dryPkL, dryPkR);
-    storeAux(3, 0.0f, 0.0f); // Line In bus is silent in the desktop build
+    storeAux(3, linePkL, linePkR);
 }
 
 MeterLevels Mixer::getAuxMeters(int aux) const {

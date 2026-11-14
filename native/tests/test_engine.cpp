@@ -135,6 +135,68 @@ TEST_CASE("Mixer pan law and soft limiter", "[engine]") {
     }
 }
 
+TEST_CASE("Mixer line-in bus monitoring", "[engine][aux]") {
+    // Global Mixer "Line In" (gMasterParams.cpp showGlobalMixer): input frames
+    // are summed into the master with the aux line gain and metered on aux 3.
+    trakr::Mixer mixer(1);
+    std::vector<trakr::TrackInfo> tracks(1);
+    std::vector<float> inL(64, 0.0f), inR(64, 0.0f);
+    const float* trackL[1] = {inL.data()};
+    const float* trackR[1] = {inR.data()};
+    std::vector<float> line(64 * 2, 0.0f);
+    for (int i = 0; i < 64; ++i) {
+        line[i * 2] = 0.25f;
+        line[i * 2 + 1] = -0.25f;
+    }
+    std::vector<float> out(64 * 2, 0.0f);
+
+    mixer.setAuxGains(0.0f, 0.0f, 1.0f, 1.0f);
+    mixer.setLineIn(line.data(), 64);
+    mixer.process(tracks, trackL, trackR, out.data(), 64, 0.0f);
+    mixer.setLineIn(nullptr, 0);
+
+    REQUIRE(out[0] == Catch::Approx(0.25f).margin(1e-3f));
+    REQUIRE(out[1] == Catch::Approx(-0.25f).margin(1e-3f));
+    const auto meters = mixer.getAuxMeters(3);
+    REQUIRE(meters.peakL == Catch::Approx(0.25f).margin(1e-2f));
+    REQUIRE(meters.peakR == Catch::Approx(0.25f).margin(1e-2f));
+
+    // Muted bus (aux line gain 0) contributes nothing to the master.
+    std::fill(out.begin(), out.end(), 0.0f);
+    mixer.setAuxGains(0.0f, 0.0f, 1.0f, 0.0f);
+    mixer.setLineIn(line.data(), 64);
+    mixer.process(tracks, trackL, trackR, out.data(), 64, 0.0f);
+    mixer.setLineIn(nullptr, 0);
+    REQUIRE(out[0] == Catch::Approx(0.0f).margin(1e-6f));
+}
+
+TEST_CASE("Engine drains capture frames into the line-in bus", "[engine][aux]") {
+    trakr::Engine engine(44100);
+    trakr::Song song;
+    song.tracks.resize(1);
+    song.auxMute[3] = false;   // Line In unmuted
+    song.auxVolume[3] = 86;    // 0 dB per the firmware default
+    engine.setSongSnapshot(trakr::makeSnapshot(song));
+
+    std::vector<float> line(64 * 2, 0.0f);
+    for (int i = 0; i < 64; ++i) {
+        line[i * 2] = 0.2f;
+        line[i * 2 + 1] = 0.1f;
+    }
+    engine.pushInput(line.data(), 64);
+
+    std::vector<float> out(64 * 2, 0.0f);
+    engine.process(out.data(), 64);
+    REQUIRE(out[0] == Catch::Approx(0.2f).margin(5e-3f));
+    REQUIRE(out[1] == Catch::Approx(0.1f).margin(5e-3f));
+    REQUIRE(engine.getAuxMeters(3).peakL == Catch::Approx(0.2f).margin(1e-2f));
+
+    // No queued input: the bus is silent again.
+    std::fill(out.begin(), out.end(), 0.0f);
+    engine.process(out.data(), 64);
+    REQUIRE(std::abs(out[0]) < 1e-6f);
+}
+
 TEST_CASE("Mixer mute and solo behavior", "[engine]") {
     trakr::Mixer mixer(2);
 

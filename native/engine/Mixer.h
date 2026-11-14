@@ -50,6 +50,13 @@ public:
         auxLineGain_ = line;
     }
 
+    // Global Mixer "Line In": interleaved stereo input frames for the next
+    // process() call (gMasterParams.cpp showGlobalMixer line-in bus).
+    void setLineIn(const float* interleavedStereo, int frames) {
+        lineIn_ = interleavedStereo;
+        lineInFrames_ = frames;
+    }
+
     MeterLevels getTrackMeters(size_t trackIndex) const;
     MeterLevels getMasterMeters() const;
     // Aux bus meters (0 Delay, 1 Reverb, 2 Dry Mix, 3 Line In).
@@ -72,6 +79,8 @@ private:
     float auxReverbGain_{1.0f};
     float auxDryGain_{1.0f};
     float auxLineGain_{1.0f};
+    const float* lineIn_{nullptr};
+    int lineInFrames_{0};
 
     dsp::Delay delay_;
     dsp::Reverb reverb_;

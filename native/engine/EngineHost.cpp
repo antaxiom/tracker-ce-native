@@ -25,6 +25,10 @@ bool EngineHost::start(int sampleRate, int bufferFrames) {
         return false;
     }
 
+    backend_->setInputCallback([this](const float* interleaved, int frames) {
+        engine_.pushInput(interleaved, frames);
+    });
+
     return backend_->start();
 }
 
@@ -40,9 +44,24 @@ bool EngineHost::isRunning() const {
     return backend_ && backend_->isRunning();
 }
 
+void EngineHost::pushInputFrames(const float* interleavedStereo, int frames) {
+    engine_.pushInput(interleavedStereo, frames);
+}
+
+bool EngineHost::setAudioInputEnabled(bool enabled) {
+    if (!backend_) return false;
+    if (enabled == inputEnabled_.load(std::memory_order_acquire)) return enabled;
+    const bool ok = backend_->setInputEnabled(enabled);
+    inputEnabled_.store(ok && enabled, std::memory_order_release);
+    return ok;
+}
+
 void EngineHost::publish(const Song& song) {
     auto snapshot = makeSnapshot(song);
     engine_.setSongSnapshot(snapshot);
+    // Global Mixer "Line In": capture runs only while the bus is unmuted, so
+    // the OS input device is never opened for a normal (muted) project.
+    setAudioInputEnabled(!song.auxMute[3]);
 }
 
 void EngineHost::play(int orderIndex, int row) {

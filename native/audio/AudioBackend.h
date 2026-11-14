@@ -11,6 +11,8 @@ namespace trakr {
 class AudioBackend {
 public:
     using Callback = std::function<void(float* outStereo, int frames)>;
+    // Interleaved stereo capture frames (audio input monitoring).
+    using InputCallback = std::function<void(const float* interleavedStereo, int frames)>;
 
     virtual ~AudioBackend() = default;
 
@@ -19,6 +21,14 @@ public:
     virtual bool start() = 0;
     virtual void stop() = 0;
     virtual bool isRunning() const = 0;
+
+    // Optional capture support (line-in monitoring). Backends without an input
+    // device keep the defaults and report silence.
+    virtual void setInputCallback(InputCallback callback) { (void)callback; }
+    virtual bool setInputEnabled(bool enabled) {
+        (void)enabled;
+        return false;
+    }
 };
 
 // Silent backend used by headless/screenshot/remote runs. It still pumps the

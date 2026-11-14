@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "AudioBackend.h"
 #include <memory>
+#include <atomic>
 #include <mutex>
 
 namespace trakr {
@@ -39,11 +40,18 @@ public:
 
     Engine& getEngine();
 
+    // Audio input monitoring (Global Mixer Line In). pushInputFrames is called
+    // from the capture callback; setAudioInputEnabled opens/closes the capture
+    // device (backends without input report false and stay silent).
+    void pushInputFrames(const float* interleavedStereo, int frames);
+    bool setAudioInputEnabled(bool enabled);
+
 private:
     std::unique_ptr<AudioBackend> backend_;
     Engine engine_;
     int sampleRate_{44100};
     int bufferFrames_{128};
+    std::atomic<bool> inputEnabled_{false};
 };
 
 } // namespace trakr

@@ -63,6 +63,11 @@ public:
 
     // Audio thread methods
     void process(float* outStereo, int frames);
+
+    // Audio input monitoring (Global Mixer "Line In"). The backend pushes
+    // interleaved stereo frames from its capture device; process() drains them
+    // into the mixer's line-in bus.
+    void pushInput(const float* interleavedStereo, int frames);
     void pushLiveEvent(const LiveEvent& ev);
 
     // Transport controls
@@ -90,6 +95,7 @@ private:
     void handleLiveEvent(const SongSnapshot* snapshot, const LiveEvent& ev);
     void ensureVoiceType(size_t track, const Instrument* inst);
     void ensurePreviewVoiceType(const Instrument* inst);
+    int drainInput(int frames);
 
     int sampleRate_{44100};
     std::shared_ptr<const SongSnapshot> snapshot_{nullptr};
@@ -120,6 +126,13 @@ private:
     std::atomic<bool> publishedPlaying_{false};
     std::atomic<double> publishedSongSeconds_{0.0};
     double songSeconds_{0.0};
+
+    // Audio input ring buffer (lock-free single producer / single consumer),
+    // interleaved stereo floats. ~1.5 s at 44.1 kHz.
+    std::vector<float> inputRing_;
+    std::atomic<size_t> inputWrite_{0};
+    std::atomic<size_t> inputRead_{0};
+    std::vector<float> inputBlock_;
 
     // Live event ring buffer (lock-free single producer / single consumer)
     static constexpr size_t kEventQueueSize = 64;
