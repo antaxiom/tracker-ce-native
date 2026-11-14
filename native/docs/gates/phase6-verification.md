@@ -137,6 +137,12 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   entirely (the bitmap offsets were absolute and pushed them below the frame);
   Master 2/3 deck labels now carry the gMasterParams content ("%.2f dB" name,
   Unmute/Mute value) instead of Track N/dB.
+- Master 3/3 aux name labels were being recoloured with the active/inactive
+  palettes (grey_32 background); the cLabels are created with
+  `topBarLabelColors` (white on grey_08) and the reference keeps that for every
+  aux, including the muted bus. `LabelControl` now pre-blends text against its
+  opaque background, which made the header pixel-exact. Master 3/3: 99.37 →
+  99.84.
 - Master 3/3 hides the selection frame like `gMasterParams.cpp:1405`
   (`setControlHide(frameControl)` in showGlobalMixer); the selected column is
   indicated by the name label colours only.

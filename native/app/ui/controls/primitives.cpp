@@ -219,12 +219,15 @@ LabelControl::LabelControl(std::string id, std::string text, trakr::hw::FwFont f
 void LabelControl::draw(Canvas& canvas) const {
     if (showBackground_) canvas.fillRect(rect_, bgColor_);
     if (showFrame_) canvas.strokeRectCentered(rect_, frameColor_, kFrameLineWidth / 16.0f);
+    // Labels that paint their own opaque background can pre-blend the glyphs
+    // against it, matching the reference's integer blend exactly.
+    const ImU32* bg = showBackground_ ? &bgColor_ : nullptr;
     if (alignLeft_) {
         // cLabel::update(): text_y = posY + (18 - font->height / 2).
         const int y = rect_.y + 18 - canvas.textHeight(font_) / 2;
-        canvas.text(font_, rect_.x, y, textColor_, text_);
+        canvas.text(font_, rect_.x, y, textColor_, text_, bg);
     } else {
-        canvas.textCentered(font_, rect_, textColor_, text_);
+        canvas.textCentered(font_, rect_, textColor_, text_, bg);
     }
 }
 

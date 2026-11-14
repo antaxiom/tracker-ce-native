@@ -109,7 +109,7 @@ Current source-true scores (≥95.0% target):
 | Instrument Automation | 99.98% | ✅ |
 | Master 1/3 | 99.66% | ✅ |
 | Master 2/3 (Track Mixer) | 99.63% | ✅ |
-| Master 3/3 (Global Mixer) | 99.49% | ✅ |
+| Master 3/3 (Global Mixer) | 99.84% | ✅ |
 | Master EQ | 99.84% | ✅ |
 | Sample Playback | 99.49% | ✅ |
 | Sample Slice | 99.40% | ✅ |
@@ -154,6 +154,9 @@ and markers align within ~1px.
   `grad_h = 12`) are theme-gated like the firmware: `theme.bottomScreenShadow`
   enables cList/cBar/cSongPlayer shadows and `theme.barShadow` the bar
   gradient. Classic enables both; other themes must not inherit them.
+- `LabelControl` pre-blends its text against `bgColor_` whenever it paints its
+  own opaque background (`Canvas::text`/`textCentered` take an optional `bg`);
+  this makes label text pixel-identical to the reference on flat panels.
 - Bitmap text on a flat background must go through `fwDrawTextOn` (pre-blended
   with the emulator's integer blend); GPU alpha blending rounds differently and
   leaves a 1-value fringe on every antialiased edge. The title bar is pixel

@@ -539,6 +539,18 @@ Do not start without a design pass; Classic remains the reference profile.
   now hidden; Master 3/3 rose from 99.37 to 99.49. Remaining difference is the
   aux meter/fader bar states and header label backgrounds.
 
+## Master 3/3 label colours + label pre-blend
+
+- Aux name labels use the creation-time `topBarLabelColors` (white on grey_08)
+  for all four aux (including the muted Line In), matching gMasterParams.cpp
+  initDisplayControls and the reference; previously they were recoloured with
+  active/inactive palettes, painting a grey_32 band across the header.
+- `Canvas::text`/`textCentered` accept an optional background; `LabelControl`
+  passes its opaque background so glyph edges match the emulator's integer
+  blend (title/deck already used `fwDrawTextOn`).
+- Master 3/3 hits 99.84 (from 99.37); remaining diff is the level-bar container
+  gradient (1 value) and bottom-label AA.
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

@@ -34,9 +34,12 @@ public:
     void line(int x1, int y1, int x2, int y2, ImU32 color,
               float deviceThickness = 1.0f) const;
 
-    void text(trakr::hw::FwFont font, int x, int yTop, ImU32 color, std::string_view s) const;
-    void textCentered(trakr::hw::FwFont font, const RectI& r, ImU32 color,
-                      std::string_view s) const;
+    // `bg` (optional) pre-blends the glyph against a known flat background with
+    // the emulator's integer blend (see hw::fwDrawTextOn).
+    void text(trakr::hw::FwFont font, int x, int yTop, ImU32 color, std::string_view s,
+              const ImU32* bg = nullptr) const;
+    void textCentered(trakr::hw::FwFont font, const RectI& r, ImU32 color, std::string_view s,
+                      const ImU32* bg = nullptr) const;
     // Draw text with its vertical centre on `centerY` (tracker rows/cells).
     void textVCentered(trakr::hw::FwFont font, int x, int centerY, ImU32 color,
                        std::string_view s) const;

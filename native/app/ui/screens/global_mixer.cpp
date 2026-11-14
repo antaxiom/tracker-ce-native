@@ -89,10 +89,12 @@ void GlobalMixerScreen::build() {
 void GlobalMixerScreen::syncFromModel(const Song& song, const MixerView& view,
                                       const EngineHost& engineHost) {
     for (int i = 0; i < kAuxCount; ++i) {
-        // Muted buses use the inactive palettes (gMasterParams.cpp showGlobalMixer).
+        // cLabel was created with topBarLabelColors (gMasterParams.cpp
+        // initDisplayControls): white text on grey_08 for every aux, including
+        // the muted bus (the mute is shown by the dimmed fader and Unmute text).
         const bool muted = song.auxMute[i];
-        name_[i]->setColors(muted ? kInactiveLabelsColors[0] : kActiveLabelsColors[0],
-                            kActiveLabelsColors[1], kActiveLabelsColors[2]);
+        name_[i]->setColors(kTopBarLabelColors[0], kTopBarLabelColors[1],
+                            kTopBarLabelColors[2]);
         volume_[i]->setValue(std::clamp(song.auxVolume[i], 0, 100));
         volume_[i]->setInactive(muted);
 

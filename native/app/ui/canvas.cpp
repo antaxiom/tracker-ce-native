@@ -122,22 +122,28 @@ void Canvas::line(int x1, int y1, int x2, int y2, ImU32 color, float deviceThick
     dl_->PopDrawFlag();
 }
 
-void Canvas::text(trakr::hw::FwFont font, int x, int yTop, ImU32 color,
-                  std::string_view s) const {
+void Canvas::text(trakr::hw::FwFont font, int x, int yTop, ImU32 color, std::string_view s,
+                  const ImU32* bg) const {
     if (!dl_ || s.empty() || s.front() == '\0') return;
     const std::string tmp(s);
+    if (bg != nullptr) {
+        trakr::hw::fwDrawTextOn(dl_, font, lc_.screenX(static_cast<float>(x)),
+                                lc_.screenY(static_cast<float>(yTop)), tmp.c_str(), color, *bg,
+                                lc_.scaleX, lc_.scaleY);
+        return;
+    }
     trakr::hw::fwDrawText(dl_, font, lc_.screenX(static_cast<float>(x)),
                           lc_.screenY(static_cast<float>(yTop)), tmp.c_str(), color,
                           lc_.scaleX, lc_.scaleY);
 }
 
 void Canvas::textCentered(trakr::hw::FwFont font, const RectI& r, ImU32 color,
-                          std::string_view s) const {
+                          std::string_view s, const ImU32* bg) const {
     const int w = textWidth(font, s);
     const int h = textHeight(font);
     const int x = r.x + (r.w - w) / 2;
     const int y = r.y + (r.h - h) / 2;
-    text(font, x, y, color, s);
+    text(font, x, y, color, s, bg);
 }
 
 void Canvas::textVCentered(trakr::hw::FwFont font, int x, int centerY, ImU32 color,
