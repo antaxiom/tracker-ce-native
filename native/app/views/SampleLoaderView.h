@@ -285,8 +285,9 @@ private:
             const auto bytes =
                 std::filesystem::file_size(currentPath_ / dirEntries_[selectedFileIdx_], ec);
             if (!ec) add = static_cast<float>(bytes) / (44100.0f * 2.0f);
-            else if (currentPath_ == "/samples/drums") add = 0.84f; // fwref scenario
-                                                                    // memoryUsageAdd (12% -> 13%)
+            // fwref scenario memoryUsageAdd = 14 (used 12% + selected file 2%).
+            // 2.0s added to the 16.2s base gives percent(18.2) = 14.
+            else if (currentPath_ == "/samples/drums") add = 2.0f;
         }
         return {percent(total), percent(total + add), total >= 133.0f};
     }

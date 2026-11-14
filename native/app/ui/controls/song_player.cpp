@@ -210,7 +210,7 @@ void SongPlayerControl::drawBlocks(Canvas& canvas) const {
             if (!hasNotes) {
                 canvas.fillRect(RectI{x, rowY, bw, kBlockHeight}, kSongPlayerColors[8]);
             } else {
-                canvas.fillRect(RectI{x, rowY + 1, bw - 1, kBlockHeight - 1},
+                canvas.fillRect(RectI{x, rowY + 1, bw - 1, kBlockHeight - 2},
                                 kSongPlayerColors[trackMuted(track) ? 7 : 1]);
             }
         }

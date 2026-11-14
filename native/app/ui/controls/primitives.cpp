@@ -180,10 +180,15 @@ void ListControl::draw(Canvas& canvas) const {
     }
 
     if (count > visibleLines_) {
+        // list.cpp:645-670: the scrollbar is anchored to list->start (not the
+        // first visible row) and sits below the cList +4px top margin, so the
+        // track starts at posY+4 and the thumb at posY+6 in the outer space.
         const int innerH = r.h - 14;
         const int length = std::max(1, (innerH * visibleLines_) / count);
-        const int thumbY = r.y + 6 + (first * (innerH - length)) / count;
-        canvas.fillRect(RectI{r.x + r.w - 6, r.y + 4, 3, innerH}, c[6]);
+        const int scrollStart = (start_ >= 0) ? start_ : 0;
+        const int trackTop = r.y + 8;
+        const int thumbY = r.y + 10 + (scrollStart * (innerH - length)) / count;
+        canvas.fillRect(RectI{r.x + r.w - 6, trackTop, 3, innerH}, c[6]);
         canvas.fillRect(RectI{r.x + r.w - 5, thumbY, 2, length}, c[2]);
     }
 }

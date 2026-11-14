@@ -111,53 +111,50 @@ void HeaderBar::render(const ImRect& rect,
     }
 
 
+    // Center transport (songTimer.cpp: "0m:00s  ||  P1.001").
+    // Interface::activateModule() shows songTimer on every module except the
+    // pattern editor (interface.cpp:417-421), the Song screen included; the
+    // File page keeps it too, beside the right-aligned project name.
+    float centerX = 0.0f;
+    float centerRight = 0.0f;
+    bool drewTransport = false;
+    if (showTransport) {
+        drewTransport = true;
+        // Song time comes from the audio clock (cSongTimer), never from
+        // accumulated frame deltas, so any frame rate shows the same value.
+        const auto& playhead = engineHost.getPlayhead();
+        const uint32_t totalSecs = static_cast<uint32_t>(playhead.songSeconds);
+        uint32_t mins = totalSecs / 60;
+        uint32_t secs = totalSecs % 60;
+
+        // songTimer.cpp: stopped state shows the Bold17 stop-icon pair
+        // ("\x18\x19"); playing uses "\x1A\x1B" (song) / "\x1C\x1D"
+        // (pattern). The icons exist only in the L4 Bold17 bitmap font.
+        const char* transportGlyph = playhead.playing ? "\x1C\x1D" : "\x18\x19";
+        int curPat = (currentOrderIdx >= 0 && currentOrderIdx < static_cast<int>(song.order.size()))
+                         ? song.order[currentOrderIdx]
+                         : 0;
+        int curStep = playhead.playing ? playhead.row : cursorRow;
+
+        // songTimer.cpp:144 timerFormat "%3im:%02is %2s P%i.%03i%2s".
+        std::snprintf(timerBuf_, sizeof(timerBuf_), "%3um:%02us %2s P%d.%03d%2s",
+                      mins, secs, transportGlyph, curPat + 1, curStep + 1, "");
+
+        centerX = rect.Min.x + 280.0f * scale;
+        centerRight = centerX + bWidth(timerBuf_) * scale;
+        // songTimerLabelColors[0] (themeDefault) is white.
+        ImU32 timerCol = textWhite;
+        bText(280.0f, timerBuf_, timerCol);
+    }
+
     const bool hasOverride = (rightLabelOverride != nullptr && rightLabelOverride[0] != '\0');
     if (hasOverride) {
         // File page: title bar shows the current project name on the right
         // instead of transport/pattern info (firmware titleBar setRightLabel).
-        float rightW = bWidth(rightLabelOverride) * scale;
-        float rightX = firmwareChrome
-                         ? 790.0f - bWidth(rightLabelOverride)
-                         : 700.0f - bWidth(rightLabelOverride) * 0.5f;
-        bText(rightX, rightLabelOverride, textWhite);
+        // titleBar.cpp: rightLabel prop.x = 790 with controlStyleRightX, so the
+        // name is right-aligned to the bar edge, not centred.
+        bText(790.0f - bWidth(rightLabelOverride), rightLabelOverride, textWhite);
     } else {
-        // Center transport (songTimer.cpp: "0m:00s  ||  P1.001").
-        // Interface::activateModule() shows songTimer on every module except the
-        // pattern editor (interface.cpp:417-421), the Song screen included.
-        float centerX = 0.0f;
-        float centerRight = 0.0f;
-        bool drewTransport = false;
-        if (showTransport) {
-            drewTransport = true;
-            // Song time comes from the audio clock (cSongTimer), never from
-            // accumulated frame deltas, so any frame rate shows the same value.
-            const auto& playhead = engineHost.getPlayhead();
-            const uint32_t totalSecs = static_cast<uint32_t>(playhead.songSeconds);
-            uint32_t mins = totalSecs / 60;
-            uint32_t secs = totalSecs % 60;
-
-            // songTimer.cpp: stopped state shows the Bold17 stop-icon pair
-            // ("\x18\x19"); playing uses "\x1A\x1B" (song) / "\x1C\x1D"
-            // (pattern). The icons exist only in the L4 Bold17 bitmap font.
-            const char* transportGlyph = playhead.playing ? "\x1C\x1D" : "\x18\x19";
-            int curPat = (currentOrderIdx >= 0 && currentOrderIdx < static_cast<int>(song.order.size()))
-                             ? song.order[currentOrderIdx]
-                             : 0;
-            int curStep = playhead.playing ? playhead.row : cursorRow;
-
-            // songTimer.cpp:144 timerFormat "%3im:%02is %2s P%i.%03i%2s".
-            std::snprintf(timerBuf_, sizeof(timerBuf_), "%3um:%02us %2s P%d.%03d%2s",
-                          mins, secs, transportGlyph, curPat + 1, curStep + 1, "");
-
-            centerX = rect.Min.x + 280.0f * scale;
-            centerRight = centerX + bWidth(timerBuf_) * scale;
-            // songTimerLabelColors[0] (themeDefault) is white.
-            ImU32 timerCol = textWhite;
-            bText(280.0f, timerBuf_, timerCol);
-
-
-        }
-
         // Right label (titleBar.cpp showCurrentInstrumentOnRightLabel). Only the
         // screens whose reference carries a rightLabel pass showInstrumentRight.
         if (showInstrumentRight) {
