@@ -60,7 +60,8 @@ int ScreenButtons::renderFirmware(const ImRect& rect, bool shiftHeld, float scal
             if (btn.onClick) btn.onClick();
         }
 
-        if (i > 0) {
+        if (i > 0 && (separatorMask_ & (1 << i))) {
+            // bgLabel.cpp: separator at (width/8)*i, y = posY+h/4 .. posY+h.
             dl->AddRectFilled(ImVec2(bx, rect.Min.y + 13.0f * scale),
                               ImVec2(bx + 1.0f * scale, rect.Min.y + 55.0f * scale),
                               IM_COL32(119, 119, 119, 255));

@@ -49,6 +49,14 @@ public:
     // selection frame at the framesPlaces[0] geometry (y=423..478).
     void setPatternChrome(bool on) { patternChrome_ = on; }
 
+    // cBgLabel (bgLabel.cpp): buttons are separated by a vertical grey line at
+    // (width/8)*i only where the bgLabel `value` bit i is set (i in 1..7). The
+    // firmware calls setValue(bgLabel, ...) per screen (config=196, sample=127,
+    // song=191, others 255). Mirror that mask so separators appear only where
+    // the firmware draws them.
+    void setSeparatorMask(int mask) { separatorMask_ = mask; }
+    int separatorMask() const { return separatorMask_; }
+
     // Render the 8 buttons inside the given screen rect
     // Returns index of button clicked (0..7) or -1
     int render(const ImRect& rect, bool shiftHeld, float scale = 1.0f);
@@ -63,6 +71,7 @@ private:
     std::vector<ScreenButton> buttons_;
     bool firmwareMode_{false};
     bool patternChrome_{false};
+    int separatorMask_{255};
 };
 
 } // namespace trakr::hw

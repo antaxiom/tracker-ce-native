@@ -609,6 +609,19 @@ void AppLayout::updateScreenButtons(Screen activeScreen,
     // exception: it additionally needs the gPatternEdit selection-frame chrome,
     // so it keeps the patternChrome path instead of the plain firmware bar.
     screenButtons_.setFirmwareMode(activeScreen != Screen::Pattern);
+
+    // bgLabel.cpp: button separators at (width/8)*i appear only where the
+    // bgLabel `value` bit i is set. Mirror the firmware setValue calls:
+    // config=196 (x 200/600/700), sample=127 (no x 700), song=191 (no x 600),
+    // everything else 255 (all seven).
+    int separatorMask = 255;
+    switch (activeScreen) {
+        case Screen::Config: separatorMask = 196; break;
+        case Screen::Sample: separatorMask = 127; break;
+        case Screen::Song: separatorMask = 191; break;
+        default: separatorMask = 255; break;
+    }
+    screenButtons_.setSeparatorMask(separatorMask);
     screenButtons_.setButtons(btns);
 }
 
