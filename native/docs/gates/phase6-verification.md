@@ -118,8 +118,10 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   and drive the mixer's delay/reverb return and dry levels; Line In remains a
   silent bus because the desktop build has no input monitoring. The Master EQ
   page is reachable from the EQ label on Master 1/3, exactly like the firmware.
-- Sample Loader import progress remains a desktop workflow divergence (direct
-  file open). The Config item editor is ported (below); settings the desktop
+- Sample Loader import progress is not a missing firmware screen: the importer
+  never shows its cProgressCursor (gSampleImport.cpp:851, 857, 925 comment out
+  show/refresh and hide it in hideImportPreview), so the direct desktop import
+  is a workflow shortcut rather than a fidelity gap. The Config item editor is ported (below); settings the desktop
   engine does not consume (anti-aliasing, limiter mode, snap-to-zero, notes
   scale/root/layout, metronome, clock routing) update the config state but do
   not yet drive audio/MIDI behavior.

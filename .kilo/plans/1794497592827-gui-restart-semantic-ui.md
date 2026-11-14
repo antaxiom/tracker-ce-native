@@ -522,6 +522,16 @@ Do not start without a design pass; Classic remains the reference profile.
   it; the title bar now matches the reference pixel-for-pixel and the Pattern
   deck diff dropped from 500 to 339 px.
 
+## Loader import progress re-scoped + capture wiring test
+
+- Checked `gSampleImport.cpp`: the importer's progress cursor is disabled
+  (show/refresh commented at lines 851/857 and hidden at 925), so the firmware
+  has no import-progress screen to port. The Loader residual is a desktop
+  workflow shortcut, not a missing control.
+- Added `Line-in capture is requested only while the bus is unmuted`, which
+  asserts EngineHost opens the capture device exactly when `auxMute[3]` is
+  false and releases it again when muted (fake backend, no hardware).
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

@@ -135,6 +135,46 @@ TEST_CASE("Mixer pan law and soft limiter", "[engine]") {
     }
 }
 
+namespace {
+// Records capture-device requests so the line-in wiring can be asserted
+// without touching real audio hardware.
+class FakeInputBackend : public trakr::AudioBackend {
+public:
+    bool open(int, int, Callback) override { return true; }
+    void close() override {}
+    bool start() override { return true; }
+    void stop() override {}
+    bool isRunning() const override { return true; }
+    bool setInputEnabled(bool enabled) override {
+        lastInputEnabled = enabled;
+        ++inputEnableCalls;
+        return true;
+    }
+    bool lastInputEnabled{false};
+    int inputEnableCalls{0};
+};
+} // namespace
+
+TEST_CASE("Line-in capture is requested only while the bus is unmuted", "[engine][aux]") {
+    auto backend = std::make_unique<FakeInputBackend>();
+    auto* fake = backend.get();
+    trakr::EngineHost host(std::move(backend));
+
+    trakr::Song muted;
+    muted.tracks.resize(1);
+    muted.auxMute[3] = true; // firmware default: line in muted
+    host.publish(muted);
+    REQUIRE_FALSE(fake->lastInputEnabled);
+
+    trakr::Song unmuted = muted;
+    unmuted.auxMute[3] = false;
+    host.publish(unmuted);
+    REQUIRE(fake->lastInputEnabled);
+
+    host.publish(muted);
+    REQUIRE_FALSE(fake->lastInputEnabled);
+}
+
 TEST_CASE("Mixer line-in bus monitoring", "[engine][aux]") {
     // Global Mixer "Line In" (gMasterParams.cpp showGlobalMixer): input frames
     // are summed into the master with the aux line gain and metered on aux 3.
