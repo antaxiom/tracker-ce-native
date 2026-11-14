@@ -137,6 +137,9 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   entirely (the bitmap offsets were absolute and pushed them below the frame);
   Master 2/3 deck labels now carry the gMasterParams content ("%.2f dB" name,
   Unmute/Mute value) instead of Track N/dB.
+- Master 3/3 hides the selection frame like `gMasterParams.cpp:1405`
+  (`setControlHide(frameControl)` in showGlobalMixer); the selected column is
+  indicated by the name label colours only.
 - Chrome text is pre-blended against the flat title-bar (#080808) and deck
   (#0A0A0A) backgrounds with `fwDrawTextOn`, reproducing the emulator's integer
   blend; the title bar now matches the reference exactly (0 differing pixels).

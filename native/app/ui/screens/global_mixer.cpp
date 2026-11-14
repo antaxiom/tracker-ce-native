@@ -106,7 +106,10 @@ void GlobalMixerScreen::syncFromModel(const Song& song, const MixerView& view,
         levelL_[i]->setValue(toBar(meters.peakL));
         levelR_[i]->setValue(toBar(meters.peakR));
     }
-    frame_->setSelected(std::clamp(view.selectedTrack(), 0, kAuxCount - 1));
+    // gMasterParams.cpp showGlobalMixer() hides the selection frame
+    // (display.setControlHide(frameControl), line 1405); the selected column is
+    // indicated by the name label colours only.
+    frame_->setVisible(false);
 }
 
 void GlobalMixerScreen::update(Song& song,

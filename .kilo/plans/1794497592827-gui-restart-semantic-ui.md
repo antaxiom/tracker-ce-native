@@ -532,6 +532,13 @@ Do not start without a design pass; Classic remains the reference profile.
   asserts EngineHost opens the capture device exactly when `auxMute[3]` is
   false and releases it again when muted (fake backend, no hardware).
 
+## Global Mixer frame
+
+- `showGlobalMixer()` hides the cFrame (gMasterParams.cpp:1405); the desktop
+  screen was drawing a red frame around the selected aux column. The frame is
+  now hidden; Master 3/3 rose from 99.37 to 99.49. Remaining difference is the
+  aux meter/fader bar states and header label backgrounds.
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.

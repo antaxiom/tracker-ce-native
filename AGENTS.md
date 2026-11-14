@@ -109,7 +109,7 @@ Current source-true scores (≥95.0% target):
 | Instrument Automation | 99.98% | ✅ |
 | Master 1/3 | 99.66% | ✅ |
 | Master 2/3 (Track Mixer) | 99.63% | ✅ |
-| Master 3/3 (Global Mixer) | 99.37% | ✅ |
+| Master 3/3 (Global Mixer) | 99.49% | ✅ |
 | Master EQ | 99.84% | ✅ |
 | Sample Playback | 99.49% | ✅ |
 | Sample Slice | 99.40% | ✅ |
