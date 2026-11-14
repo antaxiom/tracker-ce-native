@@ -649,10 +649,31 @@ Remaining residuals are documented, not app defects: (1) the fwref bottom-bar
 AA fringe, (3) granular cLineIndicator emulator gap, (4) EVE LINE_STRIP corners.
 
 Phase C — unported screens / reference regeneration:
-  1. Regenerate the fwref references with bottom-bar value=0 (fixes the
-     reference artifact; lifts most exact diffs on sub-99% screens). Verify the
-     gate baseline shift in isolation before adopting.
-  2. Instrument/Patch screens (after the reference fix), firmware-mirrored.
-  3. Sample Loader import-progress workflow (design decision + new fwref states).
+  Status (2026-11-14):
+  1. RESOLVED (corrected). The earlier premise — "regenerate references with
+     bottom-bar value=0" — is wrong: firmware cLabel `value=1` (CenterY,
+     height>fontHeight) moves the bottom-button text 10px higher via
+     `lines_step_y/2`, and the app's bottom-bar text was calibrated to the
+     value=1 references. Forcing value=0 would regress the tuned screens
+     (perform/master2/master_eq are 100% exact *with* value=1). The real,
+     fixable bottom-bar defect was that the app drew all seven button
+     separators unconditionally, while cBgLabel draws a separator at
+     (width/8)*i only where its `value` bit i is set (bgLabel.cpp). Fixed in
+     `831f9e5`: separator bitmask mirrors the firmware setValue masks
+     (config=196, sample=127, song=191, else 255). config_edit now 100% AE,
+     config 99.99 AE; no screen regressed. Remaining sub-99% exact residuals
+     are the documented L4-vs-TTF glyph AA fringe and the granular
+     cLineIndicator / LINE_STRIP gaps, not reference-artifact app bugs.
+  2. COMPLETE — the Instrument workspace (General/Effects/Automation) migrates
+     via Phase 4; visreg instrument 99.97 / effects 100.00 / automation 99.99.
+     No "Patch" page exists in the firmware beyond these; nothing to add.
+  3. BLOCKED ON A DESIGN DECISION — Sample Loader import-progress workflow. The
+     firmware never shows the import-progress cursor (gSampleImport.cpp
+     show/refresh commented at 851/857, hidden at 925), so there is no
+     firmware-correct behavior to mirror: it is a desktop-only workflow that
+     needs a product decision (modal progress vs. background import) and new
+     fwref states to gate it. Opening design centres the export/progress UX;
+     requires user approval before implementation.
 
-Phase D — Studio/Demo feature expansion (only after Phase C).
+Phase D — Studio/Demo feature expansion (only after Phase C items 1-2; item 3
+is a gated product decision and does not block D).
