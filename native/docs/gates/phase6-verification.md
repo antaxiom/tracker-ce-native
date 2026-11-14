@@ -137,6 +137,11 @@ diagonals. `test_canvas_lines.cpp` locks the behaviour.
   entirely (the bitmap offsets were absolute and pushed them below the frame);
   Master 2/3 deck labels now carry the gMasterParams content ("%.2f dB" name,
   Unmute/Mute value) instead of Track N/dB.
+- The title-bar separator was drawn at device row 27 on non-firmware-chrome
+  screens and at 28 on the others; `titleBarColors[1]` white is row 28
+  (outside the 28px header). Drawing it in the foreground list for every screen
+  fixed e.g. Config 99.67→99.97, Loader 99.53→99.84, File 99.29→99.60,
+  Sample 99.49→99.80, Song 98.97→99.27.
 - Master 3/3 aux name labels were being recoloured with the active/inactive
   palettes (grey_32 background); the cLabels are created with
   `topBarLabelColors` (white on grey_08) and the reference keeps that for every

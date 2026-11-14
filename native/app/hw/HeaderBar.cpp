@@ -70,13 +70,13 @@ void HeaderBar::render(const ImRect& rect,
     // Header background: grey_08 #080808 (Themes.cpp titleBarColors[0])
     drawList->AddRectFilled(rect.Min, rect.Max, IM_COL32(8, 8, 8, 255));
 
-    // Bottom separator line: White #FFFFFF (Themes.cpp titleBarColors[1]).
-    // Firmware draws it at posY+28 (row 28, outside the label background); the
-    // window clip ends at row 27, so firmware chrome draws it in the foreground.
-    if (!firmwareChrome && showBottomSeparator) {
-        drawList->AddRectFilled(ImVec2(rect.Min.x, rect.Max.y - 1.0f * scale),
-                                ImVec2(rect.Max.x, rect.Max.y),
-                                IM_COL32(255, 255, 255, 255));
+    // Bottom separator line: White #FFFFFF (Themes.cpp titleBarColors[1]),
+    // drawn at device row 28 (topBarLabel posY+height), i.e. just outside the
+    // 28px header window, so it goes to the foreground list for every screen.
+    if (showBottomSeparator) {
+        ImGui::GetForegroundDrawList()->AddRectFilled(
+            ImVec2(rect.Min.x, rect.Max.y), ImVec2(rect.Max.x, rect.Max.y + 1.0f * scale),
+            IM_COL32(255, 255, 255, 255));
     }
 
     ImFont* font = getMonoBoldFont();

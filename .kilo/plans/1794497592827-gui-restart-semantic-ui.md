@@ -551,6 +551,14 @@ Do not start without a design pass; Classic remains the reference profile.
 - Master 3/3 hits 99.84 (from 99.37); remaining diff is the level-bar container
   gradient (1 value) and bottom-label AA.
 
+## Title-bar separator row
+
+- All screens now draw the white separator at device row 28 (the firmware
+  topBarLabel posY+height) via the foreground list; six screens had it at row 27.
+- Parity after: Pattern 99.73, Song 99.27, Instrument 99.87, Master 1/3 99.85,
+  2/3 99.63, 3/3 99.84, EQ 99.84, Sample 99.80, Slice 99.71, Granular 99.68,
+  Loader 99.84, Config 99.97, item editor 99.97, Perform 98.84, File 99.60.
+
 ## Immediate next steps
 
 1. Commit and tag `native/` as `pre-gui-restart`; record baselines.
