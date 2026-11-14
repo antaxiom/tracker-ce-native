@@ -606,6 +606,24 @@ sample 99.30). Decide whether to add exact-count gating (see Phase A).
   not ours and is left unstaged. Nothing was deleted.
 - A4: this log updated with commit `1d0ebf2` (performed above).
 
+## Phase B residuals + reference artifact (2026-11-14)
+
+Commits 4652a94 (tracker dash +1 advance), 38c3aec (pattern bar row 479),
+468ff5c (song block height, File header, loader compare bar, list scrollbar).
+
+- All AE green (17/17 at >= 95%); exact parity lifted across the board:
+  pattern 99.15, song 98.97, loader 98.54, file 98.59 (from 98.17/98.65/
+  98.43/98.10), granular 98.34.
+- Key finding: the fwref bottom-bar cLabels were extracted at init-time
+  `value=1`; the firmware resets them to `value=0` (only the active button
+  stays 1). This is a REFERENCE artifact, not an app bug, and it dominates the
+  remaining structural diffs on config/master1/song/etc bottom bars. Regenerate
+  the references with value=0 to lift those (Phase C item; moving the gate
+  baseline needs its own verification).
+- Remaining residuals after structural fixes are the documented L4-vs-TTF AA
+  fringe, the granular cLineIndicator emulator gap, and EVE LINE_STRIP corner
+  overhang — all accepted/documented, not app defects.
+
 ## Immediate next steps
 
 Phase A — verification and housekeeping (now):

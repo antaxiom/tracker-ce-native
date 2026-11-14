@@ -268,6 +268,48 @@ pattern 98.17, song 98.65, sample_granular 98.34, loader 98.43, file 98.10.
 These are the Phase B targets. The default command remains
 `visreg.py --all --deterministic` (AE only, 17/17 at 95%).
 
+## Phase B residuals closed + reference-artifact finding (2026-11-14)
+
+After the Song/File/Loader and tracker fixes, visreg AE is all-green and the
+exact per-pixel parity lifted. Exact residuals that remain are, per screen:
+
+- pattern 99.15% / song 98.97% / loader 98.54% / file 98.59% /
+  sample_granular 98.34% / sample_slice 99.03% / sample 99.30% /
+  config 99.36% / master1 99.28% / master3 99.75% / config_edit 99.56% /
+  instrument 99.58% / instrument_automation 99.70% (effects, EQ, perform,
+  master2 exact 100%). AE gate: 17/17 at >= 95%.
+
+Fixes landed this batch (commits 4652a94, 38c3aec, 468ff5c):
+- Tracker cell text advances one cell per glyph (period 11 for Light17),
+  matching the fwref cTracker. Pattern 98.17 -> 99.15% exact.
+- Pattern bar background no longer paints row 479 (firmware cBgLabel is
+  425..478).
+- SongPlayerControl engaged pattern block is BLOCK_HEIGHT-2 tall (EVE rect
+  bottom-right vertex is exclusive). Song 98.65 -> 98.97% exact.
+- HeaderBar: the File page keeps the song timer and right-aligns the project
+  name to x790 (titleBar controlStyleRightX). File 98.10 -> 98.59%.
+- SampleLoaderView memory compare bar uses add=2.0s (memoryUsageAdd 14).
+- ListControl scrollbar anchored to list->start below the +4 top margin.
+
+Residual classification (dominant causes, verified):
+1. Bottom-bar fwref ARTIFACT (not an app bug). The spec extractor captured
+   all eight screen-button cLabels at init-time `value=1`; the firmware
+   (`gProjEdit.cpp:158-168`, and equivalent showDefaultScreen paths) resets
+   them to `value=0` with only the active button kept at 1. The app renders
+   value=0 (source-true); the references show the active text on every button,
+   which is why config/master1/song start-up bottom bars carry hundreds of
+   structural pixel diffs (e.g. master1 y440-479, config y440-479). Fixing the
+   references (regenerate with value=0) is the highest-value next step and
+   would lift most remaining exact diffs on the sub-99% screens.
+2. L4-bitmap vs TTF glyph AA (the documented RobotoMono TTFs with PixelSnapH
+   vs embedded L4 bitmaps): scattered +1..+3 fringes in every screen's text.
+   Out of scope; swapping to L4 bitmaps is a large, separate change.
+3. Sample granular: the cLineIndicator grain window the app draws from the
+   gSamplePlay formula is absent from the fwref reference because the emulator
+   cannot composite the additive overlay. Accepted reference gap.
+4. EVE LINE_STRIP 1.5px corner overhang on selection frames (8-200 px/screen)
+   vs `strokeRectCentered` rounding. Documented hardware behavior, not fixed.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
