@@ -146,8 +146,10 @@ int ScreenButtons::render(const ImRect& rect, bool shiftHeld, float scale) {
     ImVec2 mousePos = io.MousePos;
     bool mouseClicked = io.MouseClicked[0];
 
-    // Background bar: grey_0A #0A0A0A (bgLabel.cpp)
-    drawList->AddRectFilled(rect.Min, rect.Max, IM_COL32(10, 10, 10, 255));
+    // Background bar: grey_0A #0A0A0A (bgLabel.cpp). The firmware cBgLabel
+    // spans rows 425..478, so the last device row (479) stays black here.
+    drawList->AddRectFilled(rect.Min, ImVec2(rect.Max.x, rect.Max.y - 1.0f * scale),
+                            IM_COL32(10, 10, 10, 255));
 
     float btnW = rect.GetWidth() / 8.0f;
     float btnH = rect.GetHeight();
