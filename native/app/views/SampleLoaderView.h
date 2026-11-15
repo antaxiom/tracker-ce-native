@@ -13,6 +13,7 @@
 #include "History.h"
 #include "EngineHost.h"
 #include "PolyendImport.h"
+#include "BackgroundImporter.h"
 #include "../hw/ScreenButtons.h"
 #include <algorithm>
 #include <cctype>
@@ -127,8 +128,7 @@ public:
     }
 
     // cSampleImporter::instrAddNext: next free slot in the 48-slot pool.
-    void addNextAvailableSlot(Song& song, History& history, EngineHost& engineHost,
-                              int& selectedInstIdx) {
+    int firstFreeSlot(const Song& song) const {
         int nextSlot = static_cast<int>(song.instruments.size());
         for (int i = 0; i < static_cast<int>(song.instruments.size()); ++i) {
             if (!song.instruments[i].sample || song.instruments[i].sample->ch[0].empty()) {
@@ -136,10 +136,57 @@ public:
                 break;
             }
         }
-        if (nextSlot >= 48) return; // kSampleInstrumentsCount
+        return nextSlot < 48 ? nextSlot : -1;  // kSampleInstrumentsCount
+    }
+
+    void addNextAvailableSlot(Song& song, History& history, EngineHost& engineHost,
+                              int& selectedInstIdx) {
+        const int nextSlot = firstFreeSlot(song);
+        if (nextSlot < 0) return;
         importSelectedFile(song, history, engineHost, nextSlot);
         selectedInstIdx = nextSlot;
         selectedSlotIdx_ = nextSlot;
+    }
+
+    // Background import entry points (main thread). The worker only decodes;
+    // pollBackgroundImports() applies the finished instrument + publish on the
+    // main thread so the model/engine stay single-threaded.
+    bool startBackgroundImport(int slotIdx) {
+        if (selectedFileIdx_ < 0 || selectedFileIdx_ >= static_cast<int>(dirEntries_.size()))
+            return false;
+        if (isDirectory_[selectedFileIdx_]) return false;
+        trakr::io::BackgroundImporter::Job job;
+        job.path = (currentPath_ / dirEntries_[selectedFileIdx_]).string();
+        job.slot = slotIdx;
+        return importer_ ? importer_->enqueue(std::move(job)) : false;
+    }
+
+    bool startBackgroundAddNext(const Song& song, int nextSlot) {
+        trakr::io::BackgroundImporter::Job job;
+        if (selectedFileIdx_ < 0 || selectedFileIdx_ >= static_cast<int>(dirEntries_.size()))
+            return false;
+        if (isDirectory_[selectedFileIdx_]) return false;
+        job.path = (currentPath_ / dirEntries_[selectedFileIdx_]).string();
+        job.slot = nextSlot;
+        return importer_ ? importer_->enqueue(std::move(job)) : false;
+    }
+
+    // Main thread: apply every completed background import, then publish.
+    void pollBackgroundImports(Song& song, History& history, EngineHost& engineHost,
+                               int& selectedInstIdx) {
+        (void)history;
+        if (!importer_) return;
+        trakr::io::BackgroundImporter::Result r;
+        while (importer_->poll(r)) {
+            if (!r.ok) continue;
+            if (r.slot < 0) continue;
+            if (r.slot >= static_cast<int>(song.instruments.size()))
+                song.instruments.resize(r.slot + 1);
+            song.instruments[r.slot] = std::move(r.inst);
+            selectedInstIdx = r.slot;
+            selectedSlotIdx_ = r.slot;
+            engineHost.publish(song);
+        }
     }
 
     // cSampleImporter::deleteColorControl() action (single slot).
@@ -302,6 +349,8 @@ private:
     int selectedSlotIdx_{0};
     bool focusFiles_{true}; // selectedPlace 0 (SD card) vs 1 (instruments)
     double auditionStartTime_{-1.0};
+    // Drains completed imports on the main thread; worker only decodes.
+    std::unique_ptr<trakr::io::BackgroundImporter> importer_;
 };
 
 } // namespace trakr

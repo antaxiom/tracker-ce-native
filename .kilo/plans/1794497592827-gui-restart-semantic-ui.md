@@ -676,4 +676,16 @@ Phase C — unported screens / reference regeneration:
      requires user approval before implementation.
 
 Phase D — Studio/Demo feature expansion (only after Phase C items 1-2; item 3
+
+Phase C item 3 RESOLVED (2026-11-15) — background import implemented. Decision:
+background import. `trakr::io::BackgroundImporter` (native/io) decodes files off
+the UI thread; the worker only runs the pure `io::loadAudioFile`/`loadPtiInstrument`
+into a fresh Instrument. `SampleLoaderView` enqueues from the Import/Add buttons,
+and its `update()` drains finished results on the main thread, applies them to the
+requested slot and publishes the song (model/engine single-threaded). The
+synchronous `importSelectedFile`/`addNextAvailableSlot` paths are kept for the
+existing unit tests. Suite 156 cases / 539,005 assertions pass; functional_smoke
+17/17; robot clean; visreg untouched.
+
+Phase D — Studio/Demo feature expansion (only after Phase C items 1-2; item 3
 is a gated product decision and does not block D).

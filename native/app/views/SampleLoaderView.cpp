@@ -261,7 +261,8 @@ struct LoaderControls {
 };
 
 } // namespace
-SampleLoaderView::SampleLoaderView() {
+SampleLoaderView::SampleLoaderView()
+    : importer_(std::make_unique<trakr::io::BackgroundImporter>()) {
     std::error_code ec;
     currentPath_ = std::filesystem::current_path(ec);
     refreshDirectory();
@@ -292,7 +293,12 @@ std::vector<hw::ScreenButton> SampleLoaderView::getScreenButtons(
     auto preview = [&]() { previewSelectedSlot(song, engineHost); };
     auto removeSlot = [&]() { deleteInstrumentSlot(song, history, engineHost, selectedSlotIdx_); };
     auto removeUnused = [&]() { deleteUnusedInstruments(song, history, engineHost); };
-    auto importFile = [&]() { importSelectedFile(song, history, engineHost, selectedSlotIdx_); };
+    // Imports run in the background; pollBackgroundImports() applies + publishes.
+    auto importSel = [&]() { startBackgroundImport(selectedSlotIdx_); };
+    auto addNext = [&]() {
+        const int next = firstFreeSlot(song);
+        if (next >= 0) startBackgroundAddNext(song, next);
+    };
     std::vector<hw::ScreenButton> btns(8);
     const bool isAudition = auditionStartTime_ > 0.0;
 
@@ -301,13 +307,13 @@ std::vector<hw::ScreenButton> SampleLoaderView::getScreenButtons(
         // Preview, Add, Import, Delete/unused, Preview Vol, Memory.
         const auto mem = memoryUsage(song);
         btns[0] = {"Add", "", "", "", hw::UnderlineColor::Green, true, false,
-                   [&]() { addNextAvailableSlot(song, history, engineHost, selectedInstIdx); }};
+                   addNext};
         btns[1] = {"Add next", "", "", "", hw::UnderlineColor::Green, true, false,
-                   [&]() { addNextAvailableSlot(song, history, engineHost, selectedInstIdx); }};
+                   addNext};
         btns[2] = {"Preview", "", "", "", hw::UnderlineColor::Green, true, isAudition, preview};
         btns[3] = {"Add", "", "", "", hw::UnderlineColor::Green, true, false,
-                   [&]() { addNextAvailableSlot(song, history, engineHost, selectedInstIdx); }};
-        btns[4] = {"Import", "", "", "", hw::UnderlineColor::Green, true, false, importFile};
+                   addNext};
+        btns[4] = {"Import", "", "", "", hw::UnderlineColor::Green, true, false, importSel};
         btns[5] = {"Delete", "unused", "", "", hw::UnderlineColor::Red, true, false, removeUnused};
         btns[6] = {"Preview Vol", "0.00 dB", "", "", hw::UnderlineColor::Green, false, false, nullptr};
         btns[7] = {"Memory", std::to_string(mem.used) + "%", "", "", hw::UnderlineColor::Green, false, false, nullptr};
@@ -317,8 +323,8 @@ std::vector<hw::ScreenButton> SampleLoaderView::getScreenButtons(
     btns[1] = {"Delete", "Slot", "", "", hw::UnderlineColor::Red, true, false, removeSlot};
     btns[2] = {"Delete", "Unused", "", "", hw::UnderlineColor::Red, true, false, removeUnused};
     btns[3] = {"Add Next", "Slot", "", "", hw::UnderlineColor::Green, true, false,
-               [&]() { addNextAvailableSlot(song, history, engineHost, selectedInstIdx); }};
-    btns[4] = {"Import", "Selected", "", "", hw::UnderlineColor::Green, true, false, importFile};
+               addNext};
+    btns[4] = {"Import", "Selected", "", "", hw::UnderlineColor::Green, true, false, importSel};
     btns[5] = {"Parent", "Folder", "", "", hw::UnderlineColor::Dimmed,
                currentPath_.has_parent_path(), false, [this]() { goParentDirectory(); }};
     btns[6] = {"Enter", "Dir", "", "", hw::UnderlineColor::Dimmed,
@@ -332,6 +338,8 @@ std::vector<hw::ScreenButton> SampleLoaderView::getScreenButtons(
 void SampleLoaderView::update(Song& song, History& history, EngineHost& engineHost,
                               int& selectedInstIdx) {
     (void)history;
+    // Apply any finished background imports on the main thread.
+    pollBackgroundImports(song, history, engineHost, selectedInstIdx);
     advanceAudition(song, engineHost);
     const ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
                                    ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar;

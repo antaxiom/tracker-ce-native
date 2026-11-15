@@ -100,6 +100,8 @@ add_library(trakr_io STATIC
     io/PolyendImport.h
     io/PolyendExport.cpp
     io/PolyendExport.h
+    io/BackgroundImporter.cpp
+    io/BackgroundImporter.h
 )
 target_include_directories(trakr_io PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/io
@@ -403,6 +405,7 @@ add_executable(trakr_tests
     tests/test_history.cpp
     tests/test_dsp.cpp
     tests/test_import.cpp
+    tests/test_background_importer.cpp
     tests/test_fuzz.cpp
     tests/test_perf.cpp
     tests/test_ui_e2e.cpp
