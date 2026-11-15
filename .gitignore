@@ -26,3 +26,10 @@ __pycache__/
 .vscode/
 .idea/
 .DS_Store
+
+# Generated reference / capture artifacts (kept on disk, not in git)
+/render/
+/screen_*_phase5.png
+/imgui.ini
+/kilo-handoff.md
+.agents/teamwork/
