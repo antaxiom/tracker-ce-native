@@ -310,6 +310,29 @@ Residual classification (dominant causes, verified):
 4. EVE LINE_STRIP 1.5px corner overhang on selection frames (8-200 px/screen)
    vs `strokeRectCentered` rounding. Documented hardware behavior, not fixed.
 
+## Post-restart cleanup list (Phase 6, Task #3)
+
+Current parity snapshot (2026-11-15, visreg AE, 17/17 at >= 95%): Pattern 99.87,
+Song 99.90, Instrument 99.97, Effects 100.00, Automation 99.99, Master 1/3
+99.95, Master 2/3 100.00, Master 3/3 99.93, Master EQ 100.00, Sample 99.93,
+Sample Slice 99.85, Sample Granular 99.81, Loader 99.92, Config 99.99,
+Config item editor 100.00, Performance 100.00, File 99.85.
+
+Remaining work before legacy screen code can be deleted (retire dialog plumbing):
+
+1. Dialogs / state still backed by legacy views — port a semantic equivalent
+   first: the export deck (song / stems / pattern / pattern-stems / project
+   export) and the fill modal (pattern fill). The module-menu popup is already
+   semantic (`AppLayout::menuPopup_`). Import progress no longer needs a modal:
+   it was retired in favour of the background import (`trakr::io::BackgroundImporter`,
+   2026-11-15), so nothing is pending there.
+2. Unmodeled editor pages (structural-only today, no fwref multi-state spec):
+   the Sample editor sub-page. The Config item editor is ported.
+3. FW-7 multi-state regression coverage: fwref references are primarily the
+   idle state; selection / edit / popup / scrolled states are covered surgically
+   only (Instrument Effects/Automation, Config item editor, Performance). Widening
+   to full multi-state is optional, only when deeper parity is wanted.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
