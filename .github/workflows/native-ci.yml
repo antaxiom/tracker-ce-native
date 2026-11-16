@@ -45,11 +45,6 @@ jobs:
                                   libxcursor-dev libxi-dev libxfixes-dev libxrandr-dev \
                                   libxinerama-dev libgl1-mesa-dev libvulkan-dev
 
-      - name: Setup macOS dependencies
-        if: runner.os == 'macOS'
-        run: |
-          brew install sdl3 cmake
-
       - name: Fetch external dependencies
         shell: bash
         run: |
