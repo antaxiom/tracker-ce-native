@@ -40,7 +40,7 @@ python3 native/tools/os_input/os_input_runner.py
 # Fast single-screen visual testing
 python3 native/tools/os_input/os_input_runner.py --only <screen> --no-emu --hotspots
 
-# Classic visual-regression gate (16 screen/sub-page states vs fwref, >= 95%)
+# Classic visual-regression gate (17 cases vs fwref): AE >= 95% AND exact per-pixel >= 98%
 python3 native/tools/visreg/visreg.py --all --deterministic
 
 # Calibrated hardware structural checks (needs ImageMagick, numpy, scipy)
@@ -113,7 +113,7 @@ Current source-true scores (≥95.0% target):
 | Master EQ | 100.00% | ✅ |
 | Sample Playback | 99.93% | ✅ |
 | Sample Slice | 99.84% | ✅ |
-| Sample Granular | 99.81% | ✅ |
+| Sample Granular | 99.93% | ✅ |
 | Sample Loader | 99.92% | ✅ |
 | Config | 99.98% | ✅ |
 | Config item editor | 99.98% | ✅ |

@@ -350,6 +350,24 @@ bitmask (not the value), already fixed in `831f9e5`. Value=0 regeneration was
 therefore reverted; no tracked change remains. The separator-mask fix stands as
 the D2 fix.
 
+## D3 + Action 4 (2026-11-16)
+
+- D3 granular cLineIndicator: the reference kept the grain window hidden because
+  the emulator was thought unable to composite the additive overlay, but that
+  was obsolete (SRC_ALPHA,ONE -> BlendMode::SrcAlphaOne is supported,
+  ft812_api.cpp:60). build_sample_variant now emits a granular variant
+  (sample_granular.json) unhiding order-12 with granularProgressColors and a
+  visibility_source; gen_main renders it; the playhead colour was corrected to
+  the firmware cyan 0x3FFFFF. Granular exact parity 98.35 -> 99.31 (AE 99.81 ->
+  99.93). Commit ec9add2.
+- Action 4 (loader): removed the double-leading-slash on parity directory rows;
+  the remaining File/Loader/Song bottom-bar big-diff is the shared D2 value=1
+  capture artifact (not an app bug; a single cyRel cannot match File vs
+  Loader/Song references captured in different bottom-bar states).
+
+Current exact parity (all >= 98% corridor, committed): see the visreg run;
+granular 99.31, loader 98.54, file 98.59, song 98.97, others >= 99.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
