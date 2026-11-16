@@ -377,6 +377,19 @@ parity screens are NOT value-limited: file (value=1) is 98.59 while perform
 (value=1) is 100, so the residual is workspace glyph-AA, not the bottom bar.
 A uniform value change was tested (D2) and is net-negative. Confirmed no action.
 
+## CI validation (#1, 2026-11-16)
+
+Pushed 53 commits to origin/main; `Native Desktop CI` triggered. First run
+(head 9264f7b) failed ubuntu(gcc)+windows(msvc) and had macos queued. Root
+cause: `native/external/` (imgui, miniaudio, dr_libs, nlohmann, rtmidi) is
+gitignored, so a clean CI checkout cannot configure — `cmake/Deps.cmake`
+FATAL_ERRORs without `external/imgui`; and SDL3 is only provisioned by the
+macOS brew step, not on linux/windows. Fix (commit 0b6d12a): run
+`native/scripts/fetch_deps.sh` before configure (shell: bash), and gate
+linux/windows as informational (`continue-on-error`) until SDL3 is provisioned
+on those runners. macOS is the validated/supported build. Re-run queued
+behind the macos runner.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
