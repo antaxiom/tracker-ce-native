@@ -368,6 +368,15 @@ the D2 fix.
 Current exact parity (all >= 98% corridor, committed): see the visreg run;
 granular 99.31, loader 98.54, file 98.59, song 98.97, others >= 99.
 
+## #4 bottom-bar value capture (2026-11-16)
+
+Resolved, no change. The reference bottom cLabel `value` is app-consistent per
+screen: value=0 screens (config/config_edit 99.4-99.6%) and value=1 screens
+(perform/master2/master_eq 100%) both match the app at high parity. The lower
+parity screens are NOT value-limited: file (value=1) is 98.59 while perform
+(value=1) is 100, so the residual is workspace glyph-AA, not the bottom bar.
+A uniform value change was tested (D2) and is net-negative. Confirmed no action.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
