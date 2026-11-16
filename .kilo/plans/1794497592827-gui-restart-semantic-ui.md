@@ -675,6 +675,16 @@ Phase C — unported screens / reference regeneration:
      fwref states to gate it. Opening design centres the export/progress UX;
      requires user approval before implementation.
 
+Decisions & actions (2026-11-16): D1 exact>=98% corridor committed (visreg
+default); D2 value=0 regeneration tested end-to-end and REVERTED (net-negative:
+improves file/sample ~1% but drops three pixel-perfect screens to ~98.5; true
+defect was the separator mask, already fixed); D3 granular cLineIndicator
+added to the fwref reference (98.35 -> 99.31 exact, commit ec9add2); Action 4
+loader double-slash fixed; Action 2 assessed: export-deck/fill modals are
+already semantic ImGui dialogs and legacy renderActiveScreen is only reachable
+by one legacy test, so full legacy deletion stays a deferred, low-priority
+refactor; Action 1 CI macos leg validated (ctest 3/3). Phase D remains deferred.
+
 Phase D — Studio/Demo feature expansion (only after Phase C items 1-2; item 3
 
 Phase C item 3 RESOLVED (2026-11-15) — background import implemented. Decision:
