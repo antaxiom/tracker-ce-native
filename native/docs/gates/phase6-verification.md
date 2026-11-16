@@ -333,6 +333,23 @@ Remaining work before legacy screen code can be deleted (retire dialog plumbing)
    only (Instrument Effects/Automation, Config item editor, Performance). Widening
    to full multi-state is optional, only when deeper parity is wanted.
 
+## Decisions (2026-11-16): D1 exact corridor, D2 reference artifact
+
+D1 — committed: `visreg.py --all --deterministic` now enforces an exact
+per-pixel corridor (now the default; `--no-exact` opts out). `--exact-threshold`
+default is 0.98. All 17 cases pass >= 98% exact on the current baseline.
+
+D2 — resolved, decision reversed. Regenerating the fwref references with bottom
+`cLabel value=0` was tested end-to-end (extractor-level probe + full
+regeneration + `check_reference`). It is net-negative: file 98.59->99.08 and
+sample improved, but three pixel-perfect screens dropped (perform/master2/
+master_eq 100 -> ~98.5), and the corridor is met either way. The bottom-label
+`value=1` is the extractor's deliberate init-state baseline that the app
+matches per-screen; the genuine reference/app defect was the cBgLabel separator
+bitmask (not the value), already fixed in `831f9e5`. Value=0 regeneration was
+therefore reverted; no tracked change remains. The separator-mask fix stands as
+the D2 fix.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and

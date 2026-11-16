@@ -181,11 +181,12 @@ def main() -> int:
     parser.add_argument("--out", default="")
     parser.add_argument("--threshold", type=float, default=0.95,
                         help="minimum pixel similarity (default 0.95)")
-    parser.add_argument("--exact", action="store_true",
-                        help="also require exact per-pixel similarity (no GPU/AA "
-                             "fringe tolerated) above --exact-threshold")
-    parser.add_argument("--exact-threshold", type=float, default=0.99,
-                        help="minimum exact per-pixel similarity (default 0.99)")
+    parser.add_argument("--exact-threshold", type=float, default=0.98,
+                        help="committed exact per-pixel corridor (D1): the gate "
+                             "fails when any full-frame exact similarity drops "
+                             "below this (default 0.98)")
+    parser.add_argument("--no-exact", action="store_true",
+                        help="run the AE-only gate (exact corridor off)")
     parser.add_argument("--only", default="", help="comma separated case names")
     parser.add_argument("--all", action="store_true", help="run every case (default)")
     parser.add_argument("--deterministic", action="store_true",
@@ -217,7 +218,7 @@ def main() -> int:
     print(f"{'case':16} {'similarity':>10}  status")
     for case in selected:
         name, diff, similarity, note, exact = run_case(
-            case, args.app, args.refs, out_dir, want_exact=args.exact)
+            case, args.app, args.refs, out_dir, want_exact=not args.no_exact)
         if diff is None:
             status = note or "no reference"
             ok = note.startswith("rendered")
@@ -226,7 +227,7 @@ def main() -> int:
                 failures += 1
             continue
         ok = similarity >= args.threshold
-        if args.exact and exact is not None and exact < args.exact_threshold:
+        if exact is not None and exact < args.exact_threshold:
             ok = False
         label = f"{similarity * 100:9.2f}%"
         if exact is not None:
