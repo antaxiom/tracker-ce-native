@@ -386,9 +386,18 @@ gitignored, so a clean CI checkout cannot configure — `cmake/Deps.cmake`
 FATAL_ERRORs without `external/imgui`; and SDL3 is only provisioned by the
 macOS brew step, not on linux/windows. Fix (commit 0b6d12a): run
 `native/scripts/fetch_deps.sh` before configure (shell: bash), and gate
-linux/windows as informational (`continue-on-error`) until SDL3 is provisioned
-on those runners. macOS is the validated/supported build. Re-run queued
-behind the macos runner.
+linux/windows as informational (`continue-on-error`).
+
+Re-run (0b6d12a) result: macOS job CANCELLED with zero steps (runner not
+provisioned — infrastructure, not code; rescheduling does not help), Linux/
+Windows still fail at Deps.cmake:18 "SDL3 not found" (Ubuntu 24.04 has no
+libsdl3-dev; Windows has no SDL3). The pre-existing build.yml is firmware-only,
+so native-ci.yml is the sole native CI. Outcome: the workflow is correct in
+intent and the fetch-deps step is committed, but native desktop CI cannot be
+validated end-to-end in this repository's current runner setup. To make it
+green: (a) ensure macOS runners are available for the repo (the cancelled job
+never started), and (b) provision SDL3 on linux/windows (build from source or
+change the runner image) or keep them informational.
 
 ## Handoff
 
