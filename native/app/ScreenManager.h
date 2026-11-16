@@ -50,10 +50,4 @@ struct ScreenContext {
     FileView& fileView;
 };
 
-// Renders the active screen filling the designated workspace rect
-void renderActiveScreen(Screen activeScreen, ScreenContext& ctx, const ImRect& workspaceRect);
-
-// Backwards-compatible overload for legacy full-viewport layouts
-void renderActiveScreen(Screen activeScreen, ScreenContext& ctx, float headerHeight = 30.0f, float footerHeight = 28.0f);
-
 } // namespace trakr

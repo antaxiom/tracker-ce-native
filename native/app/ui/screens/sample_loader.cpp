@@ -127,6 +127,9 @@ void SampleLoaderScreen::update(Song& song,
                                 const ImRect& workspace,
                                 ui::LayoutProfile profile) {
     (void)history;
+    // Apply any finished background imports on the main thread (the legacy
+    // SampleLoaderView::update that used to own this is retired).
+    view.pollBackgroundImports(song, history, engineHost, selectedInstIdx);
     build();
     song_ = &song;
     engineHost_ = &engineHost;

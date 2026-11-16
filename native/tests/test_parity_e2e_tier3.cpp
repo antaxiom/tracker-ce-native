@@ -43,69 +43,6 @@ struct ImGuiFixture {
 
 } // namespace
 
-TEST_CASE("Tier 3 - Full Screen Navigation Cycle Preserves State", "[tier3][screens]") {
-    ImGuiFixture fixture;
-    trakr::Song song = trakr::makeDefaultSong();
-    trakr::History history;
-    auto nullAudio = std::make_unique<trakr::NullAudioBackend>();
-    trakr::EngineHost engineHost(std::move(nullAudio));
-    engineHost.start(44100, 128);
-
-    int currentOrderIdx = 0;
-    int octave = 4;
-    int editStep = 1;
-    bool recordMode = false;
-    int selectedInstIdx = 0;
-    trakr::Theme theme = trakr::makeTrackerClassicTheme();
-
-    trakr::PatternView patternView;
-    trakr::OrderListView orderListView;
-    trakr::SampleView sampleView;
-    trakr::InstrumentView instrumentView;
-    trakr::MixerView mixerView;
-    trakr::PerformView performView;
-    trakr::SampleLoaderView sampleLoaderView;
-    trakr::ConfigView configView;
-    trakr::FileView fileView;
-
-    trakr::ScreenContext ctx{
-        song, history, engineHost,
-        currentOrderIdx, octave, editStep, recordMode, selectedInstIdx,
-        theme, patternView, orderListView, sampleView, instrumentView,
-        mixerView, performView, sampleLoaderView, configView, fileView
-    };
-
-    // Set distinctive state in pattern view and song
-    patternView.setCursor(2, 10, 1);
-    song.tracks[1].gainDb = -3.5f;
-
-    std::vector<trakr::Screen> screenCycle = {
-        trakr::Screen::Pattern,
-        trakr::Screen::Song,
-        trakr::Screen::Sample,
-        trakr::Screen::Instrument,
-        trakr::Screen::Master,
-        trakr::Screen::Perform,
-        trakr::Screen::SampleLoader,
-        trakr::Screen::Config,
-        trakr::Screen::File,
-        trakr::Screen::Pattern
-    };
-
-    SECTION("T3.1: All 9 screens render consecutively without state corruption") {
-        for (auto scr : screenCycle) {
-            ImGui::NewFrame();
-            trakr::renderActiveScreen(scr, ctx, 28.0f, 55.0f);
-            ImGui::EndFrame();
-        }
-
-        // Verify preserved cursor and track gain
-        CHECK(patternView.cursorTrack() == 2);
-        CHECK(patternView.cursorRow() == 10);
-        CHECK(song.tracks[1].gainDb == Catch::Approx(-3.5f));
-    }
-}
-
 TEST_CASE("Tier 3 - Mixer Mute Interaction During Pattern Playback", "[tier3][mixer_pattern]") {
     trakr::Song song = trakr::makeDefaultSong();
     auto nullAudio = std::make_unique<trakr::NullAudioBackend>();
