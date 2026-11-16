@@ -823,9 +823,16 @@ def build_sample_variant(lines, theme_fields, colors, state):
         # (fSamplePlay.cpp:430-450 processSlicePoints).
         by_order[14]["hidden"] = False
         by_order[14]["visibility_source"] = src(GSAMPLE, lines, 430, 450)
-    # Granular keeps cLineIndicator hidden: the reference cannot yet composite
-    # its additive grain window (the overlay is documented as a fwref gap; the
-    # desktop draws it from the same gSamplePlay formula).
+    elif state == "granular":
+        # showGranularPositionValue() (gSamplePlay.cpp:724-752) computes the
+        # grain window from granularPositionInSpectrum and the effective grain
+        # length, sets the cLineIndicator selection, and shows the cursor. The
+        # control's two colors are the theme granularProgressColors set on the
+        # creation property (gSamplePlay.cpp:99).
+        by_order[12]["hidden"] = False
+        by_order[12]["colors"] = resolve_colors(theme_fields, colors,
+                                                "granularProgressColors")
+        by_order[12]["visibility_source"] = src(GSAMPLE, lines, 724, 752)
     return entries
 
 
@@ -1545,6 +1552,8 @@ def build():
                                             config_menu_lines)
     sample_slice_entries = build_sample_variant(sample_lines, theme_fields, colors,
                                                  "slice")
+    sample_granular_entries = build_sample_variant(sample_lines, theme_fields, colors,
+                                                   "granular")
     perform_entries = build_perform(perform_lines, theme_fields, colors)
     pattern_entries = build_pattern(pattern_lines, theme_lines, theme_fields, colors,
                                     songtimer_lines)
@@ -1570,6 +1579,8 @@ def build():
         validate_entry(e, files, style_names, "config_edit")
     for e in sample_slice_entries:
         validate_entry(e, files, style_names, "sample_slice")
+    for e in sample_granular_entries:
+        validate_entry(e, files, style_names, "sample_granular")
     for e in perform_entries:
         validate_entry(e, files, style_names, "perform")
     for e in pattern_entries:
@@ -1646,6 +1657,15 @@ def build():
         "provenance": provenance,
         "entries": sample_slice_entries,
     }
+    sample_granular = {
+        "screen": "sample_granular",
+        "scenario": "sample",
+        "theme": "default",
+        "chrome": {"title": "Sample Playback", "rightLabel": "@sample.rightLabel"},
+        "chrome_on_top": True,
+        "provenance": provenance,
+        "entries": sample_granular_entries,
+    }
     config_edit = {
         "screen": "config_edit",
         "scenario": "config",
@@ -1720,6 +1740,7 @@ def build():
         "loader.json": loader,
         "sample.json": sample,
         "sample_slice.json": sample_slice,
+        "sample_granular.json": sample_granular,
         "file.json": file,
     }
 

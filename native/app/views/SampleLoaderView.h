@@ -289,7 +289,10 @@ private:
         std::vector<std::string> rows;
         rows.reserve(dirEntries_.size());
         for (size_t i = 0; i < dirEntries_.size(); ++i) {
-            std::string row = isDirectory_[i] ? "/" + dirEntries_[i] : dirEntries_[i];
+            // Parity folder rows already carry the leading '/' (scenario.json
+            // "/..", "/Acoustic"), so only prefix when absent to avoid "//".
+            std::string row = dirEntries_[i];
+            if (isDirectory_[i] && (row.empty() || row[0] != '/')) row = "/" + row;
             if (row.size() > 32) row.resize(32); // explorerList.lineTextLenMax
             rows.push_back(std::move(row));
         }

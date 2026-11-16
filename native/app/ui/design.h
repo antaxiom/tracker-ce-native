@@ -122,7 +122,7 @@ constexpr ImU32 kPerfFxNameTextColor = kWhite;
 constexpr ImU32 kWaveformColors[2] = {kWhite, kGrey77};
 constexpr ImU32 kWaveformPointsColors[4] = {kWhite, kGrey0A, kOneTrueRed, kOneTrueGreen};
 constexpr ImU32 kWaveformProgressColors[2] = {kWhite, kOneTrueRed};
-constexpr ImU32 kGranularProgressColors[2] = {IM_COL32(0x00, 0xFF, 0xFF, 255), kGrey22};
+constexpr ImU32 kGranularProgressColors[2] = {IM_COL32(0x3F, 0xFF, 0xFF, 255), kGrey22};
 constexpr ImU32 kWaveTablePositionColors[2] = {kWhite, kWhite};
 constexpr ImU32 kSliceColors[3] = {IM_COL32(0xFE, 0xF7, 0x49, 255), kOneTrueRed, kOneTrueGreen};
 

@@ -280,9 +280,15 @@ int main(int argc, char** argv)
     }
     else if (sampleState == "granular")
     {
+        // playModeGranular shows the cLineIndicator grain window. The values
+        // mirror the demo project the app renders for the sample_granular
+        // parity case: playhead at spectrum position 0 with a ~42-frame grain
+        // (gSamplePlay showGranularPositionValue() widens the half window to a
+        // [0, 22) column span at the left sample edge).
         scenario.sample.playMode = 7; // playModeGranular
-        scenario.sample.regionStart = 460;
-        scenario.sample.regionEnd = 500;
+        scenario.sample.progress = 0;
+        scenario.sample.regionStart = 0;
+        scenario.sample.regionEnd = 22;
     }
     else if (sampleState != "forward")
     {
@@ -293,7 +299,9 @@ int main(int argc, char** argv)
     {
         trakr::emulator::FT812DisplayEmulator emu;
         const std::string specName =
-            sampleState == "slice" ? "sample_slice.json" : "sample.json";
+            sampleState == "slice" ? "sample_slice.json"
+            : sampleState == "granular" ? "sample_granular.json"
+            : "sample.json";
         if (!fwref::renderSampleState(emu, scenario.sample, specName))
         {
             std::fprintf(stderr, "fwref_gen: failed to render sample\n");
