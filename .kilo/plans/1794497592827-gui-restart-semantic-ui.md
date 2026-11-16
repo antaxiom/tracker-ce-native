@@ -685,6 +685,15 @@ already semantic ImGui dialogs and legacy renderActiveScreen is only reachable
 by one legacy test, so full legacy deletion stays a deferred, low-priority
 refactor; Action 1 CI macos leg validated (ctest 3/3). Phase D remains deferred.
 
+#5 (Sound-on) — broaden fwref coverage; scoped follow-up. Current FW-7
+multi-state coverage: Instrument Effects/Automation, Config item editor,
+Performance, plus idle for every workspace. To broaden: add scrolled/edited
+multi-state specs + visreg cases for Pattern (cursor + content) and Song
+(slot selection), and structurally port the Sample editor sub-page. Additive
+and no regression risk, but a dedicated chunk: new extract_spec variants,
+scenario milestones, fwref render paths, and 1-2 visreg cases per screen. Track
+as a separate increment (do not fold into a parity fix).
+
 Phase D — Studio/Demo feature expansion (only after Phase C items 1-2; item 3
 
 Phase C item 3 RESOLVED (2026-11-15) — background import implemented. Decision:
