@@ -11,21 +11,19 @@ on:
       - '.github/workflows/native-ci.yml'
   workflow_dispatch:
 
+# macOS is built and published on-demand via native/scripts/macos_release.sh
+# (a local, one-shot build+upload; no hosted macOS runner is needed and none
+# must remain listening). This workflow covers the rest: Linux/Windows are
+# informational (continue-on-error) until SDL3 is provisioned on those runners.
 jobs:
   build-and-test:
     name: ${{ matrix.os }} - ${{ matrix.compiler }}
     runs-on: ${{ matrix.os }}
-    # macOS is the supported/validated desktop build (SDL3 via Homebrew).
-    # Linux/Windows run informationally until SDL3 is provisioned on those
-    # runners, so they do not gate the workflow yet.
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: macos-latest
-            compiler: clang
-            experimental: false
           - os: ubuntu-24.04
             compiler: gcc
             experimental: true

@@ -399,6 +399,16 @@ green: (a) ensure macOS runners are available for the repo (the cancelled job
 never started), and (b) provision SDL3 on linux/windows (build from source or
 change the runner image) or keep them informational.
 
+## macOS CI decision (2026-11-16)
+
+The hosted macOS runner leg was cancelled at provisioning (run_started_at null)
+— GitHub-hosted Apple runners need paid minutes; this public account has none.
+Resolved as on-demand builds, no persistent runner: `native/scripts/macos_release.sh`
+builds the Release `.app` in a fresh dir, runs the ctest sanity gate, packages a
+zip, and optionally `gh release create/upload <tag>`. It runs only when invoked,
+then exits — the Mac is never an active runner. The hosted macOS leg was removed
+from native-ci.yml; Linux/Windows remain informational until SDL3 is provisioned.
+
 ## Handoff
 
 - Run `cmake --build native/build -j8`, `./native/build/trakr_tests`, and
